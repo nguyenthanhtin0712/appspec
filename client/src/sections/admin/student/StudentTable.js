@@ -11,8 +11,8 @@ import {
   setGlobalFilter,
   setSorting,
   setPagination,
-  deleteSpecialty,
-  setSpecialtyDialog
+  deleteStudent,
+  setStudentDialog
 } from '../../../store/reducers/student';
 import ConfirmDialog from 'components/ConfirmDialog';
 import Typography from '@mui/material/Typography';
@@ -28,7 +28,7 @@ const SpecialtyTable = () => {
   const { data, isError, isLoading, isRefetching, rowCount, columnFilters, globalFilter, sorting, pagination } = useSelector(
     (state) => state.student
   );
-  console.log(data)
+    console.log("🚀 ~ file: StudentTable.js:29 ~ SpecialtyTable ~ data:", data)
   const [openCofirm, setOpenCofirm] = useState(false);
   const [idDelete, setIdDelete] = useState('');
 
@@ -94,8 +94,8 @@ const SpecialtyTable = () => {
         header: 'Tên'
       },
       {
-        accessorKey: 'student_score',
-        header: 'Điểm TB'
+        accessorKey: 'user_gender',
+        header: 'Giới tính'
       },
       {
         accessorKey: 'user_birthday',
@@ -108,6 +108,10 @@ const SpecialtyTable = () => {
       {
         accessorKey: 'major_name',
         header: 'Ngành'
+      },
+      {
+        accessorKey: 'student_course',
+        header: 'Khóa'
       }
     ],
     []
@@ -119,7 +123,7 @@ const SpecialtyTable = () => {
   };
 
   const handleUpdate = (data) => {
-    dispatch(setSpecialtyDialog({ open: true, action: 'update', initValue: data }));
+    dispatch(setStudentDialog({ open: true, action: 'update', initValue: data }));
   };
 
   return (
@@ -150,7 +154,7 @@ const SpecialtyTable = () => {
         positionActionsColumn="last"
         renderRowActions={({ row }) => {
           return (
-            <Box>
+            <Box sx={{ display: 'flex' }}>
               <IconButton
                 onClick={() => {
                   handleUpdate(row.original);
@@ -197,7 +201,7 @@ const SpecialtyTable = () => {
             color="error"
             onClick={async () => {
               try {
-                await dispatch(deleteSpecialty(idDelete));
+                await dispatch(deleteStudent(idDelete));
                 handleCloseCofirm();
                 toast.success('Xóa chuyên ngành thành công!');
                 setIdDelete('');

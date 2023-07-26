@@ -1,5 +1,5 @@
 import React from 'react';
-import { setSpecialtyDialog } from '../../store/reducers/specialty';
+import { setStudentDialog } from '../../store/reducers/student';
 import { Add } from 'iconsax-react';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
@@ -10,7 +10,7 @@ import { dispatch } from 'store/index';
 
 const SpecialtyPage = () => {
   const handleClickOpen = () => {
-    dispatch(setSpecialtyDialog({ open: true, action: 'add' }));
+    dispatch(setStudentDialog({ open: true, action: 'add' }));
   };
 
   return (

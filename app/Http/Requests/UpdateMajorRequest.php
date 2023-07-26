@@ -27,8 +27,8 @@ class UpdateMajorRequest extends FormRequest
     public function rules()
     {
         return [
-            'major_code' => 'required|unique:majors,major_code',
-            'major_name' => 'required|unique:majors,major_name',
+            'major_code' => 'required',
+            'major_name' => 'required',
         ];
     }
 

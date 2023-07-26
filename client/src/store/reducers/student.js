@@ -3,7 +3,7 @@ import axios from '../../api/axios';
 import { API_BASE_URL } from 'config';
 
 // Async Thunk Actions
-export const fetchData = createAsyncThunk('specialty/fetchData', async (params) => {
+export const fetchData = createAsyncThunk('student/fetchData', async (params) => {
   const {
     columnFilters,
     globalFilter,
@@ -31,9 +31,9 @@ export const fetchData = createAsyncThunk('specialty/fetchData', async (params) 
   }
 });
 
-export const createSpecialty = createAsyncThunk('specialty/createSpecialty', async (specialty) => {
+export const createStudent = createAsyncThunk('student/createStudent', async (student) => {
   try {
-    const response = await axios.post(`${API_BASE_URL}/specialty`, specialty);
+    const response = await axios.post(`${API_BASE_URL}/student`, student);
     return response.data;
   } catch (error) {
     console.error(error);
@@ -41,9 +41,9 @@ export const createSpecialty = createAsyncThunk('specialty/createSpecialty', asy
   }
 });
 
-export const updateSpecialty = createAsyncThunk('specialty/updateSpecialty', async ({ id, specialty }) => {
+export const updateStudent = createAsyncThunk('student/updateStudent', async ({ id, student }) => {
   try {
-    const response = await axios.put(`${API_BASE_URL}/specialty/${id}`, specialty);
+    const response = await axios.put(`${API_BASE_URL}/student/${id}`, student);
     return response.data;
   } catch (error) {
     console.error(error);
@@ -51,9 +51,9 @@ export const updateSpecialty = createAsyncThunk('specialty/updateSpecialty', asy
   }
 });
 
-export const deleteSpecialty = createAsyncThunk('specialty/deleteSpecialty', async (id) => {
+export const deleteStudent = createAsyncThunk('student/deleteStudent', async (id) => {
   try {
-    const response = await axios.delete(`${API_BASE_URL}/specialty/${id}`);
+    const response = await axios.delete(`${API_BASE_URL}/student/${id}`);
     return response.data;
   } catch (error) {
     console.error(error);
@@ -74,19 +74,24 @@ const initialState = {
     pageIndex: 0,
     pageSize: 10
   },
-  specialtyDialog: {
+  studentDialog: {
     open: false,
     action: 'add',
     initValue: {
-      specialty_code: '',
-      specialty_name: '',
-      major_id: ''
+      user_firstname: '',
+      user_lastname: '',
+      user_gender: '',
+      user_birthday: null,
+      student_course: '',
+      student_code: '',
+      major_id: '',
+      student_class: ''
     }
   }
 };
 
-const specialty = createSlice({
-  name: 'specialty',
+const student = createSlice({
+  name: 'student',
   initialState,
   reducers: {
     setData: (state, action) => {
@@ -116,8 +121,8 @@ const specialty = createSlice({
     setPagination: (state, action) => {
       state.pagination = action.payload;
     },
-    setSpecialtyDialog: (state, action) => {
-      state.specialtyDialog = { ...state.specialtyDialog, ...action.payload };
+    setStudentDialog: (state, action) => {
+      state.studentDialog = { ...state.studentDialog, ...action.payload };
     }
   },
   extraReducers: (builder) => {
@@ -137,21 +142,21 @@ const specialty = createSlice({
         state.isRefetching = false;
         state.isError = true;
       })
-      .addCase(createSpecialty.fulfilled, (state, action) => {
+      .addCase(createStudent.fulfilled, (state, action) => {
         state.data.push(action.payload.data);
-        state.specialtyDialog.open = false;
+        state.studentDialog.open = false;
       })
-      .addCase(updateSpecialty.fulfilled, (state, action) => {
-        const updatedSpecialty = action.payload.data;
-        const index = state.data.findIndex((specialty) => specialty.specialty_id === updatedSpecialty.specialty_id);
+      .addCase(updateStudent.fulfilled, (state, action) => {
+        const updatedstudent = action.payload.data;
+        const index = state.data.findIndex((student) => student.student_id === updatedstudent.student_id);
         if (index !== -1) {
-          state.data[index] = updatedSpecialty;
-          state.specialtyDialog.open = false;
+          state.data[index] = updatedstudent;
+          state.studentDialog.open = false;
         }
       })
-      .addCase(deleteSpecialty.fulfilled, (state, action) => {
-        const deletedSpecialtyId = action.payload.data.specialty_id;
-        state.data = state.data.filter((specialty) => specialty.specialty_id !== deletedSpecialtyId);
+      .addCase(deleteStudent.fulfilled, (state, action) => {
+        const deletedstudentId = action.payload.data.student_id;
+        state.data = state.data.filter((student) => student.student_id !== deletedstudentId);
       });
   }
 });
@@ -166,7 +171,7 @@ export const {
   setGlobalFilter,
   setSorting,
   setPagination,
-  setSpecialtyDialog
-} = specialty.actions;
+  setStudentDialog
+} = student.actions;
 
-export default specialty.reducer;
+export default student.reducer;

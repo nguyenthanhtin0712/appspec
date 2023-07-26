@@ -37,7 +37,7 @@ class StudentController extends Controller
         $students = $this->student->query()
         ->leftJoin('users', 'students.user_id', '=', 'users.user_id')
         ->leftJoin('majors', 'students.major_id', '=', 'majors.major_id')
-        ->select('students.*', 'users.user_firstname', 'users.user_lastname', 'users.user_birthday','majors.major_name');
+        ->select('students.*', 'users.user_firstname', 'users.user_lastname', 'users.user_birthday','users.user_gender','majors.major_name');
         $students->where("student_isDelete", "0");
         if ($query) {
             $students->where("student_code", "LIKE", "%$query%");
@@ -97,7 +97,8 @@ class StudentController extends Controller
         } else {
             $studentWithUser = $this->student->query()
                 ->leftJoin('users', 'users.user_id', '=', 'students.user_id')
-                ->select('students.*', 'users.user_firstname', 'users.user_lastname', 'users.user_birthday')
+                ->leftJoin('majors', 'students.major_id', '=', 'majors.major_id')
+                ->select('students.*', 'users.user_firstname', 'users.user_lastname', 'users.user_birthday','users.user_gender','majors.major_name')
                 ->where('students.user_id', $id)
                 ->firstOrFail();
             $studentResource = new StudentResource($studentWithUser);
