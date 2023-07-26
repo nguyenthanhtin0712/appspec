@@ -32,10 +32,10 @@ class MajorController extends Controller
         $query = $request->input('query');
         $id = $request->input('id');
         $sortBy = $request->input('sortBy');
-        $sortOrder = $request->input('sortOrder', 'asc'); 
+        $sortOrder = $request->input('sortOrder', 'asc');
         $filters = $request->input('filters');
         $majors = $this->major->query();
-        $majors->where("major_isDelete","0");
+        $majors->where("major_isDelete", "0");
         if ($query) {
             $majors->where("major_name", "LIKE", "%$query%");
         }
@@ -52,11 +52,10 @@ class MajorController extends Controller
                     $id = $filter['id'];
                     $value = $filter['value'];
                     $majors->where($id, 'LIKE', '%' . $value . '%');
-                    
                 }
             }
         }
-        if($perPage){
+        if ($perPage) {
             $majors = $majors->paginate($perPage);
         } else {
             $majors = $majors->paginate(10);

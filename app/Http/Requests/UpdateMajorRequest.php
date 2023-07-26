@@ -6,6 +6,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Response;
+use Illuminate\Validation\Rule;
 
 class UpdateMajorRequest extends FormRequest
 {
@@ -27,8 +28,14 @@ class UpdateMajorRequest extends FormRequest
     public function rules()
     {
         return [
-            'major_code' => 'required|unique:majors,major_code',
-            'major_name' => 'required|unique:majors,major_name',
+            'major_code' => [
+                'required',
+                Rule::unique('majors')->ignore($this->major_id, 'major_id'),
+            ],
+            'major_name' => [
+                'required',
+                Rule::unique('majors')->ignore($this->major_id, 'major_id'),
+            ],
         ];
     }
 
