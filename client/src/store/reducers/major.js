@@ -1,0 +1,171 @@
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from '../../api/axios';
+import { API_BASE_URL } from 'config';
+
+// Async Thunk Actions
+export const fetchData = createAsyncThunk('major/fetchData', async (params) => {
+  const {
+    columnFilters,
+    globalFilter,
+    sorting,
+    pagination: { pageIndex, pageSize }
+  } = params;
+  const url = new URL('/api/majors', API_BASE_URL);
+  url.searchParams.set('page', `${pageIndex + 1}`);
+  url.searchParams.set('perPage', `${pageSize}`);
+  url.searchParams.set('filters', JSON.stringify(columnFilters ?? []));
+  url.searchParams.set('query', globalFilter ?? '');
+  url.searchParams.set('sortBy', `${sorting.length !== 0 ? sorting[0].id : ''}`);
+  url.searchParams.set('sortOrder', `${sorting.length !== 0 ? (sorting[0].desc ? 'desc' : 'asc') : ''}`);
+
+  try {
+    const response = await axios.get(url.href);
+    const { data } = response;
+    return {
+      data: data.data.result,
+      rowCount: data.data.meta.total
+    };
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+});
+
+export const createMajor = createAsyncThunk('major/createMajor', async (major) => {
+  try {
+    const response = await axios.post(`${API_BASE_URL}/major`, major);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+});
+
+export const updateMajor = createAsyncThunk('major/updateMajor', async ({ id, major }) => {
+  try {
+    const response = await axios.put(`${API_BASE_URL}/major/${id}`, major);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+});
+
+export const deleteMajor = createAsyncThunk('major/deleteMajor', async (id) => {
+  try {
+    const response = await axios.delete(`${API_BASE_URL}/major/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+});
+
+const initialState = {
+  data: [],
+  isError: false,
+  isLoading: false,
+  isRefetching: false,
+  rowCount: 0,
+  columnFilters: [],
+  globalFilter: '',
+  sorting: [],
+  pagination: {
+    pageIndex: 0,
+    pageSize: 10
+  },
+  majorDialog: {
+    open: false,
+    action: 'add',
+    initValue: {
+      major_code: '',
+      major_name: ''
+    }
+  }
+};
+
+const major = createSlice({
+  name: 'major',
+  initialState,
+  reducers: {
+    setData: (state, action) => {
+      state.data = action.payload;
+    },
+    setIsError: (state, action) => {
+      state.isError = action.payload;
+    },
+    setIsLoading: (state, action) => {
+      state.isLoading = action.payload;
+    },
+    setIsRefetching: (state, action) => {
+      state.isRefetching = action.payload;
+    },
+    setRowCount: (state, action) => {
+      state.rowCount = action.payload;
+    },
+    setColumnFilters: (state, action) => {
+      state.columnFilters = action.payload;
+    },
+    setGlobalFilter: (state, action) => {
+      state.globalFilter = action.payload;
+    },
+    setSorting: (state, action) => {
+      state.sorting = action.payload;
+    },
+    setPagination: (state, action) => {
+      state.pagination = action.payload;
+    },
+    setMajorDialog: (state, action) => {
+      state.majorDialog = { ...state.majorDialog, ...action.payload };
+    }
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchData.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(fetchData.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isRefetching = false;
+        state.data = action.payload.data;
+        state.rowCount = action.payload.rowCount;
+        state.isError = false;
+      })
+      .addCase(fetchData.rejected, (state) => {
+        state.isLoading = false;
+        state.isRefetching = false;
+        state.isError = true;
+      })
+      .addCase(createMajor.fulfilled, (state, action) => {
+        state.data.push(action.payload.data);
+        state.majorDialog.open = false;
+      })
+      .addCase(updateMajor.fulfilled, (state, action) => {
+        const updatedMajor = action.payload.data;
+        const index = state.data.findIndex((major) => major.major_id === updatedMajor.major_id);
+        if (index !== -1) {
+          state.data[index] = updatedMajor;
+          state.majorDialog.open = false;
+        }
+      })
+      .addCase(deleteMajor.fulfilled, (state, action) => {
+        const deletedMajorId = action.payload.data.major_id;
+        state.data = state.data.filter((major) => major.major_id !== deletedMajorId);
+      });
+  }
+});
+
+export const {
+  setData,
+  setIsError,
+  setIsLoading,
+  setIsRefetching,
+  setRowCount,
+  setColumnFilters,
+  setGlobalFilter,
+  setSorting,
+  setPagination,
+  setMajorDialog
+} = major.actions;
+
+export default major.reducer;
