@@ -41,13 +41,17 @@ export const createMajor = createAsyncThunk('major/createMajor', async (major) =
   }
 });
 
-export const updateMajor = createAsyncThunk('major/updateMajor', async ({ id, major }) => {
+export const updateMajor = createAsyncThunk('major/updateMajor', async (major, { rejectWithValue }) => {
   try {
-    const response = await axios.put(`${API_BASE_URL}/major/${id}`, major);
+    const response = await axios.put(`${API_BASE_URL}/major/${major.major_id}`, major);
     return response.data;
   } catch (error) {
-    console.error(error);
-    throw error;
+    if (error.response && error.response.data && error.response.data.errors) {
+      return rejectWithValue(error.response.data);
+    } else {
+      console.error(error);
+      throw error;
+    }
   }
 });
 
