@@ -38,6 +38,7 @@ Route::middleware(['auth:api'])->group(function () {
 
     //Major controller api
     Route::get('majors', [MajorController::class, 'index'])->middleware('check_user_role_permission:major.view');
+    Route::get('/majors/specialties', [MajorController::class, 'getAllSpecialty'])->middleware('check_user_role_permission:major.view');
     Route::post('major', [MajorController::class, 'store'])->middleware('check_user_role_permission:major.create');
     Route::get('/major/{id}', [MajorController::class, 'show'])->middleware('check_user_role_permission:major.view');
     Route::put('/major/{id}', [MajorController::class, 'update'])->middleware('check_user_role_permission:major.update');

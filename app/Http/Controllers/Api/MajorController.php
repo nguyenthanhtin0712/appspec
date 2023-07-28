@@ -10,6 +10,7 @@ use App\Http\Resources\MajorResource;
 use App\Models\Major;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 
 class MajorController extends Controller
 {
@@ -27,7 +28,7 @@ class MajorController extends Controller
     }
 
     public function index(Request $request)
-    {   
+    {
         $all = $request->input('all');
         $perPage = $request->input('perPage');
         $query = $request->input('query');
@@ -56,7 +57,7 @@ class MajorController extends Controller
                 }
             }
         }
-        if($all && $all==true){
+        if ($all && $all == true) {
             $majors = $majors->get();
         } else {
             if ($perPage) {
@@ -132,5 +133,14 @@ class MajorController extends Controller
         $major->save();
         $majorResoure = new MajorResource($major);
         return $this->sentSuccessResponse($majorResoure, "Delete user success", Response::HTTP_OK);
+    }
+
+    public function getAllSpecialty()
+    {
+        $majors = Major::all();
+        foreach ($majors as $major) {
+            $major['specialties'] = DB::table("specialties")->where('major_id', $major->major_id)->get();
+        }
+        return $this->sentSuccessResponse($majors, "Get data success", Response::HTTP_OK);
     }
 }
