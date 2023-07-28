@@ -63,6 +63,7 @@ export const deleteSpecialty = createAsyncThunk('specialty/deleteSpecialty', asy
 
 const initialState = {
   data: [],
+  allData: [],
   isError: false,
   isLoading: false,
   isRefetching: false,

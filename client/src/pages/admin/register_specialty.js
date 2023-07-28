@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+/* eslint-disable no-unused-vars */
+import React, { useEffect, useState } from 'react';
 import Typography from '@mui/material/Typography';
 import MainCard from 'components/MainCard';
 import Grid from '@mui/material/Grid';
@@ -15,45 +16,8 @@ import { useTheme } from '@mui/material/styles';
 import SelectField from 'components/input/SelectField';
 import InputField from 'components/input/InputField';
 import DateTimePickerField from 'components/input/DateTimePickerField';
-
-const major_list = [
-  {
-    major_id: 1,
-    major_name: 'Công nghệ thông tin',
-    children: [
-      {
-        specialty_id: 1,
-        specialty_name: 'Kỹ thuật phần mềm'
-      },
-      {
-        specialty_id: 2,
-        specialty_name: 'Hệ thống thông tin'
-      },
-      {
-        specialty_id: 3,
-        specialty_name: 'Kỹ thuật máy tính'
-      },
-      {
-        specialty_id: 4,
-        specialty_name: 'Khoa học máy tính'
-      }
-    ]
-  },
-  {
-    major_id: 2,
-    major_name: 'Kỹ thuật phần mềm',
-    children: [
-      {
-        specialty_id: 5,
-        specialty_name: 'Lập trình web'
-      },
-      {
-        specialty_id: 6,
-        specialty_name: 'Lập trình ứng dụng'
-      }
-    ]
-  }
-];
+import { dispatch } from 'store/index';
+import { getAll } from 'store/reducers/major';
 
 // const cource_list = () => {
 //   let year = new Date().getFullYear();
@@ -172,11 +136,7 @@ const RegisterSpecialty = () => {
                       fullWidth
                     />
                   </Grid>
-                  <Grid item xs={12} sx={{ display: 'flex', gap: 3, alignItems: 'stretch' }}>
-                    {major_list.map((major) => (
-                      <MajorSelector key={major.major_id} major={major}></MajorSelector>
-                    ))}
-                  </Grid>
+                  <MajorContainerForm />
                   {errors.submit && (
                     <Grid item xs={12}>
                       <FormHelperText error>{errors.submit}</FormHelperText>
@@ -205,9 +165,32 @@ const RegisterSpecialty = () => {
   );
 };
 
+const MajorContainerForm = () => {
+  const [majorList, setMajorList] = useState([]);
+  useEffect(() => {
+    const fetch = async () => {
+      const response = await dispatch(getAll());
+      console.log('fetching...');
+      setMajorList(response.payload.data);
+    };
+    fetch();
+  }, []);
+  console.log(majorList);
+  if (!majorList) return null;
+  return (
+    <Grid item xs={12} sx={{ display: 'flex', gap: 3, alignItems: 'stretch' }}>
+      {majorList.map((major) => {
+        if (major.specialties.length > 0) {
+          return <MajorSelector key={major.major_id} major={major}></MajorSelector>;
+        }
+      })}
+    </Grid>
+  );
+};
+
 const MajorSelector = ({ major }) => {
   // eslint-disable-next-line no-unused-vars
-  const [checked, setChecked] = useState(Array(major.children.length).fill(0));
+  const [checked, setChecked] = useState(Array(major.specialties.length).fill(0));
   const theme = useTheme();
   return (
     <Grid item xs={6}>
@@ -216,8 +199,8 @@ const MajorSelector = ({ major }) => {
           <Typography variant="h5">Ngành {major.major_name}</Typography>
         </Stack>
         <Stack spacing={2} direction="column">
-          {major.children.length > 0 &&
-            major.children.map((item) => (
+          {major.specialties.length > 0 &&
+            major.specialties.map((item) => (
               <Grid container key={item.specialty_id}>
                 <Grid item sm={6} xs={12} sx={{ margin: 'auto 0' }}>
                   <Stack direction="row" alignItems="center" spacing={1.5}>
