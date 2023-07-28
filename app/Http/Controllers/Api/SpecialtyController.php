@@ -30,6 +30,7 @@ class SpecialtyController extends Controller
 
     public function index(Request $request)
     {
+        $all = $request->input('all');
         $perPage = $request->input('perPage');
         $query = $request->input('query');
         $id = $request->input('id');
@@ -58,11 +59,16 @@ class SpecialtyController extends Controller
                 }
             }
         }
-        if ($perPage) {
-            $specialtys = $specialtys->paginate($perPage);
+        if($all && $all==true){
+            $specialtys = $specialtys->get();
         } else {
-            $specialtys = $specialtys->paginate(10);
+            if ($perPage) {
+                $specialtys = $specialtys->paginate($perPage);
+            } else {
+                $specialtys = $specialtys->paginate(10);
+            }
         }
+        
         $specialtyCollection = new Collection($specialtys);
         return $this->sentSuccessResponse($specialtyCollection, "Get data success", Response::HTTP_OK);
     }

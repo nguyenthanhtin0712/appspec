@@ -10,9 +10,9 @@ class Teacher extends Model
 {
     use HasFactory, HasRoles;
 
-    protected $primaryKey = 'user_id';
+    protected $primaryKey = 'teacher_id';
     protected $fillable = [
-        'user_id',
+        'teacher_id',
         'teacher_code',
         'teacher_name',
         'teacher_phone',

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AddFileStudentRequest;
 use App\Http\Requests\StoreStudentRequest;
 use App\Http\Requests\UpdateStudentRequest;
 use App\Http\Resources\Collection;
@@ -27,6 +28,7 @@ class StudentController extends Controller
 
     public function index(Request $request)
     {
+        $all = $request->input('all');
         $perPage = $request->input('perPage');
         $query = $request->input('query');
         $id = $request->input('id');
@@ -58,10 +60,14 @@ class StudentController extends Controller
                 }
             }
         }
-        if ($perPage) {
-            $students = $students->paginate($perPage);
+        if($all && $all==true){
+            $students = $students->get();
         } else {
-            $students = $students->paginate(10);
+            if ($perPage) {
+                $students = $students->paginate($perPage);
+            } else {
+                $students = $students->paginate(10);
+            }
         }
         $studentCollection = new Collection($students);
         return $this->sentSuccessResponse($studentCollection, "Get data success", Response::HTTP_OK);
@@ -136,5 +142,17 @@ class StudentController extends Controller
         $student->save();
         $studentResoure = new StudentResource($student);
         return $this->sentSuccessResponse($studentResoure, "Delete user success", Response::HTTP_OK);
+    }
+
+    //Hàm import sinh viên đầu khóa khi tham gia hệ thống
+    public function addFileStudent(AddFileStudentRequest $request){
+        $data = $request->input('data');
+
+    }
+
+
+    //Hàm import sinh viên đăng ký chuyên ngành
+    public function addFileStudentSpecialty(){
+
     }
 }

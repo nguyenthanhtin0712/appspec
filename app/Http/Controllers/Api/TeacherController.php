@@ -28,6 +28,7 @@ class TeacherController extends Controller
 
     public function index(Request $request)
     {
+        $all = $request->input('all');
         $perPage = $request->input('perPage');
         $query = $request->input('query');
         $id = $request->input('id');
@@ -55,10 +56,15 @@ class TeacherController extends Controller
                 }
             }
         }
-        if ($perPage) {
-            $teachers = $teachers->paginate($perPage);
+
+        if($all && $all==true){
+            $teachers = $teachers->get();
         } else {
-            $teachers = $teachers->paginate(10);
+            if ($perPage) {
+                $teachers = $teachers->paginate($perPage);
+            } else {
+                $teachers = $teachers->paginate(10);
+            }
         }
         $teacherCollection = new Collection($teachers);
         return $this->sentSuccessResponse($teacherCollection, "Get data success", Response::HTTP_OK);
@@ -87,7 +93,7 @@ class TeacherController extends Controller
      */
     public function show($id)
     {
-        $teacher = $this->teacher->where('user_id', $id)->firstOrFail();
+        $teacher = $this->teacher->where('teacher_id', $id)->firstOrFail();
         if ($teacher->teacher_isDelete == 1) {
             return response()->json([
                 'message' => 'teacher is deleted',
@@ -107,7 +113,7 @@ class TeacherController extends Controller
      */
     public function update(UpdateTeacherRequest $request, $id)
     {
-        $teacher = $this->teacher->where('user_id', $id)->firstOrFail();
+        $teacher = $this->teacher->where('teacher_id', $id)->firstOrFail();
         $dataUpdate = $request->all();
         $teacher->update($dataUpdate);
         $teacherResource = new TeacherResource($teacher);
@@ -122,7 +128,7 @@ class TeacherController extends Controller
      */
     public function destroy($id)
     {
-        $teacher = $this->teacher->where('user_id', $id)->firstOrFail();
+        $teacher = $this->teacher->where('teacher_id', $id)->firstOrFail();
         $teacher->teacher_isDelete = 1;
         $teacher->save();
         $teacherResoure = new TeacherResource($teacher);

@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class Collection extends ResourceCollection
 {
@@ -14,14 +15,19 @@ class Collection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return [
+        $data = [
             'result' => $this->collection,
-            'meta' => [
-                'total' => $this->total(),
-                'current_page' => $this->currentPage(),
-                'last_page' => $this->lastPage(),
-                'per_page' => $this->perPage(),
-            ]
         ];
+
+        if ($this->resource instanceof LengthAwarePaginator) {
+            $data['meta'] = [
+                'total' => $this->resource->total(),
+                'current_page' => $this->resource->currentPage(),
+                'last_page' => $this->resource->lastPage(),
+                'per_page' => $this->resource->perPage(),
+            ];
+        }
+
+        return $data;
     }
 }

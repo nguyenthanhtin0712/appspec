@@ -19,8 +19,9 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { toast } from 'react-toastify';
 import { dispatch } from 'store/index';
-import { Export } from 'iconsax-react';
+import { Export, Import } from 'iconsax-react';
 import { utils, writeFileXLSX } from 'xlsx';
+import * as XLSX from 'xlsx';
 import { useCallback } from 'react';
 
 const SpecialtyTable = () => {
@@ -28,7 +29,6 @@ const SpecialtyTable = () => {
   const { data, isError, isLoading, isRefetching, rowCount, columnFilters, globalFilter, sorting, pagination } = useSelector(
     (state) => state.student
   );
-    console.log("🚀 ~ file: StudentTable.js:29 ~ SpecialtyTable ~ data:", data)
   const [openCofirm, setOpenCofirm] = useState(false);
   const [idDelete, setIdDelete] = useState('');
 
@@ -70,6 +70,43 @@ const SpecialtyTable = () => {
     utils.book_append_sheet(wb, ws, 'Major');
     writeFileXLSX(wb, 'Specialty.xlsx');
   }, [data]);
+
+  const handleImportData = (e) => {
+    e.preventDefault();
+    const file = e.target.files[0];
+    if (!file) {
+      console.error('Không có file được chọn.');
+      return;
+    }
+    const reader = new FileReader();
+    reader.readAsBinaryString(file);
+    reader.onload = (e) => {
+      const data = e.target.result;
+      const workbook = XLSX.read(data, { type: 'binary' });
+      const sheetName = workbook.SheetNames[1];
+      if (!sheetName) {
+        toast.error('Không đúng định dạng.');
+        return;
+      }
+      const sheet = workbook.Sheets[sheetName];
+      const jsonData = XLSX.utils.sheet_to_json(sheet, { header: 2 });
+
+      let result = { data: [] };
+      jsonData.forEach((row) => {
+        result.data.push({
+          student_code: row['MaSV'],
+          user_firstname: row['HoLotSV'],
+          user_lastname: row['TenSV'],
+          user_birthday: row['NgaySinhC'],
+          user_gender: row['Phai'],
+          student_course: row['KhoaHoc'],
+          student_class: row['MaLop'],
+          major_code: row['MaNganh']
+        });
+      });
+      console.log(result);
+    };
+  };
 
   useEffect(() => {
     dispatch(fetchData({ columnFilters, globalFilter, sorting, pagination }));
@@ -185,9 +222,19 @@ const SpecialtyTable = () => {
           })
         }}
         renderTopToolbarCustomActions={() => (
-          <Button color="primary" onClick={handleExportData} startIcon={<Export />} variant="contained">
-            Xuất Excel
-          </Button>
+          <Box display="flex" alignItems="center">
+            <Button color="primary" onClick={handleExportData} startIcon={<Export />} variant="contained">
+              Xuất Excel
+            </Button>
+            <Box marginLeft={2}>
+              <input id="fileInput" type="file" style={{ display: 'none' }} accept=".xlsx" onChange={handleImportData} />
+              <label htmlFor="fileInput">
+                <Button color="primary" startIcon={<Import />} variant="contained" component="span">
+                  Nhập Excel
+                </Button>
+              </label>
+            </Box>
+          </Box>
         )}
       />
       <ConfirmDialog

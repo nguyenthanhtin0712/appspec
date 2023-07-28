@@ -27,7 +27,8 @@ class MajorController extends Controller
     }
 
     public function index(Request $request)
-    {
+    {   
+        $all = $request->input('all');
         $perPage = $request->input('perPage');
         $query = $request->input('query');
         $id = $request->input('id');
@@ -55,10 +56,14 @@ class MajorController extends Controller
                 }
             }
         }
-        if ($perPage) {
-            $majors = $majors->paginate($perPage);
+        if($all && $all==true){
+            $majors = $majors->get();
         } else {
-            $majors = $majors->paginate(10);
+            if ($perPage) {
+                $majors = $majors->paginate($perPage);
+            } else {
+                $majors = $majors->paginate(10);
+            }
         }
         $userCollection = new Collection($majors);
         return $this->sentSuccessResponse($userCollection, "Get data success", Response::HTTP_OK);

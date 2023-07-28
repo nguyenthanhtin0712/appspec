@@ -28,6 +28,7 @@ class EmployerController extends Controller
 
     public function index(Request $request)
     {
+        $all = $request->input('all');
         $perPage = $request->input('perPage');
         $query = $request->input('query');
         $id = $request->input('id');
@@ -55,11 +56,17 @@ class EmployerController extends Controller
                 }
             }
         }
-        if ($perPage) {
-            $employers = $employers->paginate($perPage);
+
+        if($all && $all==true){
+            $employers = $employers->get();
         } else {
-            $employers = $employers->paginate(10);
+            if ($perPage) {
+                $employers = $employers->paginate($perPage);
+            } else {
+                $employers = $employers->paginate(10);
+            }
         }
+        
         $employerCollection = new Collection($employers);
         return $this->sentSuccessResponse($employerCollection, "Get data success", Response::HTTP_OK);
     }

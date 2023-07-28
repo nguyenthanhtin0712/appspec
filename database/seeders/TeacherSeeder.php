@@ -17,7 +17,6 @@ class TeacherSeeder extends Seeder
     public function run()
     {
         $faker = Faker::create();
-
         for ($i = 0; $i < 10; $i++) {
             Teacher::create([
                 'teacher_code' => 'T' . $faker->unique()->numberBetween(1000, 9999),
