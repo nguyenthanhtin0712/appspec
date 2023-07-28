@@ -77,21 +77,6 @@ const user = createSlice({
     }
   },
   reducers: {
-    setData: (state, action) => {
-      state.data = action.payload;
-    },
-    setIsError: (state, action) => {
-      state.isError = action.payload;
-    },
-    setIsLoading: (state, action) => {
-      state.isLoading = action.payload;
-    },
-    setIsRefetching: (state, action) => {
-      state.isRefetching = action.payload;
-    },
-    setRowCount: (state, action) => {
-      state.rowCount = action.payload;
-    },
     setColumnFilters: (state, action) => {
       state.columnFilters = action.payload;
     },
@@ -166,16 +151,6 @@ const user = createSlice({
   }
 });
 
-export const {
-  setData,
-  setIsError,
-  setIsLoading,
-  setIsRefetching,
-  setRowCount,
-  setColumnFilters,
-  setGlobalFilter,
-  setSorting,
-  setPagination
-} = user.actions;
+export const { setColumnFilters, setGlobalFilter, setSorting, setPagination } = user.actions;
 
 export default user.reducer;

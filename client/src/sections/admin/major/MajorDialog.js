@@ -37,7 +37,6 @@ const MajorForm = ({ initialValues, action }) => {
             setSubmitting(false);
             toast.success(action === 'update' ? 'Sửa ngành thành công!' : 'Thêm ngành thành công!');
           } else {
-            console.log(result);
             setStatus({ success: false });
             setErrors(result.payload.errors);
             setSubmitting(false);
@@ -64,6 +63,7 @@ const MajorForm = ({ initialValues, action }) => {
                   onBlur={handleBlur}
                   onChange={handleChange}
                   placeholder="Nhập mã ngành"
+                  label="Mã ngành"
                   fullWidth
                   error={Boolean(touched.major_code && errors.major_code)}
                   helperText={errors.major_code}
@@ -78,6 +78,7 @@ const MajorForm = ({ initialValues, action }) => {
                   onBlur={handleBlur}
                   onChange={handleChange}
                   placeholder="Nhập tên ngành"
+                  label="Tên ngành"
                   fullWidth
                   error={Boolean(touched.major_name && errors.major_name)}
                   helperText={errors.major_name}
