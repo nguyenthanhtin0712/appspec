@@ -37,6 +37,7 @@ const MajorForm = ({ initialValues, action }) => {
             setSubmitting(false);
             toast.success(action === 'update' ? 'Sửa ngành thành công!' : 'Thêm ngành thành công!');
           } else {
+            console.log(result);
             setStatus({ success: false });
             setErrors(result.payload.errors);
             setSubmitting(false);

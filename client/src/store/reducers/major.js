@@ -3,7 +3,7 @@ import axios from '../../api/axios';
 import { API_BASE_URL } from 'config';
 
 // Async Thunk Actions
-export const fetchData = createAsyncThunk('major/fetchData', async (params) => {
+export const fetchData = createAsyncThunk('major/fetchData', async (params, { rejectWithValue }) => {
   const {
     columnFilters,
     globalFilter,
@@ -26,18 +26,26 @@ export const fetchData = createAsyncThunk('major/fetchData', async (params) => {
       rowCount: data.data.meta.total
     };
   } catch (error) {
-    console.error(error);
-    throw error;
+    if (error.response && error.response.data && error.response.data.errors) {
+      return rejectWithValue(error.response.data);
+    } else {
+      console.error(error);
+      throw error;
+    }
   }
 });
 
-export const createMajor = createAsyncThunk('major/createMajor', async (major) => {
+export const createMajor = createAsyncThunk('major/createMajor', async (major, { rejectWithValue }) => {
   try {
     const response = await axios.post(`${API_BASE_URL}/major`, major);
     return response.data;
   } catch (error) {
-    console.error(error);
-    throw error;
+    if (error.response && error.response.data && error.response.data.errors) {
+      return rejectWithValue(error.response.data);
+    } else {
+      console.error(error);
+      throw error;
+    }
   }
 });
 
