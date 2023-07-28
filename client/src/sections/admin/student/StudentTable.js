@@ -12,7 +12,8 @@ import {
   setSorting,
   setPagination,
   deleteStudent,
-  setStudentDialog
+  setStudentDialog,
+  createStudent
 } from '../../../store/reducers/student';
 import ConfirmDialog from 'components/ConfirmDialog';
 import Typography from '@mui/material/Typography';
@@ -29,7 +30,6 @@ const SpecialtyTable = () => {
   const { data, isError, isLoading, isRefetching, rowCount, columnFilters, globalFilter, sorting, pagination } = useSelector(
     (state) => state.student
   );
-  console.log("🚀 ~ file: StudentTable.js:29 ~ SpecialtyTable ~ data:", data)
   const [openCofirm, setOpenCofirm] = useState(false);
   const [idDelete, setIdDelete] = useState('');
 
@@ -72,7 +72,7 @@ const SpecialtyTable = () => {
     writeFileXLSX(wb, 'Specialty.xlsx');
   }, [data]);
 
-  const handleImportData = (e) => {
+  const handleImportData = async (e) => {
     e.preventDefault();
     const file = e.target.files[0];
     if (!file) {
@@ -81,7 +81,7 @@ const SpecialtyTable = () => {
     }
     const reader = new FileReader();
     reader.readAsBinaryString(file);
-    reader.onload = (e) => {
+    reader.onload = async (e) => {
       const data = e.target.result;
       const workbook = XLSX.read(data, { type: 'binary' });
       const sheetName = workbook.SheetNames[1];
@@ -106,6 +106,13 @@ const SpecialtyTable = () => {
         });
       });
       console.log(result);
+      try {
+        await dispatch(createStudent(result));
+        toast.success('Thêm sinh viên thành công!');
+      } catch (err) {
+        console.error(err);
+        toast.error('Có lỗi trong quá trình thêm!' + err);
+      }
     };
   };
 

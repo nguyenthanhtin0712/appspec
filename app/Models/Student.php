@@ -13,6 +13,7 @@ class Student extends Model
     protected $primaryKey = 'user_id';
 
     protected $fillable = [
+        'user_id',
         'student_code',
         'student_class',
         'student_score',

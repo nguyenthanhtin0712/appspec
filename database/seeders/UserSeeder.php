@@ -84,7 +84,6 @@ class UserSeeder extends Seeder
             'user_avatar' => 'https://vapa.vn/wp-content/uploads/2022/12/anh-3d-thien-nhien.jpeg',
             'user_password' => bcrypt('password'),
             'user_gender' => '1',
-            'user_status' => '1',
             'user_birthday' => '2003-01-01',
         ]);
 

@@ -33,7 +33,19 @@ export const fetchData = createAsyncThunk('student/fetchData', async (params) =>
 
 export const createStudent = createAsyncThunk('student/createStudent', async (student) => {
   try {
-    const response = await axios.post(`${API_BASE_URL}/student`, student);
+    const response = await axios.post(`${API_BASE_URL}/addFileStudent`, student);
+    console.log(response);
+    return [];
+    // return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+});
+
+export const addFileStudent = createAsyncThunk('student/addFileStudent', async (data) => {
+  try {
+    const response = await axios.post(`${API_BASE_URL}/addFileStudent`, data);
     return response.data;
   } catch (error) {
     console.error(error);
@@ -128,6 +140,10 @@ const student = createSlice({
         state.isError = true;
       })
       .addCase(createStudent.fulfilled, (state, action) => {
+        state.data.push(action.payload.data);
+        state.studentDialog.open = false;
+      })
+      .addCase(addFileStudent.fulfilled, (state, action) => {
         state.data.push(action.payload.data);
         state.studentDialog.open = false;
       })

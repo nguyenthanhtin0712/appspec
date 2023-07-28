@@ -49,25 +49,27 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('/specialty/{id}', [SpecialtyController::class, 'show'])->middleware('check_user_role_permission:specialty.view');
     Route::put('/specialty/{id}', [SpecialtyController::class, 'update'])->middleware('check_user_role_permission:specialty.update');
     Route::delete('/specialty/{id}', [SpecialtyController::class, 'destroy'])->middleware('check_user_role_permission:specialty.delete');
+
+    //Student controller api
+    Route::get('students', [StudentController::class, 'index'])->middleware('check_user_role_permission:student.view');
+    Route::post('student', [StudentController::class, 'store'])->middleware('check_user_role_permission:student.create');
+    Route::get('/student/{id}', [StudentController::class, 'show'])->middleware('check_user_role_permission:student.view');
+    Route::put('/student/{id}', [StudentController::class, 'update'])->middleware('check_user_role_permission:student.update');
+    Route::delete('/student/{id}', [StudentController::class, 'destroy'])->middleware('check_user_role_permission:student.delete');
+    //Import sinh viên đầu khóa vào hệ thóng
+    Route::post('/addFileStudent', [StudentController::class, 'addFileStudent'])->middleware('check_user_role_permission:student.create');
+
+    //Teacher controller api
+    Route::get('teachers', [TeacherController::class, 'index'])->middleware('check_user_role_permission:teacher.view');
+    Route::post('teacher', [TeacherController::class, 'store'])->middleware('check_user_role_permission:teacher.create');
+    Route::get('/teacher/{id}', [TeacherController::class, 'show'])->middleware('check_user_role_permission:teacher.view');
+    Route::put('/teacher/{id}', [TeacherController::class, 'update'])->middleware('check_user_role_permission:teacher.update');
+    Route::delete('/teacher/{id}', [TeacherController::class, 'destroy'])->middleware('check_user_role_permission:teacher.delete');
+
+    //Employer controller api
+    Route::get('employers', [EmployerController::class, 'index'])->middleware('check_user_role_permission:employer.view');
+    Route::post('employer', [EmployerController::class, 'store'])->middleware('check_user_role_permission:employer.create');
+    Route::get('/employer/{id}', [EmployerController::class, 'show'])->middleware('check_user_role_permission:employer.view');
+    Route::put('/employer/{id}', [EmployerController::class, 'update'])->middleware('check_user_role_permission:employer.update');
+    Route::delete('/employer/{id}', [EmployerController::class, 'destroy'])->middleware('check_user_role_permission:employer.delete');
 });
-
-
-Route::get('students', [StudentController::class, 'index']);
-Route::post('student', [StudentController::class, 'store']);
-Route::get('/student/{id}', [StudentController::class, 'show']);
-Route::put('/student/{id}', [StudentController::class, 'update']);
-Route::delete('/student/{id}', [StudentController::class, 'destroy']);
-
-Route::get('teachers', [TeacherController::class, 'index']);
-Route::post('teacher', [TeacherController::class, 'store']);
-Route::get('/teacher/{id}', [TeacherController::class, 'show']);
-Route::put('/teacher/{id}', [TeacherController::class, 'update']);
-Route::delete('/teacher/{id}', [TeacherController::class, 'destroy']);
-
-Route::get('employers', [EmployerController::class, 'index']);
-Route::post('employer', [EmployerController::class, 'store']);
-Route::get('/employer/{id}', [EmployerController::class, 'show']);
-Route::put('/employer/{id}', [EmployerController::class, 'update']);
-Route::delete('/employer/{id}', [EmployerController::class, 'destroy']);
-
-

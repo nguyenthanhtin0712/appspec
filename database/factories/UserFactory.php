@@ -30,7 +30,6 @@ class UserFactory extends Factory
             'user_avatar' => $this->faker->imageUrl(200, 200),
             'user_password' => bcrypt('password'),
             'user_gender' => $this->faker->numberBetween(0, 1),
-            'user_status' => $this->faker->numberBetween(0, 1),
             'user_birthday' => $this->faker->date(),
         ];
     }

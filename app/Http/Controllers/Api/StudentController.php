@@ -8,9 +8,12 @@ use App\Http\Requests\StoreStudentRequest;
 use App\Http\Requests\UpdateStudentRequest;
 use App\Http\Resources\Collection;
 use App\Http\Resources\StudentResource;
+use App\Models\Major;
 use App\Models\Student;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 
 class StudentController extends Controller
 {
@@ -37,9 +40,9 @@ class StudentController extends Controller
         $filters = $request->input('filters');
         $students = $this->student->query();
         $students = $this->student->query()
-        ->leftJoin('users', 'students.user_id', '=', 'users.user_id')
-        ->leftJoin('majors', 'students.major_id', '=', 'majors.major_id')
-        ->select('students.*', 'users.user_firstname', 'users.user_lastname', 'users.user_birthday','users.user_gender','majors.major_name');
+            ->leftJoin('users', 'students.user_id', '=', 'users.user_id')
+            ->leftJoin('majors', 'students.major_id', '=', 'majors.major_id')
+            ->select('students.*', 'users.user_firstname', 'users.user_lastname', 'users.user_birthday', 'users.user_gender', 'majors.major_name');
         $students->where("student_isDelete", "0");
         if ($query) {
             $students->where("student_code", "LIKE", "%$query%");
@@ -60,7 +63,7 @@ class StudentController extends Controller
                 }
             }
         }
-        if($all && $all==true){
+        if ($all && $all == true) {
             $students = $students->get();
         } else {
             if ($perPage) {
@@ -104,7 +107,7 @@ class StudentController extends Controller
             $studentWithUser = $this->student->query()
                 ->leftJoin('users', 'users.user_id', '=', 'students.user_id')
                 ->leftJoin('majors', 'students.major_id', '=', 'majors.major_id')
-                ->select('students.*', 'users.user_firstname', 'users.user_lastname', 'users.user_birthday','users.user_gender','majors.major_name')
+                ->select('students.*', 'users.user_firstname', 'users.user_lastname', 'users.user_birthday', 'users.user_gender', 'majors.major_name')
                 ->where('students.user_id', $id)
                 ->firstOrFail();
             $studentResource = new StudentResource($studentWithUser);
@@ -145,14 +148,59 @@ class StudentController extends Controller
     }
 
     //Hàm import sinh viên đầu khóa khi tham gia hệ thống
-    public function addFileStudent(AddFileStudentRequest $request){
+    public function addFileStudent(AddFileStudentRequest $request)
+    {
         $data = $request->input('data');
+        $result = array();
+        $majorCodes = array_column($data, 'major_code');
+        $majors = Major::whereIn('major_code', $majorCodes)->get()->keyBy('major_code');
+        foreach ($data as $row) {
+            $major_code = trim($row['major_code']);
+            $major = $majors[$major_code];
+            if (!$major) {
+                return "Không tìm thấy major trong cơ sở dữ liệu!";
+            }
+            $user_firstname = $row['user_firstname'];
+            $user_lastname = $row['user_lastname'];
+            $user_gender = $row['user_gender'];
 
+            // Chuyển đổi chuỗi ngày tháng thành đối tượng DateTime
+            $user_birthday = \DateTime::createFromFormat('d/m/Y', $row['user_birthday'])->format('Y-m-d');
+            $user_password = \DateTime::createFromFormat('d/m/Y', $row['user_birthday'])->format('mYd');
+            
+            $student_class = $row['student_class'];
+            $student_course = $row['student_course'];
+            $student_code = $row['student_code'];
+            $user = User::create([
+                'user_firstname' => "$user_firstname",
+                'user_lastname' => "$user_lastname",
+                'user_password' => bcrypt($user_password),
+                'user_gender' => "$user_gender",
+                'user_birthday' => "$user_birthday",
+            ]);
+            Student::create([
+                'user_id' => $user->user_id,
+                'student_code' => "$student_code",
+                'student_class' => "$student_class",
+                'student_course' => "$student_course",
+                'major_id' => $major->major_id,
+            ]);
+            $studentWithUser = $this->student->query()
+                ->leftJoin('users', 'users.user_id', '=', 'students.user_id')
+                ->leftJoin('majors', 'students.major_id', '=', 'majors.major_id')
+                ->select('students.*', 'users.user_firstname', 'users.user_lastname', 'users.user_birthday', 'users.user_gender', 'majors.major_name')
+                ->where('students.user_id', $user->user_id)
+                ->firstOrFail();
+            array_push($result, $studentWithUser);
+        }
+        $studentCollection = new Collection($result);
+        return $this->sentSuccessResponse($studentCollection, "Add student success", Response::HTTP_OK);
     }
 
 
-    //Hàm import sinh viên đăng ký chuyên ngành
-    public function addFileStudentSpecialty(){
 
+    //Hàm import sinh viên đăng ký chuyên ngành
+    public function addFileStudentSpecialty()
+    {
     }
 }

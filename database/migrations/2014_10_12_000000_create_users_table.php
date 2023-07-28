@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('user_avatar')->nullable();
             $table->string('user_password');
             $table->integer('user_gender');
-            $table->integer('user_status');
+            $table->integer('user_status')->default(1);
             $table->date('user_birthday');
             $table->integer('user_isDelete')->default(0);
             $table->rememberToken();

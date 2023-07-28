@@ -14,19 +14,19 @@ class CreateStudentsTable extends Migration
     public function up()
     {
         Schema::create('students', function (Blueprint $table) {
-            $table->id('user_id');
+            $table->integer('user_id');
             $table->string('student_code');
             $table->string('student_class');
-            $table->float('student_score');
+            $table->float('student_score')->nullable();
             $table->integer('student_course');
             $table->integer('major_id');
             $table->integer('specialty_id')->nullable();
             $table->date('speciality_date')->nullable();
             $table->integer('company_position_detail_id')->nullable();
-            $table->integer('student_status');
+            $table->integer('student_status')->default(1);
             $table->string('mentor_code')->nullable();
             $table->string('teacher_code')->nullable();
-            $table->integer('student_isDelete')->default(1);
+            $table->integer('student_isDelete')->default(0);
             $table->timestamps();
         });
     }

@@ -19,15 +19,13 @@ class StudentSeeder extends Seeder
         $index = 0;
         foreach ($users as $user) {
             $student = new Student([
+                'user_id' => $user->user_id,
                 'student_code' => '312141006' . $index,
                 'student_class' => 'DCT121' . $index,
                 'student_score' => 3.5,
                 'student_course' => 2021,
                 'major_id' => 1,
-                'student_status' => 1,
-                'student_isDelete' => 0,
             ]);
-            $student->user_id = $user->id;
             $student->save();
             $index++; 
         }
