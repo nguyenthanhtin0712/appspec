@@ -1,5 +1,5 @@
 // type
-import { Home3, HomeTrendUp, BitcoinRefresh, CodeCircle, Briefcase, ArchiveAdd } from 'iconsax-react';
+import { Home3, HomeTrendUp, BitcoinRefresh, CodeCircle, Briefcase, ArchiveAdd, Profile2User } from 'iconsax-react';
 
 // icons
 const icons = {
@@ -8,7 +8,8 @@ const icons = {
   sample: BitcoinRefresh,
   major: CodeCircle,
   specialty: Briefcase,
-  register_specialty: ArchiveAdd
+  register_specialty: ArchiveAdd,
+  student: Profile2User
 };
 
 // ==============================|| MENU ITEMS - DASHBOARD ||============================== //
@@ -45,7 +46,7 @@ const dashboard = {
       title: 'Sinh viên',
       type: 'item',
       url: '/admin/student',
-      icon: icons.specialty
+      icon: icons.student
     },
     {
       id: 'register_specialty',

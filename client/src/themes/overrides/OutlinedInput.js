@@ -17,7 +17,7 @@ function getColor({ variant, theme }) {
     '&.Mui-focused': {
       boxShadow: shadows,
       '& .MuiOutlinedInput-notchedOutline': {
-        border: `1px solid ${light}`
+        border: `2px solid ${light}`
       }
     }
   };

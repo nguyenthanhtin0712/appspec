@@ -3,7 +3,7 @@ import axios from '../../api/axios';
 import { API_BASE_URL } from 'config';
 
 // Async Thunk Actions
-export const fetchData = createAsyncThunk('major/fetchData', async (params) => {
+export const fetchData = createAsyncThunk('major/fetchData', async (params, { rejectWithValue }) => {
   const {
     columnFilters,
     globalFilter,
@@ -26,18 +26,26 @@ export const fetchData = createAsyncThunk('major/fetchData', async (params) => {
       rowCount: data.data.meta.total
     };
   } catch (error) {
-    console.error(error);
-    throw error;
+    if (error.response && error.response.data && error.response.data.errors) {
+      return rejectWithValue(error.response.data);
+    } else {
+      console.error(error);
+      throw error;
+    }
   }
 });
 
-export const createMajor = createAsyncThunk('major/createMajor', async (major) => {
+export const createMajor = createAsyncThunk('major/createMajor', async (major, { rejectWithValue }) => {
   try {
     const response = await axios.post(`${API_BASE_URL}/major`, major);
     return response.data;
   } catch (error) {
-    console.error(error);
-    throw error;
+    if (error.response && error.response.data && error.response.data.errors) {
+      return rejectWithValue(error.response.data);
+    } else {
+      console.error(error);
+      throw error;
+    }
   }
 });
 
@@ -92,21 +100,6 @@ const major = createSlice({
   name: 'major',
   initialState,
   reducers: {
-    setData: (state, action) => {
-      state.data = action.payload;
-    },
-    setIsError: (state, action) => {
-      state.isError = action.payload;
-    },
-    setIsLoading: (state, action) => {
-      state.isLoading = action.payload;
-    },
-    setIsRefetching: (state, action) => {
-      state.isRefetching = action.payload;
-    },
-    setRowCount: (state, action) => {
-      state.rowCount = action.payload;
-    },
     setColumnFilters: (state, action) => {
       state.columnFilters = action.payload;
     },
@@ -159,17 +152,6 @@ const major = createSlice({
   }
 });
 
-export const {
-  setData,
-  setIsError,
-  setIsLoading,
-  setIsRefetching,
-  setRowCount,
-  setColumnFilters,
-  setGlobalFilter,
-  setSorting,
-  setPagination,
-  setMajorDialog
-} = major.actions;
+export const { setColumnFilters, setGlobalFilter, setSorting, setPagination, setMajorDialog } = major.actions;
 
 export default major.reducer;

@@ -89,21 +89,6 @@ const specialty = createSlice({
   name: 'specialty',
   initialState,
   reducers: {
-    setData: (state, action) => {
-      state.data = action.payload;
-    },
-    setIsError: (state, action) => {
-      state.isError = action.payload;
-    },
-    setIsLoading: (state, action) => {
-      state.isLoading = action.payload;
-    },
-    setIsRefetching: (state, action) => {
-      state.isRefetching = action.payload;
-    },
-    setRowCount: (state, action) => {
-      state.rowCount = action.payload;
-    },
     setColumnFilters: (state, action) => {
       state.columnFilters = action.payload;
     },
@@ -156,17 +141,6 @@ const specialty = createSlice({
   }
 });
 
-export const {
-  setData,
-  setIsError,
-  setIsLoading,
-  setIsRefetching,
-  setRowCount,
-  setColumnFilters,
-  setGlobalFilter,
-  setSorting,
-  setPagination,
-  setSpecialtyDialog
-} = specialty.actions;
+export const { setColumnFilters, setGlobalFilter, setSorting, setPagination, setSpecialtyDialog } = specialty.actions;
 
 export default specialty.reducer;

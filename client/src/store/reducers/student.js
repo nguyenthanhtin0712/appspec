@@ -94,21 +94,6 @@ const student = createSlice({
   name: 'student',
   initialState,
   reducers: {
-    setData: (state, action) => {
-      state.data = action.payload;
-    },
-    setIsError: (state, action) => {
-      state.isError = action.payload;
-    },
-    setIsLoading: (state, action) => {
-      state.isLoading = action.payload;
-    },
-    setIsRefetching: (state, action) => {
-      state.isRefetching = action.payload;
-    },
-    setRowCount: (state, action) => {
-      state.rowCount = action.payload;
-    },
     setColumnFilters: (state, action) => {
       state.columnFilters = action.payload;
     },
@@ -161,17 +146,6 @@ const student = createSlice({
   }
 });
 
-export const {
-  setData,
-  setIsError,
-  setIsLoading,
-  setIsRefetching,
-  setRowCount,
-  setColumnFilters,
-  setGlobalFilter,
-  setSorting,
-  setPagination,
-  setStudentDialog
-} = student.actions;
+export const { setColumnFilters, setGlobalFilter, setSorting, setPagination, setStudentDialog } = student.actions;
 
 export default student.reducer;

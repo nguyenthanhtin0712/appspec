@@ -97,6 +97,7 @@ const SpecialtyDialog = () => {
                     onBlur={handleBlur}
                     onChange={handleChange}
                     placeholder="Nhập mã chuyên ngành"
+                    label="Mã chuyên ngành"
                     fullWidth
                     error={Boolean(touched.specialty_code && errors.specialty_code)}
                     helperText={errors.specialty_code}
@@ -111,6 +112,7 @@ const SpecialtyDialog = () => {
                     onBlur={handleBlur}
                     onChange={handleChange}
                     placeholder="Nhập tên chuyên ngành"
+                    label="Tên chuyên ngành"
                     fullWidth
                     error={Boolean(touched.specialty_name && errors.specialty_name)}
                     helperText={errors.specialty_name}

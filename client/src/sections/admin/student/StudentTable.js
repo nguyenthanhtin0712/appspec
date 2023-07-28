@@ -29,6 +29,7 @@ const SpecialtyTable = () => {
   const { data, isError, isLoading, isRefetching, rowCount, columnFilters, globalFilter, sorting, pagination } = useSelector(
     (state) => state.student
   );
+  console.log("🚀 ~ file: StudentTable.js:29 ~ SpecialtyTable ~ data:", data)
   const [openCofirm, setOpenCofirm] = useState(false);
   const [idDelete, setIdDelete] = useState('');
 
