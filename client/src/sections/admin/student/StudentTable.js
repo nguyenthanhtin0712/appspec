@@ -13,7 +13,7 @@ import {
   setPagination,
   deleteStudent,
   setStudentDialog,
-  createStudent
+  setStudentFileDialog
 } from '../../../store/reducers/student';
 import ConfirmDialog from 'components/ConfirmDialog';
 import Typography from '@mui/material/Typography';
@@ -22,8 +22,8 @@ import { toast } from 'react-toastify';
 import { dispatch } from 'store/index';
 import { Export, Import } from 'iconsax-react';
 import { utils, writeFileXLSX } from 'xlsx';
-import * as XLSX from 'xlsx';
 import { useCallback } from 'react';
+import StudentFileDialog from 'sections/admin/student/StudentFileDialog';
 
 const SpecialtyTable = () => {
   const theme = useTheme();
@@ -35,6 +35,18 @@ const SpecialtyTable = () => {
 
   const handleCloseCofirm = () => {
     setOpenCofirm(false);
+  };
+
+  const handleClickOpen = () => {
+    dispatch(
+      setStudentFileDialog({
+        open: true,
+        initValue: {
+          file_student: '',
+          password_student: ''
+        }
+      })
+    );
   };
 
   const handleExportData = useCallback(() => {
@@ -71,50 +83,6 @@ const SpecialtyTable = () => {
     utils.book_append_sheet(wb, ws, 'Major');
     writeFileXLSX(wb, 'Specialty.xlsx');
   }, [data]);
-
-  const handleImportData = async (e) => {
-    e.preventDefault();
-    const file = e.target.files[0];
-    if (!file) {
-      console.error('Không có file được chọn.');
-      return;
-    }
-    const reader = new FileReader();
-    reader.readAsBinaryString(file);
-    reader.onload = async (e) => {
-      const data = e.target.result;
-      const workbook = XLSX.read(data, { type: 'binary' });
-      const sheetName = workbook.SheetNames[1];
-      if (!sheetName) {
-        toast.error('Không đúng định dạng.');
-        return;
-      }
-      const sheet = workbook.Sheets[sheetName];
-      const jsonData = XLSX.utils.sheet_to_json(sheet, { header: 2 });
-
-      let result = { data: [] };
-      jsonData.forEach((row) => {
-        result.data.push({
-          student_code: row['MaSV'],
-          user_firstname: row['HoLotSV'],
-          user_lastname: row['TenSV'],
-          user_birthday: row['NgaySinhC'],
-          user_gender: row['Phai'],
-          student_course: row['KhoaHoc'],
-          student_class: row['MaLop'],
-          major_code: row['MaNganh']
-        });
-      });
-      console.log(result);
-      try {
-        await dispatch(createStudent(result));
-        toast.success('Thêm sinh viên thành công!');
-      } catch (err) {
-        console.error(err);
-        toast.error('Có lỗi trong quá trình thêm!' + err);
-      }
-    };
-  };
 
   useEffect(() => {
     dispatch(fetchData({ columnFilters, globalFilter, sorting, pagination }));
@@ -235,12 +203,9 @@ const SpecialtyTable = () => {
               Xuất Excel
             </Button>
             <Box marginLeft={2}>
-              <input id="fileInput" type="file" style={{ display: 'none' }} accept=".xlsx" onChange={handleImportData} />
-              <label htmlFor="fileInput">
-                <Button color="primary" startIcon={<Import />} variant="contained" component="span">
-                  Nhập Excel
-                </Button>
-              </label>
+              <Button color="primary" onClick={handleClickOpen} startIcon={<Import />} variant="contained" component="span">
+                Nhập Excel
+              </Button>
             </Box>
           </Box>
         )}
@@ -270,6 +235,7 @@ const SpecialtyTable = () => {
           </Button>
         }
       />
+      <StudentFileDialog />
     </>
   );
 };

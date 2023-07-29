@@ -151,9 +151,11 @@ class StudentController extends Controller
     public function addFileStudent(AddFileStudentRequest $request)
     {
         $data = $request->input('data');
+        $password = $request->input('password');
         $result = array();
         $majorCodes = array_column($data, 'major_code');
         $majors = Major::whereIn('major_code', $majorCodes)->get()->keyBy('major_code');
+        $password = bcrypt($password);
         foreach ($data as $row) {
             $major_code = trim($row['major_code']);
             $major = $majors[$major_code];
@@ -166,15 +168,13 @@ class StudentController extends Controller
 
             // Chuyển đổi chuỗi ngày tháng thành đối tượng DateTime
             $user_birthday = \DateTime::createFromFormat('d/m/Y', $row['user_birthday'])->format('Y-m-d');
-            $user_password = \DateTime::createFromFormat('d/m/Y', $row['user_birthday'])->format('mYd');
-            
             $student_class = $row['student_class'];
             $student_course = $row['student_course'];
             $student_code = $row['student_code'];
             $user = User::create([
                 'user_firstname' => "$user_firstname",
                 'user_lastname' => "$user_lastname",
-                'user_password' => bcrypt($user_password),
+                'user_password' => $password,
                 'user_gender' => "$user_gender",
                 'user_birthday' => "$user_birthday",
             ]);
