@@ -12,9 +12,9 @@ import { createSpecialty, setSpecialtyDialog, updateSpecialty } from 'store/redu
 import { useSelector } from 'react-redux';
 import Button from '@mui/material/Button';
 import { dispatch } from 'store/index';
-import { Select, MenuItem, InputLabel } from '@mui/material';
 import { fetchData } from '../../../store/reducers/major';
 import InputField from 'components/input/InputField';
+import SelectField from 'components/input/SelectField';
 
 const SpecialtyDialog = () => {
   const { specialtyDialog } = useSelector((state) => state.specialty);
@@ -39,48 +39,26 @@ const SpecialtyDialog = () => {
           major_id: Yup.string().max(255).required('Vui lòng chọn chuyên ngành !')
         })}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
-          switch (specialtyDialog.action) {
-            case 'add':
-              try {
-                const result = await dispatch(createSpecialty(values));
-                if (result && !result.error) {
-                  setStatus({ success: true });
-                  setSubmitting(false);
-                  toast.success('Thêm chuyên ngành thành công!');
-                } else {
-                  setStatus({ success: false });
-                  setErrors({ submit: result.error.message });
-                  setSubmitting(false);
-                  toast.error('Có lỗi xảy ra khi thêm chuyên ngành!');
-                }
-              } catch (err) {
-                console.error(err);
-                setStatus({ success: false });
-                setErrors({ submit: err.message });
-                setSubmitting(false);
-              }
-              break;
-            case 'update':
-              try {
-                const id = specialtyDialog.initValue.specialty_id;
-                const result = await dispatch(updateSpecialty({ id, specialty: values }));
-                if (result && !result.error) {
-                  setStatus({ success: true });
-                  setSubmitting(false);
-                  toast.success('Sửa chuyên ngành thành công!');
-                } else {
-                  setStatus({ success: false });
-                  setErrors({ submit: result.error.message });
-                  setSubmitting(false);
-                  toast.error('Có lỗi xảy ra khi Sửa chuyên ngành!');
-                }
-              } catch (err) {
-                console.error(err);
-                setStatus({ success: false });
-                setErrors({ submit: err.message });
-                setSubmitting(false);
-              }
-              break;
+          try {
+            const actionType = specialtyDialog.action === 'update' ? updateSpecialty : createSpecialty;
+            const result = await dispatch(actionType(values));
+            if (result && !result.error) {
+              setStatus({ success: true });
+              setSubmitting(false);
+              toast.success(specialtyDialog.action === 'update' ? 'Sửa chuyên ngành thành công!' : 'Thêm chuyên ngành thành công!');
+            } else {
+              setStatus({ success: false });
+              setErrors(result.payload.errors);
+              setSubmitting(false);
+              toast.error(
+                specialtyDialog.action === 'update' ? 'Có lỗi xảy ra khi sửa chuyên ngành!' : 'Có lỗi xảy ra khi thêm chuyên ngành!'
+              );
+            }
+          } catch (err) {
+            console.error(err);
+            setStatus({ success: false });
+            setErrors({ submit: err.message });
+            setSubmitting(false);
           }
         }}
       >
@@ -101,6 +79,7 @@ const SpecialtyDialog = () => {
                     fullWidth
                     error={Boolean(touched.specialty_id && errors.specialty_id)}
                     helperText={errors.specialty_id}
+                    disabled={specialtyDialog.action === 'update'}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -119,33 +98,21 @@ const SpecialtyDialog = () => {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <InputLabel htmlFor="major_id" sx={{ mb: '5px' }}>
-                    Chọn ngành
-                  </InputLabel>
-                  <Select
-                    labelId="major_id"
+                  <SelectField
                     id="major_id"
+                    labelId="major_id"
                     name="major_id"
+                    label="Chọn ngành"
                     value={values.major_id}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    fullWidth
-                    displayEmpty
-                    inputProps={{ 'aria-label': 'Without label' }}
                     error={Boolean(touched.major_id && errors.major_id)}
-                  >
-                    <MenuItem value="" sx={{ color: 'text.secondary' }}>
-                      Chọn ngành
-                    </MenuItem>
-                    {data.length > 0 &&
-                      data.map((item) => (
-                        <MenuItem key={item.major_id} value={item.major_id}>
-                          {item.major_name}
-                        </MenuItem>
-                      ))}
-                    {/* Thêm các MenuItem cho các ngành học khác */}
-                  </Select>
-                  {Boolean(touched.major_id && errors.major_id) && <FormHelperText error>{errors.major_id}</FormHelperText>}
+                    helperText={errors.major_id}
+                    list={data}
+                    itemValue="major_id"
+                    itemText="major_name"
+                    fullWidth
+                  />
                 </Grid>
                 {errors.submit && (
                   <Grid item xs={12}>
@@ -154,7 +121,6 @@ const SpecialtyDialog = () => {
                 )}
               </Grid>
             </DialogContent>
-
             <DialogActions>
               <Button onClick={handleClose} variant="contained" color="error">
                 Cancel

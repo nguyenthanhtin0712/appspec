@@ -3,7 +3,7 @@ import axios from '../../api/axios';
 import { API_BASE_URL } from 'config';
 
 // Async Thunk Actions
-export const fetchData = createAsyncThunk('specialty/fetchData', async (params) => {
+export const fetchData = createAsyncThunk('specialty/fetchData', async (params, { rejectWithValue }) => {
   const {
     columnFilters,
     globalFilter,
@@ -26,38 +26,54 @@ export const fetchData = createAsyncThunk('specialty/fetchData', async (params) 
       rowCount: data.data.meta.total
     };
   } catch (error) {
-    console.error(error);
-    throw error;
+    if (error.response && error.response.data && error.response.data.errors) {
+      return rejectWithValue(error.response.data);
+    } else {
+      console.error(error);
+      throw error;
+    }
   }
 });
 
-export const createSpecialty = createAsyncThunk('specialty/createSpecialty', async (specialty) => {
+export const createSpecialty = createAsyncThunk('specialty/createSpecialty', async (specialty, { rejectWithValue }) => {
   try {
-    const response = await axios.post(`${API_BASE_URL}/specialty`, specialty);
+    const response = await axios.post(`/specialty`, specialty);
     return response.data;
   } catch (error) {
-    console.error(error);
-    throw error;
+    if (error.response && error.response.data && error.response.data.errors) {
+      return rejectWithValue(error.response.data);
+    } else {
+      console.error(error);
+      throw error;
+    }
   }
 });
 
-export const updateSpecialty = createAsyncThunk('specialty/updateSpecialty', async ({ id, specialty }) => {
+export const updateSpecialty = createAsyncThunk('specialty/updateSpecialty', async (specialty, { rejectWithValue }) => {
   try {
-    const response = await axios.put(`${API_BASE_URL}/specialty/${id}`, specialty);
+    const response = await axios.put(`/specialty/${specialty.specialty_id}`, specialty);
     return response.data;
   } catch (error) {
-    console.error(error);
-    throw error;
+    if (error.response && error.response.data && error.response.data.errors) {
+      return rejectWithValue(error.response.data);
+    } else {
+      console.error(error);
+      throw error;
+    }
   }
 });
 
-export const deleteSpecialty = createAsyncThunk('specialty/deleteSpecialty', async (id) => {
+export const deleteSpecialty = createAsyncThunk('specialty/deleteSpecialty', async (id, { rejectWithValue }) => {
   try {
-    const response = await axios.delete(`${API_BASE_URL}/specialty/${id}`);
+    const response = await axios.delete(`/specialty/${id}`);
     return response.data;
   } catch (error) {
-    console.error(error);
-    throw error;
+    if (error.response && error.response.data && error.response.data.errors) {
+      return rejectWithValue(error.response.data);
+    } else {
+      console.error(error);
+      throw error;
+    }
   }
 });
 
