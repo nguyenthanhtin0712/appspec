@@ -18,4 +18,12 @@ class Controller extends BaseController
             'status' => $status
         ]);
     }
+
+    public function sentErrorResponse($data = '', $message='error',$status = 400){
+        return \response()->json([
+            'data' => $data,
+            'message' => $message,
+            'status' => $status
+        ]);
+    }
 }

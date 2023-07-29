@@ -24,8 +24,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 const StudentDialog = () => {
   const [activeTab, setActiveTab] = useState(0);
   const { studentDialog } = useSelector((state) => state.student);
-  const { data, columnFilters, globalFilter, sorting, pagination } = useSelector((state) => state.student);
-
+  const { data, columnFilters, globalFilter, sorting, pagination } = useSelector((state) => state.major);
   useEffect(() => {
     dispatch(fetchData({ columnFilters, globalFilter, sorting, pagination }));
   }, [columnFilters, globalFilter, sorting, pagination]);
@@ -41,7 +40,10 @@ const StudentDialog = () => {
           user_gender: '',
           user_birthday: null,
           student_course: '',
-          major_id: ''
+          major_id: '',
+          student_class: '',
+          student_code: '',
+          user_password: ''
         }
       })
     );
@@ -63,60 +65,83 @@ const StudentDialog = () => {
           validationSchema={Yup.object().shape({
             student_course: Yup.number('Vui lòng nhập số').required('Vui lòng nhập khóa của sinh viên!'),
             student_code: Yup.string().max(255).required('Vui lòng nhập mã số sinh viên!'),
-            user_firtname: Yup.string().max(255).required('Họ sinh viên là bắt buộc !'),
+            user_firstname: Yup.string().max(255).required('Họ sinh viên là bắt buộc !'),
             user_lastname: Yup.string().max(255).required('Tên sinh viên là bắt buộc !'),
             major_id: Yup.string().max(255).required('Vui lòng chọn ngành !'),
             user_gender: Yup.string().max(255).required('Vui giới tính !'),
-            user_birthday: Yup.date().typeError('Vui lòng nhập đầy đủ!'),
-            student_class: Yup.string().required('Vui lòng nhập lớp!')
+            user_birthday: Yup.date().typeError('Vui lòng nhập đầy đủ!').required('Thời gian bắt đầu là bắt buộc'),
+            student_class: Yup.string().required('Vui lòng nhập lớp!'),
+            user_password: Yup.string().max(255).required('Vui lòng nhập mật khẩu')
           })}
           onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
-            switch (studentDialog.action) {
-              case 'add':
-                try {
-                  const result = await dispatch(createStudent(values));
-                  if (result && !result.error) {
-                    setStatus({ success: true });
-                    setSubmitting(false);
-                    toast.success('Thêm sinh viên thành công!');
-                  } else {
+            if (activeTab == 0) {
+              let data = values.user_birthday.$d;
+              const dateObject = new Date(data);
+              const year = dateObject.getFullYear();
+              const month = String(dateObject.getMonth() + 1).padStart(2, '0');
+              const day = String(dateObject.getDate()).padStart(2, '0');
+              const formattedDate = `${year}-${month}-${day}`;
+              values.user_birthday = formattedDate;
+              switch (studentDialog.action) {
+                case 'add':
+                  try {
+                    const result = await dispatch(createStudent(values));
+                    if (result && !result.error) {
+                      setStatus({ success: true });
+                      setSubmitting(false);
+                      toast.success('Thêm sinh viên thành công!');
+                    } else {
+                      setStatus({ success: false });
+                      setErrors({ submit: result.error.message });
+                      setSubmitting(false);
+                      toast.error('Có lỗi xảy ra khi thêm sinh viên!');
+                    }
+                  } catch (err) {
+                    console.error(err);
                     setStatus({ success: false });
-                    setErrors({ submit: result.error.message });
+                    setErrors({ submit: err.message });
                     setSubmitting(false);
-                    toast.error('Có lỗi xảy ra khi thêm sinh viên!');
                   }
-                } catch (err) {
-                  console.error(err);
-                  setStatus({ success: false });
-                  setErrors({ submit: err.message });
-                  setSubmitting(false);
-                }
-                break;
-              case 'update':
-                try {
-                  const id = studentDialog.initValue.student_id;
-                  const result = await dispatch(updateStudent({ id, student: values }));
-                  if (result && !result.error) {
-                    setStatus({ success: true });
-                    setSubmitting(false);
-                    toast.success('Sửa sinh viên thành công!');
-                  } else {
+                  break;
+                case 'update':
+                  try {
+                    const id = studentDialog.initValue.student_id;
+                    const result = await dispatch(updateStudent({ id, student: values }));
+                    if (result && !result.error) {
+                      setStatus({ success: true });
+                      setSubmitting(false);
+                      toast.success('Sửa sinh viên thành công!');
+                    } else {
+                      setStatus({ success: false });
+                      setErrors({ submit: result.error.message });
+                      setSubmitting(false);
+                      toast.error('Có lỗi xảy ra khi Sửa sinh viên!');
+                    }
+                  } catch (err) {
+                    console.error(err);
                     setStatus({ success: false });
-                    setErrors({ submit: result.error.message });
+                    setErrors({ submit: err.message });
                     setSubmitting(false);
-                    toast.error('Có lỗi xảy ra khi Sửa sinh viên!');
                   }
-                } catch (err) {
-                  console.error(err);
-                  setStatus({ success: false });
-                  setErrors({ submit: err.message });
-                  setSubmitting(false);
-                }
-                break;
+                  break;
+              }
+            } else {
+              //Xử lý thêm sinh viên
             }
           }}
         >
-          {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values, setFieldValue, setFieldTouched }) => (
+          {({
+            errors,
+            handleBlur,
+            handleChange,
+            handleSubmit,
+            isSubmitting,
+            touched,
+            values,
+            setFieldValue,
+            setFieldTouched,
+            setFieldError
+          }) => (
             <form noValidate onSubmit={handleSubmit}>
               <DialogContent>
                 {activeTab == 0 && (
@@ -203,20 +228,38 @@ const StudentDialog = () => {
                         </Select>
                         {Boolean(touched.user_gender && errors.user_gender) && <FormHelperText error>{errors.major_id}</FormHelperText>}
                       </Stack>
-                      <Stack spacing={1}>
+                      <Stack spacing={1} sx={{ mb: '10px' }}>
                         <InputLabel htmlFor="user_birthday">Ngày sinh</InputLabel>
                         <DatePicker
+                          label="Ngày sinh"
                           id="user_birthday"
-                          onChange={(value) => {
-                            setFieldValue('user_birthday', value);
-                            setFieldTouched('user_birthday', true);
-                          }}
-                          disablePast
+                          onChange={(value) => setFieldValue('user_birthday', value)}
+                          onClose={() => setFieldTouched('user_birthday', true)}
                           value={values.user_birthday}
-                          displayEmpty
+                          error={touched.user_birthday && errors.user_birthday}
+                          onError={(newError) => setFieldError('user_birthday', newError)}
                           fullWidth
-                          inputProps={{ 'aria-label': 'Without label' }}
                         />
+                        {touched.user_birthday && errors.user_birthday && <FormHelperText error>{errors.user_birthday}</FormHelperText>}
+                      </Stack>
+                      <Stack spacing={1} sx={{ mb: '10px' }}>
+                        <InputLabel htmlFor="user_password">Mật khẩu</InputLabel>
+                        <OutlinedInput
+                          id="user_password"
+                          type="password"
+                          value={values.user_password}
+                          name="user_password"
+                          onBlur={handleBlur}
+                          onChange={handleChange}
+                          placeholder="Mật khẩu"
+                          fullWidth
+                          error={Boolean(touched.user_password && errors.user_password)}
+                        />
+                        {touched.user_password && errors.user_password && (
+                          <FormHelperText error id="standard-weight-helper-text-user_password">
+                            {errors.user_password}
+                          </FormHelperText>
+                        )}
                       </Stack>
                     </Grid>
                     <Grid item xs={6}>
@@ -224,7 +267,7 @@ const StudentDialog = () => {
                         <InputLabel htmlFor="student_class">Lớp</InputLabel>
                         <OutlinedInput
                           id="student_class"
-                          type="number"
+                          type="text"
                           value={values.student_class}
                           name="student_class"
                           onBlur={handleBlur}
