@@ -27,6 +27,7 @@ class StoreSpecialtyRequest extends FormRequest
     public function rules()
     {
         return [
+            'specialty_id' => 'required|unique:specialties,specialty_id',
             'specialty_name' => 'required',
             'major_id' => 'required',
         ];

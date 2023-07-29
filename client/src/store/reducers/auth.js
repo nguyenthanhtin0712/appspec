@@ -45,12 +45,15 @@ export const logoutUser = createAsyncThunk('auth/logoutUser', async () => {
 export const getUserDataFromToken = createAsyncThunk('auth/getUserDataFromToken', async () => {
   try {
     const response = await axios.get(`/user`);
-    const user = response.data.data.user_info;
-    const roles = response.data.data.roles;
-    const permissions = response.data.data['roles.permissions'].map((item) => item.name);
-    return { user, roles, permissions };
+    if (response) {
+      const user = response.data.data.user_info;
+      const roles = response.data.data.roles;
+      const permissions = response.data.data['roles.permissions'].map((item) => item.name);
+      return { user, roles, permissions };
+    }
   } catch (error) {
     Cookies.remove('token');
+    throw error;
   }
 });
 

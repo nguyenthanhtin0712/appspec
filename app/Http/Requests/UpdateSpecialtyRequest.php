@@ -27,6 +27,7 @@ class UpdateSpecialtyRequest extends FormRequest
     public function rules()
     {
         return [
+            'specialty_id' => 'required',
             'specialty_name' => 'required',
             'major_id' => 'required'
         ];

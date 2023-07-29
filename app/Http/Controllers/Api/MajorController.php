@@ -130,7 +130,9 @@ class MajorController extends Controller
 
     public function getAllSpecialty()
     {
-        $majors = Major::with('specialties')->get();
+        $majors = Major::with(['specialties' => function ($query) {
+            $query->where('specialty_isDelete', 0);
+        }])->get();
 
         return $this->sentSuccessResponse($majors, "Get data success", Response::HTTP_OK);
     }
