@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Specialty extends Model
 {
     use HasFactory, HasRoles;
-
+    protected $table = 'specialties';
     protected $primaryKey = 'specialty_id';
     protected $fillable = [
         'specialty_id',
