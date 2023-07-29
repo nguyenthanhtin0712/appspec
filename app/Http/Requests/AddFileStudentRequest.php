@@ -24,7 +24,8 @@ class AddFileStudentRequest extends FormRequest
     public function rules()
     {
         return [
-            'data' => 'required'
+            'data' => 'required',
+            'password' => 'required'
         ];
     }
 }
