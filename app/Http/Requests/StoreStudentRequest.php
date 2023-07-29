@@ -27,11 +27,15 @@ class StoreStudentRequest extends FormRequest
     public function rules()
     {
         return [
-            'student_code' => 'required|unique:studens,student_code',
+            'student_code' => 'required|unique:students,student_code',
             'student_class' => 'required',
-            'student_score' => 'required',
             'student_course' => 'required',
+            'user_gender' => 'required',
             'major_id' => 'required',
+            'user_birthday' => 'required',
+            'user_firstname' => 'required',
+            'user_lastname' => 'required',
+            'user_password' => 'required'
         ];
     }
 

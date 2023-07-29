@@ -145,9 +145,9 @@ const RegisterSpecialty = () => {
                       id="start_time"
                       onChange={(value) => setFieldValue('start_time', value)}
                       onClose={() => setFieldTouched('start_time', true)}
-                      onError={(newError) => setFieldError('start_time', newError)}
-                      error={touched.start_time && errors.start_time}
                       value={values.start_time}
+                      error={touched.start_time && errors.start_time}
+                      onError={(newError) => setFieldError('start_time', newError)}
                       helperText={errors.start_time}
                       disablePast
                       fullWidth

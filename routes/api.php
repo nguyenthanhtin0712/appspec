@@ -26,9 +26,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::middleware(['auth:api'])->group(function () {
+    
     //Login vào rồi mới logout được
     Route::get('logout', [LogoutController::class, 'logout']);
-
     //Users
     Route::get('users', [UserController::class, 'index'])->middleware('check_user_role_permission:user.view');
     Route::post('user', [UserController::class, 'store'])->middleware('check_user_role_permission:user.create');

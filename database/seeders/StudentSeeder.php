@@ -24,7 +24,7 @@ class StudentSeeder extends Seeder
                 'student_class' => 'DCT121' . $index,
                 'student_score' => 3.5,
                 'student_course' => 2021,
-                'major_id' => 1,
+                'major_id' => 'DCT',
             ]);
             $student->save();
             $index++; 

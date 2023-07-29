@@ -175,7 +175,13 @@ const SpecialtyTable = () => {
               >
                 <Edit />
               </IconButton>
-              <IconButton color="error" onClick={() => handleDelete(row.id)}>
+              <IconButton
+                color="error"
+                onClick={() => {
+                  console.log(row);
+                  return handleDelete(row.original.user_id);
+                }}
+              >
                 <Trash />
               </IconButton>
             </Box>
@@ -221,9 +227,10 @@ const SpecialtyTable = () => {
             color="error"
             onClick={async () => {
               try {
+                console.log(idDelete);
                 await dispatch(deleteStudent(idDelete));
                 handleCloseCofirm();
-                toast.success('Xóa chuyên ngành thành công!');
+                toast.success('Xóa sinh viên thành công!');
                 setIdDelete('');
               } catch (err) {
                 console.error(err);

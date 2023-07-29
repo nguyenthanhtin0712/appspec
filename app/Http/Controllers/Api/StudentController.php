@@ -38,7 +38,6 @@ class StudentController extends Controller
         $sortBy = $request->input('sortBy');
         $sortOrder = $request->input('sortOrder', 'asc');
         $filters = $request->input('filters');
-        $students = $this->student->query();
         $students = $this->student->query()
             ->leftJoin('users', 'students.user_id', '=', 'users.user_id')
             ->leftJoin('majors', 'students.major_id', '=', 'majors.major_id')
@@ -84,10 +83,36 @@ class StudentController extends Controller
      */
     public function store(StoreStudentRequest $request)
     {
-        $dataCreate = $request->all();
-        $student = $this->student->create($dataCreate);
-        $studentResoure = new StudentResource($student);
-        return $this->sentSuccessResponse($studentResoure, "Create student success", Response::HTTP_OK);
+        $student_code = $request->input('student_code');
+        $student_class = $request->input('student_class');
+        $student_course = $request->input('student_course');
+        $major_id = $request->input('major_id');
+        $user_gender = $request->input('user_gender');
+        $user_birthday = $request->input('user_birthday');
+        $user_firstname = $request->input('user_firstname');
+        $user_lastname = $request->input('user_lastname');
+        $user_password = $request->input('user_password');
+        $user = User::create([
+            'user_firstname' => "$user_firstname",
+            'user_lastname' => "$user_lastname",
+            'user_password' => bcrypt($user_password),
+            'user_gender' => "$user_gender",
+            'user_birthday' => "$user_birthday",
+        ]);
+        Student::create([
+            'user_id' => $user->user_id,
+            'student_code' => "$student_code",
+            'student_class' => "$student_class",
+            'student_course' => "$student_course",
+            'major_id' => $major_id,
+        ]);
+        $studentWithUser = $this->student->query()
+            ->leftJoin('users', 'users.user_id', '=', 'students.user_id')
+            ->leftJoin('majors', 'students.major_id', '=', 'majors.major_id')
+            ->select('students.*', 'users.user_firstname', 'users.user_lastname', 'users.user_birthday', 'users.user_gender', 'majors.major_name')
+            ->where('students.user_id', $user->user_id)
+            ->firstOrFail();
+        return $this->sentSuccessResponse($studentWithUser, "Create student success", Response::HTTP_OK);
     }
 
     /**
@@ -140,7 +165,7 @@ class StudentController extends Controller
      */
     public function destroy($id)
     {
-        $student = $this->student->where('user_id', $id)->firstOrFail();
+        $student = $this->student->where('user_id', $id)->first();
         $student->student_isDelete = 1;
         $student->save();
         $studentResoure = new StudentResource($student);
@@ -153,12 +178,17 @@ class StudentController extends Controller
         $data = $request->input('data');
         $password = $request->input('password');
         $result = array();
-        $majorCodes = array_column($data, 'major_code');
-        $majors = Major::whereIn('major_code', $majorCodes)->get()->keyBy('major_code');
+        $majorCodes = array_column($data, 'major_id');
+        $majors = Major::whereIn('major_id', $majorCodes)->get()->keyBy('major_id');
         $password = bcrypt($password);
         foreach ($data as $row) {
-            $major_code = trim($row['major_code']);
-            $major = $majors[$major_code];
+            $student_code = $row['student_code'];
+            $checkStudent = Student::where('student_code','=',"$student_code")->first();
+            if($checkStudent){
+                continue;
+            }
+            $major_id = trim($row['major_id']);
+            $major = $majors[$major_id];
             if (!$major) {
                 return "Không tìm thấy major trong cơ sở dữ liệu!";
             }

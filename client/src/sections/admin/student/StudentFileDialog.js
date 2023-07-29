@@ -43,11 +43,7 @@ const StudentFileDialog = () => {
         })}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
           try {
-            const data = await handleImportData(values.file_student);
-            if (data) {
-              data['password'] = values.password_student;
-              console.log(data);
-            }
+            const data = await handleImportData(values.file_student, values.password_student);
             const result = await dispatch(addFileStudent(data));
             if (result && !result.error) {
               setStatus({ success: true });
@@ -132,36 +128,49 @@ const StudentFileDialog = () => {
   );
 };
 
-function handleImportData(file) {
-  const reader = new FileReader();
-  reader.readAsBinaryString(file);
-  reader.onload = async (e) => {
-    const data = e.target.result;
-    const workbook = XLSX.read(data, { type: 'binary' });
-    const sheetName = workbook.SheetNames[1];
-    if (!sheetName) {
-      toast.error('Không đúng định dạng.');
-      return;
-    }
-    const sheet = workbook.Sheets[sheetName];
-    const jsonData = XLSX.utils.sheet_to_json(sheet, { header: 2 });
+function handleImportData(file, pass) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
 
-    let result = { data: [] };
-    jsonData.forEach((row) => {
-      result.data.push({
-        student_code: row['MaSV'],
-        user_firstname: row['HoLotSV'],
-        user_lastname: row['TenSV'],
-        user_birthday: row['NgaySinhC'],
-        user_gender: row['Phai'],
-        student_course: row['KhoaHoc'],
-        student_class: row['MaLop'],
-        major_code: row['MaNganh']
+    // Xử lý sự kiện khi đọc file hoàn tất
+    reader.onload = (e) => {
+      const data = e.target.result;
+      const workbook = XLSX.read(data, { type: 'binary' });
+      const sheetName = workbook.SheetNames[1];
+
+      if (!sheetName) {
+        const error = new Error('Không đúng định dạng.');
+        reject(error);
+        return;
+      }
+
+      const sheet = workbook.Sheets[sheetName];
+      const jsonData = XLSX.utils.sheet_to_json(sheet, { header: 2 });
+
+      let result = { data: [], password: pass };
+
+      jsonData.forEach((row) => {
+        result.data.push({
+          student_code: row['MaSV'],
+          user_firstname: row['HoLotSV'],
+          user_lastname: row['TenSV'],
+          user_birthday: row['NgaySinhC'],
+          user_gender: row['Phai'],
+          student_course: row['KhoaHoc'],
+          student_class: row['MaLop'],
+          major_id: row['MaNganh']
+        });
       });
-    });
-    console.log(result);
-    return result;
-  };
+      resolve(result); // Giải quyết Promise với giá trị result.
+    };
+
+    // Xử lý sự kiện khi xảy ra lỗi đọc file
+    reader.onerror = (error) => {
+      reject(error); // Nếu có lỗi đọc file, reject Promise với thông báo lỗi.
+    };
+
+    reader.readAsBinaryString(file);
+  });
 }
 
 export default memo(StudentFileDialog);
