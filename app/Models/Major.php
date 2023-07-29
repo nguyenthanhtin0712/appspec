@@ -9,7 +9,7 @@ use Spatie\Permission\Traits\HasRoles;
 class Major extends Model
 {
     use HasFactory, HasRoles;
-
+    protected $table = 'majors';
     protected $primaryKey = 'major_id';
     protected $fillable = [
         'major_id',
@@ -17,4 +17,9 @@ class Major extends Model
         'major_name',
         'major_isDelete'
     ];
+
+    public function specialties()
+    {
+        return $this->hasMany(Specialty::class, 'major_id', 'major_id');
+    }
 }

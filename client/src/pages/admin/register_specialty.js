@@ -19,11 +19,40 @@ import DateTimePickerField from 'components/input/DateTimePickerField';
 import { dispatch } from 'store/index';
 import { getAll } from 'store/reducers/major';
 
-// const cource_list = () => {
-//   let year = new Date().getFullYear();
-// };
+const cource_list = () => {
+  const currentYear = new Date().getFullYear();
+  const fourMostRecentYears = Array.from({ length: 4 }, (_, index) => currentYear - index);
+  return fourMostRecentYears;
+};
+
+const xulymang = (arr) => {
+  let result = [];
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i].specialties) {
+      for (let j = 0; j < arr[i].specialties.length; j++) {
+        result.push({
+          specialty_id: arr[i].specialties[j].specialty_id,
+          quantity: null
+        });
+      }
+    }
+  }
+  return result;
+};
 
 const RegisterSpecialty = () => {
+  const [majorList, setMajorList] = useState([]);
+  const years = cource_list();
+  useEffect(() => {
+    const fetch = async () => {
+      const response = await dispatch(getAll());
+      setMajorList(response.payload.data);
+    };
+    fetch();
+  }, []);
+  if (majorList.length == 0) {
+    return;
+  }
   return (
     <>
       <Typography variant="h4" component="h1" mb={2}>
@@ -37,7 +66,8 @@ const RegisterSpecialty = () => {
               cource_accept: '',
               start_time: null,
               end_time: null,
-              submit: null
+              submit: null,
+              specialties: xulymang(majorList)
             }}
             validationSchema={Yup.object().shape({
               registration_name: Yup.string().max(255).required('Tên đợt là bắt buộc !'),
@@ -105,6 +135,7 @@ const RegisterSpecialty = () => {
                       onChange={handleChange}
                       error={Boolean(touched.cource_accept && errors.cource_accept)}
                       helperText={errors.cource_accept}
+                      list={years}
                       fullWidth
                     />
                   </Grid>
@@ -136,7 +167,7 @@ const RegisterSpecialty = () => {
                       fullWidth
                     />
                   </Grid>
-                  <MajorContainerForm />
+                  {majorList && <MajorContainerForm majorList={majorList} values={values} setFieldValue={setFieldValue} />}
                   {errors.submit && (
                     <Grid item xs={12}>
                       <FormHelperText error>{errors.submit}</FormHelperText>
@@ -165,33 +196,24 @@ const RegisterSpecialty = () => {
   );
 };
 
-const MajorContainerForm = () => {
-  const [majorList, setMajorList] = useState([]);
-  useEffect(() => {
-    const fetch = async () => {
-      const response = await dispatch(getAll());
-      console.log('fetching...');
-      setMajorList(response.payload.data);
-    };
-    fetch();
-  }, []);
-  console.log(majorList);
-  if (!majorList) return null;
+const MajorContainerForm = ({ majorList, setFieldValue, values }) => {
   return (
-    <Grid item xs={12} sx={{ display: 'flex', gap: 3, alignItems: 'stretch' }}>
-      {majorList.map((major) => {
-        if (major.specialties.length > 0) {
-          return <MajorSelector key={major.major_id} major={major}></MajorSelector>;
-        }
-      })}
-    </Grid>
+    <>
+      <Grid item xs={12} sx={{ display: 'flex', gap: 3, alignItems: 'stretch' }}>
+        {majorList.map((major) => {
+          if (major.specialties.length > 0) {
+            return <MajorSelector setFieldValue={setFieldValue} values={values} key={major.major_id} major={major}></MajorSelector>;
+          }
+        })}
+      </Grid>
+      <Grid item xs={12}>
+        <Typography>Lưu ý: Nếu không nhập số lượng thì mặc định bằng 0 </Typography>
+      </Grid>
+    </>
   );
 };
 
-const MajorSelector = ({ major }) => {
-  // eslint-disable-next-line no-unused-vars
-  const [checked, setChecked] = useState(Array(major.specialties.length).fill(0));
-  const theme = useTheme();
+const MajorSelector = ({ major, setFieldValue, values }) => {
   return (
     <Grid item xs={6}>
       <MainCard sx={{ height: '100%' }}>
@@ -200,21 +222,41 @@ const MajorSelector = ({ major }) => {
         </Stack>
         <Stack spacing={2} direction="column">
           {major.specialties.length > 0 &&
-            major.specialties.map((item) => (
-              <Grid container key={item.specialty_id}>
-                <Grid item sm={6} xs={12} sx={{ margin: 'auto 0' }}>
-                  <Stack direction="row" alignItems="center" spacing={1.5}>
-                    <RecordCircle size="18" color={theme.palette.primary.main} variant="Bulk" />
-                    <p>{item.specialty_name}</p>
-                  </Stack>
-                </Grid>
-                <Grid item sm={6} xs={12}>
-                  <OutlinedInput type="number" size="small" placeholder="Nhập số lượng"></OutlinedInput>
-                </Grid>
-              </Grid>
+            major.specialties.map((specialty) => (
+              <InputMajorField key={specialty.specialty_id} setFieldValue={setFieldValue} values={values} specialty={specialty} />
             ))}
         </Stack>
       </MainCard>
+    </Grid>
+  );
+};
+
+const InputMajorField = ({ specialty, values, setFieldValue }) => {
+  const specialtyIndex = values.specialties.findIndex((item) => item.specialty_id === specialty.specialty_id);
+  const handleQuantityChange = (event) => {
+    const newQuantity = parseInt(event.target.value, 10) || 0;
+    const newSpecialties = [...values.specialties];
+    newSpecialties[specialtyIndex].quantity = newQuantity;
+    setFieldValue('specialties', newSpecialties);
+  };
+  const theme = useTheme();
+  return (
+    <Grid container key={specialty.specialty_id}>
+      <Grid item sm={6} xs={12} sx={{ margin: 'auto 0' }}>
+        <Stack direction="row" alignItems="center" spacing={1.5}>
+          <RecordCircle size="18" color={theme.palette.primary.main} variant="Bulk" />
+          <p>{specialty.specialty_name}</p>
+        </Stack>
+      </Grid>
+      <Grid item sm={6} xs={12}>
+        <OutlinedInput
+          type="number"
+          size="small"
+          placeholder="Nhập số lượng"
+          value={values.specialties[specialtyIndex].quantity || ''}
+          onChange={handleQuantityChange}
+        ></OutlinedInput>
+      </Grid>
     </Grid>
   );
 };

@@ -20,13 +20,6 @@ class MajorController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    protected $major;
-
-    public function __construct(Major $major)
-    {
-        $this->major = $major;
-    }
-
     public function index(Request $request)
     {
         $all = $request->input('all');
@@ -36,7 +29,7 @@ class MajorController extends Controller
         $sortBy = $request->input('sortBy');
         $sortOrder = $request->input('sortOrder', 'asc');
         $filters = $request->input('filters');
-        $majors = $this->major->query();
+        $majors = Major::query();
         $majors->where("major_isDelete", "0");
         if ($query) {
             $majors->where("major_name", "LIKE", "%$query%");
@@ -80,7 +73,7 @@ class MajorController extends Controller
     {
         $dataCreate = $request->all();
         $dataCreate['major_isDelete'] = 0;
-        $major = $this->major->create($dataCreate);
+        $major = Major::create($dataCreate);
         $majorResource = new MajorResource($major);
         return $this->sentSuccessResponse($majorResource, "Create major success", Response::HTTP_OK);
     }
@@ -93,7 +86,7 @@ class MajorController extends Controller
      */
     public function show($id)
     {
-        $major = $this->major->where('major_id', $id)->firstOrFail();
+        $major = Major::where('major_id', $id)->firstOrFail();
         if ($major->major_isDelete == 1) {
             return response()->json([
                 'message' => 'Major is deleted',
@@ -113,7 +106,7 @@ class MajorController extends Controller
      */
     public function update(UpdateMajorRequest $request, $id)
     {
-        $major = $this->major->where('major_id', $id)->firstOrFail();
+        $major = Major::where('major_id', $id)->firstOrFail();
         $dataUpdate = $request->all();
         $major->update($dataUpdate);
         $majorResource = new MajorResource($major);
@@ -128,7 +121,7 @@ class MajorController extends Controller
      */
     public function destroy($id)
     {
-        $major = $this->major->where('major_id', $id)->firstOrFail();
+        $major = Major::where('major_id', $id)->firstOrFail();
         $major->major_isDelete = 1;
         $major->save();
         $majorResoure = new MajorResource($major);
@@ -137,10 +130,8 @@ class MajorController extends Controller
 
     public function getAllSpecialty()
     {
-        $majors = Major::all();
-        foreach ($majors as $major) {
-            $major['specialties'] = DB::table("specialties")->where('major_id', $major->major_id)->get();
-        }
+        $majors = Major::with('specialties')->get();
+
         return $this->sentSuccessResponse($majors, "Get data success", Response::HTTP_OK);
     }
 }

@@ -18,7 +18,7 @@ const DialogTitleCustom = ({ onClose, children, ...other }) => {
               color: (theme) => theme.palette.grey[500]
             }}
           >
-            <CloseCircle variant="Bulk" size="40" />
+            <CloseCircle variant="Bulk" size="50" />
           </IconButton>
         ) : null}
       </Stack>
