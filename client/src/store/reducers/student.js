@@ -34,8 +34,7 @@ export const fetchData = createAsyncThunk('student/fetchData', async (params) =>
 export const createStudent = createAsyncThunk('student/createStudent', async (student) => {
   try {
     const response = await axios.post(`${API_BASE_URL}/addFileStudent`, student);
-    console.log(response);
-    return [];
+    return response.data;
     // return response.data;
   } catch (error) {
     console.error(error);
@@ -43,9 +42,9 @@ export const createStudent = createAsyncThunk('student/createStudent', async (st
   }
 });
 
-export const addFileStudent = createAsyncThunk('student/addFileStudent', async (data) => {
+export const addFileStudent = createAsyncThunk('student/addFileStudent', async (data, password) => {
   try {
-    const response = await axios.post(`${API_BASE_URL}/addFileStudent`, data);
+    const response = await axios.post(`${API_BASE_URL}/addFileStudent`, { data, password });
     return response.data;
   } catch (error) {
     console.error(error);
@@ -99,6 +98,13 @@ const initialState = {
       major_id: '',
       student_class: ''
     }
+  },
+  studentFileDialog: {
+    open: false,
+    initValue: {
+      file_student: null,
+      password_student: ''
+    }
   }
 };
 
@@ -120,6 +126,9 @@ const student = createSlice({
     },
     setStudentDialog: (state, action) => {
       state.studentDialog = { ...state.studentDialog, ...action.payload };
+    },
+    setStudentFileDialog: (state, action) => {
+      state.studentFileDialog = { ...state.studentFileDialog, ...action.payload };
     }
   },
   extraReducers: (builder) => {
@@ -144,8 +153,7 @@ const student = createSlice({
         state.studentDialog.open = false;
       })
       .addCase(addFileStudent.fulfilled, (state, action) => {
-        state.data.push(action.payload.data);
-        state.studentDialog.open = false;
+        state.data = [...state.data, ...action.payload.data];
       })
       .addCase(updateStudent.fulfilled, (state, action) => {
         const updatedstudent = action.payload.data;
@@ -162,6 +170,6 @@ const student = createSlice({
   }
 });
 
-export const { setColumnFilters, setGlobalFilter, setSorting, setPagination, setStudentDialog } = student.actions;
+export const { setColumnFilters, setGlobalFilter, setSorting, setPagination, setStudentDialog, setStudentFileDialog } = student.actions;
 
 export default student.reducer;

@@ -47,6 +47,7 @@ class Kernel extends HttpKernel
             \Laravel\Passport\Http\Middleware\CreateFreshApiToken::class,
             \Illuminate\Routing\Middleware\ThrottleRequests::class . ':api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \Fruitcake\Cors\HandleCors::class,
         ],
     ];
 

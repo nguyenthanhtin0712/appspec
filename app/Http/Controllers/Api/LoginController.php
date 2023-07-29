@@ -23,7 +23,6 @@ class LoginController extends Controller
     if (!$user || !Hash::check($credentials['password'], $user->user_password)) {
         return Helper::sendError("Invalid email or password", 401);
     }
-
     // Authentication successful
     Auth::login($user);
 

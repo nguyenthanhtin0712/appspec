@@ -24,7 +24,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 const StudentDialog = () => {
   const [activeTab, setActiveTab] = useState(0);
   const { studentDialog } = useSelector((state) => state.student);
-  const { data, columnFilters, globalFilter, sorting, pagination } = useSelector((state) => state.major);
+  const { data, columnFilters, globalFilter, sorting, pagination } = useSelector((state) => state.student);
 
   useEffect(() => {
     dispatch(fetchData({ columnFilters, globalFilter, sorting, pagination }));
