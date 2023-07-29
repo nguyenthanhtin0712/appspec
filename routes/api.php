@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\LoginController;
 use App\Http\Controllers\Api\LogoutController;
 use App\Http\Controllers\Api\MajorController;
 use App\Http\Controllers\Api\RegisterController;
+use App\Http\Controllers\Api\RegisterSpecialtyController;
 use App\Http\Controllers\Api\SpecialtyController;
 use App\Http\Controllers\Api\StudentController;
 use App\Http\Controllers\Api\TeacherController;
@@ -73,4 +74,11 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('/employer/{id}', [EmployerController::class, 'show'])->middleware('check_user_role_permission:employer.view');
     Route::put('/employer/{id}', [EmployerController::class, 'update'])->middleware('check_user_role_permission:employer.update');
     Route::delete('/employer/{id}', [EmployerController::class, 'destroy'])->middleware('check_user_role_permission:employer.delete');
+
+    // Register Specialty api
+    Route::get('register_specialties', [RegisterSpecialtyController::class, 'index'])->middleware('check_user_role_permission:register_specialty.view');
+    Route::post('register_specialty', [RegisterSpecialtyController::class, 'store'])->middleware('check_user_role_permission:register_specialty.create');
+    Route::get('/register_specialty/{id}', [RegisterSpecialtyController::class, 'show'])->middleware('check_user_role_permission:register_specialty.view');
+    Route::put('/register_specialty/{id}', [EmployerCRegisterSpecialtyControllerontroller::class, 'update'])->middleware('check_user_role_permission:register_specialty.update');
+    Route::delete('/register_specialty/{id}', [RegisterSpecialtyController::class, 'destroy'])->middleware('check_user_role_permission:register_specialty.delete');
 });

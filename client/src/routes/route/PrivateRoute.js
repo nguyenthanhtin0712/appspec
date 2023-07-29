@@ -16,7 +16,7 @@ const PrivateRoute = ({ component: Component, requiredPermissions }) => {
       return <Navigate to="/" />;
     }
   } else {
-    return <Navigate to="/auth/login" />;
+    return <Navigate to="/auth/login" replace={true} />;
   }
 };
 

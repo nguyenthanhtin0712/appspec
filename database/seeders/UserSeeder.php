@@ -47,6 +47,11 @@ class UserSeeder extends Seeder
         $teacher_create = Permission::create(['name' => 'teacher.create']);
         $teacher_update = Permission::create(['name' => 'teacher.update']);
         $teacher_delete = Permission::create(['name' => 'teacher.delete']);
+        // Role register specialty
+        $register_specialty_view = Permission::create(['name' => 'register_specialty.view']);
+        $register_specialty_create = Permission::create(['name' => 'register_specialty.create']);
+        $register_specialty_update = Permission::create(['name' => 'register_specialty.update']);
+        $register_specialty_delete = Permission::create(['name' => 'register_specialty.delete']);
     
         $admin_role = Role::create(['name' => 'admin']);
         $admin_role->givePermissionTo([
@@ -74,6 +79,10 @@ class UserSeeder extends Seeder
             $teacher_create,
             $teacher_update,
             $teacher_delete,
+            $register_specialty_view,
+            $register_specialty_create,
+            $register_specialty_update,
+            $register_specialty_delete,
         ]);
 
         $admin = User::create([
