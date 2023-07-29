@@ -8,61 +8,24 @@ import FormHelperText from '@mui/material/FormHelperText';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import { toast } from 'react-toastify';
-import { createStudent, setStudentFileDialog } from 'store/reducers/student';
+import { setStudentFileDialog, addFileStudent } from 'store/reducers/student';
 import { useSelector } from 'react-redux';
 import Button from '@mui/material/Button';
 import { dispatch } from 'store/index';
 import { InputLabel } from '@mui/material';
 import Stack from '@mui/material/Stack';
 import OutlinedInput from '@mui/material/OutlinedInput';
-// import * as XLSX from 'xlsx';
+import * as XLSX from 'xlsx';
 
 const StudentFileDialog = () => {
   const { studentFileDialog } = useSelector((state) => state.student);
-
-  // const handleImportData = async (e) => {
-  //   e.preventDefault();
-  //   const file = e.target.files[0];
-  //   if (!file) {
-  //     console.error('Không có file được chọn.');
-  //     return;
-  //   }
-  //   const reader = new FileReader();
-  //   reader.readAsBinaryString(file);
-  //   reader.onload = async (e) => {
-  //     const data = e.target.result;
-  //     const workbook = XLSX.read(data, { type: 'binary' });
-  //     const sheetName = workbook.SheetNames[1];
-  //     if (!sheetName) {
-  //       toast.error('Không đúng định dạng.');
-  //       return;
-  //     }
-  //     const sheet = workbook.Sheets[sheetName];
-  //     const jsonData = XLSX.utils.sheet_to_json(sheet, { header: 2 });
-
-  //     let result = { data: [] };
-  //     jsonData.forEach((row) => {
-  //       result.data.push({
-  //         student_code: row['MaSV'],
-  //         user_firstname: row['HoLotSV'],
-  //         user_lastname: row['TenSV'],
-  //         user_birthday: row['NgaySinhC'],
-  //         user_gender: row['Phai'],
-  //         student_course: row['KhoaHoc'],
-  //         student_class: row['MaLop'],
-  //         major_code: row['MaNganh']
-  //       });
-  //     });
-  //     console.log(result);
-  //   };
-  // };
 
   const handleClose = () => {
     dispatch(
       setStudentFileDialog({
         open: false,
         initValue: {
-          file_student: '',
+          file_student: null,
           password_student: ''
         }
       })
@@ -80,8 +43,12 @@ const StudentFileDialog = () => {
         })}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
           try {
-            console.log(values);
-            const result = await dispatch(createStudent(values));
+            const data = await handleImportData(values.file_student);
+            if (data) {
+              data['password'] = values.password_student;
+              console.log(data);
+            }
+            const result = await dispatch(addFileStudent(data));
             if (result && !result.error) {
               setStatus({ success: true });
               setSubmitting(false);
@@ -131,7 +98,6 @@ const StudentFileDialog = () => {
                     <OutlinedInput
                       id="file_student"
                       type="file"
-                      value={values.file_student}
                       name="file_student"
                       onBlur={handleBlur}
                       onChange={(e) => {
@@ -165,5 +131,37 @@ const StudentFileDialog = () => {
     </Dialog>
   );
 };
+
+function handleImportData(file) {
+  const reader = new FileReader();
+  reader.readAsBinaryString(file);
+  reader.onload = async (e) => {
+    const data = e.target.result;
+    const workbook = XLSX.read(data, { type: 'binary' });
+    const sheetName = workbook.SheetNames[1];
+    if (!sheetName) {
+      toast.error('Không đúng định dạng.');
+      return;
+    }
+    const sheet = workbook.Sheets[sheetName];
+    const jsonData = XLSX.utils.sheet_to_json(sheet, { header: 2 });
+
+    let result = { data: [] };
+    jsonData.forEach((row) => {
+      result.data.push({
+        student_code: row['MaSV'],
+        user_firstname: row['HoLotSV'],
+        user_lastname: row['TenSV'],
+        user_birthday: row['NgaySinhC'],
+        user_gender: row['Phai'],
+        student_course: row['KhoaHoc'],
+        student_class: row['MaLop'],
+        major_code: row['MaNganh']
+      });
+    });
+    console.log(result);
+    return result;
+  };
+}
 
 export default memo(StudentFileDialog);
