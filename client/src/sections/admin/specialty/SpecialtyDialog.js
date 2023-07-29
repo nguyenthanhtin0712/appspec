@@ -25,7 +25,7 @@ const SpecialtyDialog = () => {
   }, [columnFilters, globalFilter, sorting, pagination]);
 
   const handleClose = () => {
-    dispatch(setSpecialtyDialog({ open: false, initValue: { specialty_code: '', specialty_name: '', major_id: '' } }));
+    dispatch(setSpecialtyDialog({ open: false, initValue: { specialty_id: '', specialty_name: '', major_id: '' } }));
   };
 
   return (
@@ -34,7 +34,7 @@ const SpecialtyDialog = () => {
       <Formik
         initialValues={specialtyDialog.initValue}
         validationSchema={Yup.object().shape({
-          specialty_code: Yup.string().max(255).required('Mã chuyên ngành là bắt buộc !'),
+          specialty_id: Yup.string().max(255).required('Mã chuyên ngành là bắt buộc !'),
           specialty_name: Yup.string().max(255).required('Tên chuyên ngành là bắt buộc !'),
           major_id: Yup.string().max(255).required('Vui lòng chọn chuyên ngành !')
         })}
@@ -90,17 +90,17 @@ const SpecialtyDialog = () => {
               <Grid container spacing={3}>
                 <Grid item xs={12}>
                   <InputField
-                    id="specialty_code"
+                    id="specialty_id"
                     type="text"
-                    value={values.specialty_code}
-                    name="specialty_code"
+                    value={values.specialty_id}
+                    name="specialty_id"
                     onBlur={handleBlur}
                     onChange={handleChange}
                     placeholder="Nhập mã chuyên ngành"
                     label="Mã chuyên ngành"
                     fullWidth
-                    error={Boolean(touched.specialty_code && errors.specialty_code)}
-                    helperText={errors.specialty_code}
+                    error={Boolean(touched.specialty_id && errors.specialty_id)}
+                    helperText={errors.specialty_id}
                   />
                 </Grid>
                 <Grid item xs={12}>

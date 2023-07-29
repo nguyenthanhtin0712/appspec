@@ -18,14 +18,14 @@ import { dispatch } from 'store/index';
 const MajorForm = ({ initialValues, action }) => {
   const dispatch = useDispatch();
   const handleClose = useCallback(() => {
-    dispatch(setMajorDialog({ open: false, initValue: { major_code: '', major_name: '' } }));
+    dispatch(setMajorDialog({ open: false, initValue: { major_id: '', major_name: '' } }));
   }, [dispatch]);
 
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={Yup.object().shape({
-        major_code: Yup.string().max(255).required('Mã ngành là bắt buộc !'),
+        major_id: Yup.string().max(255).required('Mã ngành là bắt buộc !'),
         major_name: Yup.string().max(255).required('Tên ngành là bắt buộc !')
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
@@ -56,17 +56,17 @@ const MajorForm = ({ initialValues, action }) => {
             <Grid container spacing={3}>
               <Grid item xs={12}>
                 <InputField
-                  id="major_code"
+                  id="major_id"
                   type="text"
-                  value={values.major_code}
-                  name="major_code"
+                  value={values.major_id}
+                  name="major_id"
                   onBlur={handleBlur}
                   onChange={handleChange}
                   placeholder="Nhập mã ngành"
                   label="Mã ngành"
                   fullWidth
-                  error={Boolean(touched.major_code && errors.major_code)}
-                  helperText={errors.major_code}
+                  error={Boolean(touched.major_id && errors.major_id)}
+                  helperText={errors.major_id}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -111,7 +111,7 @@ const MajorDialog = () => {
   const action = useMemo(() => majorDialog.action, [majorDialog.action]);
 
   const handleClose = () => {
-    dispatch(setMajorDialog({ open: false, initValue: { major_code: '', major_name: '' } }));
+    dispatch(setMajorDialog({ open: false, initValue: { major_id: '', major_name: '' } }));
   };
   return (
     <Dialog open={majorDialog.open} onClose={handleClose} maxWidth="xs">

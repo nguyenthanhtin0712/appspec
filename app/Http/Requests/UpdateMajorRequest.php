@@ -28,7 +28,7 @@ class UpdateMajorRequest extends FormRequest
     public function rules()
     {
         return [
-            'major_code' => [
+            'major_id' => [
                 'required',
                 Rule::unique('majors')->ignore($this->major_id, 'major_id'),
             ],

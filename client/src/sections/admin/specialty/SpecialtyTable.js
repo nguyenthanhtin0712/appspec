@@ -78,10 +78,6 @@ const SpecialtyTable = () => {
     () => [
       {
         accessorKey: 'specialty_id',
-        header: 'ID'
-      },
-      {
-        accessorKey: 'specialty_code',
         header: 'Mã chuyên ngành'
       },
       {
@@ -114,6 +110,7 @@ const SpecialtyTable = () => {
         manualFiltering
         manualPagination
         manualSorting
+        enableRowNumbers
         muiToolbarAlertBannerProps={isError ? { color: 'error', children: 'Error loading data' } : undefined}
         onColumnFiltersChange={(updater) => dispatch(setColumnFilters(updater(columnFilters)))}
         onGlobalFilterChange={(filter) => dispatch(setGlobalFilter(filter))}

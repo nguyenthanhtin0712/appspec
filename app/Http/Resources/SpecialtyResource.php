@@ -16,7 +16,6 @@ class SpecialtyResource extends JsonResource
     {
         return [
             'specialty_id' => $this->specialty_id,
-            'specialty_code' => $this->specialty_code,
             'specialty_name' => $this->specialty_name,
             'major_id' => $this->major_id,
             'major_name' => $this->major_name,

@@ -14,14 +14,12 @@ class CreateSpecialtiesTable extends Migration
     public function up()
     {
         Schema::create('specialties', function (Blueprint $table) {
-            $table->id('specialty_id');
-            $table->string('specialty_code');
+            $table->string('specialty_id')->primary();
             $table->string('specialty_name');
-            $table->integer('major_id'); 
+            $table->string('major_id');
             $table->integer('specialty_isDelete')->default(0);
             $table->timestamps();
         });
-        
     }
 
     /**

@@ -11,9 +11,10 @@ class Specialty extends Model
     use HasFactory, HasRoles;
     protected $table = 'specialties';
     protected $primaryKey = 'specialty_id';
+    protected $keyType = 'string';
+    public $incrementing = false;
     protected $fillable = [
         'specialty_id',
-        'specialty_code',
         'specialty_name',
         'major_id',
         'specialty_isDelete'

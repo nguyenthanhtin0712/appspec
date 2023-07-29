@@ -27,7 +27,7 @@ class StoreMajorRequest extends FormRequest
     public function rules()
     {
         return [
-            'major_code' => 'required|unique:majors,major_code',
+            'major_id' => 'required|unique:majors,major_id',
             'major_name' => 'required|unique:majors,major_name',
         ];
     }

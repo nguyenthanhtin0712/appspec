@@ -16,7 +16,6 @@ class MajorResource extends JsonResource
     {
         return [
             'major_id' => $this->major_id,
-            'major_code' => $this->major_code,
             'major_name' => $this->major_name,
             'major_isDelete' => $this->major_isDelete,
         ];

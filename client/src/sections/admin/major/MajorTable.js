@@ -77,10 +77,6 @@ const MajorTable = () => {
     () => [
       {
         accessorKey: 'major_id',
-        header: 'ID'
-      },
-      {
-        accessorKey: 'major_code',
         header: 'Mã ngành'
       },
       {
@@ -97,7 +93,7 @@ const MajorTable = () => {
   };
 
   const handleUpdate = (data) => {
-    const major = { major_id: data.major_id, major_code: data.major_code, major_name: data.major_name };
+    const major = { major_id: data.major_id, major_name: data.major_name };
     dispatch(setMajorDialog({ open: true, action: 'update', initValue: major }));
   };
 
@@ -107,6 +103,7 @@ const MajorTable = () => {
         columns={columns}
         data={data}
         getRowId={(row) => row.major_id}
+        enableRowNumbers
         manualFiltering
         manualPagination
         manualSorting

@@ -11,9 +11,10 @@ class Major extends Model
     use HasFactory, HasRoles;
     protected $table = 'majors';
     protected $primaryKey = 'major_id';
+    protected $keyType = 'string';
+    public $incrementing = false;
     protected $fillable = [
         'major_id',
-        'major_code',
         'major_name',
         'major_isDelete'
     ];

@@ -16,41 +16,41 @@ class SpecialtySeeder extends Seeder
     {
         //Ngành công nghệ thông tin
         Specialty::create([
-            'specialty_code' => 'HTTT',
+            'specialty_id' => 'HTTT',
             'specialty_name' => 'Hệ thống thông tin',
-            'major_id' => '1',
+            'major_id' => 'DCT',
             'specialty_isDelete' => '0',
         ]);
         Specialty::create([
-            'specialty_code' => 'KTPM',
+            'specialty_id' => 'KTPM',
             'specialty_name' => 'Kỹ thuật phần mềm',
-            'major_id' => '1',
+            'major_id' => 'DCT',
             'specialty_isDelete' => '0',
         ]);
         Specialty::create([
-            'specialty_code' => 'MMT',
+            'specialty_id' => 'MMT',
             'specialty_name' => 'Mạng máy tính',
-            'major_id' => '1',
+            'major_id' => 'DCT',
             'specialty_isDelete' => '0',
         ]);
         Specialty::create([
-            'specialty_code' => 'KHMT',
+            'specialty_id' => 'KHMT',
             'specialty_name' => 'Khoa học máy tính',
-            'major_id' => '1',
+            'major_id' => 'DCT',
             'specialty_isDelete' => '0',
         ]);
 
         //Ngành kỹ thuật phần mềm
         Specialty::create([
-            'specialty_code' => 'LTW',
+            'specialty_id' => 'LTW',
             'specialty_name' => 'Lập trình Web',
-            'major_id' => '2',
+            'major_id' => 'DKP',
             'specialty_isDelete' => '0',
         ]);
         Specialty::create([
-            'specialty_code' => 'LTUD',
+            'specialty_id' => 'LTUD',
             'specialty_name' => 'Lập trình ứng dụng',
-            'major_id' => '2',
+            'major_id' => 'DKP',
             'specialty_isDelete' => '0',
         ]);
     }

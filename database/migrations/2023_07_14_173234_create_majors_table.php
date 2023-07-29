@@ -14,8 +14,7 @@ class CreateMajorsTable extends Migration
     public function up()
     {
         Schema::create('majors', function (Blueprint $table) {
-            $table->id('major_id');
-            $table->string('major_code');
+            $table->string('major_id')->primary();
             $table->string('major_name');
             $table->integer('major_isDelete')->default(0);
             $table->timestamps();

@@ -79,7 +79,7 @@ const initialState = {
     open: false,
     action: 'add',
     initValue: {
-      specialty_code: '',
+      specialty_id: '',
       specialty_name: '',
       major_id: ''
     }

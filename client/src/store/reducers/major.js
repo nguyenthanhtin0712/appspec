@@ -100,7 +100,7 @@ const initialState = {
     open: false,
     action: 'add',
     initValue: {
-      major_code: '',
+      major_id: '',
       major_name: ''
     }
   }
