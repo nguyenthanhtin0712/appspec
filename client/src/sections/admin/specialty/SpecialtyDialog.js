@@ -39,48 +39,26 @@ const SpecialtyDialog = () => {
           major_id: Yup.string().max(255).required('Vui lòng chọn chuyên ngành !')
         })}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
-          switch (specialtyDialog.action) {
-            case 'add':
-              try {
-                const result = await dispatch(createSpecialty(values));
-                if (result && !result.error) {
-                  setStatus({ success: true });
-                  setSubmitting(false);
-                  toast.success('Thêm chuyên ngành thành công!');
-                } else {
-                  setStatus({ success: false });
-                  setErrors({ submit: result.error.message });
-                  setSubmitting(false);
-                  toast.error('Có lỗi xảy ra khi thêm chuyên ngành!');
-                }
-              } catch (err) {
-                console.error(err);
-                setStatus({ success: false });
-                setErrors({ submit: err.message });
-                setSubmitting(false);
-              }
-              break;
-            case 'update':
-              try {
-                const id = specialtyDialog.initValue.specialty_id;
-                const result = await dispatch(updateSpecialty({ id, specialty: values }));
-                if (result && !result.error) {
-                  setStatus({ success: true });
-                  setSubmitting(false);
-                  toast.success('Sửa chuyên ngành thành công!');
-                } else {
-                  setStatus({ success: false });
-                  setErrors({ submit: result.error.message });
-                  setSubmitting(false);
-                  toast.error('Có lỗi xảy ra khi Sửa chuyên ngành!');
-                }
-              } catch (err) {
-                console.error(err);
-                setStatus({ success: false });
-                setErrors({ submit: err.message });
-                setSubmitting(false);
-              }
-              break;
+          try {
+            const actionType = specialtyDialog.action === 'update' ? updateSpecialty : createSpecialty;
+            const result = await dispatch(actionType(values));
+            if (result && !result.error) {
+              setStatus({ success: true });
+              setSubmitting(false);
+              toast.success(specialtyDialog.action === 'update' ? 'Sửa chuyên ngành thành công!' : 'Thêm chuyên ngành thành công!');
+            } else {
+              setStatus({ success: false });
+              setErrors(result.payload.errors);
+              setSubmitting(false);
+              toast.error(
+                specialtyDialog.action === 'update' ? 'Có lỗi xảy ra khi sửa chuyên ngành!' : 'Có lỗi xảy ra khi thêm chuyên ngành!'
+              );
+            }
+          } catch (err) {
+            console.error(err);
+            setStatus({ success: false });
+            setErrors({ submit: err.message });
+            setSubmitting(false);
           }
         }}
       >

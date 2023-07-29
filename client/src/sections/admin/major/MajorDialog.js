@@ -67,6 +67,7 @@ const MajorForm = ({ initialValues, action }) => {
                   fullWidth
                   error={Boolean(touched.major_id && errors.major_id)}
                   helperText={errors.major_id}
+                  disabled={action === 'update'}
                 />
               </Grid>
               <Grid item xs={12}>

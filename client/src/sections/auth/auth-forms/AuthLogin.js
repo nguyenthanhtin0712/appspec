@@ -66,7 +66,7 @@ const AuthLogin = () => {
             } else {
               setStatus({ success: true });
               setSubmitting(false);
-              toast.error('Có lỗi xảy ra!');
+              toast.error(result.payload.message);
             }
           } catch (err) {
             console.error(err);

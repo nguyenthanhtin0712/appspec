@@ -73,13 +73,17 @@ export const updateMajor = createAsyncThunk('major/updateMajor', async (major, {
   }
 });
 
-export const deleteMajor = createAsyncThunk('major/deleteMajor', async (id) => {
+export const deleteMajor = createAsyncThunk('major/deleteMajor', async (id, { rejectWithValue }) => {
   try {
     const response = await axios.delete(`${API_BASE_URL}/major/${id}`);
     return response.data;
   } catch (error) {
-    console.error(error);
-    throw error;
+    if (error.response && error.response.data && error.response.data.errors) {
+      return rejectWithValue(error.response.data);
+    } else {
+      console.error(error);
+      throw error;
+    }
   }
 });
 

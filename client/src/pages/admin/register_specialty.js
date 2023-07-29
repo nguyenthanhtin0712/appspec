@@ -46,6 +46,7 @@ const RegisterSpecialty = () => {
   useEffect(() => {
     const fetch = async () => {
       const response = await dispatch(getAll());
+      console.log(response.payload);
       setMajorList(response.payload.data);
     };
     fetch();

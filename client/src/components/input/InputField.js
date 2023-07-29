@@ -4,7 +4,7 @@ import InputLabel from '@mui/material/InputLabel';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import FormHelperText from '@mui/material/FormHelperText';
 
-const InputField = ({ id, type, label, value, name, onBlur, onChange, placeholder, fullWidth = true, error, helperText }) => (
+const InputField = ({ id, type, label, value, name, onBlur, onChange, placeholder, fullWidth = true, error, helperText, ...props }) => (
   <Stack spacing={1}>
     <InputLabel htmlFor={id}>{label}</InputLabel>
     <OutlinedInput
@@ -17,6 +17,7 @@ const InputField = ({ id, type, label, value, name, onBlur, onChange, placeholde
       placeholder={placeholder}
       fullWidth={fullWidth}
       error={error}
+      {...props}
     />
     {error && <FormHelperText error>{helperText}</FormHelperText>}
   </Stack>

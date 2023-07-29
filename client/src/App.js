@@ -9,9 +9,12 @@ import { dispatch } from 'store/index';
 
 const App = () => {
   useEffect(() => {
-    if (Cookies.get('token')) {
-      dispatch(getUserDataFromToken());
-    }
+    const fetchUser = async () => {
+      if (Cookies.get('token')) {
+        await dispatch(getUserDataFromToken());
+      }
+    };
+    fetchUser();
   }, []);
   return (
     <ThemeCustomization>
