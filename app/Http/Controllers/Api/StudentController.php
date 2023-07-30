@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AddFileStudentRequest;
+use App\Http\Requests\AddScoreStudentRequest;
 use App\Http\Requests\StoreStudentRequest;
 use App\Http\Requests\UpdateStudentRequest;
 use App\Http\Resources\Collection;
@@ -183,8 +184,8 @@ class StudentController extends Controller
         $password = bcrypt($password);
         foreach ($data as $row) {
             $student_code = $row['student_code'];
-            $checkStudent = Student::where('student_code','=',"$student_code")->first();
-            if($checkStudent){
+            $checkStudent = Student::where('student_code', '=', "$student_code")->first();
+            if ($checkStudent) {
                 continue;
             }
             $major_id = trim($row['major_id']);
@@ -230,7 +231,24 @@ class StudentController extends Controller
 
 
     //Hàm import sinh viên đăng ký chuyên ngành
-    public function addFileStudentSpecialty()
+    public function addScoreStudent(AddScoreStudentRequest $request)
     {
+        $data = $request->input('data');
+        $students = Student::whereIn('student_code', array_column($data, 'student_code'))->get();
+        $updatedCount = 0;
+
+        foreach ($data as $row) {
+            $studentCode = $row['student_code'];
+            $studentScore = trim($row['student_score']);
+
+            $student = $students->where('student_code', $studentCode)->first();
+
+            if ($student) {
+                $student->student_score = $studentScore;
+                $student->save();
+                $updatedCount++;
+            }
+        }
+        return $this->sentSuccessResponse("Cập nhật $updatedCount sinh viên!", "Add student success", Response::HTTP_OK);
     }
 }

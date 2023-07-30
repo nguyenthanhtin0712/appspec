@@ -8,7 +8,7 @@ import FormHelperText from '@mui/material/FormHelperText';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import { toast } from 'react-toastify';
-import { fetchData, setStudentFileDialog, addFileStudent } from 'store/reducers/student';
+import { fetchData, setStudentScoreDialog, addScoreStudent } from 'store/reducers/student';
 import { useSelector } from 'react-redux';
 import Button from '@mui/material/Button';
 import { dispatch } from 'store/index';
@@ -17,39 +17,38 @@ import Stack from '@mui/material/Stack';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import * as XLSX from 'xlsx';
 
-const StudentFileDialog = () => {
-  const { studentFileDialog, columnFilters, globalFilter, sorting, pagination } = useSelector((state) => state.student);
+const StudentScoreDialog = () => {
+  const { studentScoreDialog, columnFilters, globalFilter, sorting, pagination } = useSelector((state) => state.student);
 
   const handleClose = () => {
     dispatch(
-      setStudentFileDialog({
+      setStudentScoreDialog({
         open: false,
         initValue: {
-          file_student: null,
-          password_student: ''
+          file_student: null
         }
       })
     );
   };
 
   return (
-    <Dialog open={studentFileDialog.open} onClose={handleClose} fullWidth maxWidth="sm">
-      <DialogTitle>Thêm sinh viên đầu khóa</DialogTitle>
+    <Dialog open={studentScoreDialog.open} onClose={handleClose} fullWidth maxWidth="sm">
+      <DialogTitle>Thêm điểm sinh viên</DialogTitle>
       <Formik
-        initialValues={studentFileDialog.initValue}
+        initialValues={studentScoreDialog.initValue}
         validationSchema={Yup.object().shape({
-          file_student: Yup.mixed().required('Vui lòng chọn file!'),
-          password_student: Yup.string().required('Vui lòng nhập mật khẩu cho sinh viên!')
+          file_student: Yup.mixed().required('Vui lòng chọn file!')
         })}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
           try {
-            const data = await handleImportData(values.file_student, values.password_student);
-            const result = await dispatch(addFileStudent(data));
+            const data = await handleImportData(values.file_student);
+            const result = await dispatch(addScoreStudent(data));
+            handleClose();
             if (result && !result.error) {
               setStatus({ success: true });
               setSubmitting(false);
               dispatch(fetchData({ columnFilters, globalFilter, sorting, pagination }));
-              toast.success('Thêm sinh viên thành công!');
+              toast.success('Thêm điểm thành công!');
             } else {
               setStatus({ success: false });
               setErrors({ submit: result.error.message });
@@ -64,31 +63,10 @@ const StudentFileDialog = () => {
           }
         }}
       >
-        {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values, setFieldValue }) => (
+        {({ errors, handleBlur, handleSubmit, isSubmitting, touched, setFieldValue }) => (
           <form noValidate onSubmit={handleSubmit}>
             <DialogContent>
               <Grid container spacing={3}>
-                <Grid item xs={12}>
-                  <Stack spacing={1} sx={{ mb: '10px' }}>
-                    <InputLabel htmlFor="password_student">Nhập mật khẩu</InputLabel>
-                    <OutlinedInput
-                      id="password_student"
-                      type="text"
-                      value={values.password_student}
-                      name="password_student"
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      placeholder="Nhập mật khẩu cho sinh viên"
-                      fullWidth
-                      error={Boolean(touched.password_student && errors.password_student)}
-                    />
-                    {touched.password_student && errors.password_student && (
-                      <FormHelperText error id="standard-weight-helper-text-password_student">
-                        {errors.password_student}
-                      </FormHelperText>
-                    )}
-                  </Stack>
-                </Grid>
                 <Grid item xs={12}>
                   <Stack spacing={1} sx={{ mb: '10px' }}>
                     <InputLabel htmlFor="file_student">Chọn file</InputLabel>
@@ -129,7 +107,7 @@ const StudentFileDialog = () => {
   );
 };
 
-function handleImportData(file, pass) {
+function handleImportData(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
 
@@ -138,7 +116,7 @@ function handleImportData(file, pass) {
       try {
         const data = e.target.result;
         const workbook = XLSX.read(data, { type: 'binary' });
-        const sheetName = workbook.SheetNames[1];
+        const sheetName = workbook.SheetNames[0];
 
         if (!sheetName) {
           const error = new Error('Không đúng định dạng.');
@@ -150,21 +128,15 @@ function handleImportData(file, pass) {
         const sheet = workbook.Sheets[sheetName];
         const jsonData = XLSX.utils.sheet_to_json(sheet, { header: 2 });
 
-        let result = { data: [], password: pass };
+        let result = { data: [] };
 
         jsonData.forEach((row) => {
           result.data.push({
             student_code: row['MaSV'],
-            user_firstname: row['HoLotSV'],
-            user_lastname: row['TenSV'],
-            user_birthday: row['NgaySinhC'],
-            user_gender: row['Phai'],
-            student_course: row['KhoaHoc'],
-            student_class: row['MaLop'],
-            major_id: row['MaNganh']
+            student_score: row['DTBTLHK']
           });
         });
-
+        console.log(result);
         resolve(result);
       } catch (error) {
         toast.error('' + error);
@@ -179,4 +151,4 @@ function handleImportData(file, pass) {
     reader.readAsBinaryString(file);
   });
 }
-export default memo(StudentFileDialog);
+export default memo(StudentScoreDialog);
