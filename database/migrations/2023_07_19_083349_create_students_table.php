@@ -20,8 +20,8 @@ class CreateStudentsTable extends Migration
             $table->float('student_score')->nullable();
             $table->integer('student_course');
             $table->string('major_id');
-            $table->integer('specialty_id')->nullable();
-            $table->date('speciality_date')->nullable();
+            $table->string('specialty_id')->nullable();
+            $table->dateTime('specialty_date')->nullable();
             $table->integer('company_position_detail_id')->nullable();
             $table->integer('student_status')->default(1);
             $table->string('mentor_code')->nullable();

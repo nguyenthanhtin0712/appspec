@@ -27,7 +27,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::middleware(['auth:api'])->group(function () {
-    
+
     //Login vào rồi mới logout được
     Route::get('logout', [LogoutController::class, 'logout']);
     //Users
@@ -76,9 +76,12 @@ Route::middleware(['auth:api'])->group(function () {
     Route::delete('/employer/{id}', [EmployerController::class, 'destroy'])->middleware('check_user_role_permission:employer.delete');
 
     // Register Specialty api
-    Route::get('register_specialties', [RegisterSpecialtyController::class, 'index'])->middleware('check_user_role_permission:register_specialty.view');
-    Route::post('register_specialty', [RegisterSpecialtyController::class, 'store'])->middleware('check_user_role_permission:register_specialty.create');
-    Route::get('/register_specialty/{id}', [RegisterSpecialtyController::class, 'show'])->middleware('check_user_role_permission:register_specialty.view');
-    Route::put('/register_specialty/{id}', [EmployerCRegisterSpecialtyControllerontroller::class, 'update'])->middleware('check_user_role_permission:register_specialty.update');
-    Route::delete('/register_specialty/{id}', [RegisterSpecialtyController::class, 'destroy'])->middleware('check_user_role_permission:register_specialty.delete');
+    Route::get('register_specialties/admin', [RegisterSpecialtyController::class, 'index'])->middleware('check_user_role_permission:register_specialty.view');
+    Route::post('register_specialty/admin', [RegisterSpecialtyController::class, 'store'])->middleware('check_user_role_permission:register_specialty.create');
+    Route::get('/register_specialty/admin/{id}', [RegisterSpecialtyController::class, 'show'])->middleware('check_user_role_permission:register_specialty.view');
+    Route::put('/register_specialty/admin/{id}', [EmployerCRegisterSpecialtyControllerontroller::class, 'update'])->middleware('check_user_role_permission:register_specialty.update');
+    Route::delete('/register_specialty/admin/{id}', [RegisterSpecialtyController::class, 'destroy'])->middleware('check_user_role_permission:register_specialty.delete');
+
+    Route::get('register_specialties/user', [RegisterSpecialtyController::class, 'getRegisterSpecialtyByUser']);
+    Route::post('register_specialty/user', [RegisterSpecialtyController::class, 'submitRegisterSpecialty']);
 });

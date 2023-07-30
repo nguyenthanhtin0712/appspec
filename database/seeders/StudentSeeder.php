@@ -15,9 +15,11 @@ class StudentSeeder extends Seeder
      */
     public function run()
     {
-        $users = User::take(100)->get();
+        $specialtyOptions = ['HTTT', 'KTPM', 'MMT', 'KHMT'];
+        $users = User::take(103)->get();
         $index = 0;
         foreach ($users as $user) {
+            $randomSpecialty = $specialtyOptions[array_rand($specialtyOptions)];
             $student = new Student([
                 'user_id' => $user->user_id,
                 'student_code' => '312141006' . $index,
@@ -25,9 +27,10 @@ class StudentSeeder extends Seeder
                 'student_score' => 3.5,
                 'student_course' => 2021,
                 'major_id' => 'DCT',
+                'specialty_id' => $randomSpecialty
             ]);
             $student->save();
-            $index++; 
+            $index++;
         }
     }
 }

@@ -20,11 +20,20 @@ class Student extends Model
         'student_course',
         'major_id',
         'specialty_id',
-        'speciality_date',
+        'specialty_date',
         'company_position_detail_id',
         'mentor_code',
         'teacher_code',
         'student_isDelete',
     ];
 
+    public function major()
+    {
+        return $this->belongsTo(Major::class, 'major_id', 'major_id');
+    }
+
+    public function specialty()
+    {
+        return $this->belongsTo(Specialty::class, 'specialty_id', 'specialty_id');
+    }
 }

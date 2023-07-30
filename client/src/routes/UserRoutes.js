@@ -3,6 +3,7 @@ import { lazy } from 'react';
 // project-imports
 import Loadable from 'components/Loadable';
 import HomeLayout from 'layout/HomeLayout';
+import PrivateRoute from './route/PrivateRoute';
 
 // render - data display components
 const HomePage = Loadable(lazy(() => import('pages/user/homepage')));
@@ -40,11 +41,11 @@ const UserRoutes = {
       children: [
         {
           path: '/register_speciality',
-          element: <RegisterSpeciality_Index />
+          element: <PrivateRoute component={RegisterSpeciality_Index} requiredPermissions={[]} />
         },
         {
           path: 'register',
-          element: <RegisterSpeciality_Register />
+          element: <PrivateRoute component={RegisterSpeciality_Register} requiredPermissions={[]} />
         },
         {
           path: 'rules',
@@ -52,7 +53,7 @@ const UserRoutes = {
         },
         {
           path: 'result',
-          element: <RegisterSpeciality_Result />
+          element: <PrivateRoute component={RegisterSpeciality_Result} requiredPermissions={[]} />
         }
       ]
     },

@@ -7,26 +7,35 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
 import FormHelperText from '@mui/material/FormHelperText';
+import { useSelector } from 'react-redux';
+import { dispatch } from 'store/index';
+import { userRegisteringForSpecialty } from 'store/reducers/register_specialty';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
-const arrSpec = [
-  { id: 1, name: 'Kỹ thuật phần mềm', total: 375, registered_quantity: 300 },
-  { id: 2, name: 'Hệ thống thông tin', total: 75, registered_quantity: 60 },
-  { id: 3, name: 'Khoa học máy tính', total: 75, registered_quantity: 40 },
-  { id: 4, name: 'Kỹ thuật máy tính', total: 75, registered_quantity: 50 }
-];
 const RegisterForm = () => {
-  const [speciality, setSpeciality] = useState('');
+  const navigate = useNavigate();
+  const specialtyList = useSelector((state) => state.register_specialty.userRegistrationPeriod.detail);
+  const [speciality_id, setSpecialityId] = useState('');
   const [error, setError] = useState(false);
 
   const handleChange = (event) => {
-    setSpeciality(event.target.value);
+    setSpecialityId(event.target.value);
     setError(false);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!speciality) setError(true);
+    if (!speciality_id) setError(true);
+    else {
+      const result = await dispatch(userRegisteringForSpecialty(speciality_id));
+      if (result) {
+        toast.success('Đăng ký chuyên ngành thành công');
+        navigate('/register_speciality/result');
+      }
+    }
   };
+
   return (
     <MainCard title="Đăng ký chuyên ngành">
       <Grid container spacing={2}>
@@ -37,13 +46,13 @@ const RegisterForm = () => {
           </Typography>
           <form style={{ minWidth: 120 }} onSubmit={handleSubmit}>
             <FormControl fullWidth>
-              <Select value={speciality} onChange={handleChange} displayEmpty inputProps={{ 'aria-label': 'Without label' }}>
+              <Select value={speciality_id} onChange={handleChange} displayEmpty inputProps={{ 'aria-label': 'Without label' }}>
                 <MenuItem value="" sx={{ color: 'text.secondary' }}>
                   Chọn chuyên ngành bạn muốn đăng ký
                 </MenuItem>
-                {arrSpec.map((item) => (
-                  <MenuItem value={item.id} key={item.id}>
-                    {item.name}
+                {specialtyList.map(({ specialty_id, specialty_name }) => (
+                  <MenuItem value={specialty_id} key={specialty_id}>
+                    {specialty_name}
                   </MenuItem>
                 ))}
               </Select>

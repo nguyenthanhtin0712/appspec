@@ -18,6 +18,7 @@ class CreateRegisterSpecialtyDetailTable extends Migration
             $table->integer('register_specialty_id');
             $table->string('specialty_id');
             $table->integer('specialty_quantity');
+            $table->timestamps();
         });
     }
 

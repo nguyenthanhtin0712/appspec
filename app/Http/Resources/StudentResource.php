@@ -22,7 +22,7 @@ class StudentResource extends JsonResource
         'student_course' => $this->student_course,
         'major_id' => $this->major_id,
         'specialty_id' => $this->specialty_id,
-        'speciality_date' => $this->speciality_date,
+        'specialty_date' => $this->specialty_date,
         'company_position_detail_id' => $this->company_position_detail_id,
         'mentor_code' => $this->mentor_code,
         'teacher_code' => $this->teacher_code,

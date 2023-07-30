@@ -1,4 +1,6 @@
-export function formatDateTime(date) {
+import dayjs from 'dayjs';
+
+export function formatDateTimeSubmit(date) {
   const dateObject = new Date(date);
   const year = dateObject.getFullYear();
   const month = String(dateObject.getMonth() + 1).padStart(2, '0');
@@ -8,4 +10,8 @@ export function formatDateTime(date) {
   const second = String(dateObject.getSeconds()).padStart(2, '0');
   const formattedDateString = `${year}-${month}-${day} ${hour}:${minute}:${second}`;
   return formattedDateString;
+}
+
+export function formatDateTimeDisplay(date) {
+  return dayjs(date).format('HH:mm DD/MM/YYYY');
 }

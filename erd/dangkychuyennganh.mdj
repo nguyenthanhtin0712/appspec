@@ -1305,6 +1305,7 @@
 											"model": {
 												"$ref": "AAAAAAGITPYg87Aiopo="
 											},
+											"visible": false,
 											"font": "Arial;13;0",
 											"left": 1021,
 											"top": 651,
@@ -1322,7 +1323,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 1021,
-											"top": 666,
+											"top": 651,
 											"width": 229.98681640625,
 											"height": 13
 										},
@@ -1337,7 +1338,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 1021,
-											"top": 681,
+											"top": 666,
 											"width": 229.98681640625,
 											"height": 13
 										}
@@ -1346,7 +1347,7 @@
 									"left": 1016,
 									"top": 631,
 									"width": 239.98681640625,
-									"height": 68
+									"height": 53
 								}
 							],
 							"font": "Arial;13;0",
@@ -8502,7 +8503,7 @@
 								"$ref": "AAAAAAGITOlS+6/peHk="
 							},
 							"name": "spectiality_id",
-							"type": "INTEGER",
+							"type": "VARCHAR",
 							"length": 0,
 							"primaryKey": true
 						},

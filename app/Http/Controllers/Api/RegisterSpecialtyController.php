@@ -6,10 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreRegisterSpecialtyRequest;
 use App\Http\Resources\Collection;
 use App\Http\Resources\RegisterSpecialtyResource;
+use App\Models\DisplayConfig;
 use App\Models\RegisterSpecialty;
 use App\Models\RegisterSpecialtyDetail;
+use App\Models\Specialty;
+use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Carbon;
 
 class RegisterSpecialtyController extends Controller
 {
@@ -69,17 +73,10 @@ class RegisterSpecialtyController extends Controller
      */
     public function store(StoreRegisterSpecialtyRequest $request)
     {
-        // if ($request->has('register_specialty_detail')) {
-        //     $registerSpecialtyDetails = $request->input('register_specialty_detail');
-        //     $filteredDetails = array_filter($registerSpecialtyDetails, function ($item) {
-        //         return isset($item['specialty_quantity']) && $item['specialty_quantity'] > 0;
-        //     });
-        //     $registerSpecialty->registerSpecialtyDetails()->createMany($filteredDetails);
-        // }
         $dataCreate =  $request->all();
         $registerSpecialty = RegisterSpecialty::create($dataCreate);
         if ($request->has('register_specialty_detail')) {
-            $registerSpecialty->registerSpecialtyDetails()->createMany($request->input('register_specialty_detail'));
+            $registerSpecialty->specialty()->attach($request->input('register_specialty_detail'));
         }
         $registerSpecialtyResource = new RegisterSpecialtyResource($registerSpecialty);
         return $this->sentSuccessResponse($registerSpecialtyResource, "Create register specialty success", Response::HTTP_OK);
@@ -121,5 +118,43 @@ class RegisterSpecialtyController extends Controller
         $registerSpecialty->save();
         $registerSpecialtyResource = new RegisterSpecialtyResource($registerSpecialty);
         return $this->sentSuccessResponse($registerSpecialtyResource, "Delete success", Response::HTTP_OK);
+    }
+
+    public function getRegisterSpecialtyByUser(Request $request)
+    {
+        $displayConfig = DisplayConfig::find('REGISTER_SPECIALTY');
+        $registerSpecialty = RegisterSpecialty::with('specialty.major')->find($displayConfig->display_config_value);
+        $student = $request->user()->student;
+        if ($student && $student->student_course >= $registerSpecialty->register_specialty_course) {
+            $data = $registerSpecialty->specialty->filter(function ($specialty) use ($student) {
+                return $specialty->major->major_id == $student->major_id;
+            });
+            $data = $data->map(function ($specialty) use ($registerSpecialty) {
+                $specialty['pivot']['specialty_name'] = $specialty->specialty_name;
+                $specialty['pivot']['specialty_registered'] = $specialty->student->whereBetween('specialty_date', [Carbon::parse($registerSpecialty->register_specialty_start_date), Carbon::parse($registerSpecialty->register_specialty_end_date)])->count();
+                return $specialty;
+            });
+            $result = [
+                'register_specialty_id' => $registerSpecialty->register_specialty_id,
+                'register_specialty_name' => $registerSpecialty->register_specialty_name,
+                'register_specialty_start_date' => $registerSpecialty->register_specialty_start_date,
+                'register_specialty_end_date' => $registerSpecialty->register_specialty_end_date,
+                'register_specialty_course' => $registerSpecialty->register_specialty_course,
+                'detail' => $data->pluck('pivot')
+            ];
+            return $this->sentSuccessResponse($result, "Get data success", Response::HTTP_OK);
+        } else {
+            return response()->json(['message' => 'No permission',], 403);
+        }
+    }
+
+    public function submitRegisterSpecialty(Request $request)
+    {
+        $specialty_id = $request->input('specialty_id');
+        $student = $request->user()->student;
+        $student->specialty_id = $specialty_id;
+        $student->specialty_date = Carbon::now()->toDateTimeString();
+        $student->save();
+        return response()->json(['message' => 'Register specialty successful'], 200);
     }
 }

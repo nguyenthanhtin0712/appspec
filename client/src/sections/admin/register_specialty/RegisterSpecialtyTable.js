@@ -18,7 +18,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { toast } from 'react-toastify';
 import { dispatch } from 'store/index';
-import dayjs from 'dayjs';
+import { formatDateTimeDisplay } from 'utils/formatDateTime';
 
 const RegisterSpecialtyTable = () => {
   const theme = useTheme();
@@ -56,12 +56,12 @@ const RegisterSpecialtyTable = () => {
       {
         accessorKey: 'register_specialty_start_date',
         header: 'Thời gian bắt đầu',
-        Cell: ({ cell }) => dayjs(cell.getValue()).format('DD/MM/YYYY HH:mm')
+        Cell: ({ cell }) => formatDateTimeDisplay(cell.getValue())
       },
       {
         accessorKey: 'register_specialty_end_date',
         header: 'Thời gian kết thúc',
-        Cell: ({ cell }) => dayjs(cell.getValue()).format('DD/MM/YYYY HH:mm')
+        Cell: ({ cell }) => formatDateTimeDisplay(cell.getValue())
       }
     ],
     []

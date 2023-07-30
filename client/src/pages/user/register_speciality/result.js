@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
@@ -10,6 +10,9 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import { useSelector } from 'react-redux';
+import { dispatch } from 'store/index';
+import { getRegistrationInformation } from 'store/reducers/register_specialty';
 // import Paper from '@mui/material/Paper';
 
 function createData(name, calories, fat, carbs, protein) {
@@ -58,6 +61,17 @@ const MainResult = () => {
 };
 
 const SpecialityResult = () => {
+  const userRegistrationPeriod = useSelector((state) => state.register_specialty.userRegistrationPeriod);
+  useEffect(() => {
+    const fetchData = async () => {
+      await dispatch(getRegistrationInformation());
+    };
+    fetchData();
+  }, []);
+
+  if (!userRegistrationPeriod) {
+    return null;
+  }
   return (
     <Box component={Container} maxWidth="lg" sx={{ p: 3, pt: 0, mt: 2 }}>
       <Stack spacing={2}>

@@ -23,8 +23,8 @@ class RegisterSpecialty extends Model
         'register_specialty_isDelete' => 0,
     ];
 
-    public function registerSpecialtyDetails()
+    public function specialty()
     {
-        return $this->hasMany(RegisterSpecialtyDetail::class, 'register_specialty_id');
+        return $this->belongsToMany(Specialty::class, 'register_specialty_detail', 'register_specialty_id', 'specialty_id')->withPivot('specialty_quantity');
     }
 }

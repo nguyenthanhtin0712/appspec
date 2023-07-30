@@ -10,7 +10,7 @@ const InputMajorField = ({ specialty, values, setFieldValue }) => {
   const handleQuantityChange = (event) => {
     const newQuantity = parseInt(event.target.value, 10) || 0;
     const newSpecialties = [...values.register_specialty_detail];
-    newSpecialties[specialtyIndex].quantity = newQuantity;
+    newSpecialties[specialtyIndex].specialty_quantity = newQuantity;
     setFieldValue('specialties', newSpecialties);
   };
   const theme = useTheme();
@@ -27,7 +27,7 @@ const InputMajorField = ({ specialty, values, setFieldValue }) => {
           type="number"
           size="small"
           placeholder="Nhập số lượng"
-          value={values.register_specialty_detail[specialtyIndex].quantity || ''}
+          value={values.register_specialty_detail[specialtyIndex].specialty_quantity || ''}
           onChange={handleQuantityChange}
         ></OutlinedInput>
       </Grid>
