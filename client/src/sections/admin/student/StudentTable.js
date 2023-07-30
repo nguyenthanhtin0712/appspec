@@ -112,11 +112,21 @@ const SpecialtyTable = () => {
       },
       {
         accessorKey: 'user_gender',
-        header: 'Giới tính'
+        header: 'Giới tính',
+        Cell: ({ cell }) => {
+          return <div>{cell.row.original.user_gender == 0 ? 'Nam' : 'Nữ'}</div>;
+        }
       },
       {
         accessorKey: 'student_score',
-        header: 'Điểm'
+        header: 'Điểm',
+        Cell: ({ cell }) => {
+          if (cell.row.original && cell.row.original.student_score !== null && typeof cell.row.original.student_score === 'number') {
+            return <div>{cell.row.original.student_score.toFixed(2)}</div>;
+          } else {
+            return <div>N/A</div>;
+          }
+        }
       },
       {
         accessorKey: 'user_birthday',
