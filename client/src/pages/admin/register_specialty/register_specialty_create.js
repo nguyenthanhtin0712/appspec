@@ -13,7 +13,10 @@ import InputField from 'components/input/InputField';
 import DateTimePickerField from 'components/input/DateTimePickerField';
 import { dispatch } from 'store/index';
 import { getAll } from 'store/reducers/major';
-import MajorContainerForm from 'sections/admin/register_specialty/create/MajorContainerForm';
+import MajorContainerForm from 'sections/admin/register_specialty/register_specialty_create/MajorContainerForm';
+import { createRegisterSpecalty } from 'store/reducers/register_specialty';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const cource_list = () => {
   const currentYear = new Date().getFullYear();
@@ -37,6 +40,7 @@ const xulymang = (arr) => {
 };
 
 const RegisterSpecialty = () => {
+  const navigate = useNavigate();
   const [majorList, setMajorList] = useState([]);
   const years = cource_list();
   useEffect(() => {
@@ -82,9 +86,18 @@ const RegisterSpecialty = () => {
             })}
             onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
               try {
-                setStatus({ success: true });
-                setSubmitting(false);
-                console.log(values);
+                const result = await dispatch(createRegisterSpecalty(values));
+                if (result && !result.error) {
+                  setStatus({ success: true });
+                  setSubmitting(false);
+                  toast.success('Tạo đợt đăng ký thành công!');
+                  navigate('/admin/register_specialty');
+                } else {
+                  setStatus({ success: false });
+                  setErrors(result.payload.errors);
+                  setSubmitting(false);
+                  toast.error('Tạo đợt đăng ký không thành công');
+                }
               } catch (err) {
                 console.error(err);
                 setStatus({ success: false });

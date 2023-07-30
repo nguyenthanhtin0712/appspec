@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useEffect, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useTheme } from '@mui/material/styles';
 import { Edit, Trash } from 'iconsax-react';
@@ -11,59 +11,22 @@ import {
   setGlobalFilter,
   setSorting,
   setPagination,
-  deleteMajor,
-  setMajorDialog
-} from '../../../store/reducers/major';
+  deleteRegisterSpecalty
+} from '../../../store/reducers/register_specialty';
 import ConfirmDialog from 'components/ConfirmDialog';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { toast } from 'react-toastify';
 import { dispatch } from 'store/index';
-import { Export } from 'iconsax-react';
-import { utils, writeFileXLSX } from 'xlsx';
+import dayjs from 'dayjs';
 
-const MajorTable = () => {
+const RegisterSpecialtyTable = () => {
   const theme = useTheme();
   const [openCofirm, setOpenCofirm] = useState(false);
   const [idDelete, setIdDelete] = useState('');
   const { data, isError, isLoading, isRefetching, rowCount, columnFilters, globalFilter, sorting, pagination } = useSelector(
-    (state) => state.major
+    (state) => state.register_specialty
   );
-
-  const handleExportData = useCallback(() => {
-    const wb = utils.book_new();
-    const ws = utils.json_to_sheet(data);
-
-    // Calculate optimal column widths based on column names and data length
-    const columnWidths = [];
-
-    // Calculate column widths based on column names
-    Object.keys(data[0]).forEach((key, index) => {
-      const columnName = key !== null ? key.toString() : '';
-      const columnNameLength = columnName.length;
-      columnWidths[index] = Math.max(columnWidths[index] || 0, columnNameLength);
-    });
-
-    // Calculate column widths based on data length
-    data.forEach((row) => {
-      Object.values(row).forEach((cell, index) => {
-        const cellValue = cell !== null ? cell.toString() : '';
-        const cellLength = cellValue.length;
-        columnWidths[index] = Math.max(columnWidths[index] || 0, cellLength);
-      });
-    });
-
-    // Convert the column widths to Excel-style width units
-    const columnWidthsExcel = columnWidths.map((width) => ({
-      width: width + 2 // Adding some extra padding for better readability
-    }));
-
-    // Apply the calculated column widths to the worksheet
-    ws['!cols'] = columnWidthsExcel;
-
-    utils.book_append_sheet(wb, ws, 'Major');
-    writeFileXLSX(wb, 'Major.xlsx');
-  }, [data]);
 
   const handleCloseCofirm = () => {
     setOpenCofirm(false);
@@ -76,12 +39,29 @@ const MajorTable = () => {
   const columns = React.useMemo(
     () => [
       {
-        accessorKey: 'major_id',
-        header: 'Mã ngành'
+        accessorKey: 'register_specialty_id',
+        header: 'ID',
+        size: 30
       },
       {
-        accessorKey: 'major_name',
-        header: 'Tên ngành'
+        accessorKey: 'register_specialty_name',
+        header: 'Tên đợt',
+        size: 240
+      },
+      {
+        accessorKey: 'register_specialty_course',
+        header: 'Khóa',
+        size: 30
+      },
+      {
+        accessorKey: 'register_specialty_start_date',
+        header: 'Thời gian bắt đầu',
+        Cell: ({ cell }) => dayjs(cell.getValue()).format('DD/MM/YYYY HH:mm')
+      },
+      {
+        accessorKey: 'register_specialty_end_date',
+        header: 'Thời gian kết thúc',
+        Cell: ({ cell }) => dayjs(cell.getValue()).format('DD/MM/YYYY HH:mm')
       }
     ],
     []
@@ -102,8 +82,7 @@ const MajorTable = () => {
       <MaterialReactTable
         columns={columns}
         data={data}
-        getRowId={(row) => row.major_id}
-        enableRowNumbers
+        getRowId={(row) => row.register_specialty_id}
         manualFiltering
         manualPagination
         manualSorting
@@ -138,6 +117,11 @@ const MajorTable = () => {
             </IconButton>
           </Box>
         )}
+        displayColumnDefOptions={{
+          'mrt-row-actions': {
+            size: 120
+          }
+        }}
         muiTablePaperProps={{
           elevation: 0,
           variant: 'outlined',
@@ -154,11 +138,6 @@ const MajorTable = () => {
             bgcolor: theme.palette.background.neutral
           })
         }}
-        renderTopToolbarCustomActions={() => (
-          <Button color="success" onClick={handleExportData} startIcon={<Export />} variant="contained">
-            Xuất Excel
-          </Button>
-        )}
       />
 
       <ConfirmDialog
@@ -172,9 +151,9 @@ const MajorTable = () => {
             color="error"
             onClick={async () => {
               try {
-                await dispatch(deleteMajor(idDelete));
+                await dispatch(deleteRegisterSpecalty(idDelete));
                 handleCloseCofirm();
-                toast.success('Xóa ngành thành công!');
+                toast.success('Xóa đợt đăng ký thành công!');
                 setIdDelete('');
               } catch (err) {
                 console.error(err);
@@ -190,4 +169,4 @@ const MajorTable = () => {
   );
 };
 
-export default memo(MajorTable);
+export default memo(RegisterSpecialtyTable);

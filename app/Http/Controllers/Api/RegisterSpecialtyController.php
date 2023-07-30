@@ -69,17 +69,17 @@ class RegisterSpecialtyController extends Controller
      */
     public function store(StoreRegisterSpecialtyRequest $request)
     {
+        // if ($request->has('register_specialty_detail')) {
+        //     $registerSpecialtyDetails = $request->input('register_specialty_detail');
+        //     $filteredDetails = array_filter($registerSpecialtyDetails, function ($item) {
+        //         return isset($item['specialty_quantity']) && $item['specialty_quantity'] > 0;
+        //     });
+        //     $registerSpecialty->registerSpecialtyDetails()->createMany($filteredDetails);
+        // }
         $dataCreate =  $request->all();
         $registerSpecialty = RegisterSpecialty::create($dataCreate);
         if ($request->has('register_specialty_detail')) {
-            $registerSpecialtyDetail = $request->input('register_specialty_detail');
-            foreach ($registerSpecialtyDetail as $registerSpecialtyItem) {
-                RegisterSpecialtyDetail::create([
-                    'register_specialty_id' => $registerSpecialty['register_specialty_id'],
-                    'specialty_id' => $registerSpecialtyItem['specialty_id'],
-                    'specialty_quantity' => $registerSpecialtyItem['specialty_quantity']
-                ]);
-            }
+            $registerSpecialty->registerSpecialtyDetails()->createMany($request->input('register_specialty_detail'));
         }
         $registerSpecialtyResource = new RegisterSpecialtyResource($registerSpecialty);
         return $this->sentSuccessResponse($registerSpecialtyResource, "Create register specialty success", Response::HTTP_OK);
@@ -116,6 +116,10 @@ class RegisterSpecialtyController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $registerSpecialty = RegisterSpecialty::find($id);
+        $registerSpecialty->register_specialty_isDelete = 1;
+        $registerSpecialty->save();
+        $registerSpecialtyResource = new RegisterSpecialtyResource($registerSpecialty);
+        return $this->sentSuccessResponse($registerSpecialtyResource, "Delete success", Response::HTTP_OK);
     }
 }

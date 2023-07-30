@@ -8,6 +8,7 @@ import major from './major';
 import auth from './auth';
 import specialty from './specialty';
 import student from './student';
+import register_specialty from './register_specialty';
 
 // ==============================|| COMBINE REDUCERS ||============================== //
 
@@ -17,7 +18,8 @@ const reducers = combineReducers({
   major,
   auth,
   specialty,
-  student
+  student,
+  register_specialty
 });
 
 export default reducers;

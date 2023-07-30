@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\DisplayConfig;
 use App\Models\Employer;
 use App\Models\Teacher;
 use Illuminate\Database\Seeder;
@@ -22,5 +23,6 @@ class DatabaseSeeder extends Seeder
         $this->call(StudentSeeder::class);
         $this->call(EmployerSeeder::class);
         $this->call(TeacherSeeder::class);
+        $this->call(DisplayConfigSeeder::class);
     }
 }

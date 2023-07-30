@@ -14,7 +14,7 @@ const SpecialityItem = ({ name, total, registered_quantity }) => {
         <Typography variant="h6">{name}</Typography>
         <Box
           sx={{
-            backgroundColor: theme.palette.primary.main,
+            backgroundColor: registered_quantity < total ? theme.palette.success.main : theme.palette.error.main,
             color: '#fff',
             px: 1,
             py: 0.5,

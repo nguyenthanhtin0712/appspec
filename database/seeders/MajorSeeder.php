@@ -20,9 +20,6 @@ class MajorSeeder extends Seeder
             'major_isDelete' => '0'
         ]);
 
-
-
-
         Major::create([
             'major_id' => 'DKP',
             'major_name' => 'Kỹ thuật phần mềm',

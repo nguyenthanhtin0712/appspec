@@ -7,7 +7,7 @@ const arrSpec = [
   { id: 1, name: 'Kỹ thuật phần mềm', total: 375, registered_quantity: 300 },
   { id: 2, name: 'Hệ thống thông tin', total: 75, registered_quantity: 60 },
   { id: 3, name: 'Khoa học máy tính', total: 75, registered_quantity: 40 },
-  { id: 4, name: 'Kỹ thuật máy tính', total: 75, registered_quantity: 50 }
+  { id: 4, name: 'Kỹ thuật máy tính', total: 75, registered_quantity: 80 }
 ];
 const SpecialityContainer = () => {
   return (

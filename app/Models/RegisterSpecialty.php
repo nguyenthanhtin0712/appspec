@@ -22,4 +22,9 @@ class RegisterSpecialty extends Model
     protected $attributes = [
         'register_specialty_isDelete' => 0,
     ];
+
+    public function registerSpecialtyDetails()
+    {
+        return $this->hasMany(RegisterSpecialtyDetail::class, 'register_specialty_id');
+    }
 }
