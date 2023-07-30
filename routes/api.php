@@ -59,6 +59,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::delete('/student/{id}', [StudentController::class, 'destroy'])->middleware('check_user_role_permission:student.delete');
     //Import sinh viên đầu khóa vào hệ thóng
     Route::post('/addFileStudent', [StudentController::class, 'addFileStudent'])->middleware('check_user_role_permission:student.create');
+    Route::post('/addScoreStudent', [StudentController::class, 'addScoreStudent'])->middleware('check_user_role_permission:student.create');
 
     //Teacher controller api
     Route::get('teachers', [TeacherController::class, 'index'])->middleware('check_user_role_permission:teacher.view');
