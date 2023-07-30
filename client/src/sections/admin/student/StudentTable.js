@@ -1,7 +1,8 @@
 import React, { memo, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useTheme } from '@mui/material/styles';
-import { Edit, Trash } from 'iconsax-react';
+import { Trash } from 'iconsax-react';
+// import { Edit } from 'iconsax-react';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import { MaterialReactTable } from 'material-react-table';
@@ -12,8 +13,9 @@ import {
   setSorting,
   setPagination,
   deleteStudent,
-  setStudentDialog,
-  setStudentFileDialog
+  // setStudentDialog,
+  setStudentFileDialog,
+  setStudentScoreDialog
 } from '../../../store/reducers/student';
 import ConfirmDialog from 'components/ConfirmDialog';
 import Typography from '@mui/material/Typography';
@@ -24,6 +26,8 @@ import { Export, Import } from 'iconsax-react';
 import { utils, writeFileXLSX } from 'xlsx';
 import { useCallback } from 'react';
 import StudentFileDialog from 'sections/admin/student/StudentFileDialog';
+import StudentScoreDialog from 'sections/admin/student/StudentScoreDialog';
+import ScoreIcon from '@mui/icons-material/Score';
 
 const SpecialtyTable = () => {
   const theme = useTheme();
@@ -111,6 +115,10 @@ const SpecialtyTable = () => {
         header: 'Giới tính'
       },
       {
+        accessorKey: 'student_score',
+        header: 'Điểm'
+      },
+      {
         accessorKey: 'user_birthday',
         header: 'Ngày sinh'
       },
@@ -135,9 +143,9 @@ const SpecialtyTable = () => {
     setIdDelete(id);
   };
 
-  const handleUpdate = (data) => {
-    dispatch(setStudentDialog({ open: true, action: 'update', initValue: data }));
-  };
+  // const handleUpdate = (data) => {
+  //   dispatch(setStudentDialog({ open: true, action: 'update', initValue: data }));
+  // };
 
   return (
     <>
@@ -168,17 +176,16 @@ const SpecialtyTable = () => {
         renderRowActions={({ row }) => {
           return (
             <Box sx={{ display: 'flex' }}>
-              <IconButton
+              {/* <IconButton
                 onClick={() => {
                   handleUpdate(row.original);
                 }}
               >
                 <Edit />
-              </IconButton>
+              </IconButton> */}
               <IconButton
                 color="error"
                 onClick={() => {
-                  console.log(row);
                   return handleDelete(row.original.user_id);
                 }}
               >
@@ -213,6 +220,26 @@ const SpecialtyTable = () => {
                 Nhập Excel
               </Button>
             </Box>
+            <Box marginLeft={2}>
+              <Button
+                color="primary"
+                onClick={() => {
+                  dispatch(
+                    setStudentScoreDialog({
+                      open: true,
+                      initValue: {
+                        file_student: ''
+                      }
+                    })
+                  );
+                }}
+                startIcon={<ScoreIcon />}
+                variant="contained"
+                component="span"
+              >
+                Thêm điểm
+              </Button>
+            </Box>
           </Box>
         )}
       />
@@ -227,7 +254,6 @@ const SpecialtyTable = () => {
             color="error"
             onClick={async () => {
               try {
-                console.log(idDelete);
                 await dispatch(deleteStudent(idDelete));
                 handleCloseCofirm();
                 toast.success('Xóa sinh viên thành công!');
@@ -243,6 +269,7 @@ const SpecialtyTable = () => {
         }
       />
       <StudentFileDialog />
+      <StudentScoreDialog />
     </>
   );
 };

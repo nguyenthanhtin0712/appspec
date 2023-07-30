@@ -52,6 +52,16 @@ export const addFileStudent = createAsyncThunk('student/addFileStudent', async (
   }
 });
 
+export const addScoreStudent = createAsyncThunk('student/addScoreStudent', async (data) => {
+  try {
+    const response = await axios.post(`${API_BASE_URL}/addScoreStudent`, data);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+});
+
 export const updateStudent = createAsyncThunk('student/updateStudent', async ({ id, student }) => {
   try {
     const response = await axios.put(`${API_BASE_URL}/student/${id}`, student);
@@ -106,6 +116,12 @@ const initialState = {
       file_student: null,
       password_student: ''
     }
+  },
+  studentScoreDialog: {
+    open: false,
+    initValue: {
+      file_student: null
+    }
   }
 };
 
@@ -130,6 +146,9 @@ const student = createSlice({
     },
     setStudentFileDialog: (state, action) => {
       state.studentFileDialog = { ...state.studentFileDialog, ...action.payload };
+    },
+    setStudentScoreDialog: (state, action) => {
+      state.studentScoreDialog = { ...state.studentFileDialog, ...action.payload };
     }
   },
   extraReducers: (builder) => {
@@ -138,9 +157,9 @@ const student = createSlice({
         state.isLoading = true;
       })
       .addCase(fetchData.fulfilled, (state, action) => {
+        state.data = action.payload.data;
         state.isLoading = false;
         state.isRefetching = false;
-        state.data = action.payload.data;
         state.rowCount = action.payload.rowCount;
         state.isError = false;
       })
@@ -153,9 +172,21 @@ const student = createSlice({
         state.data.push(action.payload.data);
         state.studentDialog.open = false;
       })
+      .addCase(addFileStudent.pending, (state) => {
+        state.isLoading = true;
+      })
       .addCase(addFileStudent.fulfilled, (state, action) => {
-        state.data = [...state.data, ...action.payload.data.result];
+        // state.data = [...state.data, ...action.payload.data.result];
         state.studentFileDialog.open = false;
+        state.isLoading = false;
+        state.isRefetching = false;
+        state.rowCount = action.payload.rowCount;
+        state.isError = false;
+      })
+      .addCase(addFileStudent.rejected, (state) => {
+        state.isLoading = false;
+        state.isRefetching = false;
+        state.isError = true;
       })
       .addCase(updateStudent.fulfilled, (state, action) => {
         const updatedstudent = action.payload.data;
@@ -165,13 +196,41 @@ const student = createSlice({
           state.studentDialog.open = false;
         }
       })
+      .addCase(deleteStudent.pending, (state) => {
+        state.isLoading = true;
+      })
       .addCase(deleteStudent.fulfilled, (state, action) => {
+        state.isLoading = false;
         const deletedstudentId = action.payload.data.student_id;
         state.data = state.data.filter((student) => student.student_id !== deletedstudentId);
+      })
+      .addCase(deleteStudent.rejected, (state) => {
+        state.isLoading = false;
+        state.isRefetching = false;
+        state.isError = true;
+      })
+      .addCase(addScoreStudent.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(addScoreStudent.fulfilled, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(addScoreStudent.rejected, (state) => {
+        state.isLoading = false;
+        state.isRefetching = false;
+        state.isError = true;
       });
   }
 });
 
-export const { setColumnFilters, setGlobalFilter, setSorting, setPagination, setStudentDialog, setStudentFileDialog } = student.actions;
+export const {
+  setColumnFilters,
+  setGlobalFilter,
+  setSorting,
+  setPagination,
+  setStudentDialog,
+  setStudentFileDialog,
+  setStudentScoreDialog
+} = student.actions;
 
 export default student.reducer;
