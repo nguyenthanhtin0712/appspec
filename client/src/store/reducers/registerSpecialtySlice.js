@@ -11,7 +11,7 @@ export const fetchData = createAsyncThunk('register_specialty/fetchData', async 
     sorting,
     pagination: { pageIndex, pageSize }
   } = params;
-  const url = new URL('/api/register_specialties/admin', API_BASE_URL);
+  const url = new URL('/api/register-specialties/admin', API_BASE_URL);
   url.searchParams.set('page', `${pageIndex + 1}`);
   url.searchParams.set('perPage', `${pageSize}`);
   url.searchParams.set('filters', JSON.stringify(columnFilters ?? []));
@@ -46,7 +46,7 @@ export const createRegisterSpecalty = createAsyncThunk(
         register_specialty_start_date: formatDateTimeSubmit(specialty.register_specialty_start_date)
       };
 
-      const response = await axios.post(`/register_specialty/admin`, formattedSpecialty);
+      const response = await axios.post(`/register-specialties/admin`, formattedSpecialty);
       return response.data;
     } catch (error) {
       if (error.response?.data?.errors) {
@@ -63,7 +63,7 @@ export const updateRegisterSpecalty = createAsyncThunk(
   'register_specialty/updateRegisterSpecalty',
   async (specialty, { rejectWithValue }) => {
     try {
-      const response = await axios.put(`/register_specialty/admin/${specialty.register_specialty_id}`, specialty);
+      const response = await axios.put(`/register-specialties/admin/${specialty.register_specialty_id}`, specialty);
       return response.data;
     } catch (error) {
       if (error.response && error.response.data && error.response.data.errors) {
@@ -78,7 +78,7 @@ export const updateRegisterSpecalty = createAsyncThunk(
 
 export const deleteRegisterSpecalty = createAsyncThunk('register_specialty/deleteRegisterSpecalty', async (id, { rejectWithValue }) => {
   try {
-    const response = await axios.delete(`/register_specialty/admin/${id}`);
+    const response = await axios.delete(`/register-specialties/admin/${id}`);
     return response.data;
   } catch (error) {
     if (error.response && error.response.data && error.response.data.errors) {
@@ -92,7 +92,7 @@ export const deleteRegisterSpecalty = createAsyncThunk('register_specialty/delet
 
 export const getRegistrationInformation = createAsyncThunk('register_specialty/getRegistrationInformation', async () => {
   try {
-    const response = await axios.get(`/register_specialties/user`);
+    const response = await axios.get(`/register-specialties/user`);
     return response.data;
   } catch (error) {
     console.error(error);
@@ -102,7 +102,7 @@ export const getRegistrationInformation = createAsyncThunk('register_specialty/g
 
 export const userRegisteringForSpecialty = createAsyncThunk('register_specialty/userRegisteringForSpecialty', async (specialty_id) => {
   try {
-    const response = await axios.post(`/register_specialty/user`, { specialty_id });
+    const response = await axios.post(`/register-specialties/user`, { specialty_id });
     return response.data;
   } catch (error) {
     console.error(error);

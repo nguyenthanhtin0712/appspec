@@ -37,7 +37,7 @@ export const fetchData = createAsyncThunk('specialty/fetchData', async (params, 
 
 export const createSpecialty = createAsyncThunk('specialty/createSpecialty', async (specialty, { rejectWithValue }) => {
   try {
-    const response = await axios.post(`/specialty`, specialty);
+    const response = await axios.post(`/specialties`, specialty);
     return response.data;
   } catch (error) {
     if (error.response && error.response.data && error.response.data.errors) {
@@ -51,7 +51,7 @@ export const createSpecialty = createAsyncThunk('specialty/createSpecialty', asy
 
 export const updateSpecialty = createAsyncThunk('specialty/updateSpecialty', async (specialty, { rejectWithValue }) => {
   try {
-    const response = await axios.put(`/specialty/${specialty.specialty_id}`, specialty);
+    const response = await axios.put(`/specialties/${specialty.specialty_id}`, specialty);
     return response.data;
   } catch (error) {
     if (error.response && error.response.data && error.response.data.errors) {
@@ -65,7 +65,7 @@ export const updateSpecialty = createAsyncThunk('specialty/updateSpecialty', asy
 
 export const deleteSpecialty = createAsyncThunk('specialty/deleteSpecialty', async (id, { rejectWithValue }) => {
   try {
-    const response = await axios.delete(`/specialty/${id}`);
+    const response = await axios.delete(`/specialties/${id}`);
     return response.data;
   } catch (error) {
     if (error.response && error.response.data && error.response.data.errors) {

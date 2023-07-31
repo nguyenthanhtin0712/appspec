@@ -34,7 +34,7 @@ export const fetchData = createAsyncThunk('student/fetchData', async (params) =>
 export const createStudent = createAsyncThunk('student/createStudent', async (student) => {
   try {
     console.log(student);
-    const response = await axios.post(`${API_BASE_URL}/student`, student);
+    const response = await axios.post(`${API_BASE_URL}/students`, student);
     return response.data;
   } catch (error) {
     console.error(error);
@@ -44,7 +44,7 @@ export const createStudent = createAsyncThunk('student/createStudent', async (st
 
 export const addFileStudent = createAsyncThunk('student/addFileStudent', async (data) => {
   try {
-    const response = await axios.post(`${API_BASE_URL}/addFileStudent`, data);
+    const response = await axios.post(`${API_BASE_URL}/addFileStudents`, data);
     return response.data;
   } catch (error) {
     console.error(error);
@@ -54,7 +54,7 @@ export const addFileStudent = createAsyncThunk('student/addFileStudent', async (
 
 export const addScoreStudent = createAsyncThunk('student/addScoreStudent', async (data) => {
   try {
-    const response = await axios.post(`${API_BASE_URL}/addScoreStudent`, data);
+    const response = await axios.post(`${API_BASE_URL}/addScoreStudents`, data);
     return response.data;
   } catch (error) {
     console.error(error);
@@ -64,7 +64,7 @@ export const addScoreStudent = createAsyncThunk('student/addScoreStudent', async
 
 export const updateStudent = createAsyncThunk('student/updateStudent', async ({ id, student }) => {
   try {
-    const response = await axios.put(`${API_BASE_URL}/student/${id}`, student);
+    const response = await axios.put(`${API_BASE_URL}/students/${id}`, student);
     return response.data;
   } catch (error) {
     console.error(error);
@@ -74,7 +74,7 @@ export const updateStudent = createAsyncThunk('student/updateStudent', async ({ 
 
 export const deleteStudent = createAsyncThunk('student/deleteStudent', async (id) => {
   try {
-    const response = await axios.delete(`${API_BASE_URL}/student/${id}`);
+    const response = await axios.delete(`${API_BASE_URL}/students/${id}`);
     return response.data;
   } catch (error) {
     console.error(error);

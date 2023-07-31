@@ -32,7 +32,7 @@ export const fetchData = createAsyncThunk('user/fetchData', async (params) => {
 
 export const createUser = createAsyncThunk('user/createUser', async (user) => {
   try {
-    const response = await axios.post('/api/user', user);
+    const response = await axios.post('/api/users', user);
     return response.data;
   } catch (error) {
     console.error(error);
@@ -42,7 +42,7 @@ export const createUser = createAsyncThunk('user/createUser', async (user) => {
 
 export const updateUser = createAsyncThunk('user/updateUser', async ({ id, user }) => {
   try {
-    const response = await axios.put(`/api/user/${id}`, user);
+    const response = await axios.put(`/api/users/${id}`, user);
     return response.data;
   } catch (error) {
     console.error(error);
@@ -52,7 +52,7 @@ export const updateUser = createAsyncThunk('user/updateUser', async ({ id, user 
 
 export const deleteUser = createAsyncThunk('user/deleteUser', async (id) => {
   try {
-    const response = await axios.delete(`/api/user/${id}`);
+    const response = await axios.delete(`/api/users/${id}`);
     return response.data;
   } catch (error) {
     console.error(error);
