@@ -16,8 +16,11 @@ import { InputLabel } from '@mui/material';
 import Stack from '@mui/material/Stack';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import * as XLSX from 'xlsx';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const StudentFileDialog = () => {
+  const { isLoading } = useSelector((state) => state.student);
   const { studentFileDialog, columnFilters, globalFilter, sorting, pagination } = useSelector((state) => state.student);
 
   const handleClose = () => {
@@ -125,6 +128,11 @@ const StudentFileDialog = () => {
           </form>
         )}
       </Formik>
+      {isLoading && (
+        <Backdrop sx={{ color: '#fff', zIndex: 2000 }} open={isLoading}>
+          <CircularProgress color="inherit" />
+        </Backdrop>
+      )}
     </Dialog>
   );
 };
