@@ -141,6 +141,9 @@ const student = createSlice({
     setPagination: (state, action) => {
       state.pagination = action.payload;
     },
+    setLoading: (state, action) => {
+      state.isLoading = action.payload;
+    },
     setStudentDialog: (state, action) => {
       state.studentDialog = { ...state.studentDialog, ...action.payload };
     },
@@ -228,6 +231,7 @@ export const {
   setGlobalFilter,
   setSorting,
   setPagination,
+  setLoading,
   setStudentDialog,
   setStudentFileDialog,
   setStudentScoreDialog

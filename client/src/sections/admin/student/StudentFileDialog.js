@@ -146,7 +146,6 @@ function handleImportData(file, pass) {
           reject(error);
           return;
         }
-
         const sheet = workbook.Sheets[sheetName];
         const jsonData = XLSX.utils.sheet_to_json(sheet, { header: 2 });
 
@@ -164,7 +163,6 @@ function handleImportData(file, pass) {
             major_id: row['MaNganh']
           });
         });
-
         resolve(result);
       } catch (error) {
         toast.error('' + error);
