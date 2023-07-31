@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { MaterialReactTable } from 'material-react-table';
-import { fetchData, setColumnFilters, setGlobalFilter, setSorting, setPagination } from '../../store/reducers/user';
+import { fetchData, setColumnFilters, setGlobalFilter, setSorting, setPagination } from 'store/reducers/userSlice';
 import { dispatch } from 'store/index';
 
 const Example = () => {

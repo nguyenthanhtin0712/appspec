@@ -10,7 +10,7 @@ import { useTheme } from '@mui/material/styles';
 import InfoItem from 'sections/user/register_speciality/index/InfoItem';
 import RegistrationInfoTable from 'sections/user/register_speciality/index/RegistrationInfoTable';
 import { dispatch } from 'store/index';
-import { getRegistrationInformation } from 'store/reducers/register_specialty';
+import { getRegistrationInformation } from 'store/reducers/registerSpecialtySlice';
 import { useSelector } from 'react-redux';
 import { formatDateTimeDisplay } from 'utils/formatDateTime';
 

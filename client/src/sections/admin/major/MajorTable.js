@@ -13,7 +13,7 @@ import {
   setPagination,
   deleteMajor,
   setMajorDialog
-} from '../../../store/reducers/major';
+} from 'store/reducers/majorSlice';
 import ConfirmDialog from 'components/ConfirmDialog';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';

@@ -3,12 +3,12 @@ import { combineReducers } from 'redux';
 
 // project-imports
 import menu from './menu';
-import user from './user';
-import major from './major';
-import auth from './auth';
-import specialty from './specialty';
-import student from './student';
-import register_specialty from './register_specialty';
+import user from './userSlice';
+import major from './majorSlice';
+import auth from './authSlice';
+import specialty from './specialtySlice';
+import student from './studentSlice';
+import register_specialty from './registerSpecialtySlice';
 
 // ==============================|| COMBINE REDUCERS ||============================== //
 

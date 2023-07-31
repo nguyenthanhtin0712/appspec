@@ -14,7 +14,7 @@ import IconButton from 'components/@extended/IconButton';
 // assets
 import { Logout } from 'iconsax-react';
 import { useSelector } from 'react-redux';
-import { logoutUser } from 'store/reducers/auth';
+import { logoutUser } from 'store/reducers/authSlice';
 import { useNavigate } from 'react-router-dom';
 import { dispatch } from 'store/index';
 import { toast } from 'react-toastify';

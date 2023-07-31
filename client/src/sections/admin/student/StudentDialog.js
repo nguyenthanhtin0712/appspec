@@ -7,12 +7,11 @@ import FormHelperText from '@mui/material/FormHelperText';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import { toast } from 'react-toastify';
-import { createStudent, setStudentDialog, updateStudent } from 'store/reducers/student';
+import { createStudent, setStudentDialog, updateStudent } from 'store/reducers/studentSlice';
 import { useSelector } from 'react-redux';
 import Button from '@mui/material/Button';
 import { dispatch } from 'store/index';
 import { Select, MenuItem, InputLabel } from '@mui/material';
-import { fetchData } from '../../../store/reducers/major';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Stack from '@mui/material/Stack';
@@ -20,6 +19,7 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { fetchData } from 'store/reducers/majorSlice';
 
 const StudentDialog = () => {
   const { studentDialog } = useSelector((state) => state.student);

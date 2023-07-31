@@ -1,5 +1,5 @@
 import React from 'react';
-import { setMajorDialog } from '../../store/reducers/major';
+import { setMajorDialog } from 'store/reducers/majorSlice';
 import { Add } from 'iconsax-react';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';

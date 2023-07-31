@@ -9,7 +9,7 @@ import Button from '@mui/material/Button';
 import FormHelperText from '@mui/material/FormHelperText';
 import { useSelector } from 'react-redux';
 import { dispatch } from 'store/index';
-import { userRegisteringForSpecialty } from 'store/reducers/register_specialty';
+import { userRegisteringForSpecialty } from 'store/reducers/registerSpecialtySlice';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 

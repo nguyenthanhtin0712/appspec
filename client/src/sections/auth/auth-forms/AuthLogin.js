@@ -26,7 +26,7 @@ import AnimateButton from 'components/@extended/AnimateButton';
 
 // assets
 import { Eye, EyeSlash } from 'iconsax-react';
-import { login } from 'store/reducers/auth';
+import { login } from 'store/reducers/authSlice';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { dispatch } from 'store/index';

@@ -6,7 +6,7 @@ import RegisterForm from 'sections/user/register_speciality/register/RegisterFor
 import SpecialityContainer from 'sections/user/register_speciality/register/SpecialityContainer';
 import { useSelector } from 'react-redux';
 import { dispatch } from 'store/index';
-import { getRegistrationInformation } from 'store/reducers/register_specialty';
+import { getRegistrationInformation } from 'store/reducers/registerSpecialtySlice';
 
 const RegisterSpeciality = () => {
   const userRegistrationPeriod = useSelector((state) => state.register_specialty.userRegistrationPeriod);

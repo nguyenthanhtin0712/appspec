@@ -12,7 +12,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { useSelector } from 'react-redux';
 import { dispatch } from 'store/index';
-import { getRegistrationInformation } from 'store/reducers/register_specialty';
+import { getRegistrationInformation } from 'store/reducers/registerSpecialtySlice';
 // import Paper from '@mui/material/Paper';
 
 function createData(name, calories, fat, carbs, protein) {

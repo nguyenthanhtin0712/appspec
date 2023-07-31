@@ -3,7 +3,7 @@ import Routes from 'routes';
 import ThemeCustomization from 'themes';
 import ScrollTop from 'components/ScrollTop';
 import { useEffect } from 'react';
-import { getUserDataFromToken } from 'store/reducers/auth';
+import { getUserDataFromToken } from 'store/reducers/authSlice';
 import Cookies from 'js-cookie';
 import { dispatch } from 'store/index';
 
