@@ -7,13 +7,8 @@ import Typography from '@mui/material/Typography';
 import StudentTable from 'sections/admin/student/StudentTable';
 import StudentDialog from 'sections/admin/student/StudentDialog';
 import { dispatch } from 'store/index';
-import Backdrop from '@mui/material/Backdrop';
-import CircularProgress from '@mui/material/CircularProgress';
-import { useSelector } from 'react-redux';
 
 const SpecialtyPage = () => {
-  const { isLoading } = useSelector((state) => state.student);
-
   const handleClickOpen = () => {
     dispatch(setStudentDialog({ open: true, action: 'add' }));
   };
@@ -28,11 +23,6 @@ const SpecialtyPage = () => {
       </Stack>
       <StudentDialog />
       <StudentTable />
-      {isLoading && (
-        <Backdrop sx={{ color: '#fff', zIndex: 2000 }} open={isLoading}>
-          <CircularProgress color="inherit" />
-        </Backdrop>
-      )}
     </>
   );
 };

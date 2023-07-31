@@ -20,8 +20,11 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { fetchData } from 'store/reducers/majorSlice';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const StudentDialog = () => {
+  const { isLoading } = useSelector((state) => state.student);
   const { studentDialog } = useSelector((state) => state.student);
   const { data, columnFilters, globalFilter, sorting, pagination } = useSelector((state) => state.major);
   useEffect(() => {
@@ -332,6 +335,11 @@ const StudentDialog = () => {
           )}
         </Formik>
       </LocalizationProvider>
+      {isLoading && (
+        <Backdrop sx={{ color: '#fff', zIndex: 2000 }} open={isLoading}>
+          <CircularProgress color="inherit" />
+        </Backdrop>
+      )}
     </Dialog>
   );
 };
