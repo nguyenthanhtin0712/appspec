@@ -41,7 +41,7 @@ const UserRoutes = {
       children: [
         {
           path: '/register_speciality',
-          element: <PrivateRoute component={RegisterSpeciality_Index} requiredPermissions={[]} />
+          element: <RegisterSpeciality_Index />
         },
         {
           path: 'register',

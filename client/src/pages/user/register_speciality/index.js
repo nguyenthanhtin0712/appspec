@@ -5,7 +5,7 @@ import MainCard from 'components/MainCard';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import { Calendar, Chart, InfoCircle, Stickynote, ArchiveTick, Check, MedalStar } from 'iconsax-react';
+import { Calendar, Chart, InfoCircle, Stickynote, ArchiveTick, Check, MedalStar, RecordCircle } from 'iconsax-react';
 import { useTheme } from '@mui/material/styles';
 import InfoItem from 'sections/user/register_speciality/index/InfoItem';
 import RegistrationInfoTable from 'sections/user/register_speciality/index/RegistrationInfoTable';
@@ -26,33 +26,46 @@ const Register_speciality = () => {
   if (!userRegistrationPeriod) {
     return null;
   }
-  const { register_specialty_course, register_specialty_start_date, register_specialty_end_date, detail } = userRegistrationPeriod;
+  const { register_specialty_course, register_specialty_start_date, register_specialty_end_date, register_specialty_detail } =
+    userRegistrationPeriod;
   return (
     <Box component={Container} maxWidth="lg" sx={{ p: 3, pt: 0, mt: 2 }}>
       <Grid container spacing={2}>
         <Grid item xs={12} md={8} mx="auto">
           <MainCard title={`Thông tin đăng ký chuyên ngành khóa ${register_specialty_course}`}>
             <Box sx={{ borderBottom: '1px solid', borderColor: theme.palette.divider, pb: 1 }}>
-              <Stack direction="row" alignItems="center" spacing={1} mb={1}>
-                <Calendar size="20" color={theme.palette.primary.main} variant="Bulk" />
-                <Typography variant="h6">Lịch đăng ký</Typography>
+              <Stack direction="row" alignItems="flex-end" spacing={1} mb={2}>
+                <Calendar size="25" color={theme.palette.primary.main} variant="Bulk" />
+                <Typography variant="h5" fontWeight={600}>
+                  Lịch đăng ký
+                </Typography>
               </Stack>
-              <Stack ml={4}>
+              <Stack ml={3}>
                 <Typography variant="h6">Thời gian bắt đầu: {formatDateTimeDisplay(register_specialty_start_date)}</Typography>
                 <Typography variant="h6">Thời gian kết thúc: {formatDateTimeDisplay(register_specialty_end_date)}</Typography>
               </Stack>
             </Box>
             <Box sx={{ borderBottom: '1px solid', borderColor: theme.palette.divider, py: 2 }}>
-              <Stack direction="row" alignItems="center" spacing={1} mb={2}>
-                <Chart size="20" color={theme.palette.primary.main} variant="Bulk" />
-                <Typography variant="h6">Thống kê</Typography>
+              <Stack direction="row" alignItems="flex-end" spacing={1} mb={2}>
+                <Chart size="25" color={theme.palette.primary.main} variant="Bulk" />
+                <Typography variant="h5">Thống kê</Typography>
               </Stack>
-              <RegistrationInfoTable data={detail} />
+              {register_specialty_detail.map((item) => (
+                <Box key={item.major_id}>
+                  <Stack direction="row" alignItems="center" spacing={1.5} my={3}>
+                    <RecordCircle size="18" color={theme.palette.error.main} variant="Bulk" />
+                    <Typography fontWeight={600} fontSize={14}>
+                      Ngành {item.major_name}
+                    </Typography>
+                  </Stack>
+                  <RegistrationInfoTable data={item.specialties} />
+                </Box>
+              ))}
             </Box>
             <Box sx={{ borderBottom: '1px solid', borderColor: theme.palette.divider, py: 2 }}>
-              <Stack direction="row" alignItems="center" spacing={1} mb={1}>
-                <InfoCircle size="20" color={theme.palette.primary.main} variant="Bulk" />
-                <Typography variant="h6">Thông tin</Typography>
+              <Stack direction="row" alignItems="flex-end" spacing={1} mb={2}>
+                <InfoCircle size="25" color={theme.palette.primary.main} variant="Bulk" />
+                <Typography variant="h5">Thông tin</Typography>
               </Stack>
               <Grid container spacing={2}>
                 <InfoItem

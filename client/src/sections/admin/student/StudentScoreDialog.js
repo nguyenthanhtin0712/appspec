@@ -35,7 +35,7 @@ const StudentScoreDialog = () => {
   };
 
   return (
-    <Dialog open={studentScoreDialog.open} onClose={handleClose} fullWidth maxWidth="sm">
+    <Dialog open={studentScoreDialog.open} onClose={handleClose} fullWidth maxWidth="xs">
       <DialogTitle>Thêm điểm sinh viên</DialogTitle>
       <Formik
         initialValues={studentScoreDialog.initValue}

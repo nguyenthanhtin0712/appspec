@@ -124,28 +124,38 @@ class RegisterSpecialtyController extends Controller
     {
         $displayConfig = DisplayConfig::find('REGISTER_SPECIALTY');
         $registerSpecialty = RegisterSpecialty::with('specialty.major')->find($displayConfig->display_config_value);
-        $student = $request->user()->student;
-        if ($student && $student->student_course >= $registerSpecialty->register_specialty_course) {
-            $data = $registerSpecialty->specialty->filter(function ($specialty) use ($student) {
-                return $specialty->major->major_id == $student->major_id;
-            });
-            $data = $data->map(function ($specialty) use ($registerSpecialty) {
-                $specialty['pivot']['specialty_name'] = $specialty->specialty_name;
-                $specialty['pivot']['specialty_registered'] = $specialty->student->whereBetween('specialty_date', [Carbon::parse($registerSpecialty->register_specialty_start_date), Carbon::parse($registerSpecialty->register_specialty_end_date)])->count();
-                return $specialty;
-            });
-            $result = [
-                'register_specialty_id' => $registerSpecialty->register_specialty_id,
-                'register_specialty_name' => $registerSpecialty->register_specialty_name,
-                'register_specialty_start_date' => $registerSpecialty->register_specialty_start_date,
-                'register_specialty_end_date' => $registerSpecialty->register_specialty_end_date,
-                'register_specialty_course' => $registerSpecialty->register_specialty_course,
-                'detail' => $data->pluck('pivot')
+        $arrDetail = [];
+        foreach ($registerSpecialty->specialty as $value) {
+            $majorId = $value->major->major_id;
+            if (!isset($arrDetail[$majorId])) {
+                $arrDetail[$majorId] = [
+                    'major_id' => $value->major->major_id,
+                    'major_name' => $value->major->major_name,
+                    'specialties' => [],
+                ];
+            }
+            $specialtyRegisteredCount = Specialty::find($value->specialty_id)->student->whereBetween('specialty_date', [
+                Carbon::parse($registerSpecialty->register_specialty_start_date),
+                Carbon::parse($registerSpecialty->register_specialty_end_date)
+            ])->count();
+
+            $arrDetail[$majorId]['specialties'][] = [
+                "specialty_id" => $value->specialty_id,
+                "specialty_name" => $value->specialty_name,
+                "specialty_quantity" => $value->pivot->specialty_quantity,
+                "specialty_registered" => $specialtyRegisteredCount
             ];
-            return $this->sentSuccessResponse($result, "Get data success", Response::HTTP_OK);
-        } else {
-            return response()->json(['message' => 'No permission',], 403);
         }
+        $selectedColumns = $registerSpecialty->only([
+            'register_specialty_id',
+            'register_specialty_name',
+            'register_specialty_start_date',
+            'register_specialty_end_date',
+            'register_specialty_course'
+        ]);
+        $selectedColumns['user_major_id'] = $request->user() ? $request->user()->student->major_id : null;
+        $selectedColumns['register_specialty_detail'] = array_values($arrDetail);
+        return $this->sentSuccessResponse($selectedColumns, "Get data success", Response::HTTP_OK);
     }
 
     public function submitRegisterSpecialty(Request $request)

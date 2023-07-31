@@ -15,7 +15,7 @@ import { useNavigate } from 'react-router-dom';
 
 const RegisterForm = () => {
   const navigate = useNavigate();
-  const specialtyList = useSelector((state) => state.register_specialty.userRegistrationPeriod.detail);
+  const specialtyList = useSelector((state) => state.register_specialty.userRegistrationPeriod.register_specialty_detail);
   const [speciality_id, setSpecialityId] = useState('');
   const [error, setError] = useState(false);
 
