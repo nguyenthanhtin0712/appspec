@@ -33,7 +33,7 @@ const StudentFileDialog = () => {
   };
 
   return (
-    <Dialog open={studentFileDialog.open} onClose={handleClose} fullWidth maxWidth="sm">
+    <Dialog open={studentFileDialog.open} onClose={handleClose} fullWidth maxWidth="xs">
       <DialogTitle>Thêm sinh viên đầu khóa</DialogTitle>
       <Formik
         initialValues={studentFileDialog.initValue}
@@ -113,7 +113,6 @@ const StudentFileDialog = () => {
                 </Grid>
               </Grid>
             </DialogContent>
-
             <DialogActions>
               <Button onClick={handleClose} variant="contained" color="error">
                 Cancel

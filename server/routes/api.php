@@ -83,6 +83,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::put('/register-specialties/admin/{id}', [EmployerCRegisterSpecialtyControllerontroller::class, 'update'])->middleware('check_user_role_permission:register_specialty.update');
     Route::delete('/register-specialties/admin/{id}', [RegisterSpecialtyController::class, 'destroy'])->middleware('check_user_role_permission:register_specialty.delete');
 
-    Route::get('register-specialties/user', [RegisterSpecialtyController::class, 'getRegisterSpecialtyByUser']);
     Route::post('register-specialties/user', [RegisterSpecialtyController::class, 'submitRegisterSpecialty']);
+    Route::get('register-specialtiesss/user', [RegisterSpecialtyController::class, 'getRegisterSpecialtyDisplay']);
 });
+Route::get('register-specialties/user', [RegisterSpecialtyController::class, 'getRegisterSpecialtyByUser']);
