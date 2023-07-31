@@ -141,7 +141,6 @@ class StudentController extends Controller
         }
     }
 
-
     /**
      * Update the specified resource in storage.
      *
@@ -171,6 +170,15 @@ class StudentController extends Controller
         $student->save();
         $studentResoure = new StudentResource($student);
         return $this->sentSuccessResponse($studentResoure, "Delete user success", Response::HTTP_OK);
+    }
+
+    public function getInfoCurrent(Request $request)
+    {
+        $student = $request->user()->student;
+        if ($student) {
+            return $this->sentSuccessResponse($student, "Get data student success", Response::HTTP_OK);
+        }
+        return $this->sentErrorResponse($student, "Not Found Info", Response::HTTP_NOT_FOUND);
     }
 
     //Hàm import sinh viên đầu khóa khi tham gia hệ thống
@@ -227,8 +235,6 @@ class StudentController extends Controller
         $studentCollection = new Collection($result);
         return $this->sentSuccessResponse($studentCollection, "Add student success", Response::HTTP_OK);
     }
-
-
 
     //Hàm import sinh viên đăng ký chuyên ngành
     public function addScoreStudent(AddScoreStudentRequest $request)

@@ -7,9 +7,13 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
 import { useSelector } from 'react-redux';
+import { dispatch } from 'store';
+import { logoutUser } from 'store/reducers/authSlice';
+import { useNavigate } from 'react-router';
+import { toast } from 'react-toastify';
 
-const settings = ['Profile', 'Account', 'Logout'];
 const UserInfo = () => {
+  const navigate = useNavigate();
   const currentUser = useSelector((state) => state.auth.currentUser);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -43,11 +47,18 @@ const UserInfo = () => {
         open={Boolean(anchorElUser)}
         onClose={handleCloseUserMenu}
       >
-        {settings.map((setting) => (
-          <MenuItem key={setting} onClick={handleCloseUserMenu}>
-            <Typography textAlign="center">{setting}</Typography>
-          </MenuItem>
-        ))}
+        <MenuItem>
+          <Typography textAlign="center">Thông tin cá nhân</Typography>
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            dispatch(logoutUser());
+            navigate('/');
+            toast.success('Đăng xuất thành công !');
+          }}
+        >
+          <Typography textAlign="center">Đăng xuất</Typography>
+        </MenuItem>
       </Menu>
     </Box>
   );

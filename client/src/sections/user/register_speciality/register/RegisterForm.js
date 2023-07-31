@@ -7,15 +7,13 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
 import FormHelperText from '@mui/material/FormHelperText';
-import { useSelector } from 'react-redux';
 import { dispatch } from 'store/index';
 import { userRegisteringForSpecialty } from 'store/reducers/registerSpecialtySlice';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
-const RegisterForm = () => {
+const RegisterForm = ({ specialtyList }) => {
   const navigate = useNavigate();
-  const specialtyList = useSelector((state) => state.register_specialty.userRegistrationPeriod.register_specialty_detail);
   const [speciality_id, setSpecialityId] = useState('');
   const [error, setError] = useState(false);
 

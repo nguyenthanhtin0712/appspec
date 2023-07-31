@@ -53,7 +53,7 @@ const Register_speciality = () => {
               {register_specialty_detail.map((item) => (
                 <Box key={item.major_id}>
                   <Stack direction="row" alignItems="center" spacing={1.5} my={3}>
-                    <RecordCircle size="18" color={theme.palette.error.main} variant="Bulk" />
+                    <RecordCircle size="18" color={theme.palette.success.main} variant="Bulk" />
                     <Typography fontWeight={600} fontSize={14}>
                       Ngành {item.major_name}
                     </Typography>

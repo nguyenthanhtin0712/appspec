@@ -58,6 +58,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('/students/{id}', [StudentController::class, 'show'])->middleware('check_user_role_permission:student.view');
     Route::put('/students/{id}', [StudentController::class, 'update'])->middleware('check_user_role_permission:student.update');
     Route::delete('/students/{id}', [StudentController::class, 'destroy'])->middleware('check_user_role_permission:student.delete');
+    Route::get('student', [StudentController::class, 'getInfoCurrent']);
     //Import sinh viên đầu khóa vào hệ thóng
     Route::post('/addFileStudents', [StudentController::class, 'addFileStudent'])->middleware('check_user_role_permission:student.create');
     Route::post('/addScoreStudents', [StudentController::class, 'addScoreStudent'])->middleware('check_user_role_permission:student.create');
