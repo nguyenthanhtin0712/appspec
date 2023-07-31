@@ -15,6 +15,8 @@ const RegisterSpecialtyPageCreate = Loadable(lazy(() => import('pages/admin/regi
 const RegisterSpecialtyPageIndex = Loadable(lazy(() => import('pages/admin/register_specialty/register_specialty_index')));
 const SpecialtyPage = Loadable(lazy(() => import('pages/admin/specialty')));
 const StudentPage = Loadable(lazy(() => import('pages/admin/student')));
+const Page = Loadable(lazy(() => import('pages/admin/page/page_index')));
+const PageCreate = Loadable(lazy(() => import('pages/admin/page/page_create')));
 
 const AdminRoutes = {
   path: '/admin',
@@ -53,6 +55,14 @@ const AdminRoutes = {
     {
       path: 'student',
       element: <PrivateRoute component={StudentPage} requiredPermissions={['student.view']} />
+    },
+    {
+      path: 'page',
+      element: <PrivateRoute component={Page} requiredPermissions={['student.view']} />
+    },
+    {
+      path: 'page/create',
+      element: <PrivateRoute component={PageCreate} requiredPermissions={['student.view']} />
     }
   ]
 };

@@ -1,6 +1,6 @@
 // type
 import { Home3, HomeTrendUp, BitcoinRefresh, CodeCircle, Briefcase, ArchiveAdd, Profile2User } from 'iconsax-react';
-
+import WebIcon from '@mui/icons-material/Web';
 // icons
 const icons = {
   navigation: Home3,
@@ -9,7 +9,8 @@ const icons = {
   major: CodeCircle,
   specialty: Briefcase,
   register_specialty: ArchiveAdd,
-  student: Profile2User
+  student: Profile2User,
+  page: WebIcon
 };
 
 // ==============================|| MENU ITEMS - DASHBOARD ||============================== //
@@ -54,6 +55,13 @@ const dashboard = {
       type: 'item',
       url: '/admin/register_specialty',
       icon: icons.register_specialty
+    },
+    {
+      id: 'page',
+      title: 'Quản lý trang',
+      type: 'item',
+      url: '/admin/page',
+      icon: icons.page
     },
     {
       id: 'sample',
