@@ -13,7 +13,7 @@ import {
   setPagination,
   deleteSpecialty,
   setSpecialtyDialog
-} from '../../../store/reducers/specialty';
+} from 'store/reducers/specialty';
 import ConfirmDialog from 'components/ConfirmDialog';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';

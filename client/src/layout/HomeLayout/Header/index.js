@@ -8,7 +8,6 @@ import Box from '@mui/material/Box';
 import NavItem from './NavItem';
 import UserInfo from './UserInfo';
 import NavMobile from '../Drawer';
-import { navItems } from '../../../menu-items/user/index';
 import { useTheme } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
@@ -16,6 +15,7 @@ import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { openUserDrawer } from 'store/reducers/menu';
 import { dispatch } from 'store/index';
+import { navItems } from 'menu-items/user';
 
 const Navbar = () => {
   const theme = useTheme();
