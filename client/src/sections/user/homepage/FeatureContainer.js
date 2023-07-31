@@ -1,7 +1,7 @@
 import React from 'react';
 import { Code, FolderOpen, Warning2, Refresh2, Profile2User, PathTool } from 'iconsax-react';
-import Grid from '@mui/material/Grid';
 import FeatureItem from './FeatureItem';
+import { Grid } from '@mui/material';
 
 const arrFeature = [
   { id: 1, name: 'Đăng ký chuyên ngành', href: '/register_speciality', icon: <Code variant="Bulk" /> },

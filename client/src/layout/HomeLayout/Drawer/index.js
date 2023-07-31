@@ -4,10 +4,10 @@ import List from '@mui/material/List';
 import Box from '@mui/material/Box';
 import NavItemMobile from './NavItemMobile';
 import PropTypes from 'prop-types';
-import { navItems } from '../../../menu-items/user/index';
 import { useSelector } from 'react-redux';
 import { dispatch } from 'store/index';
 import { openUserDrawer } from 'store/reducers/menu';
+import { navItems } from 'menu-items/user';
 
 const drawerWidth = 240;
 

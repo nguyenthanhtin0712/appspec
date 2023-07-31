@@ -5,7 +5,7 @@ import MainCard from 'components/MainCard';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import { Calendar, Chart, InfoCircle, Stickynote, Call, Check, MedalStar } from 'iconsax-react';
+import { Calendar, Chart, InfoCircle, Stickynote, ArchiveTick, Check, MedalStar } from 'iconsax-react';
 import { useTheme } from '@mui/material/styles';
 import InfoItem from 'sections/user/register_speciality/index/InfoItem';
 import RegistrationInfoTable from 'sections/user/register_speciality/index/RegistrationInfoTable';
@@ -56,24 +56,24 @@ const Register_speciality = () => {
               </Stack>
               <Grid container spacing={2}>
                 <InfoItem
+                  href="/register_speciality/register"
+                  title="Đăng ký chuyên ngành"
+                  icon={<ArchiveTick variant="Bulk" size="32" color={theme.palette.primary.main} />}
+                />
+                <InfoItem
                   href="/"
                   title="Hướng dẫn đăng ký chuyên ngành"
                   icon={<Stickynote variant="Bulk" size="32" color={theme.palette.primary.main} />}
                 />
                 <InfoItem
-                  href="/"
+                  href="/register_speciality/rules"
                   title="Điều lệ đăng ký chuyên ngành"
                   icon={<Check variant="Bulk" size="32" color={theme.palette.primary.main} />}
                 />
                 <InfoItem
-                  href="/"
+                  href="/register_speciality/result"
                   title="Kết quả đăng ký chuyên ngành"
                   icon={<MedalStar variant="Bulk" size="32" color={theme.palette.primary.main} />}
-                />
-                <InfoItem
-                  href="/"
-                  title="Liên hệ với Ban quản trị website"
-                  icon={<Call variant="Bulk" size="32" color={theme.palette.primary.main} />}
                 />
               </Grid>
             </Box>
