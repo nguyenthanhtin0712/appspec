@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
@@ -14,7 +14,6 @@ import { useSelector } from 'react-redux';
 import { dispatch } from 'store/index';
 import { getRegistrationInformation } from 'store/reducers/registerSpecialtySlice';
 import { getInfoUserStudent } from 'store/reducers/authSlice';
-// import Paper from '@mui/material/Paper';
 
 function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
@@ -64,18 +63,26 @@ const MainResult = () => {
 const SpecialityResult = () => {
   const currentUser = useSelector((state) => state.auth.currentUser);
   const userRegistrationPeriod = useSelector((state) => state.register_specialty.userRegistrationPeriod);
-  useEffect(() => {
-    const fetchData = async () => {
-      await dispatch(getRegistrationInformation());
-      await dispatch(getInfoUserStudent());
-    };
-    fetchData();
+
+  const fetchData = useCallback(async () => {
+    await dispatch(getRegistrationInformation());
+    await dispatch(getInfoUserStudent());
   }, []);
 
-  if (!userRegistrationPeriod || !currentUser || !currentUser.student_code) {
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  const specialtyList = useMemo(() => {
+    if (!userRegistrationPeriod || !currentUser || !currentUser.student_code) {
+      return null;
+    }
+    return userRegistrationPeriod.register_specialty_detail.find((item) => item.major_id === currentUser.major_id);
+  }, [userRegistrationPeriod, currentUser]);
+
+  if (!specialtyList) {
     return null;
   }
-  const specialtyList = userRegistrationPeriod.register_specialty_detail.find((item) => item.major_id === currentUser.major_id);
 
   return (
     <Box component={Container} maxWidth="lg" sx={{ p: 3, pt: 0, mt: 2 }}>
