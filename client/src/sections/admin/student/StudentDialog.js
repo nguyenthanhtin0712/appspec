@@ -11,9 +11,7 @@ import { createStudent, setStudentDialog, updateStudent } from 'store/reducers/s
 import { useSelector } from 'react-redux';
 import Button from '@mui/material/Button';
 import { dispatch } from 'store/index';
-import { Select, MenuItem, InputLabel } from '@mui/material';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
+import { Select, MenuItem, InputLabel, DialogTitle } from '@mui/material';
 import Stack from '@mui/material/Stack';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -64,9 +62,7 @@ const StudentDialog = () => {
 
   return (
     <Dialog open={studentDialog.open} onClose={handleClose} fullWidth maxWidth="md">
-      <Tabs value={0} sx={{ mb: '15px' }}>
-        <Tab label="Thêm thủ công" />
-      </Tabs>
+      <DialogTitle>Thêm sinh viên</DialogTitle>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <Formik
           initialValues={studentDialog.initValue}

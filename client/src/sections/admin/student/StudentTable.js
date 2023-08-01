@@ -28,7 +28,7 @@ import StudentFileDialog from 'sections/admin/student/StudentFileDialog';
 import StudentScoreDialog from 'sections/admin/student/StudentScoreDialog';
 import ScoreIcon from '@mui/icons-material/Score';
 
-const SpecialtyTable = () => {
+const StudentTable = () => {
   const theme = useTheme();
   const { data, isError, isLoading, isRefetching, rowCount, columnFilters, globalFilter, sorting, pagination } = useSelector(
     (state) => state.student
@@ -161,7 +161,7 @@ const SpecialtyTable = () => {
       <MaterialReactTable
         columns={columns}
         data={data}
-        getRowId={(row) => row.specialty_id}
+        getRowId={(row) => row.user_id}
         manualFiltering
         manualPagination
         manualSorting
@@ -283,4 +283,4 @@ const SpecialtyTable = () => {
   );
 };
 
-export default memo(SpecialtyTable);
+export default memo(StudentTable);

@@ -16,7 +16,6 @@ import { toast } from 'react-toastify';
 import TinyEditor from 'components/TinyEditor';
 
 const RegisterSpecialty = () => {
-  
   const navigate = useNavigate();
   const [majorList, setMajorList] = useState([]);
   useEffect(() => {

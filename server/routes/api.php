@@ -88,4 +88,3 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('register-specialtiesss/user', [RegisterSpecialtyController::class, 'getRegisterSpecialtyDisplay']);
 });
 Route::get('register-specialties/user', [RegisterSpecialtyController::class, 'getRegisterSpecialtyByUser']);
-Route::post('uploadImage', [UserController::class, 'uploadImage']);

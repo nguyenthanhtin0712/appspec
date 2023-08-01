@@ -8,7 +8,7 @@ import StudentTable from 'sections/admin/student/StudentTable';
 import StudentDialog from 'sections/admin/student/StudentDialog';
 import { dispatch } from 'store/index';
 
-const SpecialtyPage = () => {
+const StudentPage = () => {
   const handleClickOpen = () => {
     dispatch(setStudentDialog({ open: true, action: 'add' }));
   };
@@ -27,4 +27,4 @@ const SpecialtyPage = () => {
   );
 };
 
-export default SpecialtyPage;
+export default StudentPage;
