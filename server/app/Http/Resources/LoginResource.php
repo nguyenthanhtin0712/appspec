@@ -16,6 +16,8 @@ class LoginResource extends JsonResource
     {
         $attributes = $this->getAttributes();
         unset($attributes['user_password']);
+        unset($attributes['created_at']);
+        unset($attributes['updated_at']);
         $token = $this->createToken("user");
         $data = [
             'user_info' => $attributes,

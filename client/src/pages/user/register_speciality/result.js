@@ -13,6 +13,7 @@ import TableRow from '@mui/material/TableRow';
 import { useSelector } from 'react-redux';
 import { dispatch } from 'store/index';
 import { getRegistrationInformation } from 'store/reducers/registerSpecialtySlice';
+import { getInfoUserStudent } from 'store/reducers/authSlice';
 // import Paper from '@mui/material/Paper';
 
 function createData(name, calories, fat, carbs, protein) {
@@ -61,21 +62,25 @@ const MainResult = () => {
 };
 
 const SpecialityResult = () => {
+  const currentUser = useSelector((state) => state.auth.currentUser);
   const userRegistrationPeriod = useSelector((state) => state.register_specialty.userRegistrationPeriod);
   useEffect(() => {
     const fetchData = async () => {
       await dispatch(getRegistrationInformation());
+      await dispatch(getInfoUserStudent());
     };
     fetchData();
   }, []);
 
-  if (!userRegistrationPeriod) {
+  if (!userRegistrationPeriod || !currentUser || !currentUser.student_code) {
     return null;
   }
+  const specialtyList = userRegistrationPeriod.register_specialty_detail.find((item) => item.major_id === currentUser.major_id);
+
   return (
     <Box component={Container} maxWidth="lg" sx={{ p: 3, pt: 0, mt: 2 }}>
       <Stack spacing={2}>
-        <SpecialityContainer></SpecialityContainer>
+        <SpecialityContainer specialtyList={specialtyList.specialties}></SpecialityContainer>
         <MainResult></MainResult>
       </Stack>
     </Box>

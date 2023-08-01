@@ -92,6 +92,7 @@ export const deleteRegisterSpecalty = createAsyncThunk('register_specialty/delet
 
 export const getRegistrationInformation = createAsyncThunk('register_specialty/getRegistrationInformation', async () => {
   try {
+    console.log('fetching....');
     const response = await axios.get(`/register-specialties/user`);
     return response.data;
   } catch (error) {

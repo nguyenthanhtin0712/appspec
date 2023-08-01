@@ -2,10 +2,8 @@ import React from 'react';
 import MainCard from 'components/MainCard';
 import Grid from '@mui/material/Grid';
 import SpecialityItem from './SpecialityItem';
-import { useSelector } from 'react-redux';
 
-const SpecialityContainer = () => {
-  let specialtyList = useSelector((state) => state.register_specialty.userRegistrationPeriod.register_specialty_detail);
+const SpecialityContainer = ({ specialtyList }) => {
   return (
     <MainCard title="Hiện trạng đăng ký">
       <Grid container spacing={2}>

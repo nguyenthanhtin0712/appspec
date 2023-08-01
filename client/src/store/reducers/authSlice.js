@@ -57,6 +57,16 @@ export const getUserDataFromToken = createAsyncThunk('auth/getUserDataFromToken'
   }
 });
 
+export const getInfoUserStudent = createAsyncThunk('auth/getInfoUserStudent', async () => {
+  try {
+    const response = await axios.get(`/student`);
+    return response.data;
+  } catch (error) {
+    Cookies.remove('token');
+    throw error;
+  }
+});
+
 const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -108,6 +118,10 @@ const authSlice = createSlice({
         state.isLoaded = true;
         state.isAuthenticated = false;
         state.error = action.error.message;
+      })
+      .addCase(getInfoUserStudent.fulfilled, (state, action) => {
+        console.log(action.payload);
+        state.currentUser = { ...state.currentUser, ...action.payload.data };
       });
   }
 });
