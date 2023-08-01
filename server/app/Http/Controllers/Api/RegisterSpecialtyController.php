@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreRegisterSpecialtyRequest;
 use App\Http\Resources\Collection;
 use App\Http\Resources\RegisterSpecialtyResource;
+use App\Http\Resources\ResultRegisterSpecialtyResource;
 use App\Models\DisplayConfig;
 use App\Models\RegisterSpecialty;
 use App\Models\RegisterSpecialtyDetail;
@@ -122,8 +123,8 @@ class RegisterSpecialtyController extends Controller
 
     public function getRegisterSpecialtyByUser(Request $request)
     {
-        $displayConfig = DisplayConfig::find('REGISTER_SPECIALTY');
-        $registerSpecialty = RegisterSpecialty::with('specialty.major')->find($displayConfig->display_config_value);
+        $displayConfig = DisplayConfig::find('REGISTER_SPECIALTY')->display_config_value;
+        $registerSpecialty = RegisterSpecialty::with('specialty.major')->find($displayConfig);
         $arrDetail = [];
         foreach ($registerSpecialty->specialty as $value) {
             $majorId = $value->major->major_id;
@@ -134,6 +135,7 @@ class RegisterSpecialtyController extends Controller
                     'specialties' => [],
                 ];
             }
+
             $specialtyRegisteredCount = Specialty::find($value->specialty_id)->student->whereBetween('specialty_date', [
                 Carbon::parse($registerSpecialty->register_specialty_start_date),
                 Carbon::parse($registerSpecialty->register_specialty_end_date)
@@ -166,5 +168,63 @@ class RegisterSpecialtyController extends Controller
         $student->specialty_date = Carbon::now()->toDateTimeString();
         $student->save();
         return response()->json(['message' => 'Register specialty successful'], 200);
+    }
+
+    public function getResult(Request $request)
+    {
+        $perPage = $request->input('perPage');
+        $query = $request->input('query');
+        $id = $request->input('id');
+        $sortBy = $request->input('sortBy');
+        $sortOrder = $request->input('sortOrder', 'asc');
+        $filters = $request->input('filters');
+        $major_id = $request->user()->student->major_id;
+        $displayConfig = DisplayConfig::find('REGISTER_SPECIALTY')->display_config_value;
+        $registerSpecialty = RegisterSpecialty::find($displayConfig);
+
+        $queryBuilder = Student::select(
+            'students.student_code',
+            'students.student_class',
+            'students.student_score',
+            'students.specialty_date',
+            'students.specialty_id',
+            'users.user_firstname',
+            'users.user_lastname'
+        )
+            ->leftJoin('users', 'users.user_id', '=', 'students.user_id')
+            ->where('students.student_course', $registerSpecialty->register_specialty_course)
+            ->whereNotNull('students.student_score')
+            ->where('students.major_id', $major_id);
+
+
+        if ($query) {
+            $queryBuilder->where(function ($queryBuilder) use ($query) {
+                $queryBuilder->where("user_lastname", "LIKE", "%$query%")
+                    ->orWhere("user_firstname", "LIKE", "%$query%")
+                    ->orWhere("student_code", "LIKE", "%$query%");
+            });
+        }
+        if ($id) {
+            $queryBuilder->where('student_code', $id);
+        }
+        if ($sortBy) {
+            $queryBuilder->orderBy($sortBy, $sortOrder);
+        }
+        if ($filters) {
+            $filters = json_decode($filters, true);
+            if (is_array($filters)) {
+                foreach ($filters as $filter) {
+                    $id = $filter['id'];
+                    $value = $filter['value'];
+                    $queryBuilder->where($id, 'LIKE', '%' . $value . '%');
+                }
+            }
+        }
+
+        $perPage = $perPage ?? 10;
+        $dataResult = $queryBuilder->paginate($perPage);
+
+        $registerSpecialtiesCollection = new Collection($dataResult);
+        return $this->sentSuccessResponse($registerSpecialtiesCollection, "Get data success", Response::HTTP_OK);
     }
 }
