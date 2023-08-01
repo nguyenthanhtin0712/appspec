@@ -17,6 +17,7 @@
     "@reduxjs/toolkit": "^1.8.6",
     "@svgr/webpack": "6.4.0",
     "@testing-library/react": "^13.4.0",
+    "@tinymce/tinymce-react": "^4.3.0",
     "apexcharts": "^3.35.5",
     "axios": "^1.1.2",
     "axios-mock-adapter": "^1.21.2",
