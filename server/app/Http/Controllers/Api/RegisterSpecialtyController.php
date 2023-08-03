@@ -187,14 +187,15 @@ class RegisterSpecialtyController extends Controller
             'students.student_class',
             'students.student_score',
             'students.specialty_date',
-            'students.specialty_id',
+            'specialties.specialty_name',
             'users.user_firstname',
             'users.user_lastname'
         )
             ->leftJoin('users', 'users.user_id', '=', 'students.user_id')
             ->where('students.student_course', $registerSpecialty->register_specialty_course)
             ->whereNotNull('students.student_score')
-            ->where('students.major_id', $major_id);
+            ->where('students.major_id', $major_id)
+            ->leftJoin('specialties', 'specialties.specialty_id', '=', 'students.specialty_id');
 
 
         if ($query) {

@@ -10,13 +10,13 @@ import { useTheme } from '@mui/material/styles';
 import InfoItem from 'sections/user/register_speciality/index/InfoItem';
 import RegistrationInfoTable from 'sections/user/register_speciality/index/RegistrationInfoTable';
 import { dispatch } from 'store/index';
-import { getRegistrationInformation } from 'store/reducers/registerSpecialtySlice';
+import { getRegistrationInformation } from 'store/reducers/registerSpecialtyUserSlice';
 import { useSelector } from 'react-redux';
 import { formatDateTimeDisplay } from 'utils/formatDateTime';
 
 const Register_speciality = () => {
   const theme = useTheme();
-  const userRegistrationPeriod = useSelector((state) => state.register_specialty.userRegistrationPeriod);
+  const userRegistrationPeriod = useSelector((state) => state.register_specialty_user.userRegistrationPeriod);
   useEffect(() => {
     const fetchData = async () => {
       await dispatch(getRegistrationInformation());

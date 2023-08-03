@@ -8,18 +8,18 @@ import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
 import FormHelperText from '@mui/material/FormHelperText';
 import { useSelector } from 'react-redux';
-import { userRegisteringForSpecialty } from 'store/reducers/registerSpecialtySlice';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { dispatch } from 'store';
 import CountdownTimer from 'components/CountdownTimer';
+import { userRegisteringForSpecialty } from 'store/reducers/registerSpecialtyUserSlice';
 
 const RegisterForm = ({ specialtyList }) => {
   const navigate = useNavigate();
   const [speciality_id, setSpecialityId] = useState('');
   const [error, setError] = useState(false);
   const { register_specialty_start_date, register_specialty_end_date } = useSelector(
-    (state) => state.register_specialty.userRegistrationPeriod
+    (state) => state.register_specialty_user.userRegistrationPeriod
   );
 
   const handleChange = (event) => {

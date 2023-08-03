@@ -1,24 +1,16 @@
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
-
-// third-party
 import { Provider as ReduxProvider } from 'react-redux';
-
-// fonts
 import 'assets/fonts/inter/inter.css';
-
-// scroll bar
 import 'simplebar/src/simplebar.css';
-
-// apex-chart
 import 'assets/third-party/apex-chart.css';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-// project-imports
 import App from './App';
 import { store } from 'store';
 import reportWebVitals from './reportWebVitals';
 import { APP_BASE_NAME } from './config';
+import './index.css';
 
 const container = document.getElementById('root');
 const root = createRoot(container);

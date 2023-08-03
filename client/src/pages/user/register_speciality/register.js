@@ -6,12 +6,12 @@ import RegisterForm from 'sections/user/register_speciality/register/RegisterFor
 import SpecialityContainer from 'sections/user/register_speciality/register/SpecialityContainer';
 import { useSelector } from 'react-redux';
 import { dispatch } from 'store/index';
-import { getRegistrationInformation } from 'store/reducers/registerSpecialtySlice';
+import { getRegistrationInformation } from 'store/reducers/registerSpecialtyUserSlice';
 import { getInfoUserStudent } from 'store/reducers/authSlice';
 
 const RegisterSpeciality = () => {
   const currentUser = useSelector((state) => state.auth.currentUser);
-  const userRegistrationPeriod = useSelector((state) => state.register_specialty.userRegistrationPeriod);
+  const userRegistrationPeriod = useSelector((state) => state.register_specialty_user.userRegistrationPeriod);
 
   const fetchData = useCallback(async () => {
     await dispatch(getRegistrationInformation());

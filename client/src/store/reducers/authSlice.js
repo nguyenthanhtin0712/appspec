@@ -120,7 +120,6 @@ const authSlice = createSlice({
         state.error = action.error.message;
       })
       .addCase(getInfoUserStudent.fulfilled, (state, action) => {
-        console.log(action.payload);
         state.currentUser = { ...state.currentUser, ...action.payload.data };
       });
   }

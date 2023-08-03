@@ -9,7 +9,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import InputField from 'components/input/InputField';
 import { dispatch } from 'store/index';
 import { getAll } from 'store/reducers/majorSlice';
-import { createRegisterSpecalty } from 'store/reducers/registerSpecialtySlice';
+import { createRegisterSpecalty } from 'store/reducers/registerSpecialtyAdminSlice';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 

@@ -8,7 +8,7 @@ import { DRAWER_WIDTH, MINI_DRAWER_WIDTH } from 'config';
 const openedMixin = (theme) => ({
   backgroundColor: theme.palette.background.default,
   width: DRAWER_WIDTH,
-  borderRight: `1px dashed ${theme.palette.secondary[400]}`,
+  // borderRight: `1px dashed ${theme.palette.secondary[400]}`,
   transition: theme.transitions.create('width', {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen

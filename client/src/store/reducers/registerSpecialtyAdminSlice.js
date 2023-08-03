@@ -90,27 +90,6 @@ export const deleteRegisterSpecalty = createAsyncThunk('register_specialty/delet
   }
 });
 
-export const getRegistrationInformation = createAsyncThunk('register_specialty/getRegistrationInformation', async () => {
-  try {
-    console.log('fetching....');
-    const response = await axios.get(`/register-specialties/user`);
-    return response.data;
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
-});
-
-export const userRegisteringForSpecialty = createAsyncThunk('register_specialty/userRegisteringForSpecialty', async (specialty_id) => {
-  try {
-    const response = await axios.post(`/register-specialties/user`, { specialty_id });
-    return response.data;
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
-});
-
 const initialState = {
   data: [],
   isError: false,
@@ -123,8 +102,7 @@ const initialState = {
   pagination: {
     pageIndex: 0,
     pageSize: 10
-  },
-  userRegistrationPeriod: null
+  }
 };
 
 const register_specialty = createSlice({
@@ -170,9 +148,6 @@ const register_specialty = createSlice({
         if (index !== -1) {
           state.data[index] = updatedRegisterSpecalty;
         }
-      })
-      .addCase(getRegistrationInformation.fulfilled, (state, action) => {
-        state.userRegistrationPeriod = action.payload.data;
       })
       .addCase(deleteRegisterSpecalty.fulfilled, (state, action) => {
         console.log(action.payload.data);

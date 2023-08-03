@@ -12,7 +12,7 @@ import {
   setSorting,
   setPagination,
   deleteRegisterSpecalty
-} from 'store/reducers/registerSpecialtySlice';
+} from 'store/reducers/registerSpecialtyAdminSlice';
 import ConfirmDialog from 'components/ConfirmDialog';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
