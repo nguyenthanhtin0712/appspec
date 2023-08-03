@@ -94,9 +94,8 @@ const ResultTable = () => {
         initialState={{
           showGlobalFilter: true
         }}
-        enableSorting={false}
         muiSearchTextFieldProps={{
-          placeholder: 'Search all users',
+          placeholder: 'Mã sinh viên, họ tên, ...',
           sx: { minWidth: '300px' },
           variant: 'outlined',
           size: 'small'

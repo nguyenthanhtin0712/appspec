@@ -99,7 +99,8 @@ const StudentTable = () => {
       },
       {
         accessorKey: 'student_code',
-        header: 'MSSV'
+        header: 'MSSV',
+        enableClickToCopy: true
       },
       {
         accessorKey: 'user_firstname',

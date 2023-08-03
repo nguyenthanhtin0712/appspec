@@ -36,10 +36,10 @@ export default function Table(theme) {
           borderColor: theme.palette.divider
         },
         head: {
-          color: theme.palette.text.primary,
+          color: '#2f3746',
           backgroundColor: theme.palette.background.neutral,
           fontSize: '0.8rem',
-          fontWeight: 700,
+          fontWeight: 600,
           textTransform: 'uppercase'
         },
         stickyHeader: {

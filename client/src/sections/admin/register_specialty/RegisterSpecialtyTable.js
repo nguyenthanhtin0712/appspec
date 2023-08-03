@@ -138,6 +138,16 @@ const RegisterSpecialtyTable = () => {
             bgcolor: theme.palette.background.neutral
           })
         }}
+        positionGlobalFilter="left"
+        initialState={{
+          showGlobalFilter: true
+        }}
+        muiSearchTextFieldProps={{
+          placeholder: 'Tìm kiếm đợt đăng ký ...',
+          sx: { minWidth: '300px' },
+          variant: 'outlined',
+          size: 'small'
+        }}
       />
 
       <ConfirmDialog
