@@ -240,18 +240,46 @@ class StudentController extends Controller
     public function addScoreStudent(AddScoreStudentRequest $request)
     {
         $data = $request->input('data');
-        $students = Student::whereIn('student_code', array_column($data, 'student_code'))->get();
+        $password = $request->input('password');
+        // Lấy danh sách mã sinh viên duy nhất từ dữ liệu đầu vào
+        $studentCodes = array_unique(array_column($data, 'student_code'));
+        // Lấy danh sách sinh viên dựa vào mã sinh viên
+        $students = Student::whereIn('student_code', $studentCodes)->get();
+        // Cập nhật sinh viên và người dùng đồng thời
         $updatedCount = 0;
-
         foreach ($data as $row) {
             $studentCode = $row['student_code'];
             $studentScore = trim($row['student_score']);
-
             $student = $students->where('student_code', $studentCode)->first();
-
             if ($student) {
                 $student->student_score = $studentScore;
                 $student->save();
+
+                $user = User::find($student->user_id);
+                $user->user_password = bcrypt($password);
+                $user->save();
+                $updatedCount++;
+            } else {
+                $user_firstname = $row['user_firstname'];
+                $user_lastname = $row['user_lastname'];
+                $user_birthday = $row['user_birthday'];
+                $user = User::create([
+                    'user_firstname' => "$user_firstname",
+                    'user_lastname' => "$user_lastname",
+                    'user_password' => bcrypt($password),
+                    'user_birthday' => "$user_birthday",
+                ]);
+                $student_code = $row['student_code'];
+                $student_score = trim($row['student_score']);
+                $student_class = $row['student_class'];
+                $major_id = $row['major_id'];
+                Student::create([
+                    'user_id' => $user->user_id,
+                    'student_code' => "$student_code",
+                    'student_class' => "$student_class",
+                    'student_score' => "$student_score",
+                    'major_id' => $major_id,
+                ]);
                 $updatedCount++;
             }
         }

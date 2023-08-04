@@ -120,7 +120,8 @@ const initialState = {
   studentScoreDialog: {
     open: false,
     initValue: {
-      file_student: null
+      file_student: null,
+      password_student: ''
     }
   }
 };

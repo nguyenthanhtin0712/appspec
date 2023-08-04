@@ -238,7 +238,8 @@ const StudentTable = () => {
                     setStudentScoreDialog({
                       open: true,
                       initValue: {
-                        file_student: ''
+                        file_student: '',
+                        password_student: ''
                       }
                     })
                   );
