@@ -184,4 +184,6 @@ function handleImportData(file, pass) {
     reader.readAsBinaryString(file);
   });
 }
+
+
 export default memo(StudentFileDialog);
