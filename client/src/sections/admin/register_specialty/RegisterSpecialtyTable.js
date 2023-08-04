@@ -1,7 +1,7 @@
 import React, { memo, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useTheme } from '@mui/material/styles';
-import { Edit, Trash } from 'iconsax-react';
+import { Trash } from 'iconsax-react';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import { MaterialReactTable } from 'material-react-table';
@@ -72,11 +72,6 @@ const RegisterSpecialtyTable = () => {
     setIdDelete(id);
   };
 
-  const handleUpdate = (data) => {
-    const major = { major_id: data.major_id, major_name: data.major_name };
-    dispatch(setMajorDialog({ open: true, action: 'update', initValue: major }));
-  };
-
   return (
     <>
       <MaterialReactTable
@@ -105,13 +100,13 @@ const RegisterSpecialtyTable = () => {
         positionActionsColumn="last"
         renderRowActions={({ row }) => (
           <Box>
-            <IconButton
+            {/* <IconButton
               onClick={() => {
                 handleUpdate(row.original);
               }}
             >
               <Edit />
-            </IconButton>
+            </IconButton> */}
             <IconButton color="error" onClick={() => handleDelete(row.id)}>
               <Trash />
             </IconButton>
