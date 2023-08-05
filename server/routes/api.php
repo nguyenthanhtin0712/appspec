@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\EmployerController;
 use App\Http\Controllers\Api\LoginController;
 use App\Http\Controllers\Api\LogoutController;
 use App\Http\Controllers\Api\MajorController;
+use App\Http\Controllers\Api\RecruitmentPositionController;
 use App\Http\Controllers\Api\RegisterController;
 use App\Http\Controllers\Api\RegisterSpecialtyController;
 use App\Http\Controllers\Api\SpecialtyController;
@@ -86,5 +87,8 @@ Route::middleware(['auth:api'])->group(function () {
 
     Route::post('register-specialties/user', [RegisterSpecialtyController::class, 'submitRegisterSpecialty']);
     Route::get('register-specialties/result', [RegisterSpecialtyController::class, 'getResult']);
+
+    // RecruitmentPosition
 });
 Route::get('register-specialties/user', [RegisterSpecialtyController::class, 'getRegisterSpecialtyByUser']);
+Route::get('recruitment-positions', [RecruitmentPositionController::class, 'index']);

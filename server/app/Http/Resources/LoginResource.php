@@ -25,7 +25,6 @@ class LoginResource extends JsonResource
             'roles' => $this->roles->pluck('name') ?? [],
             'roles.permissions' => $this->getPermissionsViaRoles() ?? [],
         ];
-
         return $data;
     }
 }

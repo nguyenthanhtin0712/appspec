@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useRef } from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -34,6 +34,12 @@ const StudentScoreDialog = () => {
         }
       })
     );
+  };
+
+  const fileInputRef = useRef(null);
+
+  const handleInputLabelClick = () => {
+    fileInputRef.current.click();
   };
 
   return (
@@ -76,43 +82,50 @@ const StudentScoreDialog = () => {
               <Grid container spacing={3}>
                 <Grid item xs={12}>
                   <Stack spacing={1}>
-                    <InputLabel htmlFor="password_student">Nhập mật khẩu</InputLabel>
-                    <OutlinedInput
-                      id="password_student"
-                      type="text"
-                      value={values.password_student}
-                      name="password_student"
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      placeholder="Nhập mật khẩu cho sinh viên"
-                      fullWidth
-                      error={Boolean(touched.password_student && errors.password_student)}
-                    />
-                    {touched.password_student && errors.password_student && (
-                      <FormHelperText error id="standard-weight-helper-text-password_student">
-                        {errors.password_student}
-                      </FormHelperText>
-                    )}
+                    <label htmlFor="file_student" style={{ cursor: 'pointer!important' }}>
+                      <InputLabel htmlFor="password_student">Nhập mật khẩu</InputLabel>
+                      <OutlinedInput
+                        id="password_student"
+                        style={{ cursor: 'pointer' }}
+                        type="text"
+                        value={values.password_student}
+                        name="password_student"
+                        onBlur={handleBlur}
+                        onChange={handleChange}
+                        placeholder="Nhập mật khẩu cho sinh viên"
+                        fullWidth
+                        error={Boolean(touched.password_student && errors.password_student)}
+                      />
+                      {touched.password_student && errors.password_student && (
+                        <FormHelperText error id="standard-weight-helper-text-password_student">
+                          {errors.password_student}
+                        </FormHelperText>
+                      )}
+                    </label>
                   </Stack>
                 </Grid>
                 <Grid item xs={12}>
                   <Stack spacing={1} sx={{ mb: '10px' }}>
-                    <InputLabel htmlFor="file_student">Chọn file</InputLabel>
-                    <label htmlFor="file_student">
-                      <OutlinedInput
-                        fullWidth
-                        value={values?.file_student}
-                        readOnly
-                        placeholder="Chọn file"
-                        endAdornment={
-                          <InputAdornment position="end">
-                            <IconButton component="span" aria-label="upload" style={{ padding: '0' }}>
-                              <PublishIcon />
-                            </IconButton>
-                          </InputAdornment>
+                    <InputLabel onClick={handleInputLabelClick}>Chọn file</InputLabel>
+                    <OutlinedInput
+                      fullWidth
+                      sx={{
+                        '& .MuiInputBase-input': {
+                          cursor: 'pointer'
                         }
-                      />
-                    </label>
+                      }}
+                      value={values?.file_student}
+                      readOnly
+                      placeholder="Chọn file"
+                      endAdornment={
+                        <InputAdornment position="end">
+                          <IconButton component="span" aria-label="upload" style={{ padding: '0' }}>
+                            <PublishIcon />
+                          </IconButton>
+                        </InputAdornment>
+                      }
+                      onClick={handleInputLabelClick}
+                    />
                     {touched.file_student && errors.file_student && (
                       <FormHelperText error id="standard-weight-helper-text-file_student">
                         {errors.file_student}
@@ -122,13 +135,14 @@ const StudentScoreDialog = () => {
                       id="file_student"
                       type="file"
                       name="file_student"
+                      ref={fileInputRef}
                       onBlur={() => {}}
                       onChange={(e) => {
                         const selectedFiles = Array.from(e.target.files);
                         setFieldValue('file_student', selectedFiles);
                       }}
                       multiple
-                      hidden
+                      style={{ display: 'none' }}
                     />
                   </Stack>
                 </Grid>
