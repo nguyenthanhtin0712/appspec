@@ -19,7 +19,6 @@ class RegisterSpecialtySeeder extends Seeder
             'register_specialty_name' => 'Đăng ký chuyên ngành khóa 21',
             'register_specialty_start_date' => '2023-07-30 00:00:00',
             'register_specialty_end_date' => '2023-09-30 00:00:00',
-            'register_specialty_course' => '2021'
         ]);
     }
 }

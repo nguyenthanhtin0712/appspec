@@ -87,8 +87,5 @@ Route::middleware(['auth:api'])->group(function () {
 
     Route::post('register-specialties/user', [RegisterSpecialtyController::class, 'submitRegisterSpecialty']);
     Route::get('register-specialties/result', [RegisterSpecialtyController::class, 'getResult']);
-
-    // RecruitmentPosition
 });
 Route::get('register-specialties/user', [RegisterSpecialtyController::class, 'getRegisterSpecialtyByUser']);
-Route::get('recruitment-positions', [RecruitmentPositionController::class, 'index']);

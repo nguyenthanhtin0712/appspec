@@ -8,15 +8,13 @@ import { formatDateTimeDisplay } from 'utils/formatDateTime';
 
 const ResultTable = () => {
   const theme = useTheme();
-  const { data, isError, isLoading, isRefetching, rowCount, columnFilters, globalFilter, sorting, pagination } = useSelector(
+  const { data, isError, isLoading, isRefetching, rowCount, columnFilters, globalFilter, sorting, pagination, majorId } = useSelector(
     (state) => state.register_specialty_user
   );
 
   useEffect(() => {
-    dispatch(fetchData({ columnFilters, globalFilter, sorting, pagination }));
-  }, [columnFilters, globalFilter, sorting, pagination]);
-
-  console.log(data);
+    dispatch(fetchData({ columnFilters, globalFilter, sorting, pagination, majorId }));
+  }, [columnFilters, globalFilter, sorting, pagination, majorId]);
 
   const columns = React.useMemo(
     () => [

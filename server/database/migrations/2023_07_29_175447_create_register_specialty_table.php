@@ -18,7 +18,6 @@ class CreateRegisterSpecialtyTable extends Migration
             $table->string('register_specialty_name');
             $table->dateTime('register_specialty_start_date');
             $table->dateTime('register_specialty_end_date');
-            $table->integer('register_specialty_course')->unsigned();
             $table->integer('register_specialty_isDelete')->default(0);
             $table->timestamps();
         });

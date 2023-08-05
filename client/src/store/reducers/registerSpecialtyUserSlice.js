@@ -8,9 +8,11 @@ export const fetchData = createAsyncThunk('register_specialty_user/fetchData', a
     columnFilters,
     globalFilter,
     sorting,
+    majorId,
     pagination: { pageIndex, pageSize }
   } = params;
   const url = new URL('/api/register-specialties/result', API_BASE_URL);
+  url.searchParams.set('majorId', majorId ?? '');
   url.searchParams.set('page', `${pageIndex + 1}`);
   url.searchParams.set('perPage', `${pageSize}`);
   url.searchParams.set('filters', JSON.stringify(columnFilters ?? []));
@@ -22,8 +24,9 @@ export const fetchData = createAsyncThunk('register_specialty_user/fetchData', a
     const response = await axios.get(url.href);
     const { data } = response;
     return {
-      data: data.data.result,
-      rowCount: data.data.meta.total
+      statistic: data.data.statistic,
+      data: data.data.students.result,
+      rowCount: data.data.students.meta.total
     };
   } catch (error) {
     if (error.response && error.response.data && error.response.data.errors) {
@@ -37,7 +40,17 @@ export const fetchData = createAsyncThunk('register_specialty_user/fetchData', a
 
 export const getRegistrationInformation = createAsyncThunk('register_specialty_user/getRegistrationInformation', async () => {
   try {
-    const response = await axios.get(`/register-specialties/user`);
+    const response = await axios.get(`/register-specialties`);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+});
+
+export const getMajors = createAsyncThunk('register_specialty_user/getMajors', async () => {
+  try {
+    const response = await axios.get(`/register-specialties/majors`);
     return response.data;
   } catch (error) {
     console.error(error);
@@ -55,9 +68,19 @@ export const getResultRegisterSpecialty = createAsyncThunk('register_specialty_u
   }
 });
 
+export const getSpecialtiesForRegister = createAsyncThunk('register_specialty_user/getSpecialtiesForRegister', async () => {
+  try {
+    const response = await axios.get(`/register-specialties/register`);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+});
+
 export const userRegisteringForSpecialty = createAsyncThunk('register_specialty_user/userRegisteringForSpecialty', async (specialty_id) => {
   try {
-    const response = await axios.post(`/register-specialties/user`, { specialty_id });
+    const response = await axios.post(`/register-specialties/register`, { specialty_id });
     return response.data;
   } catch (error) {
     console.error(error);
@@ -78,7 +101,10 @@ const initialState = {
     pageIndex: 0,
     pageSize: 10
   },
-  userRegistrationPeriod: null
+  majorId: '',
+  userRegistrationPeriod: null,
+  statistic: [],
+  majors: []
 };
 
 const register_specialty_user = createSlice({
@@ -96,6 +122,9 @@ const register_specialty_user = createSlice({
     },
     setPagination: (state, action) => {
       state.pagination = action.payload;
+    },
+    setMajorId: (state, action) => {
+      state.majorId = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -108,6 +137,7 @@ const register_specialty_user = createSlice({
         state.isRefetching = false;
         state.data = action.payload.data;
         state.rowCount = action.payload.rowCount;
+        state.statistic = action.payload.statistic;
         state.isError = false;
       })
       .addCase(fetchData.rejected, (state) => {
@@ -117,10 +147,21 @@ const register_specialty_user = createSlice({
       })
       .addCase(getRegistrationInformation.fulfilled, (state, action) => {
         state.userRegistrationPeriod = action.payload.data;
+      })
+      .addCase(getMajors.fulfilled, (state, action) => {
+        state.majors = action.payload.data;
+        state.majorId = state.majorId == '' ? action.payload.data[0].major_id : state.majorId;
+      })
+      .addCase(getSpecialtiesForRegister.fulfilled, (state, action) => {
+        const { major_id, register_specialty_end_date, register_specialty_name, register_specialty_start_date, statistic } =
+          action.payload.data;
+        state.userRegistrationPeriod = { register_specialty_name, register_specialty_end_date, register_specialty_start_date };
+        state.majorId = major_id;
+        state.statistic = statistic;
       });
   }
 });
 
-export const { setColumnFilters, setGlobalFilter, setSorting, setPagination } = register_specialty_user.actions;
+export const { setColumnFilters, setGlobalFilter, setSorting, setPagination, setMajorId } = register_specialty_user.actions;
 
 export default register_specialty_user.reducer;

@@ -14,20 +14,19 @@ import { dispatch } from 'store';
 import CountdownTimer from 'components/CountdownTimer';
 import { userRegisteringForSpecialty } from 'store/reducers/registerSpecialtyUserSlice';
 
-const RegisterForm = ({ specialtyList }) => {
+const RegisterForm = () => {
   const navigate = useNavigate();
   const [speciality_id, setSpecialityId] = useState('');
   const [error, setError] = useState(false);
-  const { register_specialty_start_date, register_specialty_end_date } = useSelector(
-    (state) => state.register_specialty_user.userRegistrationPeriod
-  );
+  const { statistic, userRegistrationPeriod } = useSelector((state) => state.register_specialty_user);
+  const { register_specialty_start_date, register_specialty_end_date } = userRegistrationPeriod;
 
   const handleChange = (event) => {
     setSpecialityId(event.target.value);
     setError(false);
   };
 
-  const currentTime = useMemo(() => new Date(), []); // Memoize the current time
+  const currentTime = useMemo(() => new Date(), []);
   const isBeforeRegistrationTime = useMemo(() => {
     return currentTime < new Date(register_specialty_start_date);
   }, [register_specialty_start_date, currentTime]);
@@ -61,7 +60,7 @@ const RegisterForm = ({ specialtyList }) => {
               <MenuItem value="" sx={{ color: 'text.secondary' }}>
                 Chọn chuyên ngành bạn muốn đăng ký
               </MenuItem>
-              {specialtyList?.map(({ specialty_id, specialty_name }) => (
+              {statistic?.map(({ specialty_id, specialty_name }) => (
                 <MenuItem value={specialty_id} key={specialty_id}>
                   {specialty_name}
                 </MenuItem>

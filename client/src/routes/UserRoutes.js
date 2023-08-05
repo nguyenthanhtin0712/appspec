@@ -53,7 +53,7 @@ const UserRoutes = {
         },
         {
           path: 'result',
-          element: <PrivateRoute component={RegisterSpeciality_Result} requiredPermissions={[]} />
+          element: <RegisterSpeciality_Result />
         }
       ]
     },
