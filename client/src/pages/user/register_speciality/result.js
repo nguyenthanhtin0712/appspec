@@ -1,44 +1,59 @@
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
 import SpecialityContainer from 'sections/user/register_speciality/register/SpecialityContainer';
 import { useSelector } from 'react-redux';
 import { dispatch } from 'store/index';
-import { getRegistrationInformation } from 'store/reducers/registerSpecialtyUserSlice';
-import { getInfoUserStudent } from 'store/reducers/authSlice';
+import { getMajors, setMajorId } from 'store/reducers/registerSpecialtyUserSlice';
 import ResultTable from 'sections/user/register_speciality/result/ResultTable';
+import { Card, CardContent, CardHeader, Divider, Tab, Tabs } from '@mui/material';
 
 const SpecialityResult = () => {
-  const currentUser = useSelector((state) => state.auth.currentUser);
-  const userRegistrationPeriod = useSelector((state) => state.register_specialty_user.userRegistrationPeriod);
+  const { majors, majorId } = useSelector((state) => state.register_specialty_user);
 
-  const fetchData = useCallback(async () => {
-    await dispatch(getRegistrationInformation());
-    await dispatch(getInfoUserStudent());
-  }, []);
+  const handleChange = (event, newValue) => {
+    dispatch(setMajorId(newValue));
+  };
 
   useEffect(() => {
+    const fetchData = async () => {
+      await dispatch(getMajors());
+    };
     fetchData();
-  }, [fetchData]);
+  }, []);
 
-  const specialtyList = useMemo(() => {
-    if (!userRegistrationPeriod || !currentUser || !currentUser.student_code) {
-      return null;
-    }
-    return userRegistrationPeriod.register_specialty_detail.find((item) => item.major_id === currentUser.major_id);
-  }, [userRegistrationPeriod, currentUser]);
-
-  if (!specialtyList) {
+  if (!majors) {
     return null;
   }
 
   return (
     <Box component={Container} maxWidth="lg" sx={{ p: 3, pt: 0, mt: 2 }}>
-      <Stack spacing={2}>
-        <SpecialityContainer specialtyList={specialtyList.specialties}></SpecialityContainer>
-        <ResultTable></ResultTable>
-      </Stack>
+      <Card>
+        <CardHeader
+          subheader={
+            <Tabs
+              value={majorId}
+              onChange={handleChange}
+              variant="scrollable"
+              scrollButtons="auto"
+              aria-label="scrollable auto tabs example"
+            >
+              {majors.map((major) => (
+                <Tab key={major.major_id} value={major.major_id} label={`Ngành ${major.major_name}`} />
+              ))}
+            </Tabs>
+          }
+          sx={{ py: 0 }}
+        />
+        <Divider />
+        <CardContent>
+          <Stack spacing={2}>
+            <SpecialityContainer></SpecialityContainer>
+            <ResultTable></ResultTable>
+          </Stack>
+        </CardContent>
+      </Card>
     </Box>
   );
 };

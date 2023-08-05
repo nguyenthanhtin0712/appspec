@@ -21,6 +21,7 @@ class Student extends Model
         'major_id',
         'specialty_id',
         'specialty_date',
+        'speciality_registration_id',
         'company_position_detail_id',
         'mentor_code',
         'teacher_code',

@@ -29,6 +29,7 @@ class StudentSeeder extends Seeder
                 'student_score' => 3.5,
                 'student_course' => 2021,
                 'major_id' => $randomMajor,
+                'register_specialty_id' => 1
                 // 'specialty_id' => $randomSpecialty
             ]);
             $student->save();

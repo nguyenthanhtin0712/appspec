@@ -49,11 +49,6 @@ const RegisterSpecialtyTable = () => {
         size: 240
       },
       {
-        accessorKey: 'register_specialty_course',
-        header: 'Khóa',
-        size: 30
-      },
-      {
         accessorKey: 'register_specialty_start_date',
         header: 'Thời gian bắt đầu',
         Cell: ({ cell }) => formatDateTimeDisplay(cell.getValue())

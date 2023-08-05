@@ -22,6 +22,7 @@ class CreateStudentsTable extends Migration
             $table->string('major_id');
             $table->string('specialty_id')->nullable();
             $table->dateTime('specialty_date')->nullable();
+            $table->integer('register_specialty_id')->nullable();
             $table->integer('company_position_detail_id')->nullable();
             $table->integer('student_status')->default(1);
             $table->string('mentor_code')->nullable();

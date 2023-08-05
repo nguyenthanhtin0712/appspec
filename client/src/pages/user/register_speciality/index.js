@@ -26,13 +26,13 @@ const Register_speciality = () => {
   if (!userRegistrationPeriod) {
     return null;
   }
-  const { register_specialty_course, register_specialty_start_date, register_specialty_end_date, register_specialty_detail } =
+  const { register_specialty_name, register_specialty_start_date, register_specialty_end_date, register_specialty_detail } =
     userRegistrationPeriod;
   return (
     <Box component={Container} maxWidth="lg" sx={{ p: 3, pt: 0, mt: 2 }}>
       <Grid container spacing={2}>
         <Grid item xs={12} md={8} mx="auto">
-          <MainCard title={`Thông tin đăng ký chuyên ngành khóa ${register_specialty_course}`}>
+          <MainCard title={`${register_specialty_name}`}>
             <Box sx={{ borderBottom: '1px solid', borderColor: theme.palette.divider, pb: 1 }}>
               <Stack direction="row" alignItems="flex-end" spacing={1} mb={2}>
                 <Calendar size="25" color={theme.palette.primary.main} variant="Bulk" />

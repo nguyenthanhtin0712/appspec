@@ -16,7 +16,6 @@ class RegisterSpecialty extends Model
         'register_specialty_name',
         'register_specialty_start_date',
         'register_specialty_end_date',
-        'register_specialty_course',
         'register_specialty_isDelete',
     ];
     protected $attributes = [

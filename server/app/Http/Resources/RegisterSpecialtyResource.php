@@ -18,8 +18,7 @@ class RegisterSpecialtyResource extends JsonResource
             'register_specialty_id' => $this->register_specialty_id,
             'register_specialty_name' => $this->register_specialty_name,
             'register_specialty_start_date' => $this->register_specialty_start_date,
-            'register_specialty_end_date' => $this->register_specialty_end_date,
-            'register_specialty_course' => $this->register_specialty_course
+            'register_specialty_end_date' => $this->register_specialty_end_date
         ];
     }
 }
