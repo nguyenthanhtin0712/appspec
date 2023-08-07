@@ -8,7 +8,6 @@ import * as Yup from 'yup';
 import { Formik } from 'formik';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import SelectField from 'components/input/SelectField';
 import InputField from 'components/input/InputField';
 import DateTimePickerField from 'components/input/DateTimePickerField';
 import { dispatch } from 'store/index';
@@ -17,12 +16,7 @@ import MajorContainerForm from 'sections/admin/register_specialty/register_speci
 import { createRegisterSpecalty } from 'store/reducers/registerSpecialtyAdminSlice';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-
-const cource_list = () => {
-  const currentYear = new Date().getFullYear();
-  const fourMostRecentYears = Array.from({ length: 4 }, (_, index) => currentYear - index);
-  return fourMostRecentYears;
-};
+import FileField from 'components/input/FileField';
 
 const xulymang = (arr) => {
   let result = [];
@@ -42,7 +36,6 @@ const xulymang = (arr) => {
 const RegisterSpecialty = () => {
   const navigate = useNavigate();
   const [majorList, setMajorList] = useState([]);
-  const years = cource_list();
   useEffect(() => {
     const fetch = async () => {
       const response = await dispatch(getAll());
@@ -63,7 +56,7 @@ const RegisterSpecialty = () => {
           <Formik
             initialValues={{
               register_specialty_name: '',
-              register_specialty_course: '',
+              file_student: null,
               register_specialty_start_date: null,
               register_specialty_end_date: null,
               submit: null,
@@ -71,7 +64,7 @@ const RegisterSpecialty = () => {
             }}
             validationSchema={Yup.object().shape({
               register_specialty_name: Yup.string().max(255).required('Tên đợt là bắt buộc !'),
-              register_specialty_course: Yup.string().max(255).required('Khóa là bắt buộc !'),
+              file_student: Yup.mixed().required('Vui lòng chọn file!'),
               register_specialty_start_date: Yup.date()
                 .typeError('Vui lòng nhập đầy đủ')
                 .min(new Date(), 'Thời gian bắt đầu phải lớn hơn thời gian hiện tại')
@@ -135,27 +128,28 @@ const RegisterSpecialty = () => {
                     />
                   </Grid>
                   <Grid item xs={6}>
-                    <SelectField
-                      id="register_specialty_course"
-                      label="Khóa được phép đăng ký"
-                      labelId="register_specialty_course_label"
-                      value={values.register_specialty_course}
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      error={Boolean(touched.register_specialty_course && errors.register_specialty_course)}
-                      helperText={errors.register_specialty_course}
-                      list={years}
-                      fullWidth
+                    <FileField
+                      id="file_student"
+                      name="file_student"
+                      label="Danh sách sinh viên đăng ký"
+                      placeholder="Chọn file"
+                      value={values?.file_student}
+                      error={Boolean(touched.file_student && errors.file_student)}
+                      helperText={errors.file_student}
+                      setFieldValue={setFieldValue}
+                      setFieldTouched={setFieldTouched}
+                      accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                      multiple
                     />
                   </Grid>
                   <Grid item xs={6}>
                     <DateTimePickerField
                       label="Thời gian bắt đầu"
                       id="register_specialty_start_date"
-                      onChange={(value) => setFieldValue('register_specialty_start_date', value)}
-                      onClose={() => setFieldTouched('register_specialty_start_date', true)}
-                      onError={(newError) => setFieldError('register_specialty_start_date', newError)}
-                      error={touched.register_specialty_start_date && errors.register_specialty_start_date}
+                      setFieldTouched={setFieldTouched}
+                      setFieldValue={setFieldValue}
+                      setFieldError={setFieldError}
+                      error={!!(touched.register_specialty_start_date && errors.register_specialty_start_date)}
                       value={values.register_specialty_start_date}
                       helperText={errors.register_specialty_start_date}
                       disablePast
@@ -166,10 +160,10 @@ const RegisterSpecialty = () => {
                     <DateTimePickerField
                       label="Thời gian kết thúc"
                       id="register_specialty_end_date"
-                      onChange={(value) => setFieldValue('register_specialty_end_date', value)}
-                      onClose={() => setFieldTouched('register_specialty_end_date', true)}
-                      onError={(newError) => setFieldError('register_specialty_end_date', newError)}
-                      error={touched.register_specialty_end_date && errors.register_specialty_end_date}
+                      setFieldTouched={setFieldTouched}
+                      setFieldValue={setFieldValue}
+                      setFieldError={setFieldError}
+                      error={!!(touched.register_specialty_end_date && errors.register_specialty_end_date)}
                       value={values.register_specialty_end_date}
                       helperText={errors.register_specialty_end_date}
                       disablePast

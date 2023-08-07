@@ -1,7 +1,7 @@
 import React, { memo, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useTheme } from '@mui/material/styles';
-import { Trash } from 'iconsax-react';
+import { Eye, Trash } from 'iconsax-react';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import { MaterialReactTable } from 'material-react-table';
@@ -19,6 +19,7 @@ import Button from '@mui/material/Button';
 import { toast } from 'react-toastify';
 import { dispatch } from 'store/index';
 import { formatDateTimeDisplay } from 'utils/formatDateTime';
+import { Link } from 'react-router-dom';
 
 const RegisterSpecialtyTable = () => {
   const theme = useTheme();
@@ -95,13 +96,9 @@ const RegisterSpecialtyTable = () => {
         positionActionsColumn="last"
         renderRowActions={({ row }) => (
           <Box>
-            {/* <IconButton
-              onClick={() => {
-                handleUpdate(row.original);
-              }}
-            >
-              <Edit />
-            </IconButton> */}
+            <IconButton component={Link} to={`/admin/register_specialty/${row.id}`}>
+              <Eye />
+            </IconButton>
             <IconButton color="error" onClick={() => handleDelete(row.id)}>
               <Trash />
             </IconButton>
@@ -119,7 +116,6 @@ const RegisterSpecialtyTable = () => {
             border: '1px solid',
             borderRadius: 1.5,
             borderColor: theme.palette.divider,
-            boxShadow: theme.customShadows.z2,
             overflow: 'hidden'
           }
         }}

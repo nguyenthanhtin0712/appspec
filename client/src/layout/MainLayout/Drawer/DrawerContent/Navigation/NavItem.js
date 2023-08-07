@@ -34,6 +34,8 @@ const NavItem = ({ item, level }) => {
 
   const { pathname } = useLocation();
 
+  // console.log(pathname, item.url);
+
   // active menu item on page load
   useEffect(() => {
     if (pathname === item.url) {

@@ -6,10 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreRegisterSpecialtyRequest;
 use App\Http\Resources\Collection;
 use App\Http\Resources\RegisterSpecialtyResource;
-use App\Http\Resources\ResultRegisterSpecialtyResource;
 use App\Models\DisplayConfig;
 use App\Models\RegisterSpecialty;
-use App\Models\RegisterSpecialtyDetail;
 use App\Models\Specialty;
 use App\Models\Student;
 use Illuminate\Http\Request;
@@ -93,7 +91,15 @@ class RegisterSpecialtyController extends Controller
      */
     public function show($id)
     {
-        //
+        $registerSpecialty = RegisterSpecialty::find($id);
+        if (!$registerSpecialty || $registerSpecialty->register_specialty_isDelete == 1) {
+            return response()->json([
+                'message' => 'Resource unavailable',
+            ], 404);
+        } else {
+            $registerSpecialtyResoure = new RegisterSpecialtyResource($registerSpecialty);
+            return $this->sentSuccessResponse($registerSpecialtyResoure, "Get data success", Response::HTTP_OK);
+        }
     }
 
     /**
@@ -195,10 +201,22 @@ class RegisterSpecialtyController extends Controller
         return response()->json(['message' => 'Register specialty successful'], 200);
     }
 
-    public function getMajorsResult()
+    public function changeSpecialty(Request $request)
     {
-        $displayConfig = DisplayConfig::find('REGISTER_SPECIALTY')->display_config_value;
-        $registerSpecialty = RegisterSpecialty::with(['specialty.major'])->find($displayConfig);
+        $students = $request->input('students');
+        $specialty_id = $request->input('specialty_id');
+        foreach ($students as $student_id) {
+            $student = Student::where('student_code', $student_id)->first();
+            $student->specialty_id = $specialty_id;
+            $student->save();
+            echo json_encode($student);
+        }
+    }
+
+    public function getMajorsResult(Request $request)
+    {
+        $id = $request->input('id', DisplayConfig::find('REGISTER_SPECIALTY')->display_config_value);
+        $registerSpecialty = RegisterSpecialty::with(['specialty.major'])->find($id);
         $majors = $registerSpecialty->specialty->pluck('major')->unique()->values();
         $result = $majors->map->only(['major_id', 'major_name']);
         return $this->sentSuccessResponse($result, "Get data success", Response::HTTP_OK);
@@ -209,7 +227,7 @@ class RegisterSpecialtyController extends Controller
         $perPage = $request->input('perPage');
         $query = $request->input('query');
         $sortBy = $request->input('sortBy');
-        $register_specialty_id = $request->input('id', DisplayConfig::find('REGISTER_SPECIALTY')->display_config_value);
+        $register_specialty_id = $request->input('id') ?? DisplayConfig::find('REGISTER_SPECIALTY')->display_config_value;
         $sortOrder = $request->input('sortOrder', 'asc');
         $filters = $request->input('filters');
         $major_id = $request->input('majorId');
@@ -260,7 +278,7 @@ class RegisterSpecialtyController extends Controller
             ->filter(function ($specialty) use ($major_id) {
                 return $specialty->major->major_id === $major_id;
             })
-            ->map(function ($specialty) use ($register_specialty_id, $major_id) {
+            ->map(function ($specialty) use ($register_specialty_id) {
                 return [
                     'specialty_id' => $specialty->specialty_id,
                     'specialty_name' => $specialty->specialty_name,

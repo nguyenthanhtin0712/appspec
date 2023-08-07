@@ -7,9 +7,10 @@ import SpecialityContainer from 'sections/user/register_speciality/register/Spec
 import { useSelector } from 'react-redux';
 import { dispatch } from 'store/index';
 import { getSpecialtiesForRegister } from 'store/reducers/registerSpecialtyUserSlice';
+import MainCard from 'components/MainCard';
 
 const RegisterSpeciality = () => {
-  const userRegistrationPeriod = useSelector((state) => state.register_specialty_user.userRegistrationPeriod);
+  const registrationPageInfo = useSelector((state) => state.register_specialty_user.registrationPageInfo);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -18,12 +19,14 @@ const RegisterSpeciality = () => {
     fetchData();
   }, []);
 
-  if (!userRegistrationPeriod) return null;
+  if (!registrationPageInfo) return null;
 
   return (
     <Box component={Container} maxWidth="lg" sx={{ p: 3, pt: 0, mt: 2 }}>
       <Stack spacing={2}>
-        <SpecialityContainer></SpecialityContainer>
+        <MainCard title="Hiện trạng đăng ký">
+          <SpecialityContainer></SpecialityContainer>
+        </MainCard>
         <RegisterForm></RegisterForm>
       </Stack>
     </Box>

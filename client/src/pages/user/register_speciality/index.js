@@ -23,9 +23,7 @@ const Register_speciality = () => {
     };
     fetchData();
   }, []);
-  if (!userRegistrationPeriod) {
-    return null;
-  }
+  if (!userRegistrationPeriod) return null;
   const { register_specialty_name, register_specialty_start_date, register_specialty_end_date, register_specialty_detail } =
     userRegistrationPeriod;
   return (

@@ -100,9 +100,7 @@ const StudentFileDialog = () => {
                       type="file"
                       name="file_student"
                       onBlur={handleBlur}
-                      onChange={(e) => {
-                        setFieldValue('file_student', e.target.files[0]);
-                      }}
+                      onChange={(e) => setFieldValue('file_student', e.target.files[0])}
                       placeholder="Chọn file"
                       fullWidth
                       error={Boolean(touched.file_student && errors.file_student)}

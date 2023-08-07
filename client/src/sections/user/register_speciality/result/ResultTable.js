@@ -13,7 +13,9 @@ const ResultTable = () => {
   );
 
   useEffect(() => {
-    dispatch(fetchData({ columnFilters, globalFilter, sorting, pagination, majorId }));
+    if (majorId) {
+      dispatch(fetchData({ columnFilters, globalFilter, sorting, pagination, majorId }));
+    }
   }, [columnFilters, globalFilter, sorting, pagination, majorId]);
 
   const columns = React.useMemo(
@@ -94,7 +96,7 @@ const ResultTable = () => {
         }}
         muiSearchTextFieldProps={{
           placeholder: 'Mã sinh viên, họ tên, ...',
-          sx: { minWidth: '300px' },
+          sx: { minWidth: '250px' },
           variant: 'outlined',
           size: 'small'
         }}

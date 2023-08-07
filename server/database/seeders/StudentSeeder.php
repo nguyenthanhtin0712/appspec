@@ -26,7 +26,7 @@ class StudentSeeder extends Seeder
                 'user_id' => $user->user_id,
                 'student_code' => '312141006' . $index,
                 'student_class' => 'DCT121' . $index,
-                'student_score' => 3.5,
+                'student_score' => round(randomDecimal(10, 40, 1) / 10, 2),
                 'student_course' => 2021,
                 'major_id' => $randomMajor,
                 'register_specialty_id' => 1
@@ -36,4 +36,10 @@ class StudentSeeder extends Seeder
             $index++;
         }
     }
+}
+
+function randomDecimal($min, $max, $precision = 1)
+{
+    $factor = pow(10, $precision);
+    return rand($min * $factor, $max * $factor) / $factor;
 }

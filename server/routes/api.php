@@ -85,10 +85,13 @@ Route::middleware(['auth:api'])->group(function () {
     Route::put('/register-specialties/admin/{id}', [EmployerCRegisterSpecialtyControllerontroller::class, 'update'])->middleware('check_user_role_permission:register_specialty.update');
     Route::delete('/register-specialties/admin/{id}', [RegisterSpecialtyController::class, 'destroy'])->middleware('check_user_role_permission:register_specialty.delete');
 
-    Route::post('register-specialties/user', [RegisterSpecialtyController::class, 'submitRegisterSpecialty']);
-    Route::get('register-specialties/result', [RegisterSpecialtyController::class, 'getResult']);
-
+    Route::get('register-specialties/register', [RegisterSpecialtyController::class, 'getSpecialtiesForRegister']);
+    Route::post('register-specialties/register', [RegisterSpecialtyController::class, 'submitRegisterSpecialty']);
+    Route::post('register-specialties/change', [RegisterSpecialtyController::class, 'changeSpecialty']);
+    
     // RecruitmentPosition
 });
-Route::get('register-specialties/user', [RegisterSpecialtyController::class, 'getRegisterSpecialtyByUser']);
+Route::get('register-specialties/majors', [RegisterSpecialtyController::class, 'getMajorsResult']);
+Route::get('register-specialties/result', [RegisterSpecialtyController::class, 'getResult']);
+Route::get('register-specialties', [RegisterSpecialtyController::class, 'getRegisterSpecialtyByUser']);
 Route::get('recruitment-positions', [RecruitmentPositionController::class, 'index']);

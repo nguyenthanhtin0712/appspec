@@ -8,11 +8,13 @@ export const fetchData = createAsyncThunk('register_specialty_user/fetchData', a
     columnFilters,
     globalFilter,
     sorting,
+    registerSpecialtyId,
     majorId,
     pagination: { pageIndex, pageSize }
   } = params;
   const url = new URL('/api/register-specialties/result', API_BASE_URL);
   url.searchParams.set('majorId', majorId ?? '');
+  url.searchParams.set('id', registerSpecialtyId ?? '');
   url.searchParams.set('page', `${pageIndex + 1}`);
   url.searchParams.set('perPage', `${pageSize}`);
   url.searchParams.set('filters', JSON.stringify(columnFilters ?? []));
@@ -48,9 +50,9 @@ export const getRegistrationInformation = createAsyncThunk('register_specialty_u
   }
 });
 
-export const getMajors = createAsyncThunk('register_specialty_user/getMajors', async () => {
+export const getMajors = createAsyncThunk('register_specialty_user/getMajors', async (id) => {
   try {
-    const response = await axios.get(`/register-specialties/majors`);
+    const response = await axios.get(`/register-specialties/majors${id ? `?id=${id}` : ''}`);
     return response.data;
   } catch (error) {
     console.error(error);
@@ -88,6 +90,16 @@ export const userRegisteringForSpecialty = createAsyncThunk('register_specialty_
   }
 });
 
+export const changeSpecialty = createAsyncThunk('register_specialty_user/changeSpecialty', async (params) => {
+  try {
+    const response = await axios.post(`/register-specialties/change`, params);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+});
+
 const initialState = {
   data: [],
   isError: false,
@@ -103,8 +115,10 @@ const initialState = {
   },
   majorId: '',
   userRegistrationPeriod: null,
+  registrationPageInfo: null,
   statistic: [],
-  majors: []
+  majors: [],
+  registerSpecialtyId: ''
 };
 
 const register_specialty_user = createSlice({
@@ -125,6 +139,9 @@ const register_specialty_user = createSlice({
     },
     setMajorId: (state, action) => {
       state.majorId = action.payload;
+    },
+    setRegisterSpecialtyId: (state, action) => {
+      state.registerSpecialtyId = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -150,18 +167,17 @@ const register_specialty_user = createSlice({
       })
       .addCase(getMajors.fulfilled, (state, action) => {
         state.majors = action.payload.data;
-        state.majorId = state.majorId == '' ? action.payload.data[0].major_id : state.majorId;
+        state.majorId = action.payload.data[0].major_id;
       })
       .addCase(getSpecialtiesForRegister.fulfilled, (state, action) => {
-        const { major_id, register_specialty_end_date, register_specialty_name, register_specialty_start_date, statistic } =
-          action.payload.data;
-        state.userRegistrationPeriod = { register_specialty_name, register_specialty_end_date, register_specialty_start_date };
-        state.majorId = major_id;
+        const { register_specialty_end_date, register_specialty_name, register_specialty_start_date, statistic } = action.payload.data;
+        state.registrationPageInfo = { register_specialty_name, register_specialty_end_date, register_specialty_start_date };
         state.statistic = statistic;
       });
   }
 });
 
-export const { setColumnFilters, setGlobalFilter, setSorting, setPagination, setMajorId } = register_specialty_user.actions;
+export const { setColumnFilters, setGlobalFilter, setSorting, setPagination, setMajorId, setRegisterSpecialtyId } =
+  register_specialty_user.actions;
 
 export default register_specialty_user.reducer;

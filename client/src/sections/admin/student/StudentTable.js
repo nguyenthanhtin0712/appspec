@@ -211,7 +211,6 @@ const StudentTable = () => {
             border: '1px solid',
             borderRadius: 1.5,
             borderColor: theme.palette.divider,
-            boxShadow: theme.customShadows.z2,
             overflow: 'hidden'
           }
         }}

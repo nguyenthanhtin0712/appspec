@@ -23,9 +23,7 @@ const SpecialityResult = () => {
     fetchData();
   }, []);
 
-  if (!majors) {
-    return null;
-  }
+  if (!majors) return null;
 
   return (
     <Box component={Container} maxWidth="lg" sx={{ p: 3, pt: 0, mt: 2 }}>
@@ -44,7 +42,7 @@ const SpecialityResult = () => {
               ))}
             </Tabs>
           }
-          sx={{ py: 0 }}
+          sx={{ p: 0 }}
         />
         <Divider />
         <CardContent>

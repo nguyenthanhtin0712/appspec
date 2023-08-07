@@ -1,10 +1,9 @@
-import React, { memo, useRef } from 'react';
+import React, { memo } from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import Grid from '@mui/material/Grid';
-import FormHelperText from '@mui/material/FormHelperText';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import { toast } from 'react-toastify';
@@ -12,18 +11,15 @@ import { fetchData, setStudentScoreDialog, addScoreStudent } from 'store/reducer
 import { useSelector } from 'react-redux';
 import Button from '@mui/material/Button';
 import { dispatch } from 'store/index';
-import { IconButton, InputAdornment, InputLabel } from '@mui/material';
-import Stack from '@mui/material/Stack';
-import OutlinedInput from '@mui/material/OutlinedInput';
 import * as XLSX from 'xlsx';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
-import PublishIcon from '@mui/icons-material/Publish';
+import FileField from 'components/input/FileField';
+import InputField from 'components/input/InputField';
 
 const StudentScoreDialog = () => {
   const { isLoading } = useSelector((state) => state.student);
   const { studentScoreDialog, columnFilters, globalFilter, sorting, pagination } = useSelector((state) => state.student);
-  console.log(studentScoreDialog);
   const handleClose = () => {
     dispatch(
       setStudentScoreDialog({
@@ -34,12 +30,6 @@ const StudentScoreDialog = () => {
         }
       })
     );
-  };
-
-  const fileInputRef = useRef(null);
-
-  const handleInputLabelClick = () => {
-    fileInputRef.current.click();
   };
 
   return (
@@ -54,7 +44,6 @@ const StudentScoreDialog = () => {
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
           try {
             const data = await handleImportData(values.file_student, values.password_student);
-            console.log(data);
             const result = await dispatch(addScoreStudent(data));
             handleClose();
             if (result && !result.error) {
@@ -76,75 +65,39 @@ const StudentScoreDialog = () => {
           }
         }}
       >
-        {({ errors, handleBlur, handleSubmit, isSubmitting, touched, values, handleChange, setFieldValue }) => (
+        {({ errors, handleBlur, handleSubmit, isSubmitting, touched, values, handleChange, setFieldValue, setFieldTouched }) => (
           <form noValidate onSubmit={handleSubmit}>
             <DialogContent>
               <Grid container spacing={3}>
                 <Grid item xs={12}>
-                  <Stack spacing={1}>
-                    <label htmlFor="file_student" style={{ cursor: 'pointer!important' }}>
-                      <InputLabel htmlFor="password_student">Nhập mật khẩu</InputLabel>
-                      <OutlinedInput
-                        id="password_student"
-                        style={{ cursor: 'pointer' }}
-                        type="text"
-                        value={values.password_student}
-                        name="password_student"
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        placeholder="Nhập mật khẩu cho sinh viên"
-                        fullWidth
-                        error={Boolean(touched.password_student && errors.password_student)}
-                      />
-                      {touched.password_student && errors.password_student && (
-                        <FormHelperText error id="standard-weight-helper-text-password_student">
-                          {errors.password_student}
-                        </FormHelperText>
-                      )}
-                    </label>
-                  </Stack>
+                  <InputField
+                    id="password_student"
+                    name="password_student"
+                    type="text"
+                    value={values.password_student}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    label="Nhập mật khẩu"
+                    placeholder="Nhập mật khẩu cho sinh viên"
+                    fullWidth
+                    error={Boolean(touched.password_student && errors.password_student)}
+                    helperText={errors.password_student}
+                  ></InputField>
                 </Grid>
                 <Grid item xs={12}>
-                  <Stack spacing={1} sx={{ mb: '10px' }}>
-                    <InputLabel onClick={handleInputLabelClick}>Chọn file</InputLabel>
-                    <OutlinedInput
-                      fullWidth
-                      sx={{
-                        '& .MuiInputBase-input': {
-                          cursor: 'pointer'
-                        }
-                      }}
-                      value={values?.file_student}
-                      readOnly
-                      placeholder="Chọn file"
-                      endAdornment={
-                        <InputAdornment position="end">
-                          <IconButton component="span" aria-label="upload" style={{ padding: '0' }}>
-                            <PublishIcon />
-                          </IconButton>
-                        </InputAdornment>
-                      }
-                      onClick={handleInputLabelClick}
-                    />
-                    {touched.file_student && errors.file_student && (
-                      <FormHelperText error id="standard-weight-helper-text-file_student">
-                        {errors.file_student}
-                      </FormHelperText>
-                    )}
-                    <input
-                      id="file_student"
-                      type="file"
-                      name="file_student"
-                      ref={fileInputRef}
-                      onBlur={() => {}}
-                      onChange={(e) => {
-                        const selectedFiles = Array.from(e.target.files);
-                        setFieldValue('file_student', selectedFiles);
-                      }}
-                      multiple
-                      style={{ display: 'none' }}
-                    />
-                  </Stack>
+                  <FileField
+                    id="file_student"
+                    name="file_student"
+                    label="Chọn file"
+                    placeholder="Chọn file"
+                    value={values?.file_student}
+                    error={Boolean(touched.file_student && errors.file_student)}
+                    helperText={errors.file_student}
+                    setFieldValue={setFieldValue}
+                    setFieldTouched={setFieldTouched}
+                    accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                    multiple
+                  />
                 </Grid>
               </Grid>
             </DialogContent>
