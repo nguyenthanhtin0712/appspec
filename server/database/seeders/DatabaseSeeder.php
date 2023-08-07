@@ -28,5 +28,8 @@ class DatabaseSeeder extends Seeder
         $this->call(RegisterSpecialtyDetailSeeder::class);
         $this->call(RecruitmentPositionSeeder::class);
         $this->call(InterCompanySeeder::class);
+        $this->call(InternRegistrationSeeder::class);
+        $this->call(InternRegistrationCompanySeeder::class);
+        $this->call(CompanyPositionDetailSeeder::class);
     }
 }
