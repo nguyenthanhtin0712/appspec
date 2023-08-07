@@ -11,7 +11,7 @@ import { fetchData, setStudentScoreDialog, addScoreStudent } from 'store/reducer
 import { useSelector } from 'react-redux';
 import Button from '@mui/material/Button';
 import { dispatch } from 'store/index';
-import * as XLSX from 'xlsx';
+
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import FileField from 'components/input/FileField';

@@ -45,7 +45,7 @@ export const createRegisterSpecalty = createAsyncThunk(
         register_specialty_end_date: formatDateTimeSubmit(specialty.register_specialty_end_date),
         register_specialty_start_date: formatDateTimeSubmit(specialty.register_specialty_start_date)
       };
-
+      console.log(formattedSpecialty);
       const response = await axios.post(`/register-specialties/admin`, formattedSpecialty);
       return response.data;
     } catch (error) {

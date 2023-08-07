@@ -12,6 +12,7 @@ export const fetchData = createAsyncThunk('register_specialty_user/fetchData', a
     majorId,
     pagination: { pageIndex, pageSize }
   } = params;
+  console.log('registerSpecialtyId', registerSpecialtyId);
   const url = new URL('/api/register-specialties/result', API_BASE_URL);
   url.searchParams.set('majorId', majorId ?? '');
   url.searchParams.set('id', registerSpecialtyId ?? '');

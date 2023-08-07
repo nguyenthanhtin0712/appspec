@@ -30,7 +30,9 @@ class StoreRegisterSpecialtyRequest extends FormRequest
             'register_specialty_name' => 'required|string|max:255',
             'register_specialty_start_date' => 'required|date_format:Y-m-d H:i:s|after_or_equal:now',
             'register_specialty_end_date' => 'required|date_format:Y-m-d H:i:s|after:register_specialty_start_date',
-            'register_specialty_detail' => 'required|array'
+            'register_specialty_detail' => 'required|array',
+            'file_student' => 'required',
+            
         ];
     }
 

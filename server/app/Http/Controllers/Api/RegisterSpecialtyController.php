@@ -10,6 +10,7 @@ use App\Models\DisplayConfig;
 use App\Models\RegisterSpecialty;
 use App\Models\Specialty;
 use App\Models\Student;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Carbon;
@@ -76,8 +77,51 @@ class RegisterSpecialtyController extends Controller
     {
         $dataCreate =  $request->all();
         $registerSpecialty = RegisterSpecialty::create($dataCreate);
+        $registerSpecialtyId = $registerSpecialty->register_specialty_id;
         if ($request->has('register_specialty_detail')) {
             $registerSpecialty->specialty()->attach($request->input('register_specialty_detail'));
+        }
+        $file_student = $request->input('file_student');
+        if($file_student){
+        $data = $file_student['data'];
+        $password = $file_student['password'];
+        $studentCodes = array_unique(array_column($data, 'student_code'));
+        $students = Student::whereIn('student_code', $studentCodes)->get();
+        foreach ($data as $row) {
+            $studentCode = $row['student_code'];
+            $studentScore = trim($row['student_score']);
+            $student = $students->where('student_code', $studentCode)->first();
+            if ($student) {
+                $student->student_score = $studentScore;
+                $student->register_specialty_id = $registerSpecialtyId;
+                $student->save();
+                $user = User::find($student->user_id);
+                $user->user_password = bcrypt($password);
+                $user->save();
+            } else {
+                $user_firstname = $row['user_firstname'];
+                $user_lastname = $row['user_lastname'];
+                $user_birthday = $row['user_birthday'];
+                $user = User::create([
+                    'user_firstname' => "$user_firstname",
+                    'user_lastname' => "$user_lastname",
+                    'user_password' => bcrypt($password),
+                    'user_birthday' => "$user_birthday",
+                ]);
+                $student_code = $row['student_code'];
+                $student_score = trim($row['student_score']);
+                $student_class = $row['student_class'];
+                $major_id = $row['major_id'];
+                Student::create([
+                    'user_id' => $user->user_id,
+                    'student_code' => "$student_code",
+                    'student_class' => "$student_class",
+                    'student_score' => "$student_score",
+                    'register_specialty_id' => "$registerSpecialtyId",
+                    'major_id' => $major_id,
+                ]);
+            }
+        }
         }
         $registerSpecialtyResource = new RegisterSpecialtyResource($registerSpecialty);
         return $this->sentSuccessResponse($registerSpecialtyResource, "Create register specialty success", Response::HTTP_OK);

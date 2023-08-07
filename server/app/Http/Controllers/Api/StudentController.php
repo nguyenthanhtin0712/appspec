@@ -254,7 +254,6 @@ class StudentController extends Controller
             if ($student) {
                 $student->student_score = $studentScore;
                 $student->save();
-
                 $user = User::find($student->user_id);
                 $user->user_password = bcrypt($password);
                 $user->save();
