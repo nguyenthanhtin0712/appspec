@@ -9,7 +9,7 @@ import RegisterSpecialtyTable from 'sections/admin/register_specialty/RegisterSp
 const RegisterSpecialtyIndex = () => {
   return (
     <>
-      <Stack direction="row" justifyContent="space-between" alignItems="center" mb={2}>
+      <Stack direction="row" justifyContent="space-between" alignItems="center" mb={2} flexWrap="wrap">
         <Typography variant="h4">Quản lý đợt đăng ký chuyên ngành</Typography>
         <Button variant="contained" component={Link} to="./create" startIcon={<Add />}>
           Tạo đợt đăng ký

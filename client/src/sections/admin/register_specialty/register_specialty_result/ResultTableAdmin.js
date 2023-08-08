@@ -43,12 +43,12 @@ const ResultTable = () => {
     () => [
       {
         accessorKey: 'student_code',
-        header: 'Mã sinh viên'
+        header: 'Mã sinh viên',
+        size: 10
       },
       {
         accessorKey: 'user_firstname',
-        header: 'Họ lót',
-        size: 10
+        header: 'Họ lót'
       },
       {
         accessorKey: 'user_lastname',

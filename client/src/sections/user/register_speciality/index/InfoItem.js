@@ -11,7 +11,8 @@ const InfoItem = ({ href = '/', icon, title }) => {
   return (
     <Grid
       item
-      xs={6}
+      xs={12}
+      sm={6}
       component={Link}
       to={href}
       sx={{
@@ -28,6 +29,7 @@ const InfoItem = ({ href = '/', icon, title }) => {
         sx={{
           border: '2px solid',
           borderColor: theme.palette.divider,
+          // boxShadow: theme.customShadows.z2,
           '&:hover': {
             border: '2px solid',
             borderColor: theme.palette.primary.main

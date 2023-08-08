@@ -15,7 +15,7 @@ const StudentPage = () => {
 
   return (
     <>
-      <Stack direction="row" justifyContent="space-between" alignItems="center" mb={1.5}>
+      <Stack direction="row" justifyContent="space-between" alignItems="center" mb={1.5} flexWrap="wrap">
         <Typography variant="h4">Quản lý sinh viên</Typography>
         <Button variant="contained" onClick={handleClickOpen} startIcon={<Add />}>
           Thêm sinh viên

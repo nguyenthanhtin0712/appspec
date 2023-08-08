@@ -8,6 +8,7 @@ const CustomShadows = (theme) => ({
   text: `0 -1px 0 rgb(0 0 0 / 12%)`,
   z1: `0px 8px 24px  ${alpha(theme.palette.secondary.darker, 0.08)}`,
   z2: `0px 2px 8px  ${alpha(theme.palette.secondary.darker, 0.08)}`,
+  z3: `0px 8px 24px  ${alpha(theme.palette.secondary.darker, 0.2)}`,
   primary: `0 0 0 2px ${alpha(theme.palette.primary.main, 0.1)}`,
   secondary: `0 0 0 2px ${alpha(theme.palette.secondary.main, 0.2)}`,
   error: `0 0 0 2px ${alpha(theme.palette.error.main, 0.2)}`,

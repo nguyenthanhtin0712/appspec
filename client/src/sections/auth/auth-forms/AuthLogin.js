@@ -89,7 +89,7 @@ const AuthLogin = () => {
                     name="email"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    placeholder="Enter email address"
+                    placeholder="Nhập mã sinh viên hoặc email"
                     fullWidth
                     error={Boolean(touched.email && errors.email)}
                   />
