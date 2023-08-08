@@ -2,7 +2,14 @@ import React, { memo, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useTheme } from '@mui/material/styles';
 import { MaterialReactTable } from 'material-react-table';
-import { fetchData, setColumnFilters, setGlobalFilter, setSorting, setPagination } from 'store/reducers/registerSpecialtyUserSlice';
+import {
+  fetchData,
+  setColumnFilters,
+  setGlobalFilter,
+  setSorting,
+  setPagination,
+  setStatus
+} from 'store/reducers/registerSpecialtyUserSlice';
 import { dispatch } from 'store/index';
 import { Box, Button, MenuItem, Select } from '@mui/material';
 import ChangeSpecialtyDialog from 'sections/admin/register_specialty/register_specialty_result/ChangeSpecialtyDialog';
@@ -21,15 +28,16 @@ const ResultTable = () => {
     pagination,
     registerSpecialtyId,
     majorId,
+    status,
     statistic
   } = useSelector((state) => state.register_specialty_user);
   const [open, setOpen] = useState(false);
   const [rowSelection, setRowSelection] = useState({});
   useEffect(() => {
     if (majorId) {
-      dispatch(fetchData({ columnFilters, globalFilter, sorting, pagination, majorId, registerSpecialtyId }));
+      dispatch(fetchData({ columnFilters, globalFilter, sorting, pagination, majorId, registerSpecialtyId, status }));
     }
-  }, [columnFilters, globalFilter, sorting, pagination, majorId, registerSpecialtyId]);
+  }, [columnFilters, globalFilter, sorting, pagination, majorId, registerSpecialtyId, status]);
 
   const columns = React.useMemo(
     () => [
@@ -50,7 +58,8 @@ const ResultTable = () => {
       {
         accessorKey: 'student_score',
         header: 'Điểm',
-        size: 10
+        size: 10,
+        Cell: ({ cell }) => cell.getValue().toFixed(2)
       },
       {
         accessorKey: 'specialty_name',
@@ -125,12 +134,19 @@ const ResultTable = () => {
         renderTopToolbarCustomActions={({ table }) => (
           <Box>
             {!table.getIsSomeRowsSelected() && !table.getIsAllRowsSelected() ? (
-              <Select id="demo-select-small" size="small" value="" displayEmpty inputProps={{ 'aria-label': 'Without label' }}>
+              <Select
+                id="register-status"
+                onChange={(e) => dispatch(setStatus(e.target.value))}
+                size="small"
+                value={status}
+                displayEmpty
+                inputProps={{ 'aria-label': 'Without label' }}
+              >
                 <MenuItem value="" sx={{ color: 'text.secondary' }}>
                   Tất cả
                 </MenuItem>
-                <MenuItem value={10}>Đã đăng ký</MenuItem>
-                <MenuItem value={10}>Chưa đăng ký</MenuItem>
+                <MenuItem value={1}>Đã đăng ký</MenuItem>
+                <MenuItem value={2}>Chưa đăng ký</MenuItem>
               </Select>
             ) : (
               <Button

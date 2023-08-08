@@ -9,7 +9,7 @@ import Paper from '@mui/material/Paper';
 const SpecialityItem = ({ name, total, registered_quantity }) => {
   const theme = useTheme();
   return (
-    <Grid item xs={3}>
+    <Grid item xs={12} sm={6} md={3}>
       <Stack direction="row" alignItems="center" justifyContent="space-between" spacing={2} component={Paper} variant="outlined" p={2}>
         <Typography variant="h6">{name}</Typography>
         <Box

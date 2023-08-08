@@ -75,53 +75,53 @@ class RegisterSpecialtyController extends Controller
      */
     public function store(StoreRegisterSpecialtyRequest $request)
     {
-        $dataCreate =  $request->all();
+        $dataCreate = $request->all();
         $registerSpecialty = RegisterSpecialty::create($dataCreate);
         $registerSpecialtyId = $registerSpecialty->register_specialty_id;
         if ($request->has('register_specialty_detail')) {
             $registerSpecialty->specialty()->attach($request->input('register_specialty_detail'));
         }
         $file_student = $request->input('file_student');
-        if($file_student){
-        $data = $file_student['data'];
-        $password = $file_student['password'];
-        $studentCodes = array_unique(array_column($data, 'student_code'));
-        $students = Student::whereIn('student_code', $studentCodes)->get();
-        foreach ($data as $row) {
-            $studentCode = $row['student_code'];
-            $studentScore = trim($row['student_score']);
-            $student = $students->where('student_code', $studentCode)->first();
-            if ($student) {
-                $student->student_score = $studentScore;
-                $student->register_specialty_id = $registerSpecialtyId;
-                $student->save();
-                $user = User::find($student->user_id);
-                $user->user_password = bcrypt($password);
-                $user->save();
-            } else {
-                $user_firstname = $row['user_firstname'];
-                $user_lastname = $row['user_lastname'];
-                $user_birthday = $row['user_birthday'];
-                $user = User::create([
-                    'user_firstname' => "$user_firstname",
-                    'user_lastname' => "$user_lastname",
-                    'user_password' => bcrypt($password),
-                    'user_birthday' => "$user_birthday",
-                ]);
-                $student_code = $row['student_code'];
-                $student_score = trim($row['student_score']);
-                $student_class = $row['student_class'];
-                $major_id = $row['major_id'];
-                Student::create([
-                    'user_id' => $user->user_id,
-                    'student_code' => "$student_code",
-                    'student_class' => "$student_class",
-                    'student_score' => "$student_score",
-                    'register_specialty_id' => "$registerSpecialtyId",
-                    'major_id' => $major_id,
-                ]);
+        if ($file_student) {
+            $data = $file_student['data'];
+            $password = $file_student['password'];
+            $studentCodes = array_unique(array_column($data, 'student_code'));
+            $students = Student::whereIn('student_code', $studentCodes)->get();
+            foreach ($data as $row) {
+                $studentCode = $row['student_code'];
+                $studentScore = trim($row['student_score']);
+                $student = $students->where('student_code', $studentCode)->first();
+                if ($student) {
+                    $student->student_score = $studentScore;
+                    $student->register_specialty_id = $registerSpecialtyId;
+                    $student->save();
+                    $user = User::find($student->user_id);
+                    $user->user_password = bcrypt($password);
+                    $user->save();
+                } else {
+                    $user_firstname = $row['user_firstname'];
+                    $user_lastname = $row['user_lastname'];
+                    $user_birthday = $row['user_birthday'];
+                    $user = User::create([
+                        'user_firstname' => "$user_firstname",
+                        'user_lastname' => "$user_lastname",
+                        'user_password' => bcrypt($password),
+                        'user_birthday' => "$user_birthday",
+                    ]);
+                    $student_code = $row['student_code'];
+                    $student_score = trim($row['student_score']);
+                    $student_class = $row['student_class'];
+                    $major_id = $row['major_id'];
+                    Student::create([
+                        'user_id' => $user->user_id,
+                        'student_code' => "$student_code",
+                        'student_class' => "$student_class",
+                        'student_score' => "$student_score",
+                        'register_specialty_id' => "$registerSpecialtyId",
+                        'major_id' => $major_id,
+                    ]);
+                }
             }
-        }
         }
         $registerSpecialtyResource = new RegisterSpecialtyResource($registerSpecialty);
         return $this->sentSuccessResponse($registerSpecialtyResource, "Create register specialty success", Response::HTTP_OK);
@@ -135,14 +135,38 @@ class RegisterSpecialtyController extends Controller
      */
     public function show($id)
     {
-        $registerSpecialty = RegisterSpecialty::find($id);
+        $registerSpecialty = RegisterSpecialty::with(['specialty.major'])->find($id);
         if (!$registerSpecialty || $registerSpecialty->register_specialty_isDelete == 1) {
             return response()->json([
                 'message' => 'Resource unavailable',
             ], 404);
         } else {
-            $registerSpecialtyResoure = new RegisterSpecialtyResource($registerSpecialty);
-            return $this->sentSuccessResponse($registerSpecialtyResoure, "Get data success", Response::HTTP_OK);
+            $groupedSpecialties = $registerSpecialty->specialty->groupBy('major.major_id')->map(function ($specialties) {
+                $major = $specialties->first()->major;
+                $specialtiesData = $specialties->map(function ($value) {
+                    return [
+                        "specialty_id" => $value->specialty_id,
+                        "specialty_name" => $value->specialty_name,
+                        "specialty_quantity" => $value->pivot->specialty_quantity,
+                    ];
+                });
+                return [
+                    "major_id" => $major->major_id,
+                    "major_name" => $major->major_name,
+                    "specialties" => $specialtiesData->all(),
+                ];
+            });
+
+            $selectedColumns = $registerSpecialty->only([
+                'register_specialty_id',
+                'register_specialty_name',
+                'register_specialty_start_date',
+                'register_specialty_end_date'
+            ]);
+
+            $selectedColumns['register_specialty_detail'] = $groupedSpecialties->values()->all();
+
+            return $this->sentSuccessResponse($selectedColumns, "Get data success", Response::HTTP_OK);
         }
     }
 
@@ -208,6 +232,7 @@ class RegisterSpecialtyController extends Controller
 
     public function getSpecialtiesForRegister(Request $request)
     {
+        if (!$request->user()->student) return response()->json(['message' => 'No permission',], 403);
         $displayConfig = DisplayConfig::find('REGISTER_SPECIALTY')->display_config_value;
         $major_id = $request->user()->student->major_id;
 
@@ -257,15 +282,6 @@ class RegisterSpecialtyController extends Controller
         }
     }
 
-    public function getMajorsResult(Request $request)
-    {
-        $id = $request->input('id', DisplayConfig::find('REGISTER_SPECIALTY')->display_config_value);
-        $registerSpecialty = RegisterSpecialty::with(['specialty.major'])->find($id);
-        $majors = $registerSpecialty->specialty->pluck('major')->unique()->values();
-        $result = $majors->map->only(['major_id', 'major_name']);
-        return $this->sentSuccessResponse($result, "Get data success", Response::HTTP_OK);
-    }
-
     public function getResult(Request $request)
     {
         $perPage = $request->input('perPage');
@@ -275,22 +291,29 @@ class RegisterSpecialtyController extends Controller
         $sortOrder = $request->input('sortOrder', 'asc');
         $filters = $request->input('filters');
         $major_id = $request->input('majorId');
+        $status = $request->input('status');
 
         $queryBuilder = Student::select(
             'students.student_code',
             'students.student_class',
             'students.student_score',
             'students.specialty_date',
+            'students.specialty_id',
             'specialties.specialty_name',
             'users.user_firstname',
             'users.user_lastname'
         )
             ->leftJoin('users', 'users.user_id', '=', 'students.user_id')
             ->where('students.register_specialty_id', $register_specialty_id)
-            ->whereNotNull('students.student_score')
             ->where('students.major_id', $major_id)
             ->leftJoin('specialties', 'specialties.specialty_id', '=', 'students.specialty_id');
 
+        if ($status == 1) {
+            $queryBuilder->whereNotNull('students.specialty_id');
+        }
+        if ($status == 2) {
+            $queryBuilder->whereNull('students.specialty_id');
+        }
 
         if ($query) {
             $queryBuilder->where(function ($queryBuilder) use ($query) {

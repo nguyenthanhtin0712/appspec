@@ -1,15 +1,10 @@
 // type
-import { Home3, HomeTrendUp, BitcoinRefresh, CodeCircle, Briefcase, ArchiveAdd, Profile2User } from 'iconsax-react';
+import { Home3, HomeTrendUp } from 'iconsax-react';
 import WebIcon from '@mui/icons-material/Web';
 // icons
 const icons = {
   navigation: Home3,
   dashboard: HomeTrendUp,
-  sample: BitcoinRefresh,
-  major: CodeCircle,
-  specialty: Briefcase,
-  register_specialty: ArchiveAdd,
-  student: Profile2User,
   page: WebIcon
 };
 
@@ -29,46 +24,11 @@ const dashboard = {
       icon: icons.dashboard
     },
     {
-      id: 'major',
-      title: 'Ngành',
-      type: 'item',
-      url: '/admin/major',
-      icon: icons.major
-    },
-    {
-      id: 'specialty',
-      title: 'Chuyên ngành',
-      type: 'item',
-      url: '/admin/specialty',
-      icon: icons.specialty
-    },
-    {
-      id: 'student',
-      title: 'Sinh viên',
-      type: 'item',
-      url: '/admin/student',
-      icon: icons.student
-    },
-    {
-      id: 'register_specialty',
-      title: 'Đăng ký Chuyên ngành',
-      type: 'item',
-      url: '/admin/register_specialty',
-      icon: icons.register_specialty
-    },
-    {
       id: 'page',
       title: 'Quản lý trang',
       type: 'item',
       url: '/admin/page',
       icon: icons.page
-    },
-    {
-      id: 'sample',
-      title: 'Sample',
-      type: 'item',
-      url: '/admin/sample-page',
-      icon: icons.sample
     }
   ]
 };

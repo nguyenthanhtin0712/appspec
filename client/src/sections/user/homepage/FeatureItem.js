@@ -50,7 +50,7 @@ const StyledFeatureItem = styled(Grid)(({ theme }) => ({
 
 const FeatureItem = ({ name, href, icon }) => {
   return (
-    <StyledFeatureItem item xs={4} component={Link} to={href}>
+    <StyledFeatureItem item xs={12} sm={6} md={4} component={Link} to={href}>
       <Stack direction="column" spacing={2} alignItems="center" component={Paper} variant="outlined">
         {icon}
         <Typography>{name}</Typography>

@@ -10,12 +10,13 @@ export const fetchData = createAsyncThunk('register_specialty_user/fetchData', a
     sorting,
     registerSpecialtyId,
     majorId,
+    status,
     pagination: { pageIndex, pageSize }
   } = params;
-  console.log('registerSpecialtyId', registerSpecialtyId);
   const url = new URL('/api/register-specialties/result', API_BASE_URL);
   url.searchParams.set('majorId', majorId ?? '');
   url.searchParams.set('id', registerSpecialtyId ?? '');
+  url.searchParams.set('status', status ?? '');
   url.searchParams.set('page', `${pageIndex + 1}`);
   url.searchParams.set('perPage', `${pageSize}`);
   url.searchParams.set('filters', JSON.stringify(columnFilters ?? []));
@@ -51,16 +52,6 @@ export const getRegistrationInformation = createAsyncThunk('register_specialty_u
   }
 });
 
-export const getMajors = createAsyncThunk('register_specialty_user/getMajors', async (id) => {
-  try {
-    const response = await axios.get(`/register-specialties/majors${id ? `?id=${id}` : ''}`);
-    return response.data;
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
-});
-
 export const getResultRegisterSpecialty = createAsyncThunk('register_specialty_user/getResultRegisterSpecialty', async () => {
   try {
     const response = await axios.get(`/register-specialties/result`);
@@ -72,8 +63,13 @@ export const getResultRegisterSpecialty = createAsyncThunk('register_specialty_u
 });
 
 export const getSpecialtiesForRegister = createAsyncThunk('register_specialty_user/getSpecialtiesForRegister', async () => {
+  const response = await axios.get(`/register-specialties/register`);
+  return response.data;
+});
+
+export const getRegistrationInfoById = createAsyncThunk('register_specialty_user/getRegistrationInfoById', async (id) => {
   try {
-    const response = await axios.get(`/register-specialties/register`);
+    const response = await axios.get(`/register-specialties/admin/${id}`);
     return response.data;
   } catch (error) {
     console.error(error);
@@ -114,6 +110,7 @@ const initialState = {
     pageIndex: 0,
     pageSize: 10
   },
+  status: '',
   majorId: '',
   userRegistrationPeriod: null,
   registrationPageInfo: null,
@@ -143,6 +140,9 @@ const register_specialty_user = createSlice({
     },
     setRegisterSpecialtyId: (state, action) => {
       state.registerSpecialtyId = action.payload;
+    },
+    setStatus: (state, action) => {
+      state.status = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -165,10 +165,13 @@ const register_specialty_user = createSlice({
       })
       .addCase(getRegistrationInformation.fulfilled, (state, action) => {
         state.userRegistrationPeriod = action.payload.data;
+        state.majors = action.payload.data.register_specialty_detail;
+        state.majorId = action.payload.data.register_specialty_detail[0]?.major_id;
       })
-      .addCase(getMajors.fulfilled, (state, action) => {
-        state.majors = action.payload.data;
-        state.majorId = action.payload.data[0].major_id;
+      .addCase(getRegistrationInfoById.fulfilled, (state, action) => {
+        state.userRegistrationPeriod = action.payload.data;
+        state.majors = action.payload.data.register_specialty_detail;
+        state.majorId = action.payload.data.register_specialty_detail[0]?.major_id;
       })
       .addCase(getSpecialtiesForRegister.fulfilled, (state, action) => {
         const { register_specialty_end_date, register_specialty_name, register_specialty_start_date, statistic } = action.payload.data;
@@ -178,7 +181,7 @@ const register_specialty_user = createSlice({
   }
 });
 
-export const { setColumnFilters, setGlobalFilter, setSorting, setPagination, setMajorId, setRegisterSpecialtyId } =
+export const { setColumnFilters, setGlobalFilter, setSorting, setPagination, setMajorId, setStatus, setRegisterSpecialtyId } =
   register_specialty_user.actions;
 
 export default register_specialty_user.reducer;

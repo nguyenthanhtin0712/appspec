@@ -94,12 +94,9 @@ const StudentTable = () => {
   const columns = React.useMemo(
     () => [
       {
-        accessorKey: 'user_id',
-        header: 'ID'
-      },
-      {
         accessorKey: 'student_code',
         header: 'MSSV',
+        size: 10,
         enableClickToCopy: true
       },
       {
@@ -108,11 +105,13 @@ const StudentTable = () => {
       },
       {
         accessorKey: 'user_lastname',
-        header: 'Tên'
+        header: 'Tên',
+        size: 10
       },
       {
         accessorKey: 'user_gender',
         header: 'Giới tính',
+        size: 10,
         Cell: ({ cell }) => {
           return <div>{cell.row.original.user_gender == 0 ? 'Nam' : 'Nữ'}</div>;
         }
@@ -120,6 +119,7 @@ const StudentTable = () => {
       {
         accessorKey: 'student_score',
         header: 'Điểm',
+        size: 10,
         Cell: ({ cell }) => {
           if (cell.row.original && cell.row.original.student_score !== null && typeof cell.row.original.student_score === 'number') {
             return <div>{cell.row.original.student_score.toFixed(2)}</div>;
@@ -130,11 +130,13 @@ const StudentTable = () => {
       },
       {
         accessorKey: 'user_birthday',
-        header: 'Ngày sinh'
+        header: 'Ngày sinh',
+        size: 10
       },
       {
         accessorKey: 'student_class',
-        header: 'Lớp'
+        header: 'Lớp',
+        size: 10
       },
       {
         accessorKey: 'major_name',
@@ -142,7 +144,8 @@ const StudentTable = () => {
       },
       {
         accessorKey: 'student_course',
-        header: 'Khóa'
+        header: 'Khóa',
+        size: 10
       }
     ],
     []

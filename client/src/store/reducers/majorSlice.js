@@ -37,7 +37,7 @@ export const fetchData = createAsyncThunk('major/fetchData', async (params, { re
 
 export const createMajor = createAsyncThunk('major/createMajor', async (major, { rejectWithValue }) => {
   try {
-    const response = await axios.post(`${API_BASE_URL}/major`, major);
+    const response = await axios.post(`${API_BASE_URL}/majors`, major);
     return response.data;
   } catch (error) {
     if (error.response && error.response.data && error.response.data.errors) {
@@ -61,7 +61,7 @@ export const getAll = createAsyncThunk('major/getAll', async () => {
 
 export const updateMajor = createAsyncThunk('major/updateMajor', async (major, { rejectWithValue }) => {
   try {
-    const response = await axios.put(`${API_BASE_URL}/major/${major.major_id}`, major);
+    const response = await axios.put(`${API_BASE_URL}/majors/${major.major_id}`, major);
     return response.data;
   } catch (error) {
     if (error.response && error.response.data && error.response.data.errors) {
@@ -75,7 +75,7 @@ export const updateMajor = createAsyncThunk('major/updateMajor', async (major, {
 
 export const deleteMajor = createAsyncThunk('major/deleteMajor', async (id, { rejectWithValue }) => {
   try {
-    const response = await axios.delete(`${API_BASE_URL}/major/${id}`);
+    const response = await axios.delete(`${API_BASE_URL}/majors/${id}`);
     return response.data;
   } catch (error) {
     if (error.response && error.response.data && error.response.data.errors) {

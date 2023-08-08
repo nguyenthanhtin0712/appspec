@@ -1,14 +1,18 @@
 import React from 'react';
 import Box from '@mui/material/Box';
-
 import Typography from '@mui/material/Typography';
 import Banner from '../../../assets/images/banner-2.jpg';
+import { useTheme } from '@mui/material';
 
 const BannerSection = () => {
+  const theme = useTheme();
   return (
     <Box
       sx={{
         height: '500px',
+        [theme.breakpoints.down('md')]: {
+          height: '300px'
+        },
         background: `url(${Banner}) 50% no-repeat`,
         backgroundSize: 'cover',
         position: 'relative',
@@ -39,6 +43,9 @@ const BannerSection = () => {
             fontWeight: 600,
             letterSpacing: '2px',
             position: 'relative',
+            [theme.breakpoints.down('md')]: {
+              fontSize: 30
+            },
             '&:before': {
               content: '""',
               position: 'absolute',
@@ -54,7 +61,16 @@ const BannerSection = () => {
         >
           TRƯỜNG ĐẠI HỌC SÀI GÒN
         </Typography>
-        <Typography sx={{ fontSize: '22px' }}>KHOA CÔNG NGHỆ THÔNG TIN</Typography>
+        <Typography
+          sx={{
+            fontSize: '22px',
+            [theme.breakpoints.down('md')]: {
+              fontSize: 16
+            }
+          }}
+        >
+          KHOA CÔNG NGHỆ THÔNG TIN
+        </Typography>
       </Box>
     </Box>
   );

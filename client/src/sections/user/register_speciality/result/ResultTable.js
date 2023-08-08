@@ -34,7 +34,8 @@ const ResultTable = () => {
       },
       {
         accessorKey: 'student_score',
-        header: 'Điểm'
+        header: 'Điểm',
+        Cell: ({ cell }) => cell.getValue().toFixed(2)
       },
       {
         accessorKey: 'specialty_name',
@@ -60,6 +61,8 @@ const ResultTable = () => {
         manualFiltering
         manualPagination
         manualSorting
+        enableHiding={false}
+        enableFullScreenToggle={false}
         muiToolbarAlertBannerProps={isError ? { color: 'error', children: 'Error loading data' } : undefined}
         onColumnFiltersChange={(updater) => dispatch(setColumnFilters(updater(columnFilters)))}
         onGlobalFilterChange={(filter) => dispatch(setGlobalFilter(filter))}

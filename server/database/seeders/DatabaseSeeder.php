@@ -24,8 +24,8 @@ class DatabaseSeeder extends Seeder
         $this->call(EmployerSeeder::class);
         $this->call(TeacherSeeder::class);
         $this->call(DisplayConfigSeeder::class);
-        $this->call(RegisterSpecialtySeeder::class);
-        $this->call(RegisterSpecialtyDetailSeeder::class);
+        // $this->call(RegisterSpecialtySeeder::class);
+        // $this->call(RegisterSpecialtyDetailSeeder::class);
         $this->call(RecruitmentPositionSeeder::class);
         $this->call(InterCompanySeeder::class);
         $this->call(InternRegistrationSeeder::class);

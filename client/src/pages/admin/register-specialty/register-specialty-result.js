@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import Typography from '@mui/material/Typography';
 import { dispatch } from 'store/index';
-import { getMajors, setMajorId, setRegisterSpecialtyId } from 'store/reducers/registerSpecialtyUserSlice';
+import { getRegistrationInfoById, setMajorId, setRegisterSpecialtyId } from 'store/reducers/registerSpecialtyUserSlice';
 import { Box, Button, Divider, Stack, Tab, Tabs } from '@mui/material';
 import SpecialityContainer from 'sections/user/register_speciality/register/SpecialityContainer';
 import { useSelector } from 'react-redux';
@@ -10,12 +10,13 @@ import ResultTableAdmin from 'sections/admin/register_specialty/register_special
 import { ArrowRight, TableDocument } from 'iconsax-react';
 import { setColumnFilters } from 'store/reducers/registerSpecialtyUserSlice';
 import { useTheme } from '@mui/material/styles';
+import { formatDateTimeDisplay } from 'utils/formatDateTime';
 const RegisterSpecialtyResult = () => {
   const { Id } = useParams();
   const theme = useTheme();
-  const { majors, majorId } = useSelector((state) => state.register_specialty_user);
+  const { majors, majorId, userRegistrationPeriod } = useSelector((state) => state.register_specialty_user);
   useEffect(() => {
-    dispatch(getMajors(Id));
+    dispatch(getRegistrationInfoById(Id));
     dispatch(setRegisterSpecialtyId(Id));
   }, [Id]);
 
@@ -24,19 +25,19 @@ const RegisterSpecialtyResult = () => {
     dispatch(setColumnFilters([]));
   };
 
-  if (!majors) return null;
+  if (!majors || !userRegistrationPeriod) return null;
 
   return (
     <>
       <Stack direction="row" justifyContent="space-between" flexWrap="wrap">
         <Stack mb={3} spacing={1}>
           <Typography variant="h4" component="h1">
-            Đăng ký chuyên ngành khóa 21
+            {userRegistrationPeriod.register_specialty_name}
           </Typography>
           <Stack direction="row" spacing={2} alignItems={'center'}>
-            <Typography variant="h6">Từ 00:00 30/07/2023</Typography>
+            <Typography variant="h6">Từ {formatDateTimeDisplay(userRegistrationPeriod.register_specialty_start_date)}</Typography>
             <ArrowRight size="25" color={theme.palette.primary.main} />
-            <Typography variant="h6">Đến 00:00 30/07/2023</Typography>
+            <Typography variant="h6">Đến {formatDateTimeDisplay(userRegistrationPeriod.register_specialty_end_date)}</Typography>
           </Stack>
         </Stack>
         <Box my="auto">
@@ -56,7 +57,7 @@ const RegisterSpecialtyResult = () => {
               aria-label="scrollable auto tabs example"
             >
               {majors.map((major) => (
-                <Tab key={major.major_id} value={major.major_id} label={`Ngành ${major.major_name}`} />
+                <Tab key={major?.major_id} value={major?.major_id} label={`Ngành ${major?.major_name}`} />
               ))}
             </Tabs>
             <Divider />
