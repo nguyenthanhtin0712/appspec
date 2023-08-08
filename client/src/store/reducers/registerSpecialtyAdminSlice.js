@@ -38,12 +38,13 @@ export const fetchData = createAsyncThunk('register_specialty/fetchData', async 
 
 export const createRegisterSpecalty = createAsyncThunk(
   'register_specialty/createRegisterSpecalty',
-  async (specialty, { rejectWithValue }) => {
+  async ({ values, data }, { rejectWithValue }) => {
     try {
       const formattedSpecialty = {
-        ...specialty,
-        register_specialty_end_date: formatDateTimeSubmit(specialty.register_specialty_end_date),
-        register_specialty_start_date: formatDateTimeSubmit(specialty.register_specialty_start_date)
+        ...values,
+        ...data,
+        register_specialty_end_date: formatDateTimeSubmit(values.register_specialty_end_date),
+        register_specialty_start_date: formatDateTimeSubmit(values.register_specialty_start_date)
       };
       console.log(formattedSpecialty);
       const response = await axios.post(`/register-specialties/admin`, formattedSpecialty);
@@ -139,8 +140,17 @@ const register_specialty = createSlice({
         state.isRefetching = false;
         state.isError = true;
       })
+      .addCase(createRegisterSpecalty.pending, (state) => {
+        state.isLoading = true;
+      })
       .addCase(createRegisterSpecalty.fulfilled, (state, action) => {
+        state.isLoading = false;
         state.data.push(action.payload.data);
+      })
+      .addCase(createRegisterSpecalty.rejected, (state) => {
+        state.isLoading = false;
+        state.isRefetching = false;
+        state.isError = true;
       })
       .addCase(updateRegisterSpecalty.fulfilled, (state, action) => {
         const updatedRegisterSpecalty = action.payload.data;

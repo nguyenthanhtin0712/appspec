@@ -18,6 +18,9 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import FileField from 'components/input/FileField';
 import * as XLSX from 'xlsx';
+import { useSelector } from 'react-redux';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const xulymang = (arr) => {
   let result = [];
@@ -35,6 +38,7 @@ const xulymang = (arr) => {
 };
 
 const RegisterSpecialty = () => {
+  const { isLoading } = useSelector((state) => state.register_specialty);
   const navigate = useNavigate();
   const [majorList, setMajorList] = useState([]);
   useEffect(() => {
@@ -58,6 +62,7 @@ const RegisterSpecialty = () => {
             initialValues={{
               register_specialty_name: '',
               file_student: null,
+              password_student: '',
               register_specialty_start_date: null,
               register_specialty_end_date: null,
               submit: null,
@@ -66,6 +71,7 @@ const RegisterSpecialty = () => {
             validationSchema={Yup.object().shape({
               register_specialty_name: Yup.string().max(255).required('Tên đợt là bắt buộc !'),
               file_student: Yup.mixed().required('Vui lòng chọn file!'),
+              password_student: Yup.string().max(255).required('Vui lòng nhập mật khẩu cho sinh viên!'),
               register_specialty_start_date: Yup.date()
                 .typeError('Vui lòng nhập đầy đủ')
                 .min(new Date(), 'Thời gian bắt đầu phải lớn hơn thời gian hiện tại')
@@ -79,10 +85,9 @@ const RegisterSpecialty = () => {
                 .required('Thời gian kết thúc là bắt buộc')
             })}
             onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
-              const data = await handleImportData(values.file_student, 'password');
+              const data = await handleImportData(values.file_student, values.password_student);
               try {
-                values.file_student = data;
-                const result = await dispatch(createRegisterSpecalty(values));
+                const result = await dispatch(createRegisterSpecalty({ values, data }));
                 if (result && !result.error) {
                   setStatus({ success: true });
                   setSubmitting(false);
@@ -116,7 +121,7 @@ const RegisterSpecialty = () => {
             }) => (
               <form noValidate onSubmit={handleSubmit}>
                 <Grid container spacing={3}>
-                  <Grid item xs={6}>
+                  <Grid item xs={12}>
                     <InputField
                       id="register_specialty_name"
                       type="text"
@@ -143,6 +148,20 @@ const RegisterSpecialty = () => {
                       setFieldTouched={setFieldTouched}
                       accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
                       multiple
+                    />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <InputField
+                      id="password_student"
+                      type="password"
+                      value={values.password_student}
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      placeholder="Nhập mật khẩu"
+                      label="Mật khẩu"
+                      fullWidth
+                      error={Boolean(touched.password_student && errors.password_student)}
+                      helperText={errors.password_student}
                     />
                   </Grid>
                   <Grid item xs={6}>
@@ -196,6 +215,11 @@ const RegisterSpecialty = () => {
               </form>
             )}
           </Formik>
+          {isLoading && (
+            <Backdrop sx={{ color: '#fff', zIndex: 2000 }} open={isLoading}>
+              <CircularProgress color="inherit" />
+            </Backdrop>
+          )}
         </LocalizationProvider>
       </MainCard>
     </>
