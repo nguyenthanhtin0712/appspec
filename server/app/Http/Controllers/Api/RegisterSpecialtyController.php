@@ -235,6 +235,7 @@ class RegisterSpecialtyController extends Controller
     {
         if (!$request->user()->student) return response()->json(['message' => 'No permission',], 403);
         $displayConfig = DisplayConfig::find('REGISTER_SPECIALTY')->display_config_value;
+        if ($request->user()->student->register_specialty_id != $displayConfig) return response()->json(['message' => 'No permission',], 403);
         $major_id = $request->user()->student->major_id;
 
         $registerSpecialty = RegisterSpecialty::with(['specialty' => function ($query) use ($major_id) {
@@ -267,12 +268,13 @@ class RegisterSpecialtyController extends Controller
         $student = $request->user()->student;
         $student_register_id = $student->register_specialty_id;
         $registerSpecialty = RegisterSpecialty::find($student_register_id);
-        $timeStart = strtotime($registerSpecialty->register_specialty_start_date);
-        $timeEnd = strtotime($registerSpecialty->register_specialty_end_date);
-        $currentDateTime = strtotime(date("Y-m-d H:i:s"));
-        if($currentDateTime>=$timeStart && $currentDateTime>=$timeEnd){
+        $timeStart = $registerSpecialty->register_specialty_start_date;
+        $timeEnd = $registerSpecialty->register_specialty_end_date;
+        $currentDateTime = date("Y-m-d H:i:s");
+
+        if ($currentDateTime >= $timeStart && $currentDateTime <= $timeEnd) {
             $student->specialty_id = $specialty_id;
-            $student->specialty_date = Carbon::now()->toDateTimeString();
+            $student->specialty_date = now();
             $student->save();
             return response()->json(['message' => 'Register specialty successful'], 200);
         } else {

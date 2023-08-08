@@ -26,7 +26,7 @@ const SpecialityResult = () => {
   if (!majors) return null;
 
   return (
-    <Box component={Container} maxWidth="lg" sx={{ p: 3, pt: 0, mt: 2 }}>
+    <Box component={Container} maxWidth="lg" sx={{ pt: 0, mt: 2 }}>
       <Card>
         <CardHeader
           subheader={

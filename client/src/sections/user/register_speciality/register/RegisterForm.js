@@ -21,6 +21,8 @@ const RegisterForm = () => {
   const { statistic, registrationPageInfo } = useSelector((state) => state.register_specialty_user);
   const { register_specialty_start_date, register_specialty_end_date } = registrationPageInfo;
 
+  console.log(registrationPageInfo);
+
   const handleChange = (event) => {
     setSpecialityId(event.target.value);
     setError(false);

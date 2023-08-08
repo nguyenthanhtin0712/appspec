@@ -171,12 +171,13 @@ const register_specialty_user = createSlice({
       .addCase(getRegistrationInfoById.fulfilled, (state, action) => {
         state.userRegistrationPeriod = action.payload.data;
         state.majors = action.payload.data.register_specialty_detail;
-        state.majorId = action.payload.data.register_specialty_detail[0]?.major_id;
       })
       .addCase(getSpecialtiesForRegister.fulfilled, (state, action) => {
-        const { register_specialty_end_date, register_specialty_name, register_specialty_start_date, statistic } = action.payload.data;
+        const { register_specialty_end_date, register_specialty_name, register_specialty_start_date, statistic, major_id } =
+          action.payload.data;
         state.registrationPageInfo = { register_specialty_name, register_specialty_end_date, register_specialty_start_date };
         state.statistic = statistic;
+        state.majorId = major_id;
       });
   }
 });
