@@ -8,6 +8,7 @@ use App\Http\Requests\LoginRequest;
 use App\Http\Requests\TokenRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\LoginResource;
+use App\Models\Student;
 use App\Models\User;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
@@ -19,14 +20,18 @@ class LoginController extends Controller
     $credentials = $request->only('email', 'password');
 
     $user = User::where('user_email', $credentials['email'])->first();
-
-    if (!$user || !Hash::check($credentials['password'], $user->user_password)) {
-        return Helper::sendError("Invalid email or password", 401);
+    if($user && Hash::check($credentials['password'], $user->user_password)){
+        Auth::login($user);
+        return new LoginResource($user);
     }
-    // Authentication successful
-    Auth::login($user);
-
-    // Send response
-    return new LoginResource($user);
+    $student = Student::where('student_code',$credentials['email'])->first();
+    if($student){
+        $user = User::find($student->user_id);
+        if($user && Hash::check($credentials['password'], $user->user_password)){
+            Auth::login($user);
+            return new LoginResource($user);
+        }
+    }
+    return Helper::sendError("Tên đăng nhập hoặc mật khẩu không đúng", 401);
     }
 }

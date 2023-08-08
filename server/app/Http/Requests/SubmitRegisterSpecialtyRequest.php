@@ -4,9 +4,10 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
-use App\Http\Helpers\Helper;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\Response;
 
-class LoginRequest extends FormRequest
+class SubmitRegisterSpecialtyRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,13 +27,14 @@ class LoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'required',
-            'password' => 'required'
+            'specialty_id' => 'required'
         ];
     }
 
     protected function failedValidation(Validator $validator)
     {
-        Helper::sendError('Validation error', $validator->errors());
+        throw new HttpResponseException(response()->json([
+            'errors' => $validator->errors(),
+        ], Response::HTTP_UNPROCESSABLE_ENTITY));
     }
 }

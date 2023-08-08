@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreRegisterSpecialtyRequest;
+use App\Http\Requests\SubmitRegisterSpecialtyRequest;
 use App\Http\Resources\Collection;
 use App\Http\Resources\RegisterSpecialtyResource;
 use App\Models\DisplayConfig;
@@ -235,14 +236,23 @@ class RegisterSpecialtyController extends Controller
     }
 
 
-    public function submitRegisterSpecialty(Request $request)
+    public function submitRegisterSpecialty(SubmitRegisterSpecialtyRequest $request)
     {
         $specialty_id = $request->input('specialty_id');
         $student = $request->user()->student;
-        $student->specialty_id = $specialty_id;
-        $student->specialty_date = Carbon::now()->toDateTimeString();
-        $student->save();
-        return response()->json(['message' => 'Register specialty successful'], 200);
+        $student_register_id = $student->register_specialty_id;
+        $registerSpecialty = RegisterSpecialty::find($student_register_id);
+        $timeStart = strtotime($registerSpecialty->register_specialty_start_date);
+        $timeEnd = strtotime($registerSpecialty->register_specialty_end_date);
+        $currentDateTime = strtotime(date("Y-m-d H:i:s"));
+        if($currentDateTime>=$timeStart && $currentDateTime>=$timeEnd){
+            $student->specialty_id = $specialty_id;
+            $student->specialty_date = Carbon::now()->toDateTimeString();
+            $student->save();
+            return response()->json(['message' => 'Register specialty successful'], 200);
+        } else {
+            return response()->json(['message' => 'Ngoài thời gian đăng ký'], 400);
+        }
     }
 
     public function changeSpecialty(Request $request)

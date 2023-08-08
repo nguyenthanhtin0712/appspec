@@ -51,8 +51,8 @@ const AuthLogin = () => {
           password: ''
         }}
         validationSchema={Yup.object().shape({
-          email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
-          password: Yup.string().max(255).required('Password is required')
+          email: Yup.string().max(255).required('Vui lòng điền tên đăng nhập!'),
+          password: Yup.string().max(255).required('Vui lòng điền mật khẩu!')
         })}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
           try {
