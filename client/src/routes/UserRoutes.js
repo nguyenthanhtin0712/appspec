@@ -41,7 +41,7 @@ const UserRoutes = {
       children: [
         {
           path: '/register_speciality',
-          element: <RegisterSpeciality_Index />
+          element: <RegisterSpeciality_Index requiredPermissions={[]} />
         },
         {
           path: 'register',
@@ -49,11 +49,11 @@ const UserRoutes = {
         },
         {
           path: 'rules',
-          element: <RegisterSpeciality_Rules />
+          element: <RegisterSpeciality_Rules requiredPermissions={[]} />
         },
         {
           path: 'result',
-          element: <RegisterSpeciality_Result />
+          element: <RegisterSpeciality_Result requiredPermissions={[]} />
         }
       ]
     },
