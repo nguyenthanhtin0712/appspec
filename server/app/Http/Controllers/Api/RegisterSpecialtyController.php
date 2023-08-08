@@ -9,14 +9,11 @@ use App\Http\Resources\Collection;
 use App\Http\Resources\RegisterSpecialtyResource;
 use App\Models\DisplayConfig;
 use App\Models\RegisterSpecialty;
-use App\Models\Specialty;
+use App\Models\RegisterSpecialtyDetail;
 use App\Models\Student;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Carbon;
-
-use function PHPSTORM_META\map;
 
 class RegisterSpecialtyController extends Controller
 {
@@ -161,9 +158,7 @@ class RegisterSpecialtyController extends Controller
                 'register_specialty_start_date',
                 'register_specialty_end_date'
             ]);
-
             $selectedColumns['register_specialty_detail'] = $groupedSpecialties->values()->all();
-
             return $this->sentSuccessResponse($selectedColumns, "Get data success", Response::HTTP_OK);
         }
     }
@@ -177,7 +172,29 @@ class RegisterSpecialtyController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $register_specialty_detail = $request->input('register_specialty_detail');
+        foreach ($register_specialty_detail as $detail) {
+            unset($detail['register_specialty_name']);
+        }
+        $register_specialty_name = $request->input('register_specialty_name');
+        $register_specialty_start_date = $request->input('register_specialty_start_date');
+        $register_specialty_end_date = $request->input('register_specialty_end_date');
+        $register_specialty = RegisterSpecialty::find($id);
+        RegisterSpecialtyDetail::where('register_specialty_id', "$id")->delete();
+        if ($request->has('register_specialty_detail')) {
+            foreach ($register_specialty_detail as $detail) {
+                RegisterSpecialtyDetail::create([
+                    'register_specialty_id' => "$id",
+                    'specialty_id' => $detail['specialty_id'],
+                    'specialty_quantity' => $detail['specialty_quantity']
+                ]);
+            }
+        }
+        $register_specialty->register_specialty_name = $register_specialty_name;
+        $register_specialty->register_specialty_start_date = $register_specialty_start_date;
+        $register_specialty->register_specialty_end_date = $register_specialty_end_date;
+        $register_specialty->save();
+        return $this->sentSuccessResponse($register_specialty, "Get data success", Response::HTTP_OK);
     }
 
     /**
@@ -265,18 +282,10 @@ class RegisterSpecialtyController extends Controller
         $student = $request->user()->student;
         $student_register_id = $student->register_specialty_id;
         $registerSpecialty = RegisterSpecialty::find($student_register_id);
-<<<<<<< Updated upstream
-        $timeStart = $registerSpecialty->register_specialty_start_date;
-        $timeEnd = $registerSpecialty->register_specialty_end_date;
-        $currentDateTime = date("Y-m-d H:i:s");
-
-        if ($currentDateTime >= $timeStart && $currentDateTime <= $timeEnd) {
-=======
         $timeStart = strtotime($registerSpecialty->register_specialty_start_date);
         $timeEnd = strtotime($registerSpecialty->register_specialty_end_date);
         $currentDateTime = strtotime(date("Y-m-d H:i:s"));
         if ($currentDateTime >= $timeStart && $currentDateTime >= $timeEnd) {
->>>>>>> Stashed changes
             $student->specialty_id = $specialty_id;
             $student->specialty_date = now();
             $student->save();

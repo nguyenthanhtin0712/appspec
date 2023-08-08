@@ -62,9 +62,16 @@ export const createRegisterSpecalty = createAsyncThunk(
 
 export const updateRegisterSpecalty = createAsyncThunk(
   'register_specialty/updateRegisterSpecalty',
-  async (specialty, { rejectWithValue }) => {
+  async ({ values, id }, { rejectWithValue }) => {
     try {
-      const response = await axios.put(`/register-specialties/admin/${specialty.register_specialty_id}`, specialty);
+      const formattedSpecialty = {
+        ...values,
+        register_specialty_end_date: formatDateTimeSubmit(values.register_specialty_end_date),
+        register_specialty_start_date: formatDateTimeSubmit(values.register_specialty_start_date)
+      };
+      console.log('formattedSpecialty', formattedSpecialty);
+      const response = await axios.put(`/register-specialties/admin/${id}`, formattedSpecialty);
+      console.log('response.data', response.data);
       return response.data;
     } catch (error) {
       if (error.response && error.response.data && error.response.data.errors) {
@@ -80,6 +87,20 @@ export const updateRegisterSpecalty = createAsyncThunk(
 export const deleteRegisterSpecalty = createAsyncThunk('register_specialty/deleteRegisterSpecalty', async (id, { rejectWithValue }) => {
   try {
     const response = await axios.delete(`/register-specialties/admin/${id}`);
+    return response.data;
+  } catch (error) {
+    if (error.response && error.response.data && error.response.data.errors) {
+      return rejectWithValue(error.response.data);
+    } else {
+      console.error(error);
+      throw error;
+    }
+  }
+});
+
+export const getRegisterSpecalty = createAsyncThunk('register_specialty/getRegisterSpecalty', async (id, { rejectWithValue }) => {
+  try {
+    const response = await axios.get(`/register-specialties/admin/${id}`);
     return response.data;
   } catch (error) {
     if (error.response && error.response.data && error.response.data.errors) {

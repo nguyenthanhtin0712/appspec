@@ -12,11 +12,13 @@ const DashboardDefault = Loadable(lazy(() => import('pages/admin/dashboard')));
 const SamplePage = Loadable(lazy(() => import('pages/admin/sample')));
 const MajorPage = Loadable(lazy(() => import('pages/admin/major')));
 const RegisterSpecialtyPageCreate = Loadable(lazy(() => import('pages/admin/register-specialty/register-specialty-create')));
+const RegisterSpecialtyPageEdit = Loadable(lazy(() => import('pages/admin/register-specialty/register-specialty-edit')));
 const RegisterSpecialtyPageIndex = Loadable(lazy(() => import('pages/admin/register-specialty/register-specialty-index')));
 const RegisterSpecialtyPageResult = Loadable(lazy(() => import('pages/admin/register-specialty/register-specialty-result')));
 
 const SpecialtyPage = Loadable(lazy(() => import('pages/admin/specialty')));
 const StudentPage = Loadable(lazy(() => import('pages/admin/student')));
+const TeacherPage = Loadable(lazy(() => import('pages/admin/teacher')));
 const Page = Loadable(lazy(() => import('pages/admin/page/page_index')));
 const PageCreate = Loadable(lazy(() => import('pages/admin/page/page_create')));
 
@@ -49,6 +51,10 @@ const AdminRoutes = {
       element: <PrivateRoute component={RegisterSpecialtyPageCreate} requiredPermissions={['major.view']} />
     },
     {
+      path: 'register_specialty_edit/:id',
+      element: <PrivateRoute component={RegisterSpecialtyPageEdit} requiredPermissions={['major.view']} />
+    },
+    {
       path: 'register_specialty/:Id',
       element: <PrivateRoute component={RegisterSpecialtyPageResult} requiredPermissions={['major.view']} />
     },
@@ -59,6 +65,10 @@ const AdminRoutes = {
     {
       path: 'student',
       element: <PrivateRoute component={StudentPage} requiredPermissions={['student.view']} />
+    },
+    {
+      path: 'teacher',
+      element: <PrivateRoute component={TeacherPage} requiredPermissions={['teacher.view']} />
     },
     {
       path: 'page',
