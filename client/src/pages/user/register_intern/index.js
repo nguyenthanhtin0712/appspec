@@ -24,6 +24,7 @@ import InfoItem from 'sections/user/register_speciality/index/InfoItem';
 import { bindHover } from 'material-ui-popup-state';
 import Popper from '@mui/material/Popper';
 import { bindPopper, usePopupState } from 'material-ui-popup-state/hooks';
+import { Fade } from '@mui/material';
 
 const Register_speciality = () => {
   const theme = useTheme();
@@ -64,6 +65,8 @@ const Register_speciality = () => {
                 <Typography variant="h5">Thống kê</Typography>
               </Stack>
               <Grid container spacing={2}>
+                <CompanyItem />
+                <CompanyItem />
                 <CompanyItem />
                 <CompanyItem />
                 <CompanyItem />
@@ -123,29 +126,29 @@ const HoverPopperPopupState = () => {
           Công ty TNHH Phần mềm FPT
         </Typography>
       </Stack>
-      <Popper
-        {...bindPopper(popupState)}
-        placement="top"
-        sx={{ boxShadow: theme.customShadows.z3, p: 2, bgcolor: '#fff', maxWidth: '350px', borderRadius: '8px' }}
-      >
-        <Stack spacing={2}>
-          <Stack direction="row" spacing={1} alignItems="center">
-            <Typography variant="h5">Công ty TNHH Phần mềm FPT</Typography>
-            <TickCircle size="23" color={theme.palette.primary.main} variant="Bold" />
-          </Stack>
-          <Stack direction="row" spacing={2} alignItems="center">
-            <Call size="25" color={theme.palette.secondary.main} variant="Bold" />
-            <Typography>0123456789</Typography>
-          </Stack>
-          <Stack direction="row" spacing={2} alignItems="center">
-            <MessageText1 size="25" color={theme.palette.secondary.main} variant="Bold" />
-            <Typography>transinh085@gmail.com</Typography>
-          </Stack>
-          <Stack direction="row" spacing={2} alignItems="center">
-            <Building4 size="42" color={theme.palette.secondary.main} variant="Bold" />
-            <Typography>205 Trần Hưng Đạo, phường 10, quận 5, Thành phố Hồ Chí Minh</Typography>
-          </Stack>
-        </Stack>
+      <Popper {...bindPopper(popupState)} placement="top" transition>
+        {({ TransitionProps }) => (
+          <Fade {...TransitionProps} timeout={350}>
+            <Stack spacing={2} sx={{ boxShadow: theme.customShadows.z3, p: 2, bgcolor: '#fff', maxWidth: '350px', borderRadius: '8px' }}>
+              <Stack direction="row" spacing={1} alignItems="center">
+                <Typography variant="h5">Công ty TNHH Phần mềm FPT</Typography>
+                <TickCircle size="23" color={theme.palette.primary.main} variant="Bold" />
+              </Stack>
+              <Stack direction="row" spacing={2} alignItems="center">
+                <Call size="25" color={theme.palette.secondary.main} variant="Bold" />
+                <Typography>0123456789</Typography>
+              </Stack>
+              <Stack direction="row" spacing={2} alignItems="center">
+                <MessageText1 size="25" color={theme.palette.secondary.main} variant="Bold" />
+                <Typography>transinh085@gmail.com</Typography>
+              </Stack>
+              <Stack direction="row" spacing={2} alignItems="center">
+                <Building4 size="42" color={theme.palette.secondary.main} variant="Bold" />
+                <Typography>205 Trần Hưng Đạo, phường 10, quận 5, Thành phố Hồ Chí Minh</Typography>
+              </Stack>
+            </Stack>
+          </Fade>
+        )}
       </Popper>
     </div>
   );
