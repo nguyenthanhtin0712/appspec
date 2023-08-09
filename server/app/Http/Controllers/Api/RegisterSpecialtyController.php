@@ -303,8 +303,8 @@ class RegisterSpecialtyController extends Controller
             $student = Student::where('student_code', $student_id)->first();
             $student->specialty_id = $specialty_id;
             $student->save();
-            echo json_encode($student);
         }
+        return response()->json(['message' => 'Change specialty successful'], 200);
     }
 
     public function getResult(Request $request)

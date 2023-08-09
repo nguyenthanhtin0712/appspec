@@ -1,11 +1,12 @@
 // type
-import { Home3, HomeTrendUp } from 'iconsax-react';
+import { Home3, HomeTrendUp, Setting2 } from 'iconsax-react';
 import WebIcon from '@mui/icons-material/Web';
 // icons
 const icons = {
   navigation: Home3,
   dashboard: HomeTrendUp,
-  page: WebIcon
+  page: WebIcon,
+  config: Setting2
 };
 
 // ==============================|| MENU ITEMS - DASHBOARD ||============================== //
@@ -18,10 +19,17 @@ const dashboard = {
   children: [
     {
       id: 'dashboard',
-      title: 'Dashboard',
+      title: 'Tổng quan',
       type: 'item',
       url: '/admin',
       icon: icons.dashboard
+    },
+    {
+      id: 'config',
+      title: 'Cấu hình',
+      type: 'item',
+      url: '/admin/config',
+      icon: icons.config
     },
     {
       id: 'page',

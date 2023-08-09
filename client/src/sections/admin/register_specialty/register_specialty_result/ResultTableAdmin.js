@@ -33,10 +33,9 @@ const ResultTable = () => {
   } = useSelector((state) => state.register_specialty_user);
   const [open, setOpen] = useState(false);
   const [rowSelection, setRowSelection] = useState({});
+  console.log(rowSelection);
   useEffect(() => {
-    if (majorId) {
-      dispatch(fetchData({ columnFilters, globalFilter, sorting, pagination, majorId, registerSpecialtyId, status }));
-    }
+    dispatch(fetchData({ columnFilters, globalFilter, sorting, pagination, majorId, registerSpecialtyId, status }));
   }, [columnFilters, globalFilter, sorting, pagination, majorId, registerSpecialtyId, status]);
 
   const columns = React.useMemo(

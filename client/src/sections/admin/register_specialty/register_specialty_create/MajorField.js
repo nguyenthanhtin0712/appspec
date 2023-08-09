@@ -7,7 +7,7 @@ import InputMajorField from './InputMajorField';
 
 const MajorField = ({ major, setFieldValue, values }) => {
   return (
-    <Grid item xs={6}>
+    <Grid item xs={12} md={6}>
       <MainCard sx={{ height: '100%' }}>
         <Stack direction="row" spacing={1} mb={2}>
           <Typography variant="h5">Ngành {major.major_name}</Typography>
