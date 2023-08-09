@@ -11,11 +11,11 @@ const DashboardDefault = Loadable(lazy(() => import('pages/admin/dashboard')));
 // render - sample page
 const SamplePage = Loadable(lazy(() => import('pages/admin/sample')));
 const MajorPage = Loadable(lazy(() => import('pages/admin/major')));
+const ConfigPage = Loadable(lazy(() => import('pages/admin/config-page')));
 const RegisterSpecialtyPageCreate = Loadable(lazy(() => import('pages/admin/register-specialty/register-specialty-create')));
 const RegisterSpecialtyPageEdit = Loadable(lazy(() => import('pages/admin/register-specialty/register-specialty-edit')));
 const RegisterSpecialtyPageIndex = Loadable(lazy(() => import('pages/admin/register-specialty/register-specialty-index')));
 const RegisterSpecialtyPageResult = Loadable(lazy(() => import('pages/admin/register-specialty/register-specialty-result')));
-
 const SpecialtyPage = Loadable(lazy(() => import('pages/admin/specialty')));
 const StudentPage = Loadable(lazy(() => import('pages/admin/student')));
 const TeacherPage = Loadable(lazy(() => import('pages/admin/teacher')));
@@ -33,6 +33,10 @@ const AdminRoutes = {
     {
       path: 'dashboard',
       element: <PrivateRoute component={DashboardDefault} requiredPermissions={['major.view']} />
+    },
+    {
+      path: 'config',
+      element: <ConfigPage />
     },
     {
       path: 'sample-page',

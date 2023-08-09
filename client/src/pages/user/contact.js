@@ -128,27 +128,6 @@ const ContactForm = () => {
               <Grid container spacing={3}>
                 <Grid item xs={6}>
                   <Stack spacing={1}>
-                    <InputLabel htmlFor="email-contact">Địa chỉ email</InputLabel>
-                    <OutlinedInput
-                      id="email-contact"
-                      type="email"
-                      value={values.email}
-                      name="email"
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      placeholder="Nhập địa chỉ email"
-                      fullWidth
-                      error={Boolean(touched.email && errors.email)}
-                    />
-                    {touched.email && errors.email && (
-                      <FormHelperText error id="standard-weight-helper-text-email-login">
-                        {errors.email}
-                      </FormHelperText>
-                    )}
-                  </Stack>
-                </Grid>
-                <Grid item xs={6}>
-                  <Stack spacing={1}>
                     <InputLabel htmlFor="fullname-contact">Họ và tên</InputLabel>
                     <OutlinedInput
                       id="fullname-contact"
@@ -164,6 +143,27 @@ const ContactForm = () => {
                     {touched.fullname && errors.fullname && (
                       <FormHelperText error id="standard-weight-helper-text-fullname-login">
                         {errors.fullname}
+                      </FormHelperText>
+                    )}
+                  </Stack>
+                </Grid>
+                <Grid item xs={6}>
+                  <Stack spacing={1}>
+                    <InputLabel htmlFor="email-contact">Địa chỉ email</InputLabel>
+                    <OutlinedInput
+                      id="email-contact"
+                      type="email"
+                      value={values.email}
+                      name="email"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      placeholder="Nhập địa chỉ email"
+                      fullWidth
+                      error={Boolean(touched.email && errors.email)}
+                    />
+                    {touched.email && errors.email && (
+                      <FormHelperText error id="standard-weight-helper-text-email-login">
+                        {errors.email}
                       </FormHelperText>
                     )}
                   </Stack>

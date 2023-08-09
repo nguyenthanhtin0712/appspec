@@ -9,7 +9,7 @@ import { changeSpecialty, fetchData } from 'store/reducers/registerSpecialtyUser
 import { toast } from 'react-toastify';
 
 const ChangeSpecialtyDialog = ({ open, handleClose, rowSelection, setRowSelection }) => {
-  const { statistic, columnFilters, globalFilter, sorting, pagination, majorId, registerSpecialtyId } = useSelector(
+  const { statistic, columnFilters, globalFilter, sorting, pagination, majorId, registerSpecialtyId, status } = useSelector(
     (state) => state.register_specialty_user
   );
 
@@ -33,7 +33,7 @@ const ChangeSpecialtyDialog = ({ open, handleClose, rowSelection, setRowSelectio
               toast.success('Thay đổi thông tin thành công');
               setStatus({ success: true });
               setSubmitting(false);
-              dispatch(fetchData({ columnFilters, globalFilter, sorting, pagination, majorId, registerSpecialtyId }));
+              dispatch(fetchData({ columnFilters, globalFilter, sorting, pagination, majorId, registerSpecialtyId, status }));
               handleClose();
             }
           } catch (err) {

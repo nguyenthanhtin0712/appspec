@@ -27,7 +27,7 @@ const InputMajorField = ({ specialty, values, setFieldValue }) => {
           type="number"
           size="small"
           placeholder="Nhập số lượng"
-          value={values.register_specialty_detail[specialtyIndex].specialty_quantity || ''}
+          value={values.register_specialty_detail[specialtyIndex]?.specialty_quantity || ''}
           onChange={handleQuantityChange}
         ></OutlinedInput>
       </Grid>

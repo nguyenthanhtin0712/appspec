@@ -81,7 +81,7 @@ const AuthLogin = () => {
             <Grid container spacing={3}>
               <Grid item xs={12}>
                 <Stack spacing={1}>
-                  <InputLabel htmlFor="email-login">Email Address</InputLabel>
+                  <InputLabel htmlFor="email-login">Email hoặc mã sinh viên</InputLabel>
                   <OutlinedInput
                     id="email-login"
                     type="email"
@@ -89,7 +89,7 @@ const AuthLogin = () => {
                     name="email"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    placeholder="Nhập mã sinh viên hoặc email"
+                    placeholder="Nhập email hoặc mã sinh viên"
                     fullWidth
                     error={Boolean(touched.email && errors.email)}
                   />
@@ -125,7 +125,7 @@ const AuthLogin = () => {
                         </IconButton>
                       </InputAdornment>
                     }
-                    placeholder="Enter password"
+                    placeholder="Nhập mật khẩu"
                   />
                   {touched.password && errors.password && (
                     <FormHelperText error id="standard-weight-helper-text-password-login">
