@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Teacher;
-use App\Models\Speciality;
 use Faker\Factory as Faker;
 
 class TeacherSeeder extends Seeder
@@ -19,12 +18,13 @@ class TeacherSeeder extends Seeder
         $faker = Faker::create();
         for ($i = 0; $i < 10; $i++) {
             Teacher::create([
-                'teacher_code' => 'T' . $faker->unique()->numberBetween(1000, 9999),
+                'teacher_id' => 'T' . $faker->unique()->numberBetween(1000, 9999),
                 'teacher_name' => $faker->name,
-                'teacher_phone' => $faker->phoneNumber,
+                'teacher_phone' => '0' . $faker->numberBetween(1, 9) . $faker->numerify('#########'),
                 'teacher_email' => $faker->email,
                 'teacher_birthday' => $faker->date('Y-m-d', '-25 years', '-30 years'),
                 'teacher_title' => $faker->randomElement(['Professor', 'Associate Professor', 'Assistant Professor']),
+                'teacher_spec' => 'KTPM',
                 'teacher_unit' => $faker->randomElement(['Science Department', 'Mathematics Department', 'English Department']),
             ]);
         }

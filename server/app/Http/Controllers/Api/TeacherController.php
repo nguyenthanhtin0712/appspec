@@ -35,7 +35,8 @@ class TeacherController extends Controller
         $sortBy = $request->input('sortBy');
         $sortOrder = $request->input('sortOrder', 'asc');
         $filters = $request->input('filters');
-        $teachers = $this->teacher->query();
+        $teachers = $this->teacher->query()
+        ->leftJoin('specialties', 'teachers.teacher_spec', '=', 'specialties.specialty_id');
         $teachers->where("teacher_isDelete", "0");
         if ($query) {
             $teachers->where("teacher_name", "LIKE", "%$query%");

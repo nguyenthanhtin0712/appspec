@@ -13,7 +13,7 @@ import {
   setSorting,
   setPagination,
   deleteTeacher,
-  setStudentFileDialog
+  setTeacherFileDialog
 } from 'store/reducers/teacherSlice';
 import ConfirmDialog from 'components/ConfirmDialog';
 import Typography from '@mui/material/Typography';
@@ -23,14 +23,13 @@ import { dispatch } from 'store/index';
 import { Export, Import } from 'iconsax-react';
 import { utils, writeFileXLSX } from 'xlsx';
 import { useCallback } from 'react';
-import StudentFileDialog from 'sections/admin/teacher/TeacherDialog';
+import TeacherFileDialog from 'sections/admin/teacher/TeacherDialog';
 
 const TeacherTable = () => {
   const theme = useTheme();
   const { data, isError, isLoading, isRefetching, rowCount, columnFilters, globalFilter, sorting, pagination } = useSelector(
     (state) => state.teacher
   );
-  console.log('data', data);
   const [openCofirm, setOpenCofirm] = useState(false);
   const [idDelete, setIdDelete] = useState('');
 
@@ -40,7 +39,7 @@ const TeacherTable = () => {
 
   const handleClickOpen = () => {
     dispatch(
-      setStudentFileDialog({
+      setTeacherFileDialog({
         open: true,
         initValue: {
           file_student: '',
@@ -92,7 +91,7 @@ const TeacherTable = () => {
   const columns = React.useMemo(
     () => [
       {
-        accessorKey: 'teacher_code',
+        accessorKey: 'teacher_id',
         header: 'MAGV',
         size: 10
       },
@@ -112,7 +111,12 @@ const TeacherTable = () => {
       {
         accessorKey: 'teacher_phone',
         header: 'Số ĐT',
-        size: 10
+        size: 15
+      },
+      {
+        accessorKey: 'specialty_name',
+        header: 'Chuyên ngành',
+        size: 15
       },
       {
         accessorKey: 'teacher_title',
@@ -175,7 +179,7 @@ const TeacherTable = () => {
               <IconButton
                 color="error"
                 onClick={() => {
-                  return handleDelete(row.original.user_id);
+                  return handleDelete(row.original.teacher_id);
                 }}
               >
                 <Trash />
@@ -224,7 +228,7 @@ const TeacherTable = () => {
               try {
                 await dispatch(deleteTeacher(idDelete));
                 handleCloseCofirm();
-                toast.success('Xóa sinh viên thành công!');
+                toast.success('Xóa giảng viên thành công!');
                 setIdDelete('');
               } catch (err) {
                 console.error(err);
@@ -236,7 +240,7 @@ const TeacherTable = () => {
           </Button>
         }
       />
-      <StudentFileDialog />
+      <TeacherFileDialog />
     </>
   );
 };
