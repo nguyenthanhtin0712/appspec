@@ -72,9 +72,9 @@ export const updateStudent = createAsyncThunk('student/updateStudent', async ({ 
   }
 });
 
-export const deleteStudent = createAsyncThunk('student/deleteStudent', async (id) => {
+export const deleteTeacher = createAsyncThunk('student/deleteTeacher', async (id) => {
   try {
-    const response = await axios.delete(`${API_BASE_URL}/students/${id}`);
+    const response = await axios.delete(`${API_BASE_URL}/teachers/${id}`);
     return response.data;
   } catch (error) {
     console.error(error);
@@ -186,15 +186,15 @@ const teacher = createSlice({
           state.studentDialog.open = false;
         }
       })
-      .addCase(deleteStudent.pending, (state) => {
+      .addCase(deleteTeacher.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(deleteStudent.fulfilled, (state, action) => {
+      .addCase(deleteTeacher.fulfilled, (state, action) => {
         state.isLoading = false;
         const deletedstudentId = action.payload.data.student_id;
         state.data = state.data.filter((student) => student.student_id !== deletedstudentId);
       })
-      .addCase(deleteStudent.rejected, (state) => {
+      .addCase(deleteTeacher.rejected, (state) => {
         state.isLoading = false;
         state.isRefetching = false;
         state.isError = true;

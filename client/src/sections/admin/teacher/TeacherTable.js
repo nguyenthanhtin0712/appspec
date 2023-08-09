@@ -12,7 +12,7 @@ import {
   setGlobalFilter,
   setSorting,
   setPagination,
-  deleteStudent,
+  deleteTeacher,
   setStudentFileDialog
 } from 'store/reducers/teacherSlice';
 import ConfirmDialog from 'components/ConfirmDialog';
@@ -222,7 +222,7 @@ const TeacherTable = () => {
             color="error"
             onClick={async () => {
               try {
-                await dispatch(deleteStudent(idDelete));
+                await dispatch(deleteTeacher(idDelete));
                 handleCloseCofirm();
                 toast.success('Xóa sinh viên thành công!');
                 setIdDelete('');
