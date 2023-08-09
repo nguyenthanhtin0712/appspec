@@ -1,7 +1,7 @@
 import React, { memo, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useTheme } from '@mui/material/styles';
-import { Eye, Trash } from 'iconsax-react';
+import { Eye, Trash, Edit } from 'iconsax-react';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import { MaterialReactTable } from 'material-react-table';
@@ -98,6 +98,9 @@ const RegisterSpecialtyTable = () => {
           <Box>
             <IconButton component={Link} to={`/admin/register_specialty/${row.id}`}>
               <Eye />
+            </IconButton>
+            <IconButton component={Link} to={`/admin/register_specialty_edit/${row.id}`}>
+              <Edit />
             </IconButton>
             <IconButton color="error" onClick={() => handleDelete(row.id)}>
               <Trash />

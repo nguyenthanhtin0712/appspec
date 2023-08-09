@@ -8,6 +8,7 @@ import major from './majorSlice';
 import auth from './authSlice';
 import specialty from './specialtySlice';
 import student from './studentSlice';
+import teacher from './teacherSlice';
 import register_specialty from './registerSpecialtyAdminSlice';
 import register_specialty_user from './registerSpecialtyUserSlice';
 
@@ -20,6 +21,7 @@ const reducers = combineReducers({
   auth,
   specialty,
   student,
+  teacher,
   register_specialty,
   register_specialty_user
 });
