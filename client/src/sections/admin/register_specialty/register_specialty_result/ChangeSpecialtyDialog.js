@@ -27,13 +27,13 @@ const ChangeSpecialtyDialog = ({ open, handleClose, rowSelection, setRowSelectio
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
           try {
             console.log(values);
-            const result = dispatch(changeSpecialty(values));
+            const result = await dispatch(changeSpecialty(values));
             if (result) {
               setRowSelection({});
               toast.success('Thay đổi thông tin thành công');
               setStatus({ success: true });
               setSubmitting(false);
-              dispatch(fetchData({ columnFilters, globalFilter, sorting, pagination, majorId, registerSpecialtyId, status }));
+              await dispatch(fetchData({ columnFilters, globalFilter, sorting, pagination, majorId, registerSpecialtyId, status }));
               handleClose();
             }
           } catch (err) {
