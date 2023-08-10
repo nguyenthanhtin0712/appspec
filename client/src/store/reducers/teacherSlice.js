@@ -31,7 +31,7 @@ export const fetchData = createAsyncThunk('student/fetchData', async (params) =>
   }
 });
 
-export const createStudent = createAsyncThunk('student/createStudent', async (student) => {
+export const createTeacher = createAsyncThunk('student/createTeacher', async (student) => {
   try {
     console.log(student);
     const response = await axios.post(`${API_BASE_URL}/students`, student);
@@ -62,7 +62,7 @@ export const addScoreStudent = createAsyncThunk('student/addScoreStudent', async
   }
 });
 
-export const updateStudent = createAsyncThunk('student/updateStudent', async ({ id, student }) => {
+export const updateTeacher = createAsyncThunk('student/updateTeacher', async ({ id, student }) => {
   try {
     const response = await axios.put(`${API_BASE_URL}/students/${id}`, student);
     return response.data;
@@ -72,9 +72,9 @@ export const updateStudent = createAsyncThunk('student/updateStudent', async ({ 
   }
 });
 
-export const deleteStudent = createAsyncThunk('student/deleteStudent', async (id) => {
+export const deleteTeacher = createAsyncThunk('student/deleteTeacher', async (id) => {
   try {
-    const response = await axios.delete(`${API_BASE_URL}/students/${id}`);
+    const response = await axios.delete(`${API_BASE_URL}/teachers/${id}`);
     return response.data;
   } catch (error) {
     console.error(error);
@@ -99,15 +99,14 @@ const initialState = {
     open: false,
     action: 'add',
     initValue: {
-      user_firstname: '',
-      user_lastname: '',
-      user_gender: '',
-      user_birthday: null,
-      student_course: '',
-      major_id: '',
-      student_class: '',
-      student_code: '',
-      user_password: ''
+      teacher_code: '',
+      teacher_name: '',
+      teacher_phone: '',
+      teacher_email: '',
+      teacher_birthday: null,
+      teacher_title: '',
+      teacher_spec: '',
+      teacher_unit: ''
     }
   }
 };
@@ -134,11 +133,8 @@ const teacher = createSlice({
     setTeacherDialog: (state, action) => {
       state.studentDialog = { ...state.studentDialog, ...action.payload };
     },
-    setStudentFileDialog: (state, action) => {
-      state.studentFileDialog = { ...state.studentFileDialog, ...action.payload };
-    },
-    setStudentScoreDialog: (state, action) => {
-      state.studentScoreDialog = { ...state.studentFileDialog, ...action.payload };
+    setTeacherFileDialog: (state, action) => {
+      state.TeacherFileDialog = { ...state.TeacherFileDialog, ...action.payload };
     }
   },
   extraReducers: (builder) => {
@@ -158,7 +154,7 @@ const teacher = createSlice({
         state.isRefetching = false;
         state.isError = true;
       })
-      .addCase(createStudent.fulfilled, (state, action) => {
+      .addCase(createTeacher.fulfilled, (state, action) => {
         state.data.push(action.payload.data);
         state.studentDialog.open = false;
       })
@@ -167,7 +163,7 @@ const teacher = createSlice({
       })
       .addCase(addFileStudent.fulfilled, (state, action) => {
         // state.data = [...state.data, ...action.payload.data.result];
-        state.studentFileDialog.open = false;
+        state.TeacherFileDialog.open = false;
         state.isLoading = false;
         state.isRefetching = false;
         state.rowCount = action.payload.rowCount;
@@ -178,7 +174,7 @@ const teacher = createSlice({
         state.isRefetching = false;
         state.isError = true;
       })
-      .addCase(updateStudent.fulfilled, (state, action) => {
+      .addCase(updateTeacher.fulfilled, (state, action) => {
         const updatedstudent = action.payload.data;
         const index = state.data.findIndex((student) => student.student_id === updatedstudent.student_id);
         if (index !== -1) {
@@ -186,15 +182,15 @@ const teacher = createSlice({
           state.studentDialog.open = false;
         }
       })
-      .addCase(deleteStudent.pending, (state) => {
+      .addCase(deleteTeacher.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(deleteStudent.fulfilled, (state, action) => {
+      .addCase(deleteTeacher.fulfilled, (state, action) => {
         state.isLoading = false;
-        const deletedstudentId = action.payload.data.student_id;
-        state.data = state.data.filter((student) => student.student_id !== deletedstudentId);
+        const deletedteacherId = action.payload.data.teacher_id;
+        state.data = state.data.filter((teacher) => teacher.teacher_id !== deletedteacherId);
       })
-      .addCase(deleteStudent.rejected, (state) => {
+      .addCase(deleteTeacher.rejected, (state) => {
         state.isLoading = false;
         state.isRefetching = false;
         state.isError = true;
@@ -213,15 +209,7 @@ const teacher = createSlice({
   }
 });
 
-export const {
-  setColumnFilters,
-  setGlobalFilter,
-  setSorting,
-  setPagination,
-  setLoading,
-  setTeacherDialog,
-  setStudentFileDialog,
-  setStudentScoreDialog
-} = teacher.actions;
+export const { setColumnFilters, setGlobalFilter, setSorting, setPagination, setLoading, setTeacherDialog, setTeacherFileDialog } =
+  teacher.actions;
 
 export default teacher.reducer;

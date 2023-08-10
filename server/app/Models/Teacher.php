@@ -10,15 +10,19 @@ class Teacher extends Model
 {
     use HasFactory, HasRoles;
 
-    protected $primaryKey = 'teacher_code';
+    use HasFactory, HasRoles;
+    protected $table = 'teachers';
+    protected $primaryKey = 'teacher_id';
     protected $keyType = 'string';
+    public $incrementing = false;
     protected $fillable = [
-        'teacher_code',
+        'teacher_id',
         'teacher_name',
         'teacher_phone',
         'teacher_email',
         'teacher_birthday',
         'teacher_title',
+        'teacher_spec',
         'teacher_unit',
         'teacher_isDelete'
     ];

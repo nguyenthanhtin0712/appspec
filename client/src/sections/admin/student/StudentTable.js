@@ -141,11 +141,6 @@ const StudentTable = () => {
       {
         accessorKey: 'major_name',
         header: 'Ngành'
-      },
-      {
-        accessorKey: 'student_course',
-        header: 'Khóa',
-        size: 10
       }
     ],
     []
