@@ -13,6 +13,7 @@ class DisplayConfig extends Model
     protected $primaryKey = 'display_config_id';
     protected $keyType = 'string';
     public $incrementing = false;
+    public $timestamps = false;
     protected $fillable = [
         'display_config_id',
         'display_config_name',

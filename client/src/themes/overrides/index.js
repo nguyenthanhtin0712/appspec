@@ -33,6 +33,7 @@ import Switch from './Switch';
 import Accordion from './Accordion';
 import Popover from './Popover';
 import Paper from './Paper';
+import Autocomplete from './Autocomplete';
 // import TextField from './TextField';
 
 // ==============================|| OVERRIDES - MAIN ||============================== //
@@ -40,6 +41,7 @@ import Paper from './Paper';
 export default function ComponentsOverrides(theme) {
   return merge(
     Accordion(theme),
+    Autocomplete(theme),
     Body(),
     Button(theme),
     ButtonBase(),

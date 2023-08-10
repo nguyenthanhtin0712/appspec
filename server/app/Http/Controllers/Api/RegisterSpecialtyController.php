@@ -32,7 +32,7 @@ class RegisterSpecialtyController extends Controller
         $sortOrder = $request->input('sortOrder', 'asc');
         $filters = $request->input('filters');
         $registerSpecialties = RegisterSpecialty::query();
-        $registerSpecialties->where("register_specialty_isDelete", "0");
+        $registerSpecialties->where("register_specialty_isDelete", "0")->latest();
         if ($query) {
             $registerSpecialties->where("register_specialty_name", "LIKE", "%$query%");
         }

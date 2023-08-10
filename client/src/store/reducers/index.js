@@ -11,6 +11,7 @@ import student from './studentSlice';
 import teacher from './teacherSlice';
 import register_specialty from './registerSpecialtyAdminSlice';
 import register_specialty_user from './registerSpecialtyUserSlice';
+import config_page from './configPageSlice';
 
 // ==============================|| COMBINE REDUCERS ||============================== //
 
@@ -23,7 +24,8 @@ const reducers = combineReducers({
   student,
   teacher,
   register_specialty,
-  register_specialty_user
+  register_specialty_user,
+  config_page
 });
 
 export default reducers;

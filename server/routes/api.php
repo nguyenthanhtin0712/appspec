@@ -11,7 +11,9 @@ use App\Http\Controllers\Api\SpecialtyController;
 use App\Http\Controllers\Api\StudentController;
 use App\Http\Controllers\Api\TeacherController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\DisplayConfigController;
 use App\Http\Resources\LoginResource;
+use App\Models\DisplayConfig;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -88,8 +90,10 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('register-specialties/register', [RegisterSpecialtyController::class, 'getSpecialtiesForRegister']);
     Route::post('register-specialties/register', [RegisterSpecialtyController::class, 'submitRegisterSpecialty']);
     Route::post('register-specialties/change', [RegisterSpecialtyController::class, 'changeSpecialty']);
-    
+
     // RecruitmentPosition
+    // Config page
+    Route::put('/configs/{id}', [DisplayConfigController::class, 'update']);
 });
 Route::get('register-specialties/result', [RegisterSpecialtyController::class, 'getResult']);
 Route::get('register-specialties', [RegisterSpecialtyController::class, 'getRegisterSpecialtyByUser']);

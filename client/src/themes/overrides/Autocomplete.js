@@ -1,9 +1,22 @@
-export default function Drawer() {
+export default function Autocomplete(theme) {
   return {
-    MuiDrawer: {
+    MuiAutocomplete: {
       styleOverrides: {
-        paper: {
-          backgroundImage: 'none'
+        root: {
+          '& .MuiOutlinedInput-root': {
+            padding: '3px 9px'
+          }
+        },
+        popupIndicator: {
+          width: 'auto',
+          height: 'auto'
+        },
+        popper: {
+          boxShadow: theme.customShadows.z3
+        },
+        clearIndicator: {
+          width: 'auto',
+          height: 'auto'
         }
       }
     }
