@@ -14,6 +14,16 @@ import { useSelector } from 'react-redux';
 import { dispatch } from 'store';
 import { getAllRegisterSpecialty, getPageConfigInfo, updateConfig } from 'store/reducers/configPageSlice';
 
+const styles = {
+  cursor: 'pointer',
+  border: '1px solid #ccc',
+  padding: '16px',
+  borderRadius: '8px',
+  '&:hover': {
+    background: '#ccc'
+  }
+};
+
 const ConfigPage = () => {
   const [open, setOpen] = useState(false);
   const dataConfig = useSelector((state) => state.config_page.dataConfig);
@@ -34,18 +44,13 @@ const ConfigPage = () => {
           Cấu hình
         </Typography>
         <Stack spacing={3}>
-          <Box onClick={() => setOpen(true)} sx={{ cursor: 'pointer' }}>
+          <Box onClick={() => setOpen(true)} sx={styles}>
             <Typography fontSize={16}>Đăng ký chuyên ngành</Typography>
             <Typography color="#00000085" gutterBottom>
               {dataConfig['register_specialty']?.name ?? 'Chưa chọn đợt hiển thị'}
             </Typography>
           </Box>
-          <Box
-            onClick={() => {
-              alert('Chức năng chưa khả dụng');
-            }}
-            sx={{ cursor: 'pointer' }}
-          >
+          <Box sx={styles}>
             <Typography fontSize={16}>Đăng ký thực tập</Typography>
             <Typography color="#00000085" gutterBottom>
               Đăng ký thực tập học kỳ 2, năm học 2022 - 2023

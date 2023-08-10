@@ -1,10 +1,11 @@
 // type
-import { Home3, Profile2User, Teacher } from 'iconsax-react';
+import { Home3, Profile2User, Teacher, People } from 'iconsax-react';
 // icons
 const icons = {
   navigation: Home3,
   student: Profile2User,
-  teacher: Teacher
+  teacher: Teacher,
+  people: People
 };
 
 // ==============================|| MENU ITEMS - DASHBOARD ||============================== //
@@ -28,6 +29,13 @@ const user = {
       type: 'item',
       url: '/admin/teacher',
       icon: icons.teacher
+    },
+    {
+      id: 'employer',
+      title: 'Nhà tuyển dụng',
+      type: 'item',
+      url: '/admin/employer',
+      icon: icons.people
     }
   ]
 };

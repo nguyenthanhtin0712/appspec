@@ -16,9 +16,10 @@ const InputField = ({
   fullWidth = true,
   error,
   helperText,
+  mb = '0',
   ...props
 }) => (
-  <Stack spacing={1}>
+  <Stack spacing={1} mb={mb}>
     <InputLabel htmlFor={id}>{label}</InputLabel>
     <OutlinedInput
       id={id}

@@ -142,6 +142,7 @@ const TeacherDialog = () => {
                       onChange={handleChange}
                       placeholder="Nhập mã giáo viên"
                       label="MAGV"
+                      mb="8px"
                       fullWidth
                       error={Boolean(touched.teacher_code && errors.teacher_code)}
                       helperText={errors.teacher_code}
@@ -154,6 +155,7 @@ const TeacherDialog = () => {
                       onChange={handleChange}
                       placeholder="Nhập họ và tên"
                       label="Họ tên"
+                      mb="8px"
                       fullWidth
                       error={Boolean(touched.teacher_name && errors.teacher_name)}
                       helperText={errors.teacher_name}
@@ -167,6 +169,7 @@ const TeacherDialog = () => {
                       placeholder="Nhập số điện thoại"
                       label="SDT"
                       fullWidth
+                      mb="8px"
                       error={Boolean(touched.teacher_phone && errors.teacher_phone)}
                       helperText={errors.teacher_phone}
                     />
@@ -179,6 +182,7 @@ const TeacherDialog = () => {
                       placeholder="Nhập email"
                       label="Email"
                       fullWidth
+                      mb="8px"
                       error={Boolean(touched.teacher_email && errors.teacher_email)}
                       helperText={errors.teacher_email}
                     />
@@ -208,6 +212,7 @@ const TeacherDialog = () => {
                       placeholder="Nhập trình độ"
                       label="Trình độ"
                       fullWidth
+                      mb="8px"
                       error={Boolean(touched.teacher_title && errors.teacher_title)}
                       helperText={errors.teacher_title}
                     />
@@ -219,12 +224,13 @@ const TeacherDialog = () => {
                       onChange={handleChange}
                       placeholder="Nhập đơn vị"
                       label="Đơn vị"
+                      mb="8px"
                       fullWidth
                       error={Boolean(touched.teacher_unit && errors.teacher_unit)}
                       helperText={errors.teacher_unit}
                     />
                     <Stack spacing={1} sx={{ mb: '10px' }}>
-                      <InputLabel htmlFor="teacher_spec">Chọn ngành</InputLabel>
+                      <InputLabel htmlFor="teacher_spec">Bộ môn</InputLabel>
                       <Select
                         labelId="teacher_spec"
                         id="teacher_spec"
@@ -238,7 +244,7 @@ const TeacherDialog = () => {
                         error={Boolean(touched.teacher_spec && errors.teacher_spec)}
                       >
                         <MenuItem value="" sx={{ color: 'text.secondary' }}>
-                          Chọn ngành
+                          Chọn bộ môn
                         </MenuItem>
                         {data.length > 0 &&
                           data.map((item) => (
