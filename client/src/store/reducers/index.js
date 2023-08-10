@@ -9,6 +9,7 @@ import auth from './authSlice';
 import specialty from './specialtySlice';
 import student from './studentSlice';
 import teacher from './teacherSlice';
+import employer from './employerSlice';
 import register_specialty from './registerSpecialtyAdminSlice';
 import register_specialty_user from './registerSpecialtyUserSlice';
 import config_page from './configPageSlice';
@@ -23,6 +24,7 @@ const reducers = combineReducers({
   specialty,
   student,
   teacher,
+  employer,
   register_specialty,
   register_specialty_user,
   config_page
