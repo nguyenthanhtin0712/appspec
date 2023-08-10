@@ -3,7 +3,7 @@ import axios from '../../api/axios';
 import { API_BASE_URL } from 'config';
 
 // Async Thunk Actions
-export const fetchData = createAsyncThunk('student/fetchData', async (params) => {
+export const fetchData = createAsyncThunk('teacher/fetchData', async (params) => {
   const {
     columnFilters,
     globalFilter,
@@ -31,7 +31,7 @@ export const fetchData = createAsyncThunk('student/fetchData', async (params) =>
   }
 });
 
-export const createTeacher = createAsyncThunk('student/createTeacher', async (student) => {
+export const createTeacher = createAsyncThunk('teacher/createTeacher', async (student) => {
   try {
     console.log(student);
     const response = await axios.post(`${API_BASE_URL}/students`, student);
@@ -42,7 +42,7 @@ export const createTeacher = createAsyncThunk('student/createTeacher', async (st
   }
 });
 
-export const addFileStudent = createAsyncThunk('student/addFileStudent', async (data) => {
+export const addFileStudent = createAsyncThunk('teacher/addFileStudent', async (data) => {
   try {
     const response = await axios.post(`${API_BASE_URL}/addFileStudents`, data);
     return response.data;
@@ -52,7 +52,7 @@ export const addFileStudent = createAsyncThunk('student/addFileStudent', async (
   }
 });
 
-export const addScoreStudent = createAsyncThunk('student/addScoreStudent', async (data) => {
+export const addScoreStudent = createAsyncThunk('teacher/addScoreStudent', async (data) => {
   try {
     const response = await axios.post(`${API_BASE_URL}/addScoreStudents`, data);
     return response.data;
@@ -62,7 +62,7 @@ export const addScoreStudent = createAsyncThunk('student/addScoreStudent', async
   }
 });
 
-export const updateTeacher = createAsyncThunk('student/updateTeacher', async ({ id, student }) => {
+export const updateTeacher = createAsyncThunk('teacher/updateTeacher', async ({ id, student }) => {
   try {
     const response = await axios.put(`${API_BASE_URL}/students/${id}`, student);
     return response.data;
@@ -72,7 +72,7 @@ export const updateTeacher = createAsyncThunk('student/updateTeacher', async ({ 
   }
 });
 
-export const deleteTeacher = createAsyncThunk('student/deleteTeacher', async (id) => {
+export const deleteTeacher = createAsyncThunk('teacher/deleteTeacher', async (id) => {
   try {
     const response = await axios.delete(`${API_BASE_URL}/teachers/${id}`);
     return response.data;

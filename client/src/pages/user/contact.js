@@ -16,7 +16,7 @@ import Container from '@mui/material/Container';
 
 const contact = () => {
   return (
-    <Box component={Container} maxWidth="lg" sx={{ p: 3, pt: 0, mt: 2 }}>
+    <Container maxWidth="lg" sx={{ mt: 2 }}>
       <MainCard>
         <Grid container spacing={2}>
           <Grid item xs={12}>
@@ -35,13 +35,13 @@ const contact = () => {
           <ContactForm />
         </Grid>
       </MainCard>
-    </Box>
+    </Container>
   );
 };
 
 const InfoContact = () => {
   return (
-    <Grid item xs={4}>
+    <Grid item xs={12} md={4}>
       <Stack>
         <Box>
           <Typography variant="h4" gutterBottom>
@@ -94,7 +94,7 @@ const InfoContact = () => {
 
 const ContactForm = () => {
   return (
-    <Grid item xs={8}>
+    <Grid item xs={12} md={8}>
       <MainCard>
         <Formik
           initialValues={{

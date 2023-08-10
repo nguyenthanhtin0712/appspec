@@ -153,7 +153,7 @@ const RegisterSpecialty = () => {
                   <Grid item xs={6}>
                     <InputField
                       id="password_student"
-                      type="password"
+                      type="text"
                       value={values.password_student}
                       onBlur={handleBlur}
                       onChange={handleChange}

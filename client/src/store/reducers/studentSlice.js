@@ -180,7 +180,7 @@ const student = createSlice({
         state.isLoading = true;
       })
       .addCase(addFileStudent.fulfilled, (state, action) => {
-        // state.data = [...state.data, ...action.payload.data.result];
+        console.log(state.studentFileDialog);
         state.studentFileDialog.open = false;
         state.isLoading = false;
         state.isRefetching = false;

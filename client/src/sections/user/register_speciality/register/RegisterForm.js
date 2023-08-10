@@ -1,6 +1,5 @@
 import React, { Fragment, useState, useMemo } from 'react';
 import MainCard from 'components/MainCard';
-import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
@@ -13,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import { dispatch } from 'store';
 import CountdownTimer from 'components/CountdownTimer';
 import { userRegisteringForSpecialty } from 'store/reducers/registerSpecialtyUserSlice';
+import { Container } from '@mui/material';
 
 const RegisterForm = () => {
   const navigate = useNavigate();
@@ -56,7 +56,7 @@ const RegisterForm = () => {
           Sinh viên có thể THAY ĐỔI chuyên ngành đã đăng ký trong thời gian đăng ký còn hiệu lực. Kết quả cuối cùng sẽ được xét dựa theo
           Điều lệ đăng ký chuyên ngành.
         </Typography>
-        <form style={{ minWidth: 120 }} onSubmit={handleSubmit}>
+        <form style={{ minWidth: 120, display: 'flex', flexDirection: 'column' }} onSubmit={handleSubmit}>
           <FormControl fullWidth>
             <Select value={speciality_id} onChange={handleChange} displayEmpty inputProps={{ 'aria-label': 'Without label' }}>
               <MenuItem value="" sx={{ color: 'text.secondary' }}>
@@ -70,7 +70,7 @@ const RegisterForm = () => {
             </Select>
             {error && <FormHelperText error>Vui lòng chọn chuyên ngành</FormHelperText>}
           </FormControl>
-          <Button type="submit" variant="contained" sx={{ float: 'right', mt: 1 }}>
+          <Button type="submit" variant="contained" sx={{ alignSelf: 'flex-end', mt: 1 }}>
             Đăng ký
           </Button>
         </form>
@@ -99,11 +99,9 @@ const RegisterForm = () => {
 
   return (
     <MainCard title="Đăng ký chuyên ngành">
-      <Grid container spacing={2}>
-        <Grid item xs={8} mx="auto">
-          {isAfterRegistrationTime ? <OutOfTime /> : isBeforeRegistrationTime ? <CountDown /> : renderForm()}
-        </Grid>
-      </Grid>
+      <Container maxWidth="sm">
+        {isAfterRegistrationTime ? <OutOfTime /> : isBeforeRegistrationTime ? <CountDown /> : renderForm()}
+      </Container>
     </MainCard>
   );
 };

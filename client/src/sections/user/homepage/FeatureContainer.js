@@ -1,7 +1,7 @@
 import React from 'react';
 import { Code, FolderOpen, Warning2, Refresh2, Profile2User, PathTool } from 'iconsax-react';
 import FeatureItem from './FeatureItem';
-import { Grid } from '@mui/material';
+import { Container, Grid } from '@mui/material';
 
 const arrFeature = [
   { id: 1, name: 'Đăng ký chuyên ngành', href: '/register_speciality', icon: <Code variant="Bulk" /> },
@@ -14,13 +14,13 @@ const arrFeature = [
 
 const FeatureContainer = () => {
   return (
-    <Grid container spacing={2} item xs={9} mx="auto">
-      <Grid container spacing={2}>
+    <Container maxWidth="md">
+      <Grid container spacing={2} mt={2}>
         {arrFeature.map((item) => (
           <FeatureItem key={item.id} name={item.name} href={item.href} icon={item.icon} />
         ))}
       </Grid>
-    </Grid>
+    </Container>
   );
 };
 

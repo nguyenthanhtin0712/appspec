@@ -214,7 +214,7 @@ class RegisterSpecialtyController extends Controller
 
     public function getRegisterSpecialtyByUser()
     {
-        $displayConfig = DisplayConfig::find('REGISTER_SPECIALTY')->display_config_value;
+        $displayConfig = DisplayConfig::find('register_specialty')->display_config_value ?? RegisterSpecialty::latest()->first()->register_specialty_id;
         $registerSpecialty = RegisterSpecialty::with(['specialty.major', 'specialty.student'])->find($displayConfig);
         $groupedSpecialties = $registerSpecialty->specialty->groupBy('major.major_id')->map(function ($specialties) use ($displayConfig) {
             $major = $specialties->first()->major;
@@ -248,7 +248,7 @@ class RegisterSpecialtyController extends Controller
     public function getSpecialtiesForRegister(Request $request)
     {
         if (!$request->user()->student) return response()->json(['message' => 'No permission',], 403);
-        $displayConfig = DisplayConfig::find('REGISTER_SPECIALTY')->display_config_value;
+        $displayConfig = DisplayConfig::find('register_specialty')->display_config_value ?? RegisterSpecialty::latest()->first()->register_specialty_id;
         if ($request->user()->student->register_specialty_id != $displayConfig) return response()->json(['message' => 'No permission',], 403);
         $major_id = $request->user()->student->major_id;
 
@@ -285,7 +285,7 @@ class RegisterSpecialtyController extends Controller
         $timeStart = strtotime($registerSpecialty->register_specialty_start_date);
         $timeEnd = strtotime($registerSpecialty->register_specialty_end_date);
         $currentDateTime = strtotime(date("Y-m-d H:i:s"));
-        if ($currentDateTime >= $timeStart && $currentDateTime >= $timeEnd) {
+        if ($currentDateTime >= $timeStart && $currentDateTime <= $timeEnd) {
             $student->specialty_id = $specialty_id;
             $student->specialty_date = now();
             $student->save();
@@ -309,10 +309,11 @@ class RegisterSpecialtyController extends Controller
 
     public function getResult(Request $request)
     {
+        $displayConfig = DisplayConfig::find('register_specialty')->display_config_value ?? RegisterSpecialty::latest()->first()->register_specialty_id;
         $perPage = $request->input('perPage');
         $query = $request->input('query');
         $sortBy = $request->input('sortBy');
-        $register_specialty_id = $request->input('id') ?? DisplayConfig::find('REGISTER_SPECIALTY')->display_config_value;
+        $register_specialty_id = $request->input('id') ?? $displayConfig;
         $sortOrder = $request->input('sortOrder', 'asc');
         $filters = $request->input('filters');
         $major_id = $request->input('majorId');

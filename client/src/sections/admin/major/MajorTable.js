@@ -33,33 +33,19 @@ const MajorTable = () => {
   const handleExportData = useCallback(() => {
     const wb = utils.book_new();
     const ws = utils.json_to_sheet(data);
+    const columnWidths = {};
 
-    // Calculate optimal column widths based on column names and data length
-    const columnWidths = [];
-
-    // Calculate column widths based on column names
-    Object.keys(data[0]).forEach((key, index) => {
-      const columnName = key !== null ? key.toString() : '';
-      const columnNameLength = columnName.length;
-      columnWidths[index] = Math.max(columnWidths[index] || 0, columnNameLength);
-    });
-
-    // Calculate column widths based on data length
     data.forEach((row) => {
-      Object.values(row).forEach((cell, index) => {
+      Object.entries(row).forEach(([key, cell]) => {
         const cellValue = cell !== null ? cell.toString() : '';
         const cellLength = cellValue.length;
-        columnWidths[index] = Math.max(columnWidths[index] || 0, cellLength);
+        columnWidths[key] = Math.max(columnWidths[key] || 0, cellLength);
       });
     });
 
-    // Convert the column widths to Excel-style width units
-    const columnWidthsExcel = columnWidths.map((width) => ({
-      width: width + 2 // Adding some extra padding for better readability
+    ws['!cols'] = Object.keys(columnWidths).map((key) => ({
+      width: columnWidths[key] + 2 // Adding extra padding
     }));
-
-    // Apply the calculated column widths to the worksheet
-    ws['!cols'] = columnWidthsExcel;
 
     utils.book_append_sheet(wb, ws, 'Major');
     writeFileXLSX(wb, 'Major.xlsx');

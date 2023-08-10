@@ -30,6 +30,7 @@ const FileField = ({
             caretColor: 'transparent'
           }
         }}
+        autoComplete="off"
         value={value ? value.map((item) => item.name) : ''}
         error={error}
         onBlur={() => setFieldTouched(name, true)}

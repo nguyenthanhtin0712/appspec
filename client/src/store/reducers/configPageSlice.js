@@ -1,6 +1,16 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from '../../api/axios';
 
+export const getPageConfigInfo = createAsyncThunk('config_page/getPageConfigInfo', async () => {
+  try {
+    const response = await axios.get(`/configs`);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+});
+
 export const getAllRegisterSpecialty = createAsyncThunk('config_page/getAllRegisterSpecialty', async () => {
   try {
     const response = await axios.get(`/register-specialties/admin?all=true`);
@@ -26,7 +36,8 @@ export const updateConfig = createAsyncThunk('config_page/updateConfig', async (
 });
 
 const initialState = {
-  data: []
+  dataConfig: [],
+  dataRegisterSpecialty: []
 };
 
 const config_page = createSlice({
@@ -34,9 +45,13 @@ const config_page = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getAllRegisterSpecialty.fulfilled, (state, action) => {
-      state.data = action.payload.data.result;
-    });
+    builder
+      .addCase(getPageConfigInfo.fulfilled, (state, action) => {
+        state.dataConfig = action.payload.data;
+      })
+      .addCase(getAllRegisterSpecialty.fulfilled, (state, action) => {
+        state.dataRegisterSpecialty = action.payload.data.result;
+      });
   }
 });
 

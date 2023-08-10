@@ -29,54 +29,50 @@ import { Fade } from '@mui/material';
 const Register_speciality = () => {
   const theme = useTheme();
   return (
-    <Box component={Container} maxWidth="lg" sx={{ p: 3, pt: 0, mt: 2 }}>
-      <Grid container spacing={2}>
-        <Grid item xs={12} md={8} mx="auto">
-          <MainCard title="Thông tin đăng ký thực tập">
-            <Box sx={{ borderBottom: '1px solid', borderColor: theme.palette.divider, pb: 1 }}>
-              <Stack direction="row" alignItems="flex-end" spacing={1} mb={2}>
-                <Calendar size="25" color={theme.palette.primary.main} variant="Bulk" />
-                <Typography variant="h5" fontWeight={600}>
-                  Lịch đăng ký
-                </Typography>
-              </Stack>
-              <Stack ml={4}>
-                <Typography variant="h6">Thời gian bắt đầu: 28-05-23 12:00 AM</Typography>
-                <Typography variant="h6">Thời gian kết thúc: 10-06-23 4:00 PM</Typography>
-              </Stack>
-            </Box>
-            <Box sx={{ borderBottom: '1px solid', borderColor: theme.palette.divider, py: 2 }}>
-              <Stack direction="row" alignItems="flex-end" spacing={1} mb={2}>
-                <InfoCircle size="25" color={theme.palette.primary.main} variant="Bulk" />
-                <Typography variant="h5" fontWeight={600}>
-                  Thông tin
-                </Typography>
-              </Stack>
-              <Grid container spacing={2}>
-                <InfoItem href="/" title="Hướng dẫn đăng ký thực tập" icon={<Stickynote size="32" color={theme.palette.primary.main} />} />
-                <InfoItem href="/" title="Điều lệ đăng ký thực tập" icon={<Check size="32" color={theme.palette.primary.main} />} />
-                <InfoItem href="/" title="Kết quả đăng ký thực tập" icon={<MedalStar size="32" color={theme.palette.primary.main} />} />
-                <InfoItem href="/" title="Liên hệ với Ban quản trị website" icon={<Call size="32" color={theme.palette.primary.main} />} />
-              </Grid>
-            </Box>
-            <Box sx={{ borderBottom: '1px solid', borderColor: theme.palette.divider, py: 2 }}>
-              <Stack direction="row" alignItems="flex-end" spacing={1} mb={2}>
-                <Chart size="25" color={theme.palette.primary.main} variant="Bulk" />
-                <Typography variant="h5">Thống kê</Typography>
-              </Stack>
-              <Grid container spacing={2}>
-                <CompanyItem />
-                <CompanyItem />
-                <CompanyItem />
-                <CompanyItem />
-                <CompanyItem />
-                <CompanyItem />
-              </Grid>
-            </Box>
-          </MainCard>
-        </Grid>
-      </Grid>
-    </Box>
+    <Container maxWidth="md" sx={{ mt: 2 }}>
+      <MainCard title="Thông tin đăng ký thực tập">
+        <Box sx={{ borderBottom: '1px solid', borderColor: theme.palette.divider, pb: 1 }}>
+          <Stack direction="row" alignItems="flex-end" spacing={1} mb={2}>
+            <Calendar size="25" color={theme.palette.primary.main} variant="Bulk" />
+            <Typography variant="h5" fontWeight={600}>
+              Lịch đăng ký
+            </Typography>
+          </Stack>
+          <Stack ml={4}>
+            <Typography variant="h6">Thời gian bắt đầu: 28-05-23 12:00 AM</Typography>
+            <Typography variant="h6">Thời gian kết thúc: 10-06-23 4:00 PM</Typography>
+          </Stack>
+        </Box>
+        <Box sx={{ borderBottom: '1px solid', borderColor: theme.palette.divider, py: 2 }}>
+          <Stack direction="row" alignItems="flex-end" spacing={1} mb={2}>
+            <InfoCircle size="25" color={theme.palette.primary.main} variant="Bulk" />
+            <Typography variant="h5" fontWeight={600}>
+              Thông tin
+            </Typography>
+          </Stack>
+          <Grid container spacing={2}>
+            <InfoItem href="/" title="Hướng dẫn đăng ký thực tập" icon={<Stickynote size="32" color={theme.palette.primary.main} />} />
+            <InfoItem href="/" title="Điều lệ đăng ký thực tập" icon={<Check size="32" color={theme.palette.primary.main} />} />
+            <InfoItem href="/" title="Kết quả đăng ký thực tập" icon={<MedalStar size="32" color={theme.palette.primary.main} />} />
+            <InfoItem href="/" title="Liên hệ với Ban quản trị website" icon={<Call size="32" color={theme.palette.primary.main} />} />
+          </Grid>
+        </Box>
+        <Box sx={{ borderBottom: '1px solid', borderColor: theme.palette.divider, py: 2 }}>
+          <Stack direction="row" alignItems="flex-end" spacing={1} mb={2}>
+            <Chart size="25" color={theme.palette.primary.main} variant="Bulk" />
+            <Typography variant="h5">Thống kê</Typography>
+          </Stack>
+          <Grid container spacing={2}>
+            <CompanyItem />
+            <CompanyItem />
+            <CompanyItem />
+            <CompanyItem />
+            <CompanyItem />
+            <CompanyItem />
+          </Grid>
+        </Box>
+      </MainCard>
+    </Container>
   );
 };
 
@@ -84,7 +80,7 @@ const CompanyItem = () => {
   const theme = useTheme();
 
   return (
-    <Grid item xs={12} md={6}>
+    <Grid item xs={12} md={4} sm={6}>
       <Box sx={{ p: 2, border: '1px solid', borderRadius: 1.5, borderColor: theme.palette.divider }}>
         <HoverPopperPopupState />
         <Stack spacing={2}>

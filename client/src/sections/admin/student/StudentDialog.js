@@ -235,12 +235,13 @@ const StudentDialog = () => {
                       <InputLabel htmlFor="user_password">Mật khẩu</InputLabel>
                       <OutlinedInput
                         id="user_password"
-                        type="password"
+                        type="text"
                         value={values.user_password}
                         name="user_password"
                         onBlur={handleBlur}
                         onChange={handleChange}
                         placeholder="Mật khẩu"
+                        autoComplete="off"
                         fullWidth
                         error={Boolean(touched.user_password && errors.user_password)}
                       />

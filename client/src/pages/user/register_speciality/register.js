@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
 import RegisterForm from 'sections/user/register_speciality/register/RegisterForm';
@@ -28,7 +27,7 @@ const RegisterSpeciality = () => {
 
   if (error) {
     return (
-      <Box component={Container} maxWidth="lg" sx={{ p: 3, pt: 0, mt: 2 }}>
+      <Container maxWidth="lg" sx={{ mt: 2 }}>
         <Stack justifyContent="center" alignItems="center" spacing={4} minHeight={500}>
           <LockCircle size="150" color={theme.palette.warning.main} variant="Bulk" />
           <Typography variant="h4" textAlign="center">
@@ -38,21 +37,21 @@ const RegisterSpeciality = () => {
             Trở về trang chủ
           </Button>
         </Stack>
-      </Box>
+      </Container>
     );
   }
 
   if (!registrationPageInfo) return null;
 
   return (
-    <Box component={Container} maxWidth="lg" sx={{ p: 3, pt: 0, mt: 2 }}>
+    <Container maxWidth="lg" sx={{ mt: 2 }}>
       <Stack spacing={2}>
         <MainCard title="Hiện trạng đăng ký">
           <SpecialityContainer></SpecialityContainer>
         </MainCard>
         <RegisterForm></RegisterForm>
       </Stack>
-    </Box>
+    </Container>
   );
 };
 

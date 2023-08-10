@@ -93,6 +93,7 @@ Route::middleware(['auth:api'])->group(function () {
 
     // RecruitmentPosition
     // Config page
+    Route::get('configs', [DisplayConfigController::class, 'index']);
     Route::put('/configs/{id}', [DisplayConfigController::class, 'update']);
 });
 Route::get('register-specialties/result', [RegisterSpecialtyController::class, 'getResult']);

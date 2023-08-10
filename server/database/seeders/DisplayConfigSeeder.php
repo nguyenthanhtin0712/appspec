@@ -15,12 +15,12 @@ class DisplayConfigSeeder extends Seeder
     public function run()
     {
         DisplayConfig::insert([
-            'display_config_id' => 'REGISTER_SPECIALTY',
+            'display_config_id' => 'register_specialty',
             'display_config_name' => 'Đăng ký chuyên ngành',
-            'display_config_value' => '1'
+            'display_config_value' => null
         ]);
         DisplayConfig::insert([
-            'display_config_id' => 'REGISTER_INTERN',
+            'display_config_id' => 'register_intern',
             'display_config_name' => 'Đăng ký thực tập',
             'display_config_value' => '1'
         ]);

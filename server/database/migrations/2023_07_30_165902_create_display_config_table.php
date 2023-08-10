@@ -16,7 +16,7 @@ class CreateDisplayConfigTable extends Migration
         Schema::create('display_configs', function (Blueprint $table) {
             $table->string('display_config_id')->primary();
             $table->string('display_config_name');
-            $table->integer('display_config_value');
+            $table->integer('display_config_value')->nullable();
         });
     }
 

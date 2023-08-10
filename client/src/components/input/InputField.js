@@ -18,7 +18,7 @@ const InputField = ({
   helperText,
   ...props
 }) => (
-  <Stack spacing={1} mb={1}>
+  <Stack spacing={1}>
     <InputLabel htmlFor={id}>{label}</InputLabel>
     <OutlinedInput
       id={id}

@@ -41,7 +41,14 @@ const RegisterSpecialtyResult = () => {
           </Stack>
         </Stack>
         <Box my="auto">
-          <Button variant="contained" color="success" startIcon={<TableDocument />}>
+          <Button
+            variant="contained"
+            color="success"
+            onClick={() => {
+              alert('Tính năng chưa khả dụng');
+            }}
+            startIcon={<TableDocument />}
+          >
             Xuất dữ liệu
           </Button>
         </Box>

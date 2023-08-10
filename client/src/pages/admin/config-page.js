@@ -12,10 +12,18 @@ import Autocomplete from '@mui/material/Autocomplete';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { dispatch } from 'store';
-import { getAllRegisterSpecialty, updateConfig } from 'store/reducers/configPageSlice';
+import { getAllRegisterSpecialty, getPageConfigInfo, updateConfig } from 'store/reducers/configPageSlice';
 
 const ConfigPage = () => {
   const [open, setOpen] = useState(false);
+  const dataConfig = useSelector((state) => state.config_page.dataConfig);
+
+  useEffect(() => {
+    dispatch(getPageConfigInfo());
+  }, []);
+
+  if (!dataConfig) return null;
+
   const handleClose = () => {
     setOpen(false);
   };
@@ -29,13 +37,14 @@ const ConfigPage = () => {
           <Box onClick={() => setOpen(true)} sx={{ cursor: 'pointer' }}>
             <Typography fontSize={16}>Đăng ký chuyên ngành</Typography>
             <Typography color="#00000085" gutterBottom>
-              Đăng ký chuyên ngành khóa 21
+              {dataConfig['register_specialty']?.name ?? 'Chưa chọn đợt hiển thị'}
             </Typography>
           </Box>
           <Box
             onClick={() => {
               alert('Chức năng chưa khả dụng');
             }}
+            sx={{ cursor: 'pointer' }}
           >
             <Typography fontSize={16}>Đăng ký thực tập</Typography>
             <Typography color="#00000085" gutterBottom>
@@ -52,17 +61,19 @@ const ConfigPage = () => {
 const SpecialtyDisplayDialog = ({ open, handleClose }) => {
   const [value, setValue] = React.useState(null);
   const [inputValue, setInputValue] = React.useState('');
-  const data = useSelector((state) => state.config_page.data);
+  const dataRegisterSpecialty = useSelector((state) => state.config_page.dataRegisterSpecialty);
   useEffect(() => {
     dispatch(getAllRegisterSpecialty());
   }, []);
-  if (!data) return null;
-  console.log(value);
+  if (!dataRegisterSpecialty) return null;
 
   const handleSubmit = () => {
-    dispatch(updateConfig({ display_config_id: 'REGISTER_SPECIALTY', display_config_value: value.register_specialty_id }));
-    handleClose();
-    toast.success('Lưu thành công');
+    const result = dispatch(updateConfig({ display_config_id: 'register_specialty', display_config_value: value.register_specialty_id }));
+    if (result) {
+      dispatch(getPageConfigInfo());
+      handleClose();
+      toast.success('Lưu thành công');
+    }
   };
   return (
     <Dialog open={open} onClose={handleClose}>
@@ -78,7 +89,7 @@ const SpecialtyDisplayDialog = ({ open, handleClose }) => {
             setInputValue(newInputValue);
           }}
           id="select-register-specialty"
-          options={data}
+          options={dataRegisterSpecialty}
           getOptionLabel={(option) => option.register_specialty_name}
           renderOption={(props, option) => (
             <Box component="li" {...props} key={option.register_specialty_id}>
