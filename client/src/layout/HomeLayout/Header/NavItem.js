@@ -30,7 +30,7 @@ const paperProps = (position = 'top') => {
       minWidth: 200,
       overflow: 'visible',
       marginLeft: position == 'left' ? '10px' : 0,
-      filter: 'drop-shadow(0px 2px 2px rgba(0,0,0,0.32))',
+      boxShadow: '0px 8px 24px rgba(19, 25, 32, 0.2)',
       '&:before': {
         content: '""',
         display: 'block',

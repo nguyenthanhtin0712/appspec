@@ -37,7 +37,7 @@ const MainCard = forwardRef(({ children, content = true, contentSX = {}, divider
       {title && divider && <Divider />}
 
       {/* card content */}
-      {content && <CardContent sx={contentSX}>{children}</CardContent>}
+      {content && <CardContent sx={{ p: 2.5, ...contentSX }}>{children}</CardContent>}
       {!content && children}
     </Card>
   );

@@ -1,7 +1,7 @@
 import React from 'react';
 import AppBar from '@mui/material/AppBar';
 import IconButton from '@mui/material/IconButton';
-import { HambergerMenu } from 'iconsax-react';
+import { HambergerMenu, Login } from 'iconsax-react';
 import LogoSection from 'components/logo/index';
 import Toolbar from '@mui/material/Toolbar';
 import Box from '@mui/material/Box';
@@ -16,9 +16,11 @@ import { useSelector } from 'react-redux';
 import { openUserDrawer } from 'store/reducers/menu';
 import { dispatch } from 'store/index';
 import { navItems } from 'menu-items/user';
+import { useMediaQuery } from '@mui/material';
 
 const Navbar = () => {
   const theme = useTheme();
+  const downSm = useMediaQuery(theme.breakpoints.down('sm'));
   const drawerUserOpen = useSelector((state) => state.menu.drawerUserOpen);
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
@@ -64,10 +66,14 @@ const Navbar = () => {
             </Box>
             {isAuthenticated ? (
               <UserInfo />
-            ) : (
+            ) : !downSm ? (
               <Button variant="contained" component={Link} to="/auth/login">
                 Đăng nhập
               </Button>
+            ) : (
+              <IconButton component={Link} to="/auth/login" aria-label="Đăng nhập">
+                <Login variant="Bulk" />
+              </IconButton>
             )}
           </Toolbar>
         </Container>

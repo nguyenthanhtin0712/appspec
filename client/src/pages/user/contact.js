@@ -24,7 +24,7 @@ const contact = () => {
               title="map"
               src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d7839.4039764983645!2d106.67124331235044!3d10.757435271212223!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f1b7cc64087%3A0x84535ed662fecc27!2zS2hvYSBDw7RuZyBOZ2jhu4cgVGjDtG5nIFRpbg!5e0!3m2!1svi!2s!4v1689011178751!5m2!1svi!2s"
               width="100%"
-              height="350"
+              height="300"
               allowFullScreen=""
               loading="lazy"
               style={{ border: 'none' }}
@@ -126,7 +126,7 @@ const ContactForm = () => {
           {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
             <form noValidate onSubmit={handleSubmit}>
               <Grid container spacing={3}>
-                <Grid item xs={6}>
+                <Grid item xs={12} md={6}>
                   <Stack spacing={1}>
                     <InputLabel htmlFor="fullname-contact">Họ và tên</InputLabel>
                     <OutlinedInput
@@ -147,7 +147,7 @@ const ContactForm = () => {
                     )}
                   </Stack>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={12} md={6}>
                   <Stack spacing={1}>
                     <InputLabel htmlFor="email-contact">Địa chỉ email</InputLabel>
                     <OutlinedInput
@@ -229,7 +229,7 @@ const ContactForm = () => {
                       variant="contained"
                       color="primary"
                     >
-                      Login
+                      Gửi liên hệ
                     </Button>
                   </AnimateButton>
                 </Grid>
