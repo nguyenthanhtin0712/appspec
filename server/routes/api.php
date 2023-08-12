@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\Api\AcademicFieldController;
+use App\Http\Controllers\Api\DegreeController;
 use App\Http\Controllers\Api\EmployerController;
+use App\Http\Controllers\Api\JobHolderController;
 use App\Http\Controllers\Api\LoginController;
 use App\Http\Controllers\Api\LogoutController;
 use App\Http\Controllers\Api\MajorController;
@@ -10,17 +13,18 @@ use App\Http\Controllers\Api\RegisterSpecialtyController;
 use App\Http\Controllers\Api\SpecialtyController;
 use App\Http\Controllers\Api\StudentController;
 use App\Http\Controllers\Api\TeacherController;
+use App\Http\Controllers\Api\TitleController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\DisplayConfigController;
 use App\Http\Resources\LoginResource;
-use App\Models\DisplayConfig;
+use App\Models\JobHolder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 
 //Authentication api
 
-//Này đăng nhập bằng email và password
+//Này đăng nhập bằng email, mssv và password
 Route::post('login', [LoginController::class, 'login']);
 Route::post('register', [RegisterController::class, 'register']);
 
@@ -99,3 +103,7 @@ Route::middleware(['auth:api'])->group(function () {
 Route::get('register-specialties/result', [RegisterSpecialtyController::class, 'getResult']);
 Route::get('register-specialties', [RegisterSpecialtyController::class, 'getRegisterSpecialtyByUser']);
 Route::get('recruitment-positions', [RecruitmentPositionController::class, 'index']);
+Route::get('academic-fields', [AcademicFieldController::class, 'index']);
+Route::get('titles', [TitleController::class, 'index']);
+Route::get('degrees', [DegreeController::class, 'index']);
+Route::get('jobholders', [JobHolderController::class, 'index']);

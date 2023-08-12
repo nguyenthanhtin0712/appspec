@@ -17,73 +17,7 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        //Role user
-        $user_view = Permission::create(['name' => 'user.view']);
-        $user_create = Permission::create(['name' => 'user.create']);
-        $user_update = Permission::create(['name' => 'user.update']);
-        $user_delete = Permission::create(['name' => 'user.delete']);
-        //Role major
-        $major_view = Permission::create(['name' => 'major.view']);
-        $major_create = Permission::create(['name' => 'major.create']);
-        $major_update = Permission::create(['name' => 'major.update']);
-        $major_delete = Permission::create(['name' => 'major.delete']);
-        //Role specialty
-        $specialty_view = Permission::create(['name' => 'specialty.view']);
-        $specialty_create = Permission::create(['name' => 'specialty.create']);
-        $specialty_update = Permission::create(['name' => 'specialty.update']);
-        $specialty_delete = Permission::create(['name' => 'specialty.delete']);
-        //Role student
-        $student_view = Permission::create(['name' => 'student.view']);
-        $student_create = Permission::create(['name' => 'student.create']);
-        $student_update = Permission::create(['name' => 'student.update']);
-        $student_delete = Permission::create(['name' => 'student.delete']);
-        //Role employer
-        $employer_view = Permission::create(['name' => 'employer.view']);
-        $employer_create = Permission::create(['name' => 'employer.create']);
-        $employer_update = Permission::create(['name' => 'employer.update']);
-        $employer_delete = Permission::create(['name' => 'employer.delete']);
-        //Role teacher
-        $teacher_view = Permission::create(['name' => 'teacher.view']);
-        $teacher_create = Permission::create(['name' => 'teacher.create']);
-        $teacher_update = Permission::create(['name' => 'teacher.update']);
-        $teacher_delete = Permission::create(['name' => 'teacher.delete']);
-        // Role register specialty
-        $register_specialty_view = Permission::create(['name' => 'register_specialty.view']);
-        $register_specialty_create = Permission::create(['name' => 'register_specialty.create']);
-        $register_specialty_update = Permission::create(['name' => 'register_specialty.update']);
-        $register_specialty_delete = Permission::create(['name' => 'register_specialty.delete']);
-    
-        $admin_role = Role::create(['name' => 'admin']);
-        $admin_role->givePermissionTo([
-            $user_view,
-            $user_create,
-            $user_update,
-            $user_delete,
-            $major_view,
-            $major_create,
-            $major_update,
-            $major_delete,
-            $specialty_view,
-            $specialty_create,
-            $specialty_update,
-            $specialty_delete,
-            $student_view,
-            $student_create,
-            $student_update,
-            $student_delete,
-            $employer_view,
-            $employer_create,
-            $employer_update,
-            $employer_delete,
-            $teacher_view,
-            $teacher_create,
-            $teacher_update,
-            $teacher_delete,
-            $register_specialty_view,
-            $register_specialty_create,
-            $register_specialty_update,
-            $register_specialty_delete,
-        ]);
+        $admin_role = Role::findByName('admin');
 
         $admin = User::create([
             'user_email' => 'musicanime2501@gmail.com',
