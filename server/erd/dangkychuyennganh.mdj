@@ -7453,8 +7453,8 @@
 								"$ref": "AAAAAAGITK4l26584jk="
 							},
 							"font": "Arial;13;0",
-							"left": 2360,
-							"top": 1112,
+							"left": 2456,
+							"top": 1104,
 							"width": 177,
 							"height": 38,
 							"text": "Chi tiết lớp học được mở "
@@ -7528,8 +7528,8 @@
 										"$ref": "AAAAAAGJp60T1gbdf2s="
 									},
 									"font": "Arial;13;1",
-									"left": 1976,
-									"top": 1517,
+									"left": 2104,
+									"top": 1501,
 									"width": 244.30322265625,
 									"height": 13,
 									"text": "display_config"
@@ -7554,8 +7554,8 @@
 												"$ref": "AAAAAAGJp61U5gbqCX0="
 											},
 											"font": "Arial;13;0",
-											"left": 1981,
-											"top": 1540,
+											"left": 2109,
+											"top": 1524,
 											"width": 234.30322265625,
 											"height": 13
 										},
@@ -7569,8 +7569,8 @@
 												"$ref": "AAAAAAGJp8K3kQcHGR4="
 											},
 											"font": "Arial;13;0",
-											"left": 1981,
-											"top": 1555,
+											"left": 2109,
+											"top": 1539,
 											"width": 234.30322265625,
 											"height": 13
 										},
@@ -7584,8 +7584,8 @@
 												"$ref": "AAAAAAGJp62PyAbxY9c="
 											},
 											"font": "Arial;13;0",
-											"left": 1981,
-											"top": 1570,
+											"left": 2109,
+											"top": 1554,
 											"width": 234.30322265625,
 											"height": 13
 										},
@@ -7599,22 +7599,22 @@
 												"$ref": "AAAAAAGJp626rgb4msY="
 											},
 											"font": "Arial;13;0",
-											"left": 1981,
-											"top": 1585,
+											"left": 2109,
+											"top": 1569,
 											"width": 234.30322265625,
 											"height": 13
 										}
 									],
 									"font": "Arial;13;0",
-									"left": 1976,
-									"top": 1535,
+									"left": 2104,
+									"top": 1519,
 									"width": 244.30322265625,
 									"height": 68
 								}
 							],
 							"font": "Arial;13;0",
-							"left": 1976,
-							"top": 1512,
+							"left": 2104,
+							"top": 1496,
 							"width": 244.30322265625,
 							"height": 91,
 							"nameLabel": {
@@ -8161,8 +8161,8 @@
 										"$ref": "AAAAAAGJ5l3d+ZHp9sY="
 									},
 									"font": "Arial;13;1",
-									"left": 1128,
-									"top": 1901,
+									"left": 1120,
+									"top": 1893,
 									"width": 174.23779296875,
 									"height": 13,
 									"text": "title"
@@ -8187,8 +8187,8 @@
 												"$ref": "AAAAAAGJ5l34oZH0oIg="
 											},
 											"font": "Arial;13;0",
-											"left": 1133,
-											"top": 1924,
+											"left": 1125,
+											"top": 1916,
 											"width": 164.23779296875,
 											"height": 13
 										},
@@ -8202,8 +8202,8 @@
 												"$ref": "AAAAAAGJ5l4UQJH7hSs="
 											},
 											"font": "Arial;13;0",
-											"left": 1133,
-											"top": 1939,
+											"left": 1125,
+											"top": 1931,
 											"width": 164.23779296875,
 											"height": 13
 										},
@@ -8217,22 +8217,22 @@
 												"$ref": "AAAAAAGJ5mKsCpJL5AI="
 											},
 											"font": "Arial;13;0",
-											"left": 1133,
-											"top": 1954,
+											"left": 1125,
+											"top": 1946,
 											"width": 164.23779296875,
 											"height": 13
 										}
 									],
 									"font": "Arial;13;0",
-									"left": 1128,
-									"top": 1919,
+									"left": 1120,
+									"top": 1911,
 									"width": 174.23779296875,
 									"height": 53
 								}
 							],
 							"font": "Arial;13;0",
-							"left": 1128,
-							"top": 1896,
+							"left": 1120,
+							"top": 1888,
 							"width": 174.23779296875,
 							"height": 76,
 							"nameLabel": {
@@ -8249,8 +8249,8 @@
 								"$ref": "AAAAAAGITK4l26584jk="
 							},
 							"font": "Arial;13;0",
-							"left": 1200,
-							"top": 1832,
+							"left": 1176,
+							"top": 1848,
 							"width": 89,
 							"height": 25,
 							"text": "Chức vụ"
@@ -8354,7 +8354,7 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 1077,
+									"left": 1073,
 									"top": 1937,
 									"height": 13,
 									"alpha": 1.5707963267948966,
@@ -8371,7 +8371,7 @@
 										"$ref": "AAAAAAGJ5mKQV5I6hVg="
 									},
 									"font": "Arial;13;0",
-									"left": 1102,
+									"left": 1094,
 									"top": 1936,
 									"height": 13,
 									"alpha": 0.5235987755982988,
@@ -8406,7 +8406,7 @@
 								"$ref": "AAAAAAGJ5l3d+ZHp9sY="
 							},
 							"lineStyle": 2,
-							"points": "1128:1928;1028:1928",
+							"points": "1120:1928;1028:1928",
 							"nameLabel": {
 								"$ref": "AAAAAAGJ5mKQV5I77Oc="
 							},
@@ -8603,8 +8603,8 @@
 								"$ref": "AAAAAAGITK4l26584jk="
 							},
 							"font": "Arial;13;0",
-							"left": 944,
-							"top": 2136,
+							"left": 912,
+							"top": 2128,
 							"width": 60,
 							"height": 25,
 							"text": "học vị"

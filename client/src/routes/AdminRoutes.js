@@ -20,6 +20,8 @@ const SpecialtyPage = Loadable(lazy(() => import('pages/admin/specialty')));
 const StudentPage = Loadable(lazy(() => import('pages/admin/student')));
 const TeacherPage = Loadable(lazy(() => import('pages/admin/teacher')));
 const EmployerPage = Loadable(lazy(() => import('pages/admin/employer')));
+const TitlePage = Loadable(lazy(() => import('pages/admin/title')));
+const DegreePage = Loadable(lazy(() => import('pages/admin/degree')));
 const Page = Loadable(lazy(() => import('pages/admin/page/page_index')));
 const PageCreate = Loadable(lazy(() => import('pages/admin/page/page_create')));
 
@@ -78,6 +80,14 @@ const AdminRoutes = {
     {
       path: 'employer',
       element: <PrivateRoute component={EmployerPage} requiredPermissions={['employer.view']} />
+    },
+    {
+      path: 'title',
+      element: <PrivateRoute component={TitlePage} requiredPermissions={['title.view']} />
+    },
+    {
+      path: 'degree',
+      element: <PrivateRoute component={DegreePage} requiredPermissions={['degree.view']} />
     },
     {
       path: 'page',
