@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import Routes from 'routes';
 import ThemeCustomization from 'themes';
 import ScrollTop from 'components/ScrollTop';
@@ -16,6 +15,7 @@ const App = () => {
     };
     fetchUser();
   }, []);
+
   return (
     <ThemeCustomization>
       <ScrollTop>

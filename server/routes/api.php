@@ -94,8 +94,8 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('register-specialties/register', [RegisterSpecialtyController::class, 'getSpecialtiesForRegister']);
     Route::post('register-specialties/register', [RegisterSpecialtyController::class, 'submitRegisterSpecialty']);
     Route::post('register-specialties/change', [RegisterSpecialtyController::class, 'changeSpecialty']);
+    Route::post('register-specialties/export', [RegisterSpecialtyController::class, 'getStudentOfSpecialty']);
 
-    // RecruitmentPosition
     // Config page
     Route::get('configs', [DisplayConfigController::class, 'index']);
     Route::put('/configs/{id}', [DisplayConfigController::class, 'update']);

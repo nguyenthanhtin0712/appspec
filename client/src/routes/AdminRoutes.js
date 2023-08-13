@@ -22,6 +22,7 @@ const TeacherPage = Loadable(lazy(() => import('pages/admin/teacher')));
 const EmployerPage = Loadable(lazy(() => import('pages/admin/employer')));
 const Page = Loadable(lazy(() => import('pages/admin/page/page_index')));
 const PageCreate = Loadable(lazy(() => import('pages/admin/page/page_create')));
+const Test = Loadable(lazy(() => import('pages/admin/tblex')));
 
 const AdminRoutes = {
   path: '/admin',
@@ -86,6 +87,10 @@ const AdminRoutes = {
     {
       path: 'page/create',
       element: <PrivateRoute component={PageCreate} requiredPermissions={['student.view']} />
+    },
+    {
+      path: 'test',
+      element: <PrivateRoute component={Test} requiredPermissions={['student.view']} />
     }
   ]
 };

@@ -31,11 +31,16 @@ const MajorTable = () => {
   );
 
   const handleExportData = useCallback(() => {
+    const dataExport = data.map((major) => ({
+      id: major.major_id,
+      name: major.major_name
+    }));
+
     const wb = utils.book_new();
-    const ws = utils.json_to_sheet(data);
+    const ws = utils.json_to_sheet(dataExport);
     const columnWidths = {};
 
-    data.forEach((row) => {
+    dataExport.forEach((row) => {
       Object.entries(row).forEach(([key, cell]) => {
         const cellValue = cell !== null ? cell.toString() : '';
         const cellLength = cellValue.length;
@@ -48,6 +53,7 @@ const MajorTable = () => {
     }));
 
     utils.book_append_sheet(wb, ws, 'Major');
+    utils.sheet_add_aoa(ws, [['Mã ngành', 'Tên ngành']], { origin: 'A1' });
     writeFileXLSX(wb, 'Major.xlsx');
   }, [data]);
 

@@ -97,6 +97,16 @@ export const changeSpecialty = createAsyncThunk('register_specialty_user/changeS
   }
 });
 
+export const getExportData = createAsyncThunk('register_specialty_user/getExportData', async (params) => {
+  try {
+    const response = await axios.post(`/register-specialties/export`, params);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+});
+
 const initialState = {
   data: [],
   isError: false,

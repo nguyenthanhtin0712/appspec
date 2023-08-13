@@ -307,6 +307,23 @@ class RegisterSpecialtyController extends Controller
         return response()->json(['message' => 'Change specialty successful'], 200);
     }
 
+    public function getStatistic($register_specialty_id, $major_id)
+    {
+        $statistic = RegisterSpecialty::find($register_specialty_id)->specialty
+            ->filter(function ($specialty) use ($major_id) {
+                return $specialty->major->major_id === $major_id;
+            })
+            ->map(function ($specialty) use ($register_specialty_id) {
+                return [
+                    'specialty_id' => $specialty->specialty_id,
+                    'specialty_name' => $specialty->specialty_name,
+                    'specialty_quantity' => $specialty->pivot->specialty_quantity,
+                    'specialty_registered' => Student::where('register_specialty_id', $register_specialty_id)->where('specialty_id', $specialty->specialty_id)->count()
+                ];
+            })->values();
+        return $statistic;
+    }
+
     public function getResult(Request $request)
     {
         $displayConfig = DisplayConfig::find('register_specialty')->display_config_value ?? RegisterSpecialty::latest()->first()->register_specialty_id;
@@ -367,18 +384,7 @@ class RegisterSpecialtyController extends Controller
         $perPage = $perPage ?? 10;
         $dataStudent = $queryBuilder->paginate($perPage);
 
-        $statistic = RegisterSpecialty::find($register_specialty_id)->specialty
-            ->filter(function ($specialty) use ($major_id) {
-                return $specialty->major->major_id === $major_id;
-            })
-            ->map(function ($specialty) use ($register_specialty_id) {
-                return [
-                    'specialty_id' => $specialty->specialty_id,
-                    'specialty_name' => $specialty->specialty_name,
-                    'specialty_quantity' => $specialty->pivot->specialty_quantity,
-                    'specialty_registered' => Student::where('register_specialty_id', $register_specialty_id)->where('specialty_id', $specialty->specialty_id)->count()
-                ];
-            })->values();
+        $statistic = $this->getStatistic($register_specialty_id, $major_id);
 
         $registerSpecialtiesCollection = new Collection($dataStudent);
         $dataResult = [
@@ -387,5 +393,17 @@ class RegisterSpecialtyController extends Controller
         ];
 
         return $this->sentSuccessResponse($dataResult, "Get data success", Response::HTTP_OK);
+    }
+
+    public function getStudentOfSpecialty(Request $request)
+    {
+        $register_specialty_id = $request->input('register_specialty_id');
+        $specialty_id = $request->input('specialty_id');
+        $students = Student::select('students.student_code', 'users.user_firstname', 'users.user_lastname')
+            ->leftJoin('users', 'students.user_id', '=', 'users.user_id')
+            ->where('students.register_specialty_id', $register_specialty_id)
+            ->where('students.specialty_id', $specialty_id)
+            ->get();
+        return $this->sentSuccessResponse($students, "Get data success", Response::HTTP_OK);
     }
 }

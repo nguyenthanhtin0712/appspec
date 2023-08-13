@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import Typography from '@mui/material/Typography';
 import { dispatch } from 'store/index';
 import { getRegistrationInfoById, setMajorId, setRegisterSpecialtyId } from 'store/reducers/registerSpecialtyUserSlice';
-import { Box, Button, Divider, Stack, Tab, Tabs } from '@mui/material';
+import { Box, Button, Divider, Fade, Menu, MenuItem, Stack, Tab, Tabs } from '@mui/material';
 import SpecialityContainer from 'sections/user/register_speciality/register/SpecialityContainer';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router';
@@ -15,6 +15,16 @@ const RegisterSpecialtyResult = () => {
   const { Id } = useParams();
   const theme = useTheme();
   const { majors, majorId, userRegistrationPeriod } = useSelector((state) => state.register_specialty_user);
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   useEffect(() => {
     dispatch(getRegistrationInfoById(Id));
     dispatch(setRegisterSpecialtyId(Id));
@@ -44,13 +54,39 @@ const RegisterSpecialtyResult = () => {
           <Button
             variant="contained"
             color="success"
-            onClick={() => {
-              alert('Tính năng chưa khả dụng');
-            }}
+            id="fade-button"
+            aria-controls={open ? 'fade-menu' : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? 'true' : undefined}
+            onClick={handleClick}
             startIcon={<TableDocument />}
           >
             Xuất dữ liệu
           </Button>
+          <Menu
+            id="fade-menu"
+            MenuListProps={{
+              'aria-labelledby': 'fade-button'
+            }}
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            TransitionComponent={Fade}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'right'
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'right'
+            }}
+          >
+            {majors.map((major) => (
+              <MenuItem onClick={handleClose} key={major?.major_id}>
+                {major?.major_name}
+              </MenuItem>
+            ))}
+          </Menu>
         </Box>
       </Stack>
       <Box>

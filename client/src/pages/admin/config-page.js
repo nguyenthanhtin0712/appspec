@@ -44,22 +44,29 @@ const ConfigPage = () => {
           Cấu hình
         </Typography>
         <Stack spacing={3}>
-          <Box onClick={() => setOpen(true)} sx={styles}>
-            <Typography fontSize={16}>Đăng ký chuyên ngành</Typography>
-            <Typography color="#00000085" gutterBottom>
-              {dataConfig['register_specialty']?.name ?? 'Chưa chọn đợt hiển thị'}
-            </Typography>
-          </Box>
+          <BoxCofig
+            name="Đăng ký chuyên ngành"
+            value={dataConfig['register_specialty']?.name ?? 'Chưa chọn đợt hiển thị'}
+            onClick={() => setOpen(true)}
+          />
+
           <Box sx={styles}>
             <Typography fontSize={16}>Đăng ký thực tập</Typography>
-            <Typography color="#00000085" gutterBottom>
-              Đăng ký thực tập học kỳ 2, năm học 2022 - 2023
-            </Typography>
+            <Typography color="#00000085">Đăng ký thực tập học kỳ 2, năm học 2022 - 2023</Typography>
           </Box>
         </Stack>
       </MainCard>
       <SpecialtyDisplayDialog open={open} handleClose={handleClose} />
     </>
+  );
+};
+
+const BoxCofig = ({ name, value, onClick }) => {
+  return (
+    <Box onClick={onClick} sx={styles}>
+      <Typography fontSize={16}>{name}</Typography>
+      <Typography color="#00000085">{value}</Typography>
+    </Box>
   );
 };
 

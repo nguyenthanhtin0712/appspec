@@ -3,7 +3,7 @@ export default function Popover(theme) {
     MuiPopover: {
       styleOverrides: {
         paper: {
-          boxShadow: theme.customShadows.z1
+          boxShadow: theme.customShadows.z3
         }
       }
     }
