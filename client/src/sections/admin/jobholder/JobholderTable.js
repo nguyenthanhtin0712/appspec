@@ -77,11 +77,11 @@ const JobholderTable = () => {
         size: 5
       },
       {
-        accessorKey: 'user.user_gender',
+        accessorKey: 'user?.user_gender',
         header: 'Giới tính',
         size: 5,
         Cell: ({ cell }) => {
-          return <div>{cell.row.original.user.user_gender == 0 ? 'Nam' : 'Nữ'}</div>;
+          return <div>{cell.row.original?.user?.user_gender == 0 ? 'Nam' : 'Nữ'}</div>;
         }
       },
       {

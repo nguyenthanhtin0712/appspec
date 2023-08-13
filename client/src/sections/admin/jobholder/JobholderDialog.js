@@ -45,12 +45,12 @@ const JobholderForm = ({ initialValues, action }) => {
           if (result && !result.error) {
             setStatus({ success: true });
             setSubmitting(false);
-            toast.success(action === 'update' ? 'Sửa ngành thành công!' : 'Thêm ngành thành công!');
+            toast.success(action === 'update' ? 'Sửa viên chức thành công!' : 'Thêm viên chức thành công!');
           } else {
             setStatus({ success: false });
             setErrors(result.payload.errors);
             setSubmitting(false);
-            toast.error(action === 'update' ? 'Có lỗi xảy ra khi Sửa ngành!' : 'Có lỗi xảy ra khi thêm ngành!');
+            toast.error(action === 'update' ? 'Có lỗi xảy ra khi Sửa viên chức!' : 'Có lỗi xảy ra khi thêm viên chức!');
           }
         } catch (err) {
           console.error(err);
@@ -175,7 +175,7 @@ const JobholderForm = ({ initialValues, action }) => {
               Cancel
             </Button>
             <Button variant="contained" type="submit" disabled={isSubmitting}>
-              {action === 'add' ? 'Thêm ngành' : 'Chỉnh sửa'}
+              {action === 'add' ? 'Thêm viên chức' : 'Chỉnh sửa'}
             </Button>
           </DialogActions>
         </form>
@@ -194,7 +194,7 @@ const JobholderDialog = () => {
   };
   return (
     <Dialog open={jobholderDialog.open} onClose={handleClose} maxWidth="md" fullWidth>
-      <DialogTitleCustom onClose={handleClose}>{action === 'add' ? 'Thêm chuyên ngành' : 'Chỉnh sửa chuyên ngành'}</DialogTitleCustom>
+      <DialogTitleCustom onClose={handleClose}>{action === 'add' ? 'Thêm viên chức' : 'Chỉnh sửa viên chức'}</DialogTitleCustom>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <JobholderForm initialValues={initialValues} action={action} />
       </LocalizationProvider>
