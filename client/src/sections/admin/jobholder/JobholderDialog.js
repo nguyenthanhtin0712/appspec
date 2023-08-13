@@ -1,4 +1,4 @@
-import React, { memo, useMemo, useCallback } from 'react';
+import React, { memo, useMemo, useCallback, useEffect } from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -12,20 +12,48 @@ import Button from '@mui/material/Button';
 import { useDispatch } from 'react-redux';
 import DialogTitleCustom from 'components/DialogTitleCustom';
 import { dispatch } from 'store/index';
-import { createMajor, setJobholderDialog, updateMajor } from 'store/reducers/jobholderSlice';
+import {
+  createJobholder,
+  setJobholderDialog,
+  updateJobholder,
+  getAllDegree,
+  getAllTitle,
+  getAllAcademicField
+} from 'store/reducers/jobholderSlice';
 import { Select, MenuItem, InputLabel } from '@mui/material';
 import Stack from '@mui/material/Stack';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-// import Backdrop from '@mui/material/Backdrop';
-// import CircularProgress from '@mui/material/CircularProgress';
+import Switch from '@mui/material/Switch';
 
 const JobholderForm = ({ initialValues, action }) => {
   const dispatch = useDispatch();
+  const { dataDegree, dataTitle, dataAcademicField } = useSelector((state) => state.jobholder);
+  useEffect(() => {
+    dispatch(getAllDegree({}));
+    dispatch(getAllTitle({}));
+    dispatch(getAllAcademicField({}));
+  }, [dispatch]);
   const handleClose = useCallback(() => {
-    dispatch(setJobholderDialog({ open: false, initValue: { major_id: '', major_name: '' } }));
+    dispatch(
+      setJobholderDialog({
+        open: false,
+        initValue: {
+          user_firstname: '',
+          user_lastname: '',
+          user_gender: '',
+          user_birthday: null,
+          user_password: '',
+          jobholder_code: '',
+          degree_id: '',
+          title_id: '',
+          academic_field_id: '',
+          jobholder_isLeader: false
+        }
+      })
+    );
   }, [dispatch]);
 
   return (
@@ -36,11 +64,15 @@ const JobholderForm = ({ initialValues, action }) => {
         user_lastname: Yup.string().max(255).required('Tên sinh viên là bắt buộc!'),
         user_gender: Yup.string().max(255).required('Vui giới tính!'),
         user_birthday: Yup.date().typeError('Vui lòng nhập đầy đủ!').required('Thời gian bắt đầu là bắt buộc'),
-        user_password: Yup.string().max(255).required('Vui lòng nhập mật khẩu')
+        user_password: Yup.string().max(255).required('Vui lòng nhập mật khẩu'),
+        jobholder_code: Yup.string().max(255).required('Mã viên chức là bắt buộc!'),
+        degree_id: Yup.string().max(255).required('Học vị là bắt buộc!'),
+        title_id: Yup.string().max(255).required('Chức vụ là bắt buộc!'),
+        academic_field_id: Yup.string().max(255).required('Bộ môn là bắt buộc!')
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
         try {
-          const actionType = action === 'update' ? updateMajor : createMajor;
+          const actionType = action === 'update' ? updateJobholder : createJobholder;
           const result = await dispatch(actionType(values));
           if (result && !result.error) {
             setStatus({ success: true });
@@ -60,7 +92,7 @@ const JobholderForm = ({ initialValues, action }) => {
         }
       }}
     >
-      {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
+      {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values, setFieldTouched }) => (
         <form noValidate onSubmit={handleSubmit}>
           <DialogContent>
             <Grid container spacing={3}>
@@ -125,12 +157,11 @@ const JobholderForm = ({ initialValues, action }) => {
                     <MenuItem value="0">Nam</MenuItem>
                     <MenuItem value="1">Nữ</MenuItem>
                   </Select>
-                  {Boolean(touched.user_gender && errors.user_gender) && <FormHelperText error>{errors.major_id}</FormHelperText>}
+                  {Boolean(touched.user_gender && errors.user_gender) && <FormHelperText error>{errors.jobholder_id}</FormHelperText>}
                 </Stack>
                 <Stack spacing={1} sx={{ mb: '10px' }}>
                   <InputLabel htmlFor="user_birthday">Ngày sinh</InputLabel>
                   <DatePicker
-                    label="Ngày sinh"
                     id="user_birthday"
                     onChange={(value) => setFieldValue('user_birthday', value)}
                     onClose={() => setFieldTouched('user_birthday', true)}
@@ -162,7 +193,92 @@ const JobholderForm = ({ initialValues, action }) => {
                   )}
                 </Stack>
               </Grid>
-              <Grid item xs={6}></Grid>
+              <Grid item xs={6}>
+                <Stack spacing={1} sx={{ mb: '10px' }}>
+                  <InputLabel htmlFor="academic_field_id">Chọn bộ môn</InputLabel>
+                  <Select
+                    labelId="academic_field_id"
+                    id="academic_field_id"
+                    name="academic_field_id"
+                    value={values.academic_field_id}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    fullWidth
+                    displayEmpty
+                    inputProps={{ 'aria-label': 'Without label' }}
+                    error={Boolean(touched.academic_field_id && errors.academic_field_id)}
+                  >
+                    <MenuItem value="" sx={{ color: 'text.secondary' }}>
+                      Chọn bộ môn
+                    </MenuItem>
+                    {dataAcademicField?.length > 0 &&
+                      dataAcademicField?.map((item) => (
+                        <MenuItem key={item.academic_field_id} value={item.academic_field_id}>
+                          {item.academic_field_name}
+                        </MenuItem>
+                      ))}
+                  </Select>
+                  {Boolean(touched.academic_field_id && errors.academic_field_id) && (
+                    <FormHelperText error>{errors.academic_field_id}</FormHelperText>
+                  )}
+                </Stack>
+                <Stack spacing={1} sx={{ mb: '10px' }}>
+                  <InputLabel htmlFor="degree_id">Chọn học vị</InputLabel>
+                  <Select
+                    labelId="degree_id"
+                    id="degree_id"
+                    name="degree_id"
+                    value={values.degree_id}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    fullWidth
+                    displayEmpty
+                    inputProps={{ 'aria-label': 'Without label' }}
+                    error={Boolean(touched.degree_id && errors.degree_id)}
+                  >
+                    <MenuItem value="" sx={{ color: 'text.secondary' }}>
+                      Chọn học vị
+                    </MenuItem>
+                    {dataDegree?.length > 0 &&
+                      dataDegree?.map((item) => (
+                        <MenuItem key={item.degree_id} value={item.degree_id}>
+                          {item.degree_name}
+                        </MenuItem>
+                      ))}
+                  </Select>
+                  {Boolean(touched.degree_id && errors.degree_id) && <FormHelperText error>{errors.degree_id}</FormHelperText>}
+                </Stack>
+                <Stack spacing={1} sx={{ mb: '10px' }}>
+                  <InputLabel htmlFor="title_id">Chọn chức vụ</InputLabel>
+                  <Select
+                    labelId="title_id"
+                    id="title_id"
+                    name="title_id"
+                    value={values.title_id}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    fullWidth
+                    displayEmpty
+                    inputProps={{ 'aria-label': 'Without label' }}
+                    error={Boolean(touched.title_id && errors.title_id)}
+                  >
+                    <MenuItem value="" sx={{ color: 'text.secondary' }}>
+                      Chọn chức vụ
+                    </MenuItem>
+                    {dataTitle?.length > 0 &&
+                      dataTitle?.map((item) => (
+                        <MenuItem key={item.title_id} value={item.title_id}>
+                          {item.title_name}
+                        </MenuItem>
+                      ))}
+                  </Select>
+                  {Boolean(touched.title_id && errors.title_id) && <FormHelperText error>{errors.title_id}</FormHelperText>}
+                </Stack>
+                <Stack spacing={1} sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', mb: '10px' }}>
+                  <InputLabel htmlFor="jobholder_isLeader">Trưởng bộ môn</InputLabel>
+                  <Switch checked={values.jobholder_isLeader} id="jobholder_isLeader" name="jobholder_isLeader" onChange={handleChange} />
+                </Stack>
+              </Grid>
               {errors.submit && (
                 <Grid item xs={12}>
                   <FormHelperText error>{errors.submit}</FormHelperText>
@@ -190,7 +306,23 @@ const JobholderDialog = () => {
   const action = useMemo(() => jobholderDialog.action, [jobholderDialog.action]);
 
   const handleClose = () => {
-    dispatch(setJobholderDialog({ open: false, initValue: { major_id: '', major_name: '' } }));
+    dispatch(
+      setJobholderDialog({
+        open: false,
+        initValue: {
+          user_firstname: '',
+          user_lastname: '',
+          user_gender: '',
+          user_birthday: null,
+          user_password: '',
+          jobholder_code: '',
+          degree_id: '',
+          title_id: '',
+          academic_field_id: '',
+          jobholder_isLeader: ''
+        }
+      })
+    );
   };
   return (
     <Dialog open={jobholderDialog.open} onClose={handleClose} maxWidth="md" fullWidth>
@@ -198,11 +330,6 @@ const JobholderDialog = () => {
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <JobholderForm initialValues={initialValues} action={action} />
       </LocalizationProvider>
-      {/* {isLoading && (
-        <Backdrop sx={{ color: '#fff', zIndex: 2000 }} open={isLoading}>
-          <CircularProgress color="inherit" />
-        </Backdrop>
-      )} */}
     </Dialog>
   );
 };

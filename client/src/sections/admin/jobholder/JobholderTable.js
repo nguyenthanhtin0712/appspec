@@ -11,7 +11,7 @@ import {
   setGlobalFilter,
   setSorting,
   setPagination,
-  deleteMajor,
+  deleteJobholder,
   setJobholderDialog
 } from 'store/reducers/jobholderSlice';
 import ConfirmDialog from 'components/ConfirmDialog';
@@ -29,8 +29,10 @@ const JobholderTable = () => {
   const { data, isError, isLoading, isRefetching, rowCount, columnFilters, globalFilter, sorting, pagination } = useSelector(
     (state) => state.jobholder
   );
+  useEffect(() => {
+    dispatch(fetchData({ columnFilters, globalFilter, sorting, pagination }));
+  }, [columnFilters, globalFilter, sorting, pagination]);
 
-  console.log('data', data);
   const handleExportData = useCallback(() => {
     const wb = utils.book_new();
     const ws = utils.json_to_sheet(data);
@@ -48,17 +50,13 @@ const JobholderTable = () => {
       width: columnWidths[key] + 2 // Adding extra padding
     }));
 
-    utils.book_append_sheet(wb, ws, 'Major');
-    writeFileXLSX(wb, 'Major.xlsx');
+    utils.book_append_sheet(wb, ws, 'jobholder');
+    writeFileXLSX(wb, 'jobholder.xlsx');
   }, [data]);
 
   const handleCloseCofirm = () => {
     setOpenCofirm(false);
   };
-
-  useEffect(() => {
-    dispatch(fetchData({ columnFilters, globalFilter, sorting, pagination }));
-  }, [columnFilters, globalFilter, sorting, pagination]);
 
   const columns = React.useMemo(
     () => [
@@ -77,11 +75,11 @@ const JobholderTable = () => {
         size: 5
       },
       {
-        accessorKey: 'user?.user_gender',
+        accessorKey: 'user.user_gender',
         header: 'Giới tính',
         size: 5,
         Cell: ({ cell }) => {
-          return <div>{cell.row.original?.user?.user_gender == 0 ? 'Nam' : 'Nữ'}</div>;
+          return <div>{cell?.row?.original?.user?.user_gender == 0 ? 'Nam' : 'Nữ'}</div>;
         }
       },
       {
@@ -106,8 +104,8 @@ const JobholderTable = () => {
   };
 
   const handleUpdate = (data) => {
-    const major = { major_id: data.major_id, major_name: data.major_name };
-    dispatch(setJobholderDialog({ open: true, action: 'update', initValue: major }));
+    const jobholder = { jobholder_id: data.jobholder_id, jobholder_name: data.jobholder_name };
+    dispatch(setJobholderDialog({ open: true, action: 'update', initValue: jobholder }));
   };
 
   return (
@@ -184,7 +182,7 @@ const JobholderTable = () => {
             color="error"
             onClick={async () => {
               try {
-                await dispatch(deleteMajor(idDelete));
+                await dispatch(deleteJobholder(idDelete));
                 handleCloseCofirm();
                 toast.success('Xóa ngành thành công!');
                 setIdDelete('');

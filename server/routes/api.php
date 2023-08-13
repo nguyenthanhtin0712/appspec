@@ -104,11 +104,11 @@ Route::middleware(['auth:api'])->group(function () {
     Route::delete('titles/{id}', [TitleController::class, 'destroy'])->middleware('check_user_role_permission:title.delete');
 
     // Degree api
-    Route::get('degrees', [DegreeController::class, 'index'])->middleware('check_user_role_permission:degress.view');
-    Route::post('degrees', [DegreeController::class, 'store'])->middleware('check_user_role_permission:degress.create');
-    Route::get('degrees/{id}', [DegreeController::class, 'show'])->middleware('check_user_role_permission:degress.view');
-    Route::put('degrees/{id}', [DegreeController::class, 'update'])->middleware('check_user_role_permission:degress.update');
-    Route::delete('degrees/{id}', [DegreeController::class, 'destroy'])->middleware('check_user_role_permission:degress.delete');
+    Route::get('degrees', [DegreeController::class, 'index'])->middleware('check_user_role_permission:degree.view');
+    Route::post('degrees', [DegreeController::class, 'store'])->middleware('check_user_role_permission:degree.create');
+    Route::get('degrees/{id}', [DegreeController::class, 'show'])->middleware('check_user_role_permission:degree.view');
+    Route::put('degrees/{id}', [DegreeController::class, 'update'])->middleware('check_user_role_permission:degree.update');
+    Route::delete('degrees/{id}', [DegreeController::class, 'destroy'])->middleware('check_user_role_permission:degree.delete');
 
     // RecruitmentPosition
     // Config page

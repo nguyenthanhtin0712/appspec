@@ -7542,6 +7542,7 @@
 											"model": {
 												"$ref": "AAAAAAGJ5ldbWpGLOZQ="
 											},
+											"visible": false,
 											"font": "Arial;13;0",
 											"left": 821,
 											"top": 1922,
@@ -7623,7 +7624,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 821,
-											"top": 1937,
+											"top": 1922,
 											"width": 202.7998046875,
 											"height": 13
 										},
@@ -7638,7 +7639,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 821,
-											"top": 1952,
+											"top": 1937,
 											"width": 202.7998046875,
 											"height": 13
 										},
@@ -7653,7 +7654,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 821,
-											"top": 1967,
+											"top": 1952,
 											"width": 202.7998046875,
 											"height": 13
 										},
@@ -7668,7 +7669,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 821,
-											"top": 1982,
+											"top": 1967,
 											"width": 202.7998046875,
 											"height": 13
 										}
@@ -7677,14 +7678,14 @@
 									"left": 816,
 									"top": 1887,
 									"width": 212.7998046875,
-									"height": 113
+									"height": 98
 								}
 							],
 							"font": "Arial;13;0",
 							"left": 816,
 							"top": 1864,
 							"width": 212.7998046875,
-							"height": 145,
+							"height": 129,
 							"nameLabel": {
 								"$ref": "AAAAAAGJ5lat15FwDAg="
 							},
@@ -8106,8 +8107,8 @@
 										"$ref": "AAAAAAGJ5rTcqpJhq6g="
 									},
 									"font": "Arial;13;1",
-									"left": 832,
-									"top": 2109,
+									"left": 840,
+									"top": 2085,
 									"width": 129.7216796875,
 									"height": 13,
 									"text": "degree"
@@ -8132,8 +8133,8 @@
 												"$ref": "AAAAAAGJ5rTtwpJtqxE="
 											},
 											"font": "Arial;13;0",
-											"left": 837,
-											"top": 2132,
+											"left": 845,
+											"top": 2108,
 											"width": 119.7216796875,
 											"height": 13
 										},
@@ -8147,8 +8148,8 @@
 												"$ref": "AAAAAAGJ5rUAopJ01AM="
 											},
 											"font": "Arial;13;0",
-											"left": 837,
-											"top": 2147,
+											"left": 845,
+											"top": 2123,
 											"width": 119.7216796875,
 											"height": 13
 										},
@@ -8162,22 +8163,22 @@
 												"$ref": "AAAAAAGJ5rUcBZJ7l/8="
 											},
 											"font": "Arial;13;0",
-											"left": 837,
-											"top": 2162,
+											"left": 845,
+											"top": 2138,
 											"width": 119.7216796875,
 											"height": 13
 										}
 									],
 									"font": "Arial;13;0",
-									"left": 832,
-									"top": 2127,
+									"left": 840,
+									"top": 2103,
 									"width": 129.7216796875,
 									"height": 53
 								}
 							],
 							"font": "Arial;13;0",
-							"left": 832,
-							"top": 2104,
+							"left": 840,
+							"top": 2080,
 							"width": 129.7216796875,
 							"height": 76,
 							"nameLabel": {
@@ -8206,7 +8207,7 @@
 									"visible": false,
 									"font": "Arial;13;0",
 									"left": 889,
-									"top": 2049,
+									"top": 2029,
 									"height": 13,
 									"alpha": 1.5707963267948966,
 									"distance": 15,
@@ -8223,7 +8224,7 @@
 									},
 									"font": "Arial;13;0",
 									"left": 889,
-									"top": 2072,
+									"top": 2048,
 									"height": 13,
 									"alpha": 0.5235987755982988,
 									"distance": 30,
@@ -8240,7 +8241,7 @@
 									},
 									"font": "Arial;13;0",
 									"left": 889,
-									"top": 2027,
+									"top": 2011,
 									"height": 13,
 									"alpha": -0.5235987755982988,
 									"distance": 30,
@@ -8257,7 +8258,7 @@
 								"$ref": "AAAAAAGJ5rTcqpJhq6g="
 							},
 							"lineStyle": 2,
-							"points": "904:2104;904:2008",
+							"points": "904:2080;904:1992",
 							"nameLabel": {
 								"$ref": "AAAAAAGJ5rWIBJKKBFI="
 							},
@@ -8276,7 +8277,7 @@
 							},
 							"font": "Arial;13;0",
 							"left": 912,
-							"top": 2080,
+							"top": 2048,
 							"width": 60,
 							"height": 25,
 							"text": "học vị"

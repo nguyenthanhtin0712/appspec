@@ -3,7 +3,7 @@ import axios from '../../api/axios';
 import { API_BASE_URL } from 'config';
 
 // Async Thunk Actions
-export const fetchData = createAsyncThunk('major/fetchData', async (params, { rejectWithValue }) => {
+export const fetchData = createAsyncThunk('jobholder/fetchData', async (params, { rejectWithValue }) => {
   const {
     columnFilters,
     globalFilter,
@@ -35,9 +35,9 @@ export const fetchData = createAsyncThunk('major/fetchData', async (params, { re
   }
 });
 
-export const createMajor = createAsyncThunk('major/createMajor', async (major, { rejectWithValue }) => {
+export const getAllDegree = createAsyncThunk('jobholder/getAllDegree', async ({ rejectWithValue }) => {
   try {
-    const response = await axios.post(`${API_BASE_URL}/majors`, major);
+    const response = await axios.get(`${API_BASE_URL}/degrees?all=true`);
     return response.data;
   } catch (error) {
     if (error.response && error.response.data && error.response.data.errors) {
@@ -49,19 +49,9 @@ export const createMajor = createAsyncThunk('major/createMajor', async (major, {
   }
 });
 
-export const getAll = createAsyncThunk('major/getAll', async () => {
+export const getAllTitle = createAsyncThunk('jobholder/getAllTitle', async ({ rejectWithValue }) => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/majors/specialties`);
-    return response.data;
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
-});
-
-export const updateMajor = createAsyncThunk('major/updateMajor', async (major, { rejectWithValue }) => {
-  try {
-    const response = await axios.put(`${API_BASE_URL}/majors/${major.major_id}`, major);
+    const response = await axios.get(`${API_BASE_URL}/titles?all=true`);
     return response.data;
   } catch (error) {
     if (error.response && error.response.data && error.response.data.errors) {
@@ -73,9 +63,51 @@ export const updateMajor = createAsyncThunk('major/updateMajor', async (major, {
   }
 });
 
-export const deleteMajor = createAsyncThunk('major/deleteMajor', async (id, { rejectWithValue }) => {
+export const getAllAcademicField = createAsyncThunk('jobholder/getAllAcademicField', async ({ rejectWithValue }) => {
   try {
-    const response = await axios.delete(`${API_BASE_URL}/majors/${id}`);
+    const response = await axios.get(`${API_BASE_URL}/academic-fields?all=true`);
+    return response.data;
+  } catch (error) {
+    if (error.response && error.response.data && error.response.data.errors) {
+      return rejectWithValue(error.response.data);
+    } else {
+      console.error(error);
+      throw error;
+    }
+  }
+});
+
+export const createJobholder = createAsyncThunk('jobholder/createJobholder', async (jobholder, { rejectWithValue }) => {
+  try {
+    const response = await axios.post(`${API_BASE_URL}/jobholders`, jobholder);
+    return response.data;
+  } catch (error) {
+    if (error.response && error.response.data && error.response.data.errors) {
+      return rejectWithValue(error.response.data);
+    } else {
+      console.error(error);
+      throw error;
+    }
+  }
+});
+
+export const updateJobholder = createAsyncThunk('jobholder/updateJobholder', async (jobholder, { rejectWithValue }) => {
+  try {
+    const response = await axios.put(`${API_BASE_URL}/jobholders/${jobholder.jobholder_id}`, jobholder);
+    return response.data;
+  } catch (error) {
+    if (error.response && error.response.data && error.response.data.errors) {
+      return rejectWithValue(error.response.data);
+    } else {
+      console.error(error);
+      throw error;
+    }
+  }
+});
+
+export const deleteJobholder = createAsyncThunk('jobholder/deleteJobholder', async (id, { rejectWithValue }) => {
+  try {
+    const response = await axios.delete(`${API_BASE_URL}/jobholders/${id}`);
     return response.data;
   } catch (error) {
     if (error.response && error.response.data && error.response.data.errors) {
@@ -89,6 +121,9 @@ export const deleteMajor = createAsyncThunk('major/deleteMajor', async (id, { re
 
 const initialState = {
   data: [],
+  dataDegree: [],
+  dataTitle: [],
+  dataAcademicField: [],
   isError: false,
   isLoading: false,
   isRefetching: false,
@@ -108,7 +143,12 @@ const initialState = {
       user_lastname: '',
       user_gender: '',
       user_birthday: null,
-      user_password: ''
+      user_password: '',
+      jobholder_code: '',
+      degree_id: '',
+      title_id: '',
+      academic_field_id: '',
+      jobholder_isLeader: false
     }
   }
 };
@@ -136,7 +176,7 @@ const jobholder = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchData.pending, (state) => {
-        state.isLoading = true;
+        state.isLoading = false;
       })
       .addCase(fetchData.fulfilled, (state, action) => {
         state.isLoading = false;
@@ -145,26 +185,35 @@ const jobholder = createSlice({
         state.rowCount = action.payload.rowCount;
         state.isError = false;
       })
+      .addCase(getAllDegree.fulfilled, (state, action) => {
+        state.dataDegree = action.payload.data.result;
+      })
+      .addCase(getAllTitle.fulfilled, (state, action) => {
+        state.dataTitle = action.payload.data.result;
+      })
+      .addCase(getAllAcademicField.fulfilled, (state, action) => {
+        state.dataAcademicField = action.payload.data.result;
+      })
       .addCase(fetchData.rejected, (state) => {
         state.isLoading = false;
         state.isRefetching = false;
         state.isError = true;
       })
-      .addCase(createMajor.fulfilled, (state, action) => {
+      .addCase(createJobholder.fulfilled, (state, action) => {
         state.data.push(action.payload.data);
         state.jobholderDialog.open = false;
       })
-      .addCase(updateMajor.fulfilled, (state, action) => {
-        const updatedMajor = action.payload.data;
-        const index = state.data.findIndex((major) => major.major_id === updatedMajor.major_id);
+      .addCase(updateJobholder.fulfilled, (state, action) => {
+        const updatedJobholder = action.payload.data;
+        const index = state.data.findIndex((jobholder) => jobholder.jobholder_id === updatedJobholder.jobholder_id);
         if (index !== -1) {
-          state.data[index] = updatedMajor;
+          state.data[index] = updatedJobholder;
           state.jobholderDialog.open = false;
         }
       })
-      .addCase(deleteMajor.fulfilled, (state, action) => {
-        const deletedMajorId = action.payload.data.major_id;
-        state.data = state.data.filter((major) => major.major_id !== deletedMajorId);
+      .addCase(deleteJobholder.fulfilled, (state, action) => {
+        const deletedJobholderId = action.payload.data.jobholder_id;
+        state.data = state.data.filter((jobholder) => jobholder.jobholder_id !== deletedJobholderId);
       });
   }
 });
