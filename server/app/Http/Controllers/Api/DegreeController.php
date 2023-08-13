@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreDegreeRequest;
+use App\Http\Requests\UpdateDegreeRequest;
 use App\Http\Resources\Collection;
 use App\Models\Degree;
 use Illuminate\Http\Request;
@@ -64,9 +66,12 @@ class DegreeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreDegreeRequest $request)
     {
-        //
+        $dataCreate = $request->all();
+        $dataCreate['degree_isDelete'] = 0;
+        $degree = Degree::create($dataCreate);
+        return $this->sentSuccessResponse($degree, "Create title success", Response::HTTP_OK);
     }
 
     /**
@@ -77,7 +82,14 @@ class DegreeController extends Controller
      */
     public function show($id)
     {
-        //
+        $degree = Degree::where('degree_id', $id)->firstOrFail();
+        if ($degree->degree_isDelete == 1) {
+            return response()->json([
+                'message' => 'Degree is deleted',
+            ], 404);
+        } else {
+            return $this->sentSuccessResponse($degree, "Get degree success", Response::HTTP_OK);
+        }
     }
 
     /**
@@ -87,9 +99,12 @@ class DegreeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateDegreeRequest $request, $id)
     {
-        //
+        $degree = Degree::where('degree_id', $id)->firstOrFail();
+        $dataUpdate = $request->all();
+        $degree->update($dataUpdate);
+        return $this->sentSuccessResponse($degree, "Update degree success", Response::HTTP_OK);
     }
 
     /**
@@ -100,6 +115,9 @@ class DegreeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $degree = Degree::where('degree_id', $id)->firstOrFail();
+        $degree->degree_isDelete = 1;
+        $degree->save();
+        return $this->sentSuccessResponse($degree, "Delete degree success", Response::HTTP_OK);
     }
 }

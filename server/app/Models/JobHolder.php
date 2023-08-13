@@ -11,22 +11,22 @@ class JobHolder extends Model
     use HasFactory, HasRoles;
 
     protected $table = 'job_holders';
-    protected $primaryKey = 'jobholder_id';
-    public $incrementing = true;
+    protected $primaryKey = 'user_id';
+    public $incrementing = false;
     public $timestamps = false;
 
     protected $fillable = [
-        'jobholder_id',
-        'jobholder_name',
-        'jobholder_birthday',
-        'jobholder_email',
-        'jobholder_phone',
-        'jobholder_gender',
+        'user_id',
+        'jobholder_code',
         'degree_id',
         'title_id',
         'academic_field_id',
         'jobholder_isDelete'
     ];
+
+    public function user() {
+        return $this->hasOne(User::class, 'user_id', 'user_id');
+    }
 
     public function degree() {
         return $this->belongsTo(Degree::class, 'degree_id', 'degree_id');

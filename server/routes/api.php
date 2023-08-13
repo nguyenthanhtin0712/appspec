@@ -96,6 +96,21 @@ Route::middleware(['auth:api'])->group(function () {
     Route::post('register-specialties/change', [RegisterSpecialtyController::class, 'changeSpecialty']);
     Route::post('register-specialties/export', [RegisterSpecialtyController::class, 'getStudentOfSpecialty']);
 
+    //Title api
+    Route::get('titles', [TitleController::class, 'index'])->middleware('check_user_role_permission:title.view');
+    Route::post('titles', [TitleController::class, 'store'])->middleware('check_user_role_permission:title.create');
+    Route::get('titles/{id}', [TitleController::class, 'show'])->middleware('check_user_role_permission:title.view');
+    Route::put('titles/{id}', [TitleController::class, 'update'])->middleware('check_user_role_permission:title.update');
+    Route::delete('titles/{id}', [TitleController::class, 'destroy'])->middleware('check_user_role_permission:title.delete');
+
+    // Degree api
+    Route::get('degrees', [DegreeController::class, 'index'])->middleware('check_user_role_permission:degress.view');
+    Route::post('degrees', [DegreeController::class, 'store'])->middleware('check_user_role_permission:degress.create');
+    Route::get('degrees/{id}', [DegreeController::class, 'show'])->middleware('check_user_role_permission:degress.view');
+    Route::put('degrees/{id}', [DegreeController::class, 'update'])->middleware('check_user_role_permission:degress.update');
+    Route::delete('degrees/{id}', [DegreeController::class, 'destroy'])->middleware('check_user_role_permission:degress.delete');
+
+    // RecruitmentPosition
     // Config page
     Route::get('configs', [DisplayConfigController::class, 'index']);
     Route::put('/configs/{id}', [DisplayConfigController::class, 'update']);
@@ -104,6 +119,8 @@ Route::get('register-specialties/result', [RegisterSpecialtyController::class, '
 Route::get('register-specialties', [RegisterSpecialtyController::class, 'getRegisterSpecialtyByUser']);
 Route::get('recruitment-positions', [RecruitmentPositionController::class, 'index']);
 Route::get('academic-fields', [AcademicFieldController::class, 'index']);
-Route::get('titles', [TitleController::class, 'index']);
-Route::get('degrees', [DegreeController::class, 'index']);
+
+// Degree api
+
+
 Route::get('jobholders', [JobHolderController::class, 'index']);

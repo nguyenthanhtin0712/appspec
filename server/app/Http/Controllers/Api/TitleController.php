@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreTitleRequest;
+use App\Http\Requests\UpdateTitleRequest;
 use App\Http\Resources\Collection;
 use App\Models\Title;
 use Illuminate\Http\Request;
@@ -64,9 +66,12 @@ class TitleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreTitleRequest $request)
     {
-        //
+        $dataCreate = $request->all();
+        $dataCreate['title_isDelete'] = 0;
+        $title = Title::create($dataCreate);
+        return $this->sentSuccessResponse($title, "Create title success", Response::HTTP_OK);
     }
 
     /**
@@ -77,7 +82,14 @@ class TitleController extends Controller
      */
     public function show($id)
     {
-        //
+        $title = Title::where('title_id', $id)->firstOrFail();
+        if ($title->title_isDelete == 1) {
+            return response()->json([
+                'message' => 'Title is deleted',
+            ], 404);
+        } else {
+            return $this->sentSuccessResponse($title, "Get title success", Response::HTTP_OK);
+        }
     }
 
     /**
@@ -87,9 +99,12 @@ class TitleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateTitleRequest $request, $id)
     {
-        //
+        $title = Title::where('title_id', $id)->firstOrFail();
+        $dataUpdate = $request->all();
+        $title->update($dataUpdate);
+        return $this->sentSuccessResponse($title, "Update title success", Response::HTTP_OK);
     }
 
     /**
@@ -100,6 +115,9 @@ class TitleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $title = Title::where('title_id', $id)->firstOrFail();
+        $title->title_isDelete = 1;
+        $title->save();
+        return $this->sentSuccessResponse($title, "Delete title success", Response::HTTP_OK);
     }
 }

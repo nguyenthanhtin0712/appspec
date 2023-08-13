@@ -103,11 +103,11 @@ const initialState = {
       user_lastname: '',
       user_gender: '',
       user_birthday: null,
+      user_password: '',
       student_course: '',
       major_id: '',
       student_class: '',
-      student_code: '',
-      user_password: ''
+      student_code: ''
     }
   },
   studentFileDialog: {

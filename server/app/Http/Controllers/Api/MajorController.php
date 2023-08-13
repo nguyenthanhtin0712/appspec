@@ -59,8 +59,8 @@ class MajorController extends Controller
                 $majors = $majors->paginate(10);
             }
         }
-        $userCollection = new Collection($majors);
-        return $this->sentSuccessResponse($userCollection, "Get data success", Response::HTTP_OK);
+        $majorCollection = new Collection($majors);
+        return $this->sentSuccessResponse($majorCollection, "Get data success", Response::HTTP_OK);
     }
 
     /**
@@ -125,7 +125,7 @@ class MajorController extends Controller
         $major->major_isDelete = 1;
         $major->save();
         $majorResoure = new MajorResource($major);
-        return $this->sentSuccessResponse($majorResoure, "Delete user success", Response::HTTP_OK);
+        return $this->sentSuccessResponse($majorResoure, "Delete major success", Response::HTTP_OK);
     }
 
     public function getAllSpecialty()

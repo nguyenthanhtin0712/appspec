@@ -51,9 +51,9 @@ const StudentDialog = () => {
   const StudentSchema = Yup.object().shape({
     student_course: Yup.number().typeError('Vui lòng nhập số').required('Vui lòng nhập khóa của sinh viên!'),
     student_code: Yup.string().max(255).required('Vui lòng nhập mã số sinh viên!'),
+    major_id: Yup.string().max(255).required('Vui lòng chọn ngành!'),
     user_firstname: Yup.string().max(255).required('Họ sinh viên là bắt buộc!'),
     user_lastname: Yup.string().max(255).required('Tên sinh viên là bắt buộc!'),
-    major_id: Yup.string().max(255).required('Vui lòng chọn ngành!'),
     user_gender: Yup.string().max(255).required('Vui giới tính!'),
     user_birthday: Yup.date().typeError('Vui lòng nhập đầy đủ!').required('Thời gian bắt đầu là bắt buộc'),
     student_class: Yup.string().required('Vui lòng nhập lớp!'),

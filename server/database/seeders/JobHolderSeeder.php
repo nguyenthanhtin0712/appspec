@@ -15,11 +15,8 @@ class JobHolderSeeder extends Seeder
     public function run()
     {
         JobHolder::create([
-            'jobholder_name' => 'Nguyễn Thanh Sang',
-            'jobholder_birthday' => '1973-10-01',
-            'jobholder_gender' => '0',
-            'jobholder_email' => 'thanhsang@edu.sgu.com',
-            'jobholder_phone' => '0355374322',
+            'user_id' => '104',
+            'jobholder_code' => '111111',
             'degree_id' => '1',
             'title_id' => '1',
             'academic_field_id' => 'KTPM',
