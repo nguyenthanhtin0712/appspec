@@ -24,13 +24,13 @@ class JobHolderController extends Controller
         $sortBy = $request->input('sortBy');
         $sortOrder = $request->input('sortOrder', 'asc');
         $filters = $request->input('filters');
-        $jobholder = JobHolder::with('degree', 'title', 'academic_field')
+        $jobholder = JobHolder::with('user', 'degree', 'title', 'academic_field')
         ->where("jobholder_isDelete", "0");
         if ($query) {
-            $jobholder->where("jobholder_name", "LIKE", "%$query%");
+            $jobholder->where("jobholder_code", "LIKE", "%$query%");
         }
         if ($id) {
-            $jobholder->where('jobholder_id', $id);
+            $jobholder->where('user_id', $id);
         }
         if ($sortBy) {
             $jobholder->orderBy($sortBy, $sortOrder);

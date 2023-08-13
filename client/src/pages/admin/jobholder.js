@@ -1,30 +1,30 @@
 import React from 'react';
-import { setTeacherDialog } from 'store/reducers/teacherSlice';
+import { setJobholderDialog } from 'store/reducers/jobholderSlice';
 import { Add } from 'iconsax-react';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import TeacherTable from 'sections/admin/teacher/TeacherTable';
-import TeacherDialog from 'sections/admin/teacher/TeacherDialog';
+import JobholderTable from 'sections/admin/jobholder/JobholderTable';
+import JobholderDialog from 'sections/admin/jobholder/JobholderDialog';
 import { dispatch } from 'store/index';
 
-const TeacherPage = () => {
+const MajorPage = () => {
   const handleClickOpen = () => {
-    dispatch(setTeacherDialog({ open: true, action: 'add' }));
+    dispatch(setJobholderDialog({ open: true, action: 'add' }));
   };
 
   return (
     <>
       <Stack direction="row" justifyContent="space-between" alignItems="center" mb={1.5} flexWrap="wrap">
-        <Typography variant="h4">Quản lý giảng viên</Typography>
+        <Typography variant="h4">Quản lý viên chức</Typography>
         <Button variant="contained" onClick={handleClickOpen} startIcon={<Add />}>
-          Thêm giảng viên
+          Thêm viên chức
         </Button>
       </Stack>
-      <TeacherDialog />
-      <TeacherTable />
+      <JobholderDialog />
+      <JobholderTable />
     </>
   );
 };
 
-export default TeacherPage;
+export default MajorPage;

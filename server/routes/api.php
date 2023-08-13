@@ -85,7 +85,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::delete('/employers/{id}', [EmployerController::class, 'destroy'])->middleware('check_user_role_permission:employer.delete');
 
     // Register Specialty api
-    Route::get('register-specialties/admin', [RegisterSpecialtyController::class, 'index'])->middleware('check_user_role_permission:register_specialty.view'); 
+    Route::get('register-specialties/admin', [RegisterSpecialtyController::class, 'index'])->middleware('check_user_role_permission:register_specialty.view');
     Route::post('register-specialties/admin', [RegisterSpecialtyController::class, 'store'])->middleware('check_user_role_permission:register_specialty.create');
     Route::get('/register-specialties/admin/{id}', [RegisterSpecialtyController::class, 'show'])->middleware('check_user_role_permission:register_specialty.view');
     Route::put('/register-specialties/admin/{id}', [RegisterSpecialtyController::class, 'update'])->middleware('check_user_role_permission:register_specialty.update');
@@ -102,7 +102,13 @@ Route::middleware(['auth:api'])->group(function () {
     Route::put('titles/{id}', [TitleController::class, 'update'])->middleware('check_user_role_permission:title.update');
     Route::delete('titles/{id}', [TitleController::class, 'destroy'])->middleware('check_user_role_permission:title.delete');
 
-    
+    // Degree api
+    Route::get('degrees', [DegreeController::class, 'index'])->middleware('check_user_role_permission:degress.view');
+    Route::post('degrees', [DegreeController::class, 'store'])->middleware('check_user_role_permission:degress.create');
+    Route::get('degrees/{id}', [DegreeController::class, 'show'])->middleware('check_user_role_permission:degress.view');
+    Route::put('degrees/{id}', [DegreeController::class, 'update'])->middleware('check_user_role_permission:degress.update');
+    Route::delete('degrees/{id}', [DegreeController::class, 'destroy'])->middleware('check_user_role_permission:degress.delete');
+
     // RecruitmentPosition
     // Config page
     Route::get('configs', [DisplayConfigController::class, 'index']);
@@ -114,10 +120,6 @@ Route::get('recruitment-positions', [RecruitmentPositionController::class, 'inde
 Route::get('academic-fields', [AcademicFieldController::class, 'index']);
 
 // Degree api
-Route::get('degrees', [DegreeController::class, 'index']);
-Route::post('degrees', [DegreeController::class, 'store']);
-Route::get('degrees/{id}', [DegreeController::class, 'show']);
-Route::put('degrees/{id}', [DegreeController::class, 'update']);
-Route::delete('degrees/{id}', [DegreeController::class, 'destroy']);
+
 
 Route::get('jobholders', [JobHolderController::class, 'index']);

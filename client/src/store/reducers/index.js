@@ -12,6 +12,7 @@ import teacher from './teacherSlice';
 import employer from './employerSlice';
 import title from './titleSlice';
 import degree from './degreeSlice';
+import jobholder from './jobholderSlice';
 import register_specialty from './registerSpecialtyAdminSlice';
 import register_specialty_user from './registerSpecialtyUserSlice';
 import config_page from './configPageSlice';
@@ -29,6 +30,7 @@ const reducers = combineReducers({
   degree,
   teacher,
   employer,
+  jobholder,
   register_specialty,
   register_specialty_user,
   config_page

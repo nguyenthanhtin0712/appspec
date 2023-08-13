@@ -14,12 +14,8 @@ class CreateJobHoldersTable extends Migration
     public function up()
     {
         Schema::create('job_holders', function (Blueprint $table) {
-            $table->id('jobholder_id');
-            $table->string('jobholder_name');
-            $table->date('jobholder_birthday');
-            $table->integer('jobholder_gender');
-            $table->string('jobholder_email');
-            $table->string('jobholder_phone');
+            $table->integer('user_id');
+            $table->string('jobholder_code');
             $table->integer('degree_id');
             $table->integer('title_id');
             $table->string('academic_field_id');

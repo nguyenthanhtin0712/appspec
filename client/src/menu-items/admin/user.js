@@ -4,8 +4,8 @@ import { Home3, Profile2User, Teacher, People } from 'iconsax-react';
 const icons = {
   navigation: Home3,
   student: Profile2User,
-  teacher: Teacher,
-  people: People
+  people: People,
+  jobholder: Teacher
 };
 
 // ==============================|| MENU ITEMS - DASHBOARD ||============================== //
@@ -24,11 +24,11 @@ const user = {
       icon: icons.student
     },
     {
-      id: 'teacher',
-      title: 'Giảng viên',
+      id: 'jobholder',
+      title: 'Viên chức',
       type: 'item',
-      url: '/admin/teacher',
-      icon: icons.teacher
+      url: '/admin/jobhodler',
+      icon: icons.jobholder
     },
     {
       id: 'employer',

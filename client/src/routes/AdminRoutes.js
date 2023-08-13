@@ -18,8 +18,8 @@ const RegisterSpecialtyPageIndex = Loadable(lazy(() => import('pages/admin/regis
 const RegisterSpecialtyPageResult = Loadable(lazy(() => import('pages/admin/register-specialty/register-specialty-result')));
 const SpecialtyPage = Loadable(lazy(() => import('pages/admin/specialty')));
 const StudentPage = Loadable(lazy(() => import('pages/admin/student')));
-const TeacherPage = Loadable(lazy(() => import('pages/admin/teacher')));
 const EmployerPage = Loadable(lazy(() => import('pages/admin/employer')));
+const JobholderPage = Loadable(lazy(() => import('pages/admin/jobholder')));
 const TitlePage = Loadable(lazy(() => import('pages/admin/title')));
 const DegreePage = Loadable(lazy(() => import('pages/admin/degree')));
 const Page = Loadable(lazy(() => import('pages/admin/page/page_index')));
@@ -74,12 +74,12 @@ const AdminRoutes = {
       element: <PrivateRoute component={StudentPage} requiredPermissions={['student.view']} />
     },
     {
-      path: 'teacher',
-      element: <PrivateRoute component={TeacherPage} requiredPermissions={['teacher.view']} />
-    },
-    {
       path: 'employer',
       element: <PrivateRoute component={EmployerPage} requiredPermissions={['employer.view']} />
+    },
+    {
+      path: 'jobhodler',
+      element: <PrivateRoute component={JobholderPage} requiredPermissions={['jobholder.view']} />
     },
     {
       path: 'title',
