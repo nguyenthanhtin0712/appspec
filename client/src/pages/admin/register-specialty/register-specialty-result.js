@@ -80,6 +80,7 @@ const RegisterSpecialtyResult = () => {
               vertical: 'top',
               horizontal: 'right'
             }}
+            sx={{ mt: 1 }}
           >
             {majors.map((major) => (
               <MenuItem onClick={handleClose} key={major?.major_id}>
