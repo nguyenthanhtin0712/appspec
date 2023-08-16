@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Stack } from '@mui/material';
+import { Box, Stack, useTheme } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import MainCard from 'components/MainCard';
 import Dialog from '@mui/material/Dialog';
@@ -13,16 +13,6 @@ import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { dispatch } from 'store';
 import { getAllRegisterSpecialty, getPageConfigInfo, updateConfig } from 'store/reducers/configPageSlice';
-
-const styles = {
-  cursor: 'pointer',
-  border: '1px solid #ccc',
-  padding: '16px',
-  borderRadius: '8px',
-  '&:hover': {
-    background: '#ccc'
-  }
-};
 
 const ConfigPage = () => {
   const [open, setOpen] = useState(false);
@@ -50,10 +40,7 @@ const ConfigPage = () => {
             onClick={() => setOpen(true)}
           />
 
-          <Box sx={styles}>
-            <Typography fontSize={16}>Đăng ký thực tập</Typography>
-            <Typography color="#00000085">Đăng ký thực tập học kỳ 2, năm học 2022 - 2023</Typography>
-          </Box>
+          <BoxCofig name="Đăng ký thực tập" value="Đăng ký thực tập học kỳ 2, năm học 2022 - 2023" onClick={() => setOpen(true)} />
         </Stack>
       </MainCard>
       <SpecialtyDisplayDialog open={open} handleClose={handleClose} />
@@ -62,8 +49,22 @@ const ConfigPage = () => {
 };
 
 const BoxCofig = ({ name, value, onClick }) => {
+  const theme = useTheme();
   return (
-    <Box onClick={onClick} sx={styles}>
+    <Box
+      onClick={onClick}
+      sx={{
+        padding: 2,
+        cursor: 'pointer',
+        border: '1.5px solid',
+        borderRadius: 1.5,
+        borderColor: theme.palette.divider,
+        transition: 'all 0.2s ease',
+        '&:hover': {
+          background: theme.palette.secondary[200]
+        }
+      }}
+    >
       <Typography fontSize={16}>{name}</Typography>
       <Typography color="#00000085">{value}</Typography>
     </Box>

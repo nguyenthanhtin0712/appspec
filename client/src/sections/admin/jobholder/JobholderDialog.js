@@ -29,6 +29,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import InputField from 'components/input/InputField';
 import DatePickerField from 'components/input/DatePickerField';
 import SelectField from 'components/input/SelectField';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const gender = [
   { id: 1, name: 'Nữ' },
@@ -38,16 +39,26 @@ const gender = [
 const JobholderForm = ({ initialValues, action }) => {
   const dispatch = useDispatch();
   const { dataDegree, dataTitle, dataAcademicField } = useSelector((state) => state.jobholder);
+
   useEffect(() => {
-    dispatch(getAllDegree({}));
-    dispatch(getAllTitle({}));
-    dispatch(getAllAcademicField({}));
-  }, [dispatch, initialValues]);
+    const fetchData = async () => {
+      await Promise.all([dispatch(getAllDegree()), dispatch(getAllTitle()), dispatch(getAllAcademicField())]);
+    };
+    fetchData();
+  }, [dispatch]);
+
   const handleClose = useCallback(() => {
     dispatch(setCloseDialog());
   }, [dispatch]);
 
-  if (!dataDegree || !dataTitle || !dataAcademicField) return null;
+  if (dataDegree.length == 0 || dataTitle.length == 0 || dataAcademicField.length == 0)
+    return (
+      <>
+        <DialogContent sx={{ height: '500px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <CircularProgress />
+        </DialogContent>
+      </>
+    );
 
   return (
     <Formik
@@ -101,7 +112,7 @@ const JobholderForm = ({ initialValues, action }) => {
         <form noValidate onSubmit={handleSubmit}>
           <DialogContent>
             <Grid container spacing={3}>
-              <Grid item xs={6}>
+              <Grid item xs={12} sm={6}>
                 <Stack spacing={2}>
                   <InputField
                     id="jobholder_code"
@@ -147,6 +158,8 @@ const JobholderForm = ({ initialValues, action }) => {
                     name="user_gender"
                     error={Boolean(touched.user_gender && errors.user_gender)}
                     helperText={errors.user_gender}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
                     list={gender}
                     itemValue="id"
                     itemText="name"
@@ -163,37 +176,24 @@ const JobholderForm = ({ initialValues, action }) => {
                     helperText={errors.user_birthday}
                     fullWidth
                   />
-                  <InputField
-                    id="user_password"
-                    type="password"
-                    value={values.user_password}
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    placeholder="Nhập mật khẩu"
-                    label="Mật khẩu"
-                    fullWidth
-                    disabled={action == 'update' ? true : false}
-                    error={Boolean(touched.user_password && errors.user_password)}
-                    helperText={errors.user_password}
-                    mb="10px"
-                  />
                 </Stack>
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={12} sm={6}>
                 <Stack spacing={2}>
                   <SelectField
                     id="academic_field_id"
+                    name="academic_field_id"
                     labelId="academic_field_id_label"
                     label="Bộ môn"
                     value={values.academic_field_id}
-                    name="academic_field_id"
                     error={Boolean(touched.academic_field_id && errors.academic_field_id)}
                     helperText={errors.academic_field_id}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
                     list={dataAcademicField}
                     itemValue="academic_field_id"
                     itemText="academic_field_name"
                   />
-
                   <SelectField
                     id="degree_id"
                     labelId="degree_id_label"
@@ -202,6 +202,8 @@ const JobholderForm = ({ initialValues, action }) => {
                     name="degree_id"
                     error={Boolean(touched.degree_id && errors.degree_id)}
                     helperText={errors.degree_id}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
                     list={dataDegree}
                     itemValue="degree_id"
                     itemText="degree_name"
@@ -215,18 +217,34 @@ const JobholderForm = ({ initialValues, action }) => {
                     name="title_id"
                     error={Boolean(touched.title_id && errors.title_id)}
                     helperText={errors.title_id}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
                     list={dataTitle}
                     itemValue="title_id"
                     itemText="title_name"
                   />
+
+                  <InputField
+                    id="user_password"
+                    type="password"
+                    value={values.user_password}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    placeholder="Nhập mật khẩu"
+                    label="Mật khẩu"
+                    fullWidth
+                    disabled={action == 'update' ? true : false}
+                    error={Boolean(touched.user_password && errors.user_password)}
+                    helperText={errors.user_password}
+                  />
                   <Box mt={2}>
-                    <label htmlFor="jobholder_isLeader">Trưởng phòng</label>
+                    <label htmlFor="jobholder_isLeader">Trưởng bộ môn</label>
                     <Switch
                       id="jobholder_isLeader"
                       name="jobholder_isLeader"
-                      value={values.jobholder_isLeader}
-                      checked={values.jobholder_isLeader === 1}
-                      onChange={handleChange}
+                      checked={values.jobholder_isLeader == 1}
+                      onBlur={handleBlur}
+                      onChange={(e) => setFieldValue('jobholder_isLeader', e.target.checked)}
                       inputProps={{ 'aria-label': 'Switch A' }}
                     />
                   </Box>

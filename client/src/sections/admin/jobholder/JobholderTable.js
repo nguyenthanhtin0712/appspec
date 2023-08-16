@@ -1,7 +1,7 @@
 import React, { memo, useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useTheme } from '@mui/material/styles';
-import { Edit, Trash } from 'iconsax-react';
+import { Edit, ExportSquare, Trash } from 'iconsax-react';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import { MaterialReactTable } from 'material-react-table';
@@ -17,9 +17,9 @@ import {
 import ConfirmDialog from 'components/ConfirmDialog';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import Tooltip from '@mui/material/Tooltip';
 import { toast } from 'react-toastify';
 import { dispatch } from 'store/index';
-import { Export } from 'iconsax-react';
 import { utils, writeFileXLSX } from 'xlsx';
 
 const JobholderTable = () => {
@@ -63,7 +63,7 @@ const JobholderTable = () => {
       {
         accessorKey: 'jobholder_code',
         header: 'MaGV',
-        size: 10
+        size: 5
       },
       {
         accessorKey: 'user.user_firstname',
@@ -75,24 +75,19 @@ const JobholderTable = () => {
         size: 5
       },
       {
-        accessorKey: 'user.user_gender',
-        header: 'Giới tính',
-        size: 5,
-        Cell: ({ cell }) => {
-          return <div>{cell?.row?.original?.user?.user_gender == 0 ? 'Nam' : 'Nữ'}</div>;
-        }
-      },
-      {
         accessorKey: 'degree.degree_name',
-        header: 'Học vị'
+        header: 'Học vị',
+        size: 5
       },
       {
         accessorKey: 'title.title_name',
-        header: 'Chức vụ'
+        header: 'Chức vụ',
+        size: 10
       },
       {
         accessorKey: 'academic_field.academic_field_name',
-        header: 'Bộ môn'
+        header: 'Bộ môn',
+        size: 20
       }
     ],
     []
@@ -104,7 +99,6 @@ const JobholderTable = () => {
   };
 
   const handleUpdate = (data) => {
-    console.log(data);
     const value = {
       user_firstname: data?.user?.user_firstname,
       user_lastname: data?.user?.user_lastname,
@@ -117,7 +111,6 @@ const JobholderTable = () => {
       academic_field_id: data?.academic_field_id || '',
       jobholder_isLeader: data?.jobholder_isLeader
     };
-    console.log('value', value);
     dispatch(setJobholderDialog({ open: true, action: 'update', initValue: value }));
   };
 
@@ -127,7 +120,6 @@ const JobholderTable = () => {
         columns={columns}
         data={data}
         getRowId={(row) => row.jobholder_code}
-        enableRowNumbers
         manualFiltering
         manualPagination
         manualSorting
@@ -150,11 +142,7 @@ const JobholderTable = () => {
         positionActionsColumn="last"
         renderRowActions={({ row }) => (
           <Box sx={{ display: 'flex' }}>
-            <IconButton
-              onClick={() => {
-                handleUpdate(row.original);
-              }}
-            >
+            <IconButton onClick={() => handleUpdate(row.original)}>
               <Edit />
             </IconButton>
             <IconButton color="error" onClick={() => handleDelete(row.original.jobholder_code)}>
@@ -178,9 +166,11 @@ const JobholderTable = () => {
           })
         }}
         renderTopToolbarCustomActions={() => (
-          <Button color="success" onClick={handleExportData} startIcon={<Export />} variant="contained">
-            Xuất Excel
-          </Button>
+          <Tooltip title="Xuất Excel">
+            <IconButton color="success" onClick={handleExportData} variant="contained">
+              <ExportSquare variant="Bulk" />
+            </IconButton>
+          </Tooltip>
         )}
       />
 

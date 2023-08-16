@@ -36,7 +36,7 @@ export const fetchData = createAsyncThunk('jobholder/fetchData', async (params, 
   }
 });
 
-export const getAllDegree = createAsyncThunk('jobholder/getAllDegree', async ({ rejectWithValue }) => {
+export const getAllDegree = createAsyncThunk('jobholder/getAllDegree', async () => {
   try {
     const response = await axios.get(`${API_BASE_URL}/degrees?all=true`);
     return response.data;
@@ -50,31 +50,23 @@ export const getAllDegree = createAsyncThunk('jobholder/getAllDegree', async ({ 
   }
 });
 
-export const getAllTitle = createAsyncThunk('jobholder/getAllTitle', async ({ rejectWithValue }) => {
+export const getAllTitle = createAsyncThunk('jobholder/getAllTitle', async () => {
   try {
     const response = await axios.get(`${API_BASE_URL}/titles?all=true`);
     return response.data;
   } catch (error) {
-    if (error.response && error.response.data && error.response.data.errors) {
-      return rejectWithValue(error.response.data);
-    } else {
-      console.error(error);
-      throw error;
-    }
+    console.error(error);
+    throw error;
   }
 });
 
-export const getAllAcademicField = createAsyncThunk('jobholder/getAllAcademicField', async ({ rejectWithValue }) => {
+export const getAllAcademicField = createAsyncThunk('jobholder/getAllAcademicField', async () => {
   try {
     const response = await axios.get(`${API_BASE_URL}/academic-fields?all=true`);
     return response.data;
   } catch (error) {
-    if (error.response && error.response.data && error.response.data.errors) {
-      return rejectWithValue(error.response.data);
-    } else {
-      console.error(error);
-      throw error;
-    }
+    console.error(error);
+    throw error;
   }
 });
 
