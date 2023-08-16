@@ -120,7 +120,10 @@ Route::get('register-specialties', [RegisterSpecialtyController::class, 'getRegi
 Route::get('recruitment-positions', [RecruitmentPositionController::class, 'index']);
 Route::get('academic-fields', [AcademicFieldController::class, 'index']);
 
-// Degree api
 
+// Degree jobholder
 
 Route::get('jobholders', [JobHolderController::class, 'index']);
+Route::post('jobholders', [JobHolderController::class, 'store']);
+Route::get('jobholders/{id}', [JobHolderController::class, 'show']);
+Route::delete('jobholders/{id}', [JobHolderController::class, 'destroy']);

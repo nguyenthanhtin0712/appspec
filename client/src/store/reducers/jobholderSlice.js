@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from '../../api/axios';
 import { API_BASE_URL } from 'config';
+import { formatDateTimeSubmit } from 'utils/formatDateTime';
 
 // Async Thunk Actions
 export const fetchData = createAsyncThunk('jobholder/fetchData', async (params, { rejectWithValue }) => {
@@ -79,6 +80,7 @@ export const getAllAcademicField = createAsyncThunk('jobholder/getAllAcademicFie
 
 export const createJobholder = createAsyncThunk('jobholder/createJobholder', async (jobholder, { rejectWithValue }) => {
   try {
+    jobholder.user_birthday = formatDateTimeSubmit(jobholder.user_birthday);
     const response = await axios.post(`${API_BASE_URL}/jobholders`, jobholder);
     return response.data;
   } catch (error) {
@@ -212,8 +214,8 @@ const jobholder = createSlice({
         }
       })
       .addCase(deleteJobholder.fulfilled, (state, action) => {
-        const deletedJobholderId = action.payload.data.jobholder_id;
-        state.data = state.data.filter((jobholder) => jobholder.jobholder_id !== deletedJobholderId);
+        const deletedJobholderId = action.payload.data.jobholder_code;
+        state.data = state.data.filter((jobholder) => jobholder.jobholder_code !== deletedJobholderId);
       });
   }
 });

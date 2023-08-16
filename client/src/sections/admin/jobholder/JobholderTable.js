@@ -104,8 +104,21 @@ const JobholderTable = () => {
   };
 
   const handleUpdate = (data) => {
-    const jobholder = { jobholder_id: data.jobholder_id, jobholder_name: data.jobholder_name };
-    dispatch(setJobholderDialog({ open: true, action: 'update', initValue: jobholder }));
+    console.log(data);
+    const value = {
+      user_firstname: data?.user?.user_firstname,
+      user_lastname: data?.user?.user_lastname,
+      user_gender: data?.user?.user_gender,
+      user_birthday: null,
+      user_password: 'password',
+      jobholder_code: data?.jobholder_code,
+      degree_id: data?.degree_id || '',
+      title_id: data?.title_id || '',
+      academic_field_id: data?.academic_field_id || '',
+      jobholder_isLeader: data?.jobholder_isLeader
+    };
+    console.log('value', value);
+    dispatch(setJobholderDialog({ open: true, action: 'update', initValue: value }));
   };
 
   return (
@@ -144,7 +157,7 @@ const JobholderTable = () => {
             >
               <Edit />
             </IconButton>
-            <IconButton color="error" onClick={() => handleDelete(row.id)}>
+            <IconButton color="error" onClick={() => handleDelete(row.original.jobholder_code)}>
               <Trash />
             </IconButton>
           </Box>
