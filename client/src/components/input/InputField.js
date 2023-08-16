@@ -10,6 +10,7 @@ const InputField = ({
   label,
   value,
   name,
+  disabled = false,
   onBlur,
   onChange,
   placeholder,
@@ -26,6 +27,7 @@ const InputField = ({
       type={type}
       value={value}
       name={name ? name : id}
+      disabled={disabled}
       onBlur={onBlur}
       onChange={onChange}
       placeholder={placeholder}

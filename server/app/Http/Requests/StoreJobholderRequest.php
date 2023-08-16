@@ -28,15 +28,15 @@ class StoreJobholderRequest extends FormRequest
     {
         return [
             "user_firstname" => "required",
-          "user_lastname" => "required",
-          "user_gender" => "required",
-          "user_birthday" => "required",
-          "user_password" => "required",
-          "jobholder_code" => "required",
-          "degree_id" => "required",
-          "title_id" => "required",
-          "academic_field_id" => "required",
-          "jobholder_isLeader" => "required"
+            "user_lastname" => "required",
+            "user_gender" => "required",
+            "user_birthday" => "required",
+            "user_password" => "required",
+            "jobholder_code" => "required|unique:job_holders,jobholder_code",
+            "degree_id" => "required",
+            "title_id" => "required",
+            "academic_field_id" => "required",
+            "jobholder_isLeader" => "required"
         ];
     }
 

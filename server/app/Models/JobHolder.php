@@ -21,6 +21,7 @@ class JobHolder extends Model
         'degree_id',
         'title_id',
         'academic_field_id',
+        'jobholder_isLeader',
         'jobholder_isDelete'
     ];
 

@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { memo, useMemo, useCallback, useEffect } from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -20,13 +21,12 @@ import {
   getAllTitle,
   getAllAcademicField
 } from 'store/reducers/jobholderSlice';
-import { Select, MenuItem, InputLabel } from '@mui/material';
+import { Select, MenuItem, InputLabel, Switch, Box } from '@mui/material';
 import Stack from '@mui/material/Stack';
-import OutlinedInput from '@mui/material/OutlinedInput';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import Switch from '@mui/material/Switch';
+import InputField from 'components/input/InputField';
 
 const JobholderForm = ({ initialValues, action }) => {
   const dispatch = useDispatch();
@@ -35,7 +35,7 @@ const JobholderForm = ({ initialValues, action }) => {
     dispatch(getAllDegree({}));
     dispatch(getAllTitle({}));
     dispatch(getAllAcademicField({}));
-  }, [dispatch]);
+  }, [dispatch, initialValues]);
   const handleClose = useCallback(() => {
     dispatch(
       setJobholderDialog({
@@ -71,6 +71,8 @@ const JobholderForm = ({ initialValues, action }) => {
         academic_field_id: Yup.string().max(255).required('Bộ môn là bắt buộc!')
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
+        values.jobholder_isLeader = values.jobholder_isLeader ? 1 : 0;
+        console.log('values', values);
         try {
           const actionType = action === 'update' ? updateJobholder : createJobholder;
           const result = await dispatch(actionType(values));
@@ -92,49 +94,61 @@ const JobholderForm = ({ initialValues, action }) => {
         }
       }}
     >
-      {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values, setFieldTouched }) => (
+      {({
+        errors,
+        handleBlur,
+        handleChange,
+        handleSubmit,
+        isSubmitting,
+        touched,
+        values,
+        setFieldTouched,
+        setFieldValue,
+        setFieldError
+      }) => (
         <form noValidate onSubmit={handleSubmit}>
           <DialogContent>
             <Grid container spacing={3}>
               <Grid item xs={6}>
-                <Stack spacing={1} sx={{ mb: '10px' }}>
-                  <InputLabel htmlFor="user_firstname">Họ</InputLabel>
-                  <OutlinedInput
-                    id="user_firstname"
-                    type="text"
-                    value={values.user_firstname}
-                    name="user_firstname"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    placeholder="Nhập họ"
-                    fullWidth
-                    error={Boolean(touched.user_firstname && errors.user_firstname)}
-                  />
-                  {touched.user_firstname && errors.user_firstname && (
-                    <FormHelperText error id="standard-weight-helper-text-user_firstname">
-                      {errors.user_firstname}
-                    </FormHelperText>
-                  )}
-                </Stack>
-                <Stack spacing={1} sx={{ mb: '10px' }}>
-                  <InputLabel htmlFor="user_lastname">Tên</InputLabel>
-                  <OutlinedInput
-                    id="user_lastname"
-                    type="text"
-                    value={values.user_lastname}
-                    name="user_lastname"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    placeholder="Nhập tên"
-                    fullWidth
-                    error={Boolean(touched.user_lastname && errors.user_lastname)}
-                  />
-                  {touched.user_lastname && errors.user_lastname && (
-                    <FormHelperText error id="standard-weight-helper-text-user_lastname">
-                      {errors.user_lastname}
-                    </FormHelperText>
-                  )}
-                </Stack>
+                <InputField
+                  id="jobholder_code"
+                  type="text"
+                  value={values.jobholder_code}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  placeholder="Nhập mã viên chức"
+                  label="Mã viên chức"
+                  fullWidth
+                  error={Boolean(touched.jobholder_code && errors.jobholder_code)}
+                  helperText={errors.jobholder_code}
+                  mb="10px"
+                />
+                <InputField
+                  id="user_firstname"
+                  type="text"
+                  value={values.user_firstname}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  placeholder="Nhập họ"
+                  label="Họ"
+                  fullWidth
+                  error={Boolean(touched.user_firstname && errors.user_firstname)}
+                  helperText={errors.user_firstname}
+                  mb="10px"
+                />
+                <InputField
+                  id="user_lastname"
+                  type="text"
+                  value={values.user_lastname}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  placeholder="Nhập tên"
+                  label="Tên"
+                  fullWidth
+                  error={Boolean(touched.user_lastname && errors.user_lastname)}
+                  helperText={errors.user_lastname}
+                  mb="10px"
+                />
                 <Stack spacing={1} sx={{ mb: '10px' }}>
                   <InputLabel htmlFor="user_gender" sx={{ mb: '5px' }}>
                     Chọn giới tính
@@ -157,7 +171,7 @@ const JobholderForm = ({ initialValues, action }) => {
                     <MenuItem value="0">Nam</MenuItem>
                     <MenuItem value="1">Nữ</MenuItem>
                   </Select>
-                  {Boolean(touched.user_gender && errors.user_gender) && <FormHelperText error>{errors.jobholder_id}</FormHelperText>}
+                  {Boolean(touched.user_gender && errors.user_gender) && <FormHelperText error>{errors.user_gender}</FormHelperText>}
                 </Stack>
                 <Stack spacing={1} sx={{ mb: '10px' }}>
                   <InputLabel htmlFor="user_birthday">Ngày sinh</InputLabel>
@@ -172,26 +186,20 @@ const JobholderForm = ({ initialValues, action }) => {
                   />
                   {touched.user_birthday && errors.user_birthday && <FormHelperText error>{errors.user_birthday}</FormHelperText>}
                 </Stack>
-                <Stack spacing={1} sx={{ mb: '10px' }}>
-                  <InputLabel htmlFor="user_password">Mật khẩu</InputLabel>
-                  <OutlinedInput
-                    id="user_password"
-                    type="text"
-                    value={values.user_password}
-                    name="user_password"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    placeholder="Mật khẩu"
-                    autoComplete="off"
-                    fullWidth
-                    error={Boolean(touched.user_password && errors.user_password)}
-                  />
-                  {touched.user_password && errors.user_password && (
-                    <FormHelperText error id="standard-weight-helper-text-user_password">
-                      {errors.user_password}
-                    </FormHelperText>
-                  )}
-                </Stack>
+                <InputField
+                  id="user_password"
+                  type="password"
+                  value={values.user_password}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  placeholder="Nhập mật khẩu"
+                  label="Mật khẩu"
+                  fullWidth
+                  disabled={action == 'update' ? true : false}
+                  error={Boolean(touched.user_password && errors.user_password)}
+                  helperText={errors.user_password}
+                  mb="10px"
+                />
               </Grid>
               <Grid item xs={6}>
                 <Stack spacing={1} sx={{ mb: '10px' }}>
@@ -213,8 +221,8 @@ const JobholderForm = ({ initialValues, action }) => {
                     </MenuItem>
                     {dataAcademicField?.length > 0 &&
                       dataAcademicField?.map((item) => (
-                        <MenuItem key={item.academic_field_id} value={item.academic_field_id}>
-                          {item.academic_field_name}
+                        <MenuItem key={item?.academic_field_id} value={item?.academic_field_id}>
+                          {item?.academic_field_name}
                         </MenuItem>
                       ))}
                   </Select>
@@ -241,8 +249,8 @@ const JobholderForm = ({ initialValues, action }) => {
                     </MenuItem>
                     {dataDegree?.length > 0 &&
                       dataDegree?.map((item) => (
-                        <MenuItem key={item.degree_id} value={item.degree_id}>
-                          {item.degree_name}
+                        <MenuItem key={item?.degree_id} value={item?.degree_id}>
+                          {item?.degree_name}
                         </MenuItem>
                       ))}
                   </Select>
@@ -267,17 +275,24 @@ const JobholderForm = ({ initialValues, action }) => {
                     </MenuItem>
                     {dataTitle?.length > 0 &&
                       dataTitle?.map((item) => (
-                        <MenuItem key={item.title_id} value={item.title_id}>
-                          {item.title_name}
+                        <MenuItem key={item?.title_id} value={item?.title_id}>
+                          {item?.title_name}
                         </MenuItem>
                       ))}
                   </Select>
                   {Boolean(touched.title_id && errors.title_id) && <FormHelperText error>{errors.title_id}</FormHelperText>}
                 </Stack>
-                <Stack spacing={1} sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', mb: '10px' }}>
-                  <InputLabel htmlFor="jobholder_isLeader">Trưởng bộ môn</InputLabel>
-                  <Switch checked={values.jobholder_isLeader} id="jobholder_isLeader" name="jobholder_isLeader" onChange={handleChange} />
-                </Stack>
+                <Box mt={2}>
+                  <label htmlFor="jobholder_isLeader">Trưởng phòng</label>
+                  <Switch
+                    id="jobholder_isLeader"
+                    name="jobholder_isLeader"
+                    value={values.jobholder_isLeader}
+                    checked={values.jobholder_isLeader === 1}
+                    onChange={handleChange}
+                    inputProps={{ 'aria-label': 'Switch A' }}
+                  />
+                </Box>
               </Grid>
               {errors.submit && (
                 <Grid item xs={12}>
@@ -319,7 +334,7 @@ const JobholderDialog = () => {
           degree_id: '',
           title_id: '',
           academic_field_id: '',
-          jobholder_isLeader: ''
+          jobholder_isLeader: false
         }
       })
     );
