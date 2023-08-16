@@ -432,6 +432,12 @@ class RegisterSpecialtyController extends Controller
                 })
             ];
         })->values();
-        return $this->sentSuccessResponse($formattedData, "Get data success", Response::HTTP_OK);
+        $registerSpecialty = RegisterSpecialty::select('register_specialty_id', 'register_specialty_name')
+            ->find($register_specialty_id);
+        $result = [
+            ...$registerSpecialty->toArray(),
+            'specialties' => $formattedData
+        ];
+        return $this->sentSuccessResponse($result, "Get data success", Response::HTTP_OK);
     }
 }

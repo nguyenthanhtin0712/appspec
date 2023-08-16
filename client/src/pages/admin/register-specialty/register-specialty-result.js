@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Typography from '@mui/material/Typography';
 import { dispatch } from 'store/index';
 import { getRegistrationInfoById, setMajorId, setRegisterSpecialtyId } from 'store/reducers/registerSpecialtyUserSlice';
@@ -11,18 +11,25 @@ import { ArrowRight, TableDocument } from 'iconsax-react';
 import { setColumnFilters } from 'store/reducers/registerSpecialtyUserSlice';
 import { useTheme } from '@mui/material/styles';
 import { formatDateTimeDisplay } from 'utils/formatDateTime';
+import { ExportResultRegisterSpecialty } from 'export-excel/export-result-register-specialty';
 const RegisterSpecialtyResult = () => {
   const { Id } = useParams();
   const theme = useTheme();
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
   const { majors, majorId, userRegistrationPeriod } = useSelector((state) => state.register_specialty_user);
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleExport = (major_id) => {
+    ExportResultRegisterSpecialty(userRegistrationPeriod.register_specialty_id, major_id);
+    handleClose();
   };
 
   useEffect(() => {
@@ -83,7 +90,7 @@ const RegisterSpecialtyResult = () => {
             sx={{ mt: 1 }}
           >
             {majors.map((major) => (
-              <MenuItem onClick={handleClose} key={major?.major_id}>
+              <MenuItem onClick={() => handleExport(major?.major_id)} key={major?.major_id}>
                 {major?.major_name}
               </MenuItem>
             ))}

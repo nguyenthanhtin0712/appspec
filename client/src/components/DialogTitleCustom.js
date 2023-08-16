@@ -2,8 +2,7 @@ import React from 'react';
 import DialogTitle from '@mui/material/DialogTitle';
 import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
-
-import { CloseCircle } from 'iconsax-react';
+import CloseIcon from '@mui/icons-material/Close';
 
 const DialogTitleCustom = ({ onClose, children, ...other }) => {
   return (
@@ -18,7 +17,7 @@ const DialogTitleCustom = ({ onClose, children, ...other }) => {
               color: (theme) => theme.palette.grey[500]
             }}
           >
-            <CloseCircle variant="Bulk" size="50" />
+            <CloseIcon />
           </IconButton>
         ) : null}
       </Stack>
