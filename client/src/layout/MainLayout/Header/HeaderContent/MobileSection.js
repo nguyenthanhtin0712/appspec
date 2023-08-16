@@ -11,7 +11,7 @@ import IconButton from 'components/@extended/IconButton';
 import Transitions from 'components/@extended/Transitions';
 
 // assets
-import { MoreSquare } from 'iconsax-react';
+import { More } from 'iconsax-react';
 
 // ==============================|| HEADER CONTENT - MOBILE ||============================== //
 
@@ -59,7 +59,7 @@ const MobileSection = () => {
           size="large"
           sx={{ color: 'secondary.main', bgcolor: open ? iconBackColorOpen : iconBackColor, p: 1 }}
         >
-          <MoreSquare size={28} variant="Bulk" style={{ transform: 'rotate(90deg)' }} />
+          <More size={28} style={{ transform: 'rotate(90deg)' }} />
         </IconButton>
       </Box>
       <Popper

@@ -10,6 +10,7 @@ use App\Http\Resources\RegisterSpecialtyResource;
 use App\Models\DisplayConfig;
 use App\Models\RegisterSpecialty;
 use App\Models\RegisterSpecialtyDetail;
+use App\Models\Specialty;
 use App\Models\Student;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -395,7 +396,7 @@ class RegisterSpecialtyController extends Controller
         return $this->sentSuccessResponse($dataResult, "Get data success", Response::HTTP_OK);
     }
 
-    public function getStudentOfSpecialty(Request $request)
+    public function getStudentOfSpecialtys(Request $request)
     {
         $register_specialty_id = $request->input('register_specialty_id');
         $specialty_id = $request->input('specialty_id');
@@ -405,5 +406,32 @@ class RegisterSpecialtyController extends Controller
             ->where('students.specialty_id', $specialty_id)
             ->get();
         return $this->sentSuccessResponse($students, "Get data success", Response::HTTP_OK);
+    }
+
+    public function getStudentOfSpecialty(Request $request)
+    {
+        $register_specialty_id = $request->input('register_specialty_id');
+        $major_id = $request->input('major_id');
+        $students = Student::select('students.student_code', 'users.user_firstname', 'users.user_lastname', 'students.specialty_id')
+            ->leftJoin('users', 'students.user_id', '=', 'users.user_id')
+            ->where('students.register_specialty_id', $register_specialty_id)
+            ->where('students.major_id', $major_id)
+            ->with('specialty')
+            ->get();
+        $formattedData = $students->groupBy('specialty_id')->map(function ($studentsGroup) {
+            $specialty = $studentsGroup->first()->specialty;
+            return [
+                "specialty_id" => $specialty->specialty_id ?? "CDK",
+                "specialty_name" => $specialty->specialty_name ?? "Chưa đăng ký",
+                "students" => $studentsGroup->map(function ($student) {
+                    return [
+                        "student_code" => $student->student_code,
+                        "user_firstname" => $student->user_firstname,
+                        "user_lastname" => $student->user_lastname,
+                    ];
+                })
+            ];
+        })->values();
+        return $this->sentSuccessResponse($formattedData, "Get data success", Response::HTTP_OK);
     }
 }
