@@ -5,8 +5,11 @@ import { useEffect } from 'react';
 import { getUserDataFromToken } from 'store/reducers/authSlice';
 import Cookies from 'js-cookie';
 import { dispatch } from 'store/index';
+import LoadingScreen from 'components/LoadingScreen';
+import { useSelector } from 'react-redux';
 
 const App = () => {
+  const isLoaded = useSelector((state) => state.auth.isLoaded);
   useEffect(() => {
     const fetchUser = async () => {
       if (Cookies.get('token')) {
@@ -15,6 +18,8 @@ const App = () => {
     };
     fetchUser();
   }, []);
+
+  if (!isLoaded) return <LoadingScreen></LoadingScreen>;
 
   return (
     <ThemeCustomization>

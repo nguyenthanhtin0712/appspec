@@ -173,6 +173,21 @@ const jobholder = createSlice({
     },
     setJobholderDialog: (state, action) => {
       state.jobholderDialog = { ...state.jobholderDialog, ...action.payload };
+    },
+    setCloseDialog: (state) => {
+      state.jobholderDialog.open = false;
+      state.jobholderDialog.initValue = {
+        user_firstname: '',
+        user_lastname: '',
+        user_gender: '',
+        user_birthday: null,
+        user_password: '',
+        jobholder_code: '',
+        degree_id: '',
+        title_id: '',
+        academic_field_id: '',
+        jobholder_isLeader: false
+      };
     }
   },
   extraReducers: (builder) => {
@@ -220,6 +235,6 @@ const jobholder = createSlice({
   }
 });
 
-export const { setColumnFilters, setGlobalFilter, setSorting, setPagination, setJobholderDialog } = jobholder.actions;
+export const { setColumnFilters, setGlobalFilter, setSorting, setPagination, setJobholderDialog, setCloseDialog } = jobholder.actions;
 
 export default jobholder.reducer;

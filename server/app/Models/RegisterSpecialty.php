@@ -21,6 +21,7 @@ class RegisterSpecialty extends Model
     protected $attributes = [
         'register_specialty_isDelete' => 0,
     ];
+    protected $hidden = ['created_at', 'updated_at'];
 
     public function specialty()
     {

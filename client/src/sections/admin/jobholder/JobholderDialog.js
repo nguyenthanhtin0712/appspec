@@ -15,18 +15,25 @@ import DialogTitleCustom from 'components/DialogTitleCustom';
 import { dispatch } from 'store/index';
 import {
   createJobholder,
-  setJobholderDialog,
   updateJobholder,
   getAllDegree,
   getAllTitle,
-  getAllAcademicField
+  getAllAcademicField,
+  setCloseDialog
 } from 'store/reducers/jobholderSlice';
-import { Select, MenuItem, InputLabel, Switch, Box } from '@mui/material';
 import Stack from '@mui/material/Stack';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import Switch from '@mui/material/Switch';
+import Box from '@mui/material/Box';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import InputField from 'components/input/InputField';
+import DatePickerField from 'components/input/DatePickerField';
+import SelectField from 'components/input/SelectField';
+
+const gender = [
+  { id: 1, name: 'Nữ' },
+  { id: 0, name: 'Nam' }
+];
 
 const JobholderForm = ({ initialValues, action }) => {
   const dispatch = useDispatch();
@@ -37,24 +44,10 @@ const JobholderForm = ({ initialValues, action }) => {
     dispatch(getAllAcademicField({}));
   }, [dispatch, initialValues]);
   const handleClose = useCallback(() => {
-    dispatch(
-      setJobholderDialog({
-        open: false,
-        initValue: {
-          user_firstname: '',
-          user_lastname: '',
-          user_gender: '',
-          user_birthday: null,
-          user_password: '',
-          jobholder_code: '',
-          degree_id: '',
-          title_id: '',
-          academic_field_id: '',
-          jobholder_isLeader: false
-        }
-      })
-    );
+    dispatch(setCloseDialog());
   }, [dispatch]);
+
+  if (!dataDegree || !dataTitle || !dataAcademicField) return null;
 
   return (
     <Formik
@@ -72,7 +65,6 @@ const JobholderForm = ({ initialValues, action }) => {
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
         values.jobholder_isLeader = values.jobholder_isLeader ? 1 : 0;
-        console.log('values', values);
         try {
           const actionType = action === 'update' ? updateJobholder : createJobholder;
           const result = await dispatch(actionType(values));
@@ -110,189 +102,135 @@ const JobholderForm = ({ initialValues, action }) => {
           <DialogContent>
             <Grid container spacing={3}>
               <Grid item xs={6}>
-                <InputField
-                  id="jobholder_code"
-                  type="text"
-                  value={values.jobholder_code}
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  placeholder="Nhập mã viên chức"
-                  label="Mã viên chức"
-                  fullWidth
-                  error={Boolean(touched.jobholder_code && errors.jobholder_code)}
-                  helperText={errors.jobholder_code}
-                  mb="10px"
-                />
-                <InputField
-                  id="user_firstname"
-                  type="text"
-                  value={values.user_firstname}
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  placeholder="Nhập họ"
-                  label="Họ"
-                  fullWidth
-                  error={Boolean(touched.user_firstname && errors.user_firstname)}
-                  helperText={errors.user_firstname}
-                  mb="10px"
-                />
-                <InputField
-                  id="user_lastname"
-                  type="text"
-                  value={values.user_lastname}
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  placeholder="Nhập tên"
-                  label="Tên"
-                  fullWidth
-                  error={Boolean(touched.user_lastname && errors.user_lastname)}
-                  helperText={errors.user_lastname}
-                  mb="10px"
-                />
-                <Stack spacing={1} sx={{ mb: '10px' }}>
-                  <InputLabel htmlFor="user_gender" sx={{ mb: '5px' }}>
-                    Chọn giới tính
-                  </InputLabel>
-                  <Select
-                    labelId="user_gender"
-                    id="user_gender"
-                    name="user_gender"
-                    value={values.user_gender}
-                    onChange={handleChange}
+                <Stack spacing={2}>
+                  <InputField
+                    id="jobholder_code"
+                    type="text"
+                    value={values.jobholder_code}
                     onBlur={handleBlur}
+                    onChange={handleChange}
+                    placeholder="Nhập mã viên chức"
+                    label="Mã viên chức"
                     fullWidth
-                    displayEmpty
-                    inputProps={{ 'aria-label': 'Without label' }}
+                    error={Boolean(touched.jobholder_code && errors.jobholder_code)}
+                    helperText={errors.jobholder_code}
+                  />
+                  <InputField
+                    id="user_firstname"
+                    type="text"
+                    value={values.user_firstname}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    placeholder="Nhập họ"
+                    label="Họ"
+                    fullWidth
+                    error={Boolean(touched.user_firstname && errors.user_firstname)}
+                    helperText={errors.user_firstname}
+                  />
+                  <InputField
+                    id="user_lastname"
+                    type="text"
+                    value={values.user_lastname}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    placeholder="Nhập tên"
+                    label="Tên"
+                    fullWidth
+                    error={Boolean(touched.user_lastname && errors.user_lastname)}
+                    helperText={errors.user_lastname}
+                  />
+                  <SelectField
+                    id="user_gender"
+                    labelId="user_gender_label"
+                    label="Giới tính"
+                    value={values.user_gender}
+                    name="user_gender"
                     error={Boolean(touched.user_gender && errors.user_gender)}
-                  >
-                    <MenuItem value="" sx={{ color: 'text.secondary' }}>
-                      Chọn giới tính
-                    </MenuItem>
-                    <MenuItem value="0">Nam</MenuItem>
-                    <MenuItem value="1">Nữ</MenuItem>
-                  </Select>
-                  {Boolean(touched.user_gender && errors.user_gender) && <FormHelperText error>{errors.user_gender}</FormHelperText>}
-                </Stack>
-                <Stack spacing={1} sx={{ mb: '10px' }}>
-                  <InputLabel htmlFor="user_birthday">Ngày sinh</InputLabel>
-                  <DatePicker
+                    helperText={errors.user_gender}
+                    list={gender}
+                    itemValue="id"
+                    itemText="name"
+                  />
+
+                  <DatePickerField
+                    label="Ngày sinh"
                     id="user_birthday"
-                    onChange={(value) => setFieldValue('user_birthday', value)}
-                    onClose={() => setFieldTouched('user_birthday', true)}
+                    setFieldTouched={setFieldTouched}
+                    setFieldValue={setFieldValue}
+                    setFieldError={setFieldError}
+                    error={!!(touched.user_birthday && errors.user_birthday)}
                     value={values.user_birthday}
-                    error={touched.user_birthday && errors.user_birthday}
-                    onError={(newError) => setFieldError('user_birthday', newError)}
+                    helperText={errors.user_birthday}
                     fullWidth
                   />
-                  {touched.user_birthday && errors.user_birthday && <FormHelperText error>{errors.user_birthday}</FormHelperText>}
+                  <InputField
+                    id="user_password"
+                    type="password"
+                    value={values.user_password}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    placeholder="Nhập mật khẩu"
+                    label="Mật khẩu"
+                    fullWidth
+                    disabled={action == 'update' ? true : false}
+                    error={Boolean(touched.user_password && errors.user_password)}
+                    helperText={errors.user_password}
+                    mb="10px"
+                  />
                 </Stack>
-                <InputField
-                  id="user_password"
-                  type="password"
-                  value={values.user_password}
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  placeholder="Nhập mật khẩu"
-                  label="Mật khẩu"
-                  fullWidth
-                  disabled={action == 'update' ? true : false}
-                  error={Boolean(touched.user_password && errors.user_password)}
-                  helperText={errors.user_password}
-                  mb="10px"
-                />
               </Grid>
               <Grid item xs={6}>
-                <Stack spacing={1} sx={{ mb: '10px' }}>
-                  <InputLabel htmlFor="academic_field_id">Chọn bộ môn</InputLabel>
-                  <Select
-                    labelId="academic_field_id"
+                <Stack spacing={2}>
+                  <SelectField
                     id="academic_field_id"
-                    name="academic_field_id"
+                    labelId="academic_field_id_label"
+                    label="Bộ môn"
                     value={values.academic_field_id}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    fullWidth
-                    displayEmpty
-                    inputProps={{ 'aria-label': 'Without label' }}
+                    name="academic_field_id"
                     error={Boolean(touched.academic_field_id && errors.academic_field_id)}
-                  >
-                    <MenuItem value="" sx={{ color: 'text.secondary' }}>
-                      Chọn bộ môn
-                    </MenuItem>
-                    {dataAcademicField?.length > 0 &&
-                      dataAcademicField?.map((item) => (
-                        <MenuItem key={item?.academic_field_id} value={item?.academic_field_id}>
-                          {item?.academic_field_name}
-                        </MenuItem>
-                      ))}
-                  </Select>
-                  {Boolean(touched.academic_field_id && errors.academic_field_id) && (
-                    <FormHelperText error>{errors.academic_field_id}</FormHelperText>
-                  )}
-                </Stack>
-                <Stack spacing={1} sx={{ mb: '10px' }}>
-                  <InputLabel htmlFor="degree_id">Chọn học vị</InputLabel>
-                  <Select
-                    labelId="degree_id"
-                    id="degree_id"
-                    name="degree_id"
-                    value={values.degree_id}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    fullWidth
-                    displayEmpty
-                    inputProps={{ 'aria-label': 'Without label' }}
-                    error={Boolean(touched.degree_id && errors.degree_id)}
-                  >
-                    <MenuItem value="" sx={{ color: 'text.secondary' }}>
-                      Chọn học vị
-                    </MenuItem>
-                    {dataDegree?.length > 0 &&
-                      dataDegree?.map((item) => (
-                        <MenuItem key={item?.degree_id} value={item?.degree_id}>
-                          {item?.degree_name}
-                        </MenuItem>
-                      ))}
-                  </Select>
-                  {Boolean(touched.degree_id && errors.degree_id) && <FormHelperText error>{errors.degree_id}</FormHelperText>}
-                </Stack>
-                <Stack spacing={1} sx={{ mb: '10px' }}>
-                  <InputLabel htmlFor="title_id">Chọn chức vụ</InputLabel>
-                  <Select
-                    labelId="title_id"
-                    id="title_id"
-                    name="title_id"
-                    value={values.title_id}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    fullWidth
-                    displayEmpty
-                    inputProps={{ 'aria-label': 'Without label' }}
-                    error={Boolean(touched.title_id && errors.title_id)}
-                  >
-                    <MenuItem value="" sx={{ color: 'text.secondary' }}>
-                      Chọn chức vụ
-                    </MenuItem>
-                    {dataTitle?.length > 0 &&
-                      dataTitle?.map((item) => (
-                        <MenuItem key={item?.title_id} value={item?.title_id}>
-                          {item?.title_name}
-                        </MenuItem>
-                      ))}
-                  </Select>
-                  {Boolean(touched.title_id && errors.title_id) && <FormHelperText error>{errors.title_id}</FormHelperText>}
-                </Stack>
-                <Box mt={2}>
-                  <label htmlFor="jobholder_isLeader">Trưởng phòng</label>
-                  <Switch
-                    id="jobholder_isLeader"
-                    name="jobholder_isLeader"
-                    value={values.jobholder_isLeader}
-                    checked={values.jobholder_isLeader === 1}
-                    onChange={handleChange}
-                    inputProps={{ 'aria-label': 'Switch A' }}
+                    helperText={errors.academic_field_id}
+                    list={dataAcademicField}
+                    itemValue="academic_field_id"
+                    itemText="academic_field_name"
                   />
-                </Box>
+
+                  <SelectField
+                    id="degree_id"
+                    labelId="degree_id_label"
+                    label="Chức vụ"
+                    value={values.degree_id}
+                    name="degree_id"
+                    error={Boolean(touched.degree_id && errors.degree_id)}
+                    helperText={errors.degree_id}
+                    list={dataDegree}
+                    itemValue="degree_id"
+                    itemText="degree_name"
+                  />
+
+                  <SelectField
+                    id="title_id"
+                    labelId="title_id_label"
+                    label="Học vị"
+                    value={values.title_id}
+                    name="title_id"
+                    error={Boolean(touched.title_id && errors.title_id)}
+                    helperText={errors.title_id}
+                    list={dataTitle}
+                    itemValue="title_id"
+                    itemText="title_name"
+                  />
+                  <Box mt={2}>
+                    <label htmlFor="jobholder_isLeader">Trưởng phòng</label>
+                    <Switch
+                      id="jobholder_isLeader"
+                      name="jobholder_isLeader"
+                      value={values.jobholder_isLeader}
+                      checked={values.jobholder_isLeader === 1}
+                      onChange={handleChange}
+                      inputProps={{ 'aria-label': 'Switch A' }}
+                    />
+                  </Box>
+                </Stack>
               </Grid>
               {errors.submit && (
                 <Grid item xs={12}>
@@ -302,9 +240,7 @@ const JobholderForm = ({ initialValues, action }) => {
             </Grid>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose} variant="contained" color="error">
-              Cancel
-            </Button>
+            <Button onClick={handleClose}>Hủy</Button>
             <Button variant="contained" type="submit" disabled={isSubmitting}>
               {action === 'add' ? 'Thêm viên chức' : 'Chỉnh sửa'}
             </Button>
@@ -321,23 +257,7 @@ const JobholderDialog = () => {
   const action = useMemo(() => jobholderDialog.action, [jobholderDialog.action]);
 
   const handleClose = () => {
-    dispatch(
-      setJobholderDialog({
-        open: false,
-        initValue: {
-          user_firstname: '',
-          user_lastname: '',
-          user_gender: '',
-          user_birthday: null,
-          user_password: '',
-          jobholder_code: '',
-          degree_id: '',
-          title_id: '',
-          academic_field_id: '',
-          jobholder_isLeader: false
-        }
-      })
-    );
+    dispatch(setCloseDialog());
   };
   return (
     <Dialog open={jobholderDialog.open} onClose={handleClose} maxWidth="md" fullWidth>

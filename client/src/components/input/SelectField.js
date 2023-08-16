@@ -32,7 +32,7 @@ const SelectField = ({ id, labelId, label, value, name, error, helperText, list,
         {...props}
       >
         <MenuItem value="" sx={{ color: 'text.secondary' }}>
-          {label}
+          {`Chọn ${label}`}
         </MenuItem>
         {memoizedOptions}
       </Select>

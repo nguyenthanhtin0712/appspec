@@ -87,9 +87,8 @@ class DegreeController extends Controller
             return response()->json([
                 'message' => 'Degree is deleted',
             ], 404);
-        } else {
-            return $this->sentSuccessResponse($degree, "Get degree success", Response::HTTP_OK);
         }
+        return $this->sentSuccessResponse($degree, "Get degree success", Response::HTTP_OK);
     }
 
     /**

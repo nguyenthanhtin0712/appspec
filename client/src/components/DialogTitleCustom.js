@@ -10,13 +10,7 @@ const DialogTitleCustom = ({ onClose, children, ...other }) => {
       <Stack direction="row" justifyContent="space-between" alignItems="center">
         {children}
         {onClose ? (
-          <IconButton
-            aria-label="close"
-            onClick={onClose}
-            sx={{
-              color: (theme) => theme.palette.grey[500]
-            }}
-          >
+          <IconButton aria-label="close" onClick={onClose}>
             <CloseIcon />
           </IconButton>
         ) : null}
