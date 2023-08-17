@@ -70,6 +70,11 @@ class RoleSeeder extends Seeder
         $jobholder_create = Permission::create(['name' => 'jobholder.create']);
         $jobholder_update = Permission::create(['name' => 'jobholder.update']);
         $jobholder_delete = Permission::create(['name' => 'jobholder.delete']);
+        // Role company
+        $company_view = Permission::create(['name' => 'company.view']);
+        $company_create = Permission::create(['name' => 'company.create']);
+        $company_update = Permission::create(['name' => 'company.update']);
+        $company_delete = Permission::create(['name' => 'company.delete']);
     
         $admin_role = Role::create(['name' => 'admin']);
         $admin_role->givePermissionTo([
@@ -117,6 +122,10 @@ class RoleSeeder extends Seeder
             $jobholder_create,
             $jobholder_update,
             $jobholder_delete,
+            $company_view,
+            $company_create,
+            $company_update,
+            $company_delete
         ]);
     }
 }
