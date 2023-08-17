@@ -24,10 +24,10 @@ class DegreeSeeder extends Seeder
             'degree_name' => 'Tiến sĩ'
         ]);
         Degree::create([
-            'degree_name' => 'Phó giáo sư tiến sĩ'
+            'degree_name' => 'Phó giáo sư, Tiến sĩ'
         ]);
         Degree::create([
-            'degree_name' => 'Giáo sư tiến sĩ'
+            'degree_name' => 'Giáo sư, Tiến sĩ'
         ]);
     }
 }
