@@ -16,7 +16,7 @@ class CreateTitlesTable extends Migration
         Schema::create('titles', function (Blueprint $table) {
             $table->id('title_id');
             $table->string('title_name');
-            $table->integer('title_isDelete')->default(0);
+            $table->tinyInteger('title_isDelete')->length(1)->default(0);
         });
     }
 

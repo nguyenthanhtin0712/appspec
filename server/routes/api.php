@@ -16,6 +16,7 @@ use App\Http\Controllers\Api\TeacherController;
 use App\Http\Controllers\Api\TitleController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\DisplayConfigController;
+use App\Http\Controllers\Api\SubjectController;
 use App\Http\Resources\LoginResource;
 use App\Models\JobHolder;
 use Illuminate\Http\Request;
@@ -114,6 +115,13 @@ Route::middleware(['auth:api'])->group(function () {
     // Config page
     Route::get('configs', [DisplayConfigController::class, 'index']);
     Route::put('/configs/{id}', [DisplayConfigController::class, 'update']);
+
+    // Subject api
+    Route::get('subjects', [SubjectController::class, 'index'])->middleware('check_user_role_permission:title.view');
+    Route::post('subjects', [SubjectController::class, 'store'])->middleware('check_user_role_permission:subject.create');
+    Route::get('subjects/{id}', [SubjectController::class, 'show'])->middleware('check_user_role_permission:subject.view');
+    Route::put('subjects/{id}', [SubjectController::class, 'update'])->middleware('check_user_role_permission:subject.update');
+    Route::delete('subjects/{id}', [SubjectController::class, 'destroy'])->middleware('check_user_role_permission:subject.delete');
 });
 Route::get('register-specialties/result', [RegisterSpecialtyController::class, 'getResult']);
 Route::get('register-specialties', [RegisterSpecialtyController::class, 'getRegisterSpecialtyByUser']);

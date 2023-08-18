@@ -65,12 +65,17 @@ class RoleSeeder extends Seeder
         $degree_create = Permission::create(['name' => 'degree.create']);
         $degree_update = Permission::create(['name' => 'degree.update']);
         $degree_delete = Permission::create(['name' => 'degree.delete']);
-        // Role degree
+        // Role jobholder
         $jobholder_view = Permission::create(['name' => 'jobholder.view']);
         $jobholder_create = Permission::create(['name' => 'jobholder.create']);
         $jobholder_update = Permission::create(['name' => 'jobholder.update']);
         $jobholder_delete = Permission::create(['name' => 'jobholder.delete']);
-    
+        // Role subject
+        $subject_view = Permission::create(['name' => 'subject.view']);
+        $subject_create = Permission::create(['name' => 'subject.create']);
+        $subject_update = Permission::create(['name' => 'subject.update']);
+        $subject_delete = Permission::create(['name' => 'subject.delete']);
+
         $admin_role = Role::create(['name' => 'admin']);
         $admin_role->givePermissionTo([
             $user_view,
@@ -117,6 +122,10 @@ class RoleSeeder extends Seeder
             $jobholder_create,
             $jobholder_update,
             $jobholder_delete,
+            $subject_view,
+            $subject_create,
+            $subject_update,
+            $subject_delete,
         ]);
     }
 }

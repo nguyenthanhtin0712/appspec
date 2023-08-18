@@ -10,7 +10,6 @@ use App\Http\Resources\MajorResource;
 use App\Models\Major;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\DB;
 
 class MajorController extends Controller
 {

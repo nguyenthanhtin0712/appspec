@@ -22,7 +22,11 @@ class AcademicField extends Model
         'academic_field_names'
     ];
 
-    public function jobholder () {
+    public function jobholder() {
         return $this->hasMany(JobHolder::class, 'academic_field_id', 'academic_field_id');
+    }
+
+    public function subject() {
+        return $this->hasMany(Subject::class, 'academic_field_id', 'academic_field_id');
     }
 }
