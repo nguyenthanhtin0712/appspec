@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AcademicFieldController;
 use App\Http\Controllers\Api\DegreeController;
 use App\Http\Controllers\Api\EmployerController;
+use App\Http\Controllers\Api\InternCompanyController;
 use App\Http\Controllers\Api\JobHolderController;
 use App\Http\Controllers\Api\LoginController;
 use App\Http\Controllers\Api\LogoutController;
@@ -110,6 +111,14 @@ Route::middleware(['auth:api'])->group(function () {
     Route::put('degrees/{id}', [DegreeController::class, 'update'])->middleware('check_user_role_permission:degree.update');
     Route::delete('degrees/{id}', [DegreeController::class, 'destroy'])->middleware('check_user_role_permission:degree.delete');
 
+    // Jobholder api
+    Route::get('jobholders', [JobHolderController::class, 'index'])->middleware('check_user_role_permission:jobholder.view');
+    Route::post('jobholders', [JobHolderController::class, 'store'])->middleware('check_user_role_permission:jobholder.create');
+    Route::get('jobholders/{id}', [JobHolderController::class, 'show'])->middleware('check_user_role_permission:jobholder.view');
+    Route::put('jobholders/{id}', [JobHolderController::class, 'update'])->middleware('check_user_role_permission:jobholder.update');
+    Route::delete('jobholders/{id}', [JobHolderController::class, 'destroy'])->middleware('check_user_role_permission:jobholder.delete');
+
+
     // RecruitmentPosition
     // Config page
     Route::get('configs', [DisplayConfigController::class, 'index']);
@@ -120,10 +129,9 @@ Route::get('register-specialties', [RegisterSpecialtyController::class, 'getRegi
 Route::get('recruitment-positions', [RecruitmentPositionController::class, 'index']);
 Route::get('academic-fields', [AcademicFieldController::class, 'index']);
 
+Route::get('companies', [InternCompanyController::class, 'index']);
+Route::post('companies', [InternCompanyController::class, 'store']);
+Route::get('companies/{id}', [InternCompanyController::class, 'show']);
+Route::put('companies/{id}', [InternCompanyController::class, 'update']);
+Route::delete('companies/{id}', [InternCompanyController::class, 'destroy']);
 
-// Degree jobholder
-
-Route::get('jobholders', [JobHolderController::class, 'index']);
-Route::post('jobholders', [JobHolderController::class, 'store']);
-Route::get('jobholders/{id}', [JobHolderController::class, 'show']);
-Route::delete('jobholders/{id}', [JobHolderController::class, 'destroy']);

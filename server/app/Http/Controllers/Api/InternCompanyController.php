@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreInternCompanyRequest;
+use App\Http\Requests\UpdateInternCompanyRequest;
 use App\Http\Resources\Collection;
 use App\Models\InternCompany;
 use Illuminate\Http\Request;
@@ -63,9 +65,21 @@ class InternCompanyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreInternCompanyRequest $request)
     {
-        //
+        $company_name = $request->input('company_name');
+        $company_phone = $request->input('company_phone');
+        $company_address = $request->input('company_address');
+        $company_host = $request->input('company_host');
+        $company_is_official = $request->input('company_is_official');
+        $company = InternCompany::create([
+            'company_name' => "$company_name",
+            'company_phone' => "$company_phone",
+            'company_address' => "$company_address",
+            'company_host' => "$company_host",
+            'company_is_official' => "$company_is_official",
+        ]);
+        return $this->sentSuccessResponse($company, "Add company success", Response::HTTP_OK);
     }
 
     /**
@@ -76,7 +90,14 @@ class InternCompanyController extends Controller
      */
     public function show($id)
     {
-        //
+        $comapny = InternCompany::where('company_id', $id)->firstOrFail();
+        if ($comapny->comapny_isDelete == 1) {
+            return response()->json([
+                'message' => 'Comapny is deleted',
+            ], 404);
+        } else {
+            return $this->sentSuccessResponse($comapny, "Get company success", Response::HTTP_OK);
+        }
     }
 
     /**
@@ -86,9 +107,21 @@ class InternCompanyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateInternCompanyRequest $request, $id)
     {
-        //
+        $company_name = $request->input('company_name');
+        $company_phone = $request->input('company_phone');
+        $company_address = $request->input('company_address');
+        $company_host = $request->input('company_host');
+        $company_is_official = $request->input('company_is_official');
+        $comapny = InternCompany::where('company_id', $id)->firstOrFail();
+        $comapny->company_name = $company_name;
+        $comapny->company_phone = $company_phone;
+        $comapny->company_address = $company_address;
+        $comapny->company_host = $company_host;
+        $comapny->company_is_official = $company_is_official;
+        $comapny->save();
+        return $this->sentSuccessResponse($comapny, "Update company success", Response::HTTP_OK);
     }
 
     /**
@@ -99,6 +132,9 @@ class InternCompanyController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $company = InternCompany::where('company_id', $id)->firstOrFail();
+        $company->company_isDelete = 1;
+        $company->save();
+        return $this->sentSuccessResponse($company, "Delete user success", Response::HTTP_OK);
     }
 }

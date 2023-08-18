@@ -3,14 +3,14 @@ import { Add } from 'iconsax-react';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import TitleTable from 'sections/admin/title/TitleTable';
-import TitleDialog from 'sections/admin/title/TitleDialog';
-import { setTitleDialog } from 'store/reducers/titleSlice';
+import CompanyTable from 'sections/admin/company/CompanyTable';
+import CompanyDialog from 'sections/admin/company/CompanyDialog';
+import { setcompanyDialog } from 'store/reducers/companySlice';
 import { dispatch } from 'store/index';
 
 const CompanyPage = () => {
   const handleClickOpen = () => {
-    dispatch(setTitleDialog({ open: true, action: 'add' }));
+    dispatch(setcompanyDialog({ open: true, action: 'add' }));
   };
 
   return (
@@ -21,8 +21,8 @@ const CompanyPage = () => {
           Thêm công ty
         </Button>
       </Stack>
-      <TitleTable />
-      <TitleDialog />
+      <CompanyTable />
+      <CompanyDialog />
     </>
   );
 };
