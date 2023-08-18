@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\LogoutController;
 use App\Http\Controllers\Api\MajorController;
 use App\Http\Controllers\Api\RecruitmentPositionController;
 use App\Http\Controllers\Api\RegisterController;
+use App\Http\Controllers\Api\RegisterInternController;
 use App\Http\Controllers\Api\RegisterSpecialtyController;
 use App\Http\Controllers\Api\SpecialtyController;
 use App\Http\Controllers\Api\StudentController;
@@ -112,18 +113,19 @@ Route::middleware(['auth:api'])->group(function () {
     Route::put('degrees/{id}', [DegreeController::class, 'update'])->middleware('check_user_role_permission:degree.update');
     Route::delete('degrees/{id}', [DegreeController::class, 'destroy'])->middleware('check_user_role_permission:degree.delete');
 
-    // Jobholder api
+    // Company api
     Route::get('jobholders', [JobHolderController::class, 'index'])->middleware('check_user_role_permission:jobholder.view');
     Route::post('jobholders', [JobHolderController::class, 'store'])->middleware('check_user_role_permission:jobholder.create');
     Route::get('jobholders/{id}', [JobHolderController::class, 'show'])->middleware('check_user_role_permission:jobholder.view');
     Route::put('jobholders/{id}', [JobHolderController::class, 'update'])->middleware('check_user_role_permission:jobholder.update');
     Route::delete('jobholders/{id}', [JobHolderController::class, 'destroy'])->middleware('check_user_role_permission:jobholder.delete');
 
-
-    // RecruitmentPosition
-    // Config page
-    Route::get('configs', [DisplayConfigController::class, 'index']);
-    Route::put('/configs/{id}', [DisplayConfigController::class, 'update']);
+    // Jobholder api
+    Route::get('companies', [InternCompanyController::class, 'index'])->middleware('check_user_role_permission:company.view');
+    Route::post('companies', [InternCompanyController::class, 'store'])->middleware('check_user_role_permission:company.view');
+    Route::get('companies/{id}', [InternCompanyController::class, 'show'])->middleware('check_user_role_permission:company.view');
+    Route::put('companies/{id}', [InternCompanyController::class, 'update'])->middleware('check_user_role_permission:company.view');
+    Route::delete('companies/{id}', [InternCompanyController::class, 'destroy'])->middleware('check_user_role_permission:company.view');
 
     // Subject api
     Route::get('subjects', [SubjectController::class, 'index'])->middleware('check_user_role_permission:title.view');
@@ -131,15 +133,23 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('subjects/{id}', [SubjectController::class, 'show'])->middleware('check_user_role_permission:subject.view');
     Route::put('subjects/{id}', [SubjectController::class, 'update'])->middleware('check_user_role_permission:subject.update');
     Route::delete('subjects/{id}', [SubjectController::class, 'destroy'])->middleware('check_user_role_permission:subject.delete');
+
+    // Academic_field api
+    Route::get('academic-fields', [AcademicFieldController::class, 'index'])->middleware('<check_user_role_permission:academic_field></check_user_role_permission:academic_field>.view');;
+
+    // RecruitmentPosition
+    // Config page
+    Route::get('configs', [DisplayConfigController::class, 'index']);
+    Route::put('/configs/{id}', [DisplayConfigController::class, 'update']);
+
+    
 });
 Route::get('register-specialties/result', [RegisterSpecialtyController::class, 'getResult']);
 Route::get('register-specialties', [RegisterSpecialtyController::class, 'getRegisterSpecialtyByUser']);
-Route::get('recruitment-positions', [RecruitmentPositionController::class, 'index']);
-Route::get('academic-fields', [AcademicFieldController::class, 'index']);
 
-Route::get('companies', [InternCompanyController::class, 'index']);
-Route::post('companies', [InternCompanyController::class, 'store']);
-Route::get('companies/{id}', [InternCompanyController::class, 'show']);
-Route::put('companies/{id}', [InternCompanyController::class, 'update']);
-Route::delete('companies/{id}', [InternCompanyController::class, 'destroy']);
+
+
+
+Route::get('recruitment-positions', [RecruitmentPositionController::class, 'index']);
+Route::get('register-interns/admin', [RegisterInternController::class, 'index']);
 

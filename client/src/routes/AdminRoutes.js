@@ -16,6 +16,10 @@ const RegisterSpecialtyPageCreate = Loadable(lazy(() => import('pages/admin/regi
 const RegisterSpecialtyPageEdit = Loadable(lazy(() => import('pages/admin/register-specialty/register-specialty-edit')));
 const RegisterSpecialtyPageIndex = Loadable(lazy(() => import('pages/admin/register-specialty/register-specialty-index')));
 const RegisterSpecialtyPageResult = Loadable(lazy(() => import('pages/admin/register-specialty/register-specialty-result')));
+const RegisterInternPageCreate = Loadable(lazy(() => import('pages/admin/register-intern/register-intern-create')));
+const RegisterInternPageEdit = Loadable(lazy(() => import('pages/admin/register-intern/register-intern-edit')));
+const RegisterInternPageIndex = Loadable(lazy(() => import('pages/admin/register-intern/register-intern-index')));
+const RegisterInternPageResult = Loadable(lazy(() => import('pages/admin/register-intern/register-intern-result')));
 const SpecialtyPage = Loadable(lazy(() => import('pages/admin/specialty')));
 const StudentPage = Loadable(lazy(() => import('pages/admin/student')));
 const EmployerPage = Loadable(lazy(() => import('pages/admin/employer')));
@@ -65,6 +69,22 @@ const AdminRoutes = {
     {
       path: 'register_specialty/:Id',
       element: <PrivateRoute component={RegisterSpecialtyPageResult} requiredPermissions={['major.view']} />
+    },
+    {
+      path: 'register_intern',
+      element: <PrivateRoute component={RegisterInternPageIndex} requiredPermissions={['register_intern.view']} />
+    },
+    {
+      path: 'register_intern/create',
+      element: <PrivateRoute component={RegisterInternPageCreate} requiredPermissions={['register_intern.view']} />
+    },
+    {
+      path: 'register_intern_edit/:id',
+      element: <PrivateRoute component={RegisterInternPageEdit} requiredPermissions={['register_intern.view']} />
+    },
+    {
+      path: 'register_intern/:Id',
+      element: <PrivateRoute component={RegisterInternPageResult} requiredPermissions={['register_intern.view']} />
     },
     {
       path: 'specialty',

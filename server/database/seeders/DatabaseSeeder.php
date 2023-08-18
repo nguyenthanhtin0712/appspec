@@ -34,5 +34,7 @@ class DatabaseSeeder extends Seeder
         $this->call(DegreeSeeder::class);
         $this->call(JobHolderSeeder::class);
         $this->call(SubjectSeeder::class);
+        $this->call(InternshipGraduationSeeder::class);
+        $this->call(OpenclassTimeSeeder::class);
     }
 }

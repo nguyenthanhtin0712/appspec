@@ -11,6 +11,7 @@ class InternRegistrationCompany extends Model
     use HasFactory, HasRoles;
 
     protected $primaryKey = 'intern_registration_company_id';
+    public $timestamps = false;
     protected $fillable = [
         'intern_registration_company_id',
         'intern_registration_id',

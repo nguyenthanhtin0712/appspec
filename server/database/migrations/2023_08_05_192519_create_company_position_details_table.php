@@ -19,7 +19,6 @@ class CreateCompanyPositionDetailsTable extends Migration
             $table->integer('position_id');
             $table->integer('position_quantity');
             $table->string('position_note');
-            $table->timestamps();
         });
     }
 

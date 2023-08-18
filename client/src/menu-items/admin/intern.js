@@ -1,9 +1,11 @@
 // type
 // import { People } from 'iconsax-react';
 import ApartmentIcon from '@mui/icons-material/Apartment';
+import SettingsEthernetIcon from '@mui/icons-material/SettingsEthernet';
 // icons
 const icons = {
-  company: ApartmentIcon
+  company: ApartmentIcon,
+  intern: SettingsEthernetIcon
 };
 
 // ==============================|| MENU ITEMS - DASHBOARD ||============================== //
@@ -19,6 +21,13 @@ const intern = {
       type: 'item',
       url: '/admin/company',
       icon: icons.company
+    },
+    {
+      id: 'register_intern',
+      title: 'Đăng ký thực tập',
+      type: 'item',
+      url: '/admin/register_intern',
+      icon: icons.intern
     }
   ]
 };

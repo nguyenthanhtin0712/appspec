@@ -12,17 +12,14 @@ class InternRegistrationSeeder extends Seeder
     public function run()
     {
         $now = Carbon::now();
-
-        for ($i = 1; $i <= 20; $i++) {
-            $start_date = $now->addMonths($i);
-            $end_date = $start_date->copy()->addMonths(3);
-            InternRegistration::create([
-                'intern_registration_start_date' => $start_date,
-                'intern_registration_end_date' => $end_date,
-                'intern_registration_semester' => ($i % 2 === 0) ? 2 : 1,
-                'intern_registration_year' => $start_date->year,
-                'intern_registration_isDelete' => 0,
-            ]);
-        }
+        $start_date = $now->addMonths(1);
+        $end_date = $start_date->copy()->addMonths(3);
+        InternRegistration::create([
+            'internship_graduation_id' => 1,
+            'intern_registration_name' => "Đăng ký thực tập khóa 21 đợt 1",
+            'intern_registration_start_date' => $start_date,
+            'intern_registration_end_date' => $end_date,
+            'intern_registration_isDelete' => 0,
+        ]);
     }
 }

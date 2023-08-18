@@ -17,7 +17,6 @@ class CreateInternRegistrationCompaniesTable extends Migration
             $table->id('intern_registration_company_id');
             $table->integer('intern_registration_id');
             $table->integer('company_id');
-            $table->timestamps();
         });
     }
 

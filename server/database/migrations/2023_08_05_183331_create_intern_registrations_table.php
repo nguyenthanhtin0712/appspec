@@ -14,11 +14,10 @@ class CreateInternRegistrationsTable extends Migration
     public function up()
     {
         Schema::create('intern_registrations', function (Blueprint $table) {
-            $table->id('intern_registration_id');
+            $table->integer('internship_graduation_id');
+            $table->string('intern_registration_name');
             $table->dateTime('intern_registration_start_date');
             $table->dateTime('intern_registration_end_date');
-            $table->integer('intern_registration_semester');
-            $table->integer('intern_registration_year');
             $table->integer('intern_registration_isDelete')->default(0);
             $table->timestamps();
         });
