@@ -158,6 +158,7 @@ const CompanyDialog = () => {
   const handleClose = () => {
     dispatch(setCloseDialog());
   };
+
   return (
     <Dialog open={companyDialog.open} onClose={handleClose} maxWidth="xs" fullWidth>
       <DialogTitleCustom onClose={handleClose}>{action === 'add' ? 'Thêm công ty' : 'Chỉnh sửa công ty'}</DialogTitleCustom>

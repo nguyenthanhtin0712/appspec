@@ -1,12 +1,11 @@
 <?php
 
 use App\Http\Controllers\Api\AcademicFieldController;
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\DegreeController;
 use App\Http\Controllers\Api\EmployerController;
 use App\Http\Controllers\Api\InternCompanyController;
 use App\Http\Controllers\Api\JobHolderController;
-use App\Http\Controllers\Api\LoginController;
-use App\Http\Controllers\Api\LogoutController;
 use App\Http\Controllers\Api\MajorController;
 use App\Http\Controllers\Api\RecruitmentPositionController;
 use App\Http\Controllers\Api\RegisterController;
@@ -19,7 +18,6 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\DisplayConfigController;
 use App\Http\Controllers\Api\SubjectController;
 use App\Http\Resources\LoginResource;
-use App\Models\JobHolder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,7 +25,7 @@ use Illuminate\Support\Facades\Route;
 //Authentication api
 
 //Này đăng nhập bằng email, mssv và password
-Route::post('login', [LoginController::class, 'login']);
+Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [RegisterController::class, 'register']);
 
 // Cái đăng nhập bằng accessToken
@@ -38,7 +36,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::middleware(['auth:api'])->group(function () {
 
     //Login vào rồi mới logout được
-    Route::get('logout', [LogoutController::class, 'logout']);
+    Route::get('logout', [AuthController::class, 'logout']);
     //Users
     Route::get('users', [UserController::class, 'index'])->middleware('check_user_role_permission:user.view');
     Route::post('users', [UserController::class, 'store'])->middleware('check_user_role_permission:user.create');

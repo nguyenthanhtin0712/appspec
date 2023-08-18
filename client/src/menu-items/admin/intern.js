@@ -1,9 +1,8 @@
-// type
-// import { People } from 'iconsax-react';
-import ApartmentIcon from '@mui/icons-material/Apartment';
+import { Buildings } from 'iconsax-react';
+
 // icons
 const icons = {
-  company: ApartmentIcon
+  company: Buildings
 };
 
 // ==============================|| MENU ITEMS - DASHBOARD ||============================== //
