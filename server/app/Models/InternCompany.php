@@ -11,11 +11,13 @@ class InternCompany extends Model
     use HasFactory, HasRoles;
 
     protected $primaryKey = 'company_id';
+    public $timestamps = false;
 
     protected $fillable = [
         'company_id',
         'company_name',
         'company_phone',
+        'company_email',
         'company_address',
         'company_host',
         'company_is_official',

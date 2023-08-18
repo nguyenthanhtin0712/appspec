@@ -1,24 +1,24 @@
 // type
-import { People } from 'iconsax-react';
+// import { People } from 'iconsax-react';
+import ApartmentIcon from '@mui/icons-material/Apartment';
 // icons
 const icons = {
-  dashboard: People
+  company: ApartmentIcon
 };
 
 // ==============================|| MENU ITEMS - DASHBOARD ||============================== //
 
 const intern = {
-  id: 'group-specialty',
+  id: 'group-intern',
   title: 'Quản lý thực tập',
-  icon: icons.People,
   type: 'group',
   children: [
     {
-      id: 'employer',
-      title: 'Nhà tuyển dụng',
+      id: 'company',
+      title: 'Công ty',
       type: 'item',
-      url: '/admin/major',
-      icon: icons.major
+      url: '/admin/company',
+      icon: icons.company
     }
   ]
 };
