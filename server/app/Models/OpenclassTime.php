@@ -6,15 +6,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Permission\Traits\HasRoles;
 
-class RecruitmentPosition extends Model
+class OpenclassTime extends Model
 {
     use HasFactory, HasRoles;
 
-    protected $primaryKey = 'position_id';
+    protected $primaryKey = 'openclass_id';
     public $timestamps = false;
 
     protected $fillable = [
-        'position_id',
-        'position_name'
+        'openclass_id',
+        'openclass_semester',
+        'openclass_year',
     ];
 }

@@ -15,6 +15,7 @@ import degree from './degreeSlice';
 import jobholder from './jobholderSlice';
 import company from './companySlice';
 import register_specialty from './registerSpecialtyAdminSlice';
+import register_intern from './registerInternAdminSlice';
 import register_specialty_user from './registerSpecialtyUserSlice';
 import config_page from './configPageSlice';
 
@@ -35,6 +36,7 @@ const reducers = combineReducers({
   company,
   register_specialty,
   register_specialty_user,
+  register_intern,
   config_page
 });
 

@@ -50,6 +50,11 @@ class RoleSeeder extends Seeder
         $register_specialty_create = Permission::create(['name' => 'register_specialty.create']);
         $register_specialty_update = Permission::create(['name' => 'register_specialty.update']);
         $register_specialty_delete = Permission::create(['name' => 'register_specialty.delete']);
+        // Role register specialty
+        $register_intern_view = Permission::create(['name' => 'register_intern.view']);
+        $register_intern_create = Permission::create(['name' => 'register_intern.create']);
+        $register_intern_update = Permission::create(['name' => 'register_intern.update']);
+        $register_intern_delete = Permission::create(['name' => 'register_intern.delete']);
         // Role academic field 
         $academic_field_view = Permission::create(['name' => 'academic_field.view']);
         $academic_field_create = Permission::create(['name' => 'academic_field.create']);
@@ -112,6 +117,10 @@ class RoleSeeder extends Seeder
             $register_specialty_create,
             $register_specialty_update,
             $register_specialty_delete,
+            $register_intern_view,
+            $register_intern_create,
+            $register_intern_update,
+            $register_intern_delete,
             $academic_field_view,
             $academic_field_create,
             $academic_field_update,

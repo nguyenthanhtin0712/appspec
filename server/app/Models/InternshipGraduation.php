@@ -3,20 +3,20 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Permission\Traits\HasRoles;
 
-class InternRegistration extends Model
+class InternshipGraduation extends Model
 {
     use HasFactory, HasRoles;
 
     protected $primaryKey = 'internship_graduation_id';
-    public $timestamps = true;
+    public $timestamps = false;
+
     protected $fillable = [
         'internship_graduation_id',
-        'intern_registration_name',
-        'intern_registration_start_date',
-        'intern_registration_end_date',
-        'intern_registration_isDelete',
+        'openclass_time_id',
+        'internship_graduation_start_date',
+        'internship_graduation_end_date',
     ];
 }
