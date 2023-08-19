@@ -28,6 +28,7 @@ use Illuminate\Support\Facades\Route;
 //Này đăng nhập bằng email, mssv và password
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [RegisterController::class, 'register']);
+// Route::post('refresh', [AuthController::class, 'refreshToken']);
 
 // Cái đăng nhập bằng accessToken
 Route::middleware('auth:api')->get('/user', function (Request $request) {
@@ -133,7 +134,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::delete('subjects/{id}', [SubjectController::class, 'destroy'])->middleware('check_user_role_permission:subject.delete');
 
     // Academic_field api
-    Route::get('academic-fields', [AcademicFieldController::class, 'index'])->middleware('<check_user_role_permission:academic_field></check_user_role_permission:academic_field>.view');;
+    Route::get('academic-fields', [AcademicFieldController::class, 'index'])->middleware('check_user_role_permission:academic_field.view');;
 
     // RecruitmentPosition
     // Config page

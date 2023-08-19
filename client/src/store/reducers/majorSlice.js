@@ -2,7 +2,6 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from '../../api/axios';
 import { API_BASE_URL } from 'config';
 
-// Async Thunk Actions
 export const fetchData = createAsyncThunk('major/fetchData', async (params, { rejectWithValue }) => {
   const {
     columnFilters,

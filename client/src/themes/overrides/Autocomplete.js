@@ -4,7 +4,7 @@ export default function Autocomplete(theme) {
       styleOverrides: {
         root: {
           '& .MuiOutlinedInput-root': {
-            padding: '3px 9px'
+            padding: '7px 9px'
           }
         },
         popupIndicator: {

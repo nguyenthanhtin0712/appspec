@@ -12,6 +12,7 @@ import teacher from './teacherSlice';
 import employer from './employerSlice';
 import title from './titleSlice';
 import degree from './degreeSlice';
+import subject from './subjectSlice';
 import jobholder from './jobholderSlice';
 import company from './companySlice';
 import register_specialty from './registerSpecialtyAdminSlice';
@@ -31,6 +32,7 @@ const reducers = combineReducers({
   title,
   degree,
   teacher,
+  subject,
   employer,
   jobholder,
   company,

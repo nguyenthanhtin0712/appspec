@@ -9,8 +9,6 @@ const initialState = {
   error: null
 };
 
-// ==============================|| SLICE - MENU ||============================== //
-
 const menu = createSlice({
   name: 'menu',
   initialState,
@@ -18,19 +16,15 @@ const menu = createSlice({
     activeItem(state, action) {
       state.openItem = action.payload.openItem;
     },
-
     activeID(state, action) {
       state.selectedID = action.payload;
     },
-
     openAdminDrawer(state, action) {
       state.drawerAdminOpen = action.payload.drawerAdminOpen;
     },
-
     openUserDrawer(state, action) {
       state.drawerUserOpen = action.payload.drawerUserOpen;
     },
-
     hasError(state, action) {
       state.error = action.payload;
     }

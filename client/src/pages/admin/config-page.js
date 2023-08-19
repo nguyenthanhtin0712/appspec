@@ -94,9 +94,7 @@ const SpecialtyDisplayDialog = ({ open, handleClose }) => {
       <DialogContent>
         <Autocomplete
           value={value}
-          onChange={(event, newValue) => {
-            setValue(newValue);
-          }}
+          onChange={(event, newValue) => setValue(newValue)}
           inputValue={inputValue}
           onInputChange={(event, newInputValue) => {
             setInputValue(newInputValue);

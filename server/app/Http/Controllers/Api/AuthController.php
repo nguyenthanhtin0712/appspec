@@ -9,8 +9,10 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\LoginResource;
 use App\Models\Student;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+
 
 class AuthController extends Controller
 {
@@ -45,5 +47,15 @@ class AuthController extends Controller
 
         $accessToken->revoke();
         return response()->json(['message' => 'Logout success']);
+    }
+
+    public function refreshToken(Request $request)
+    {
+        $user = Auth::user();
+        $token = $user->createToken('user')->accessToken;
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'Bearer',
+        ]);
     }
 }

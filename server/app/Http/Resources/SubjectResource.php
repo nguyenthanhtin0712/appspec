@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources;
 
-use App\Models\Subject;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class SubjectResource extends JsonResource
@@ -25,7 +24,7 @@ class SubjectResource extends JsonResource
             'subject_BT' => $this->subject_BT,
             'subject_TH' => $this->subject_TH,
             'academic_field_id' => $this->academic_field_id,
-            'subject_previous' => $this->subject_previous->pluck('subject_id')->toArray()
+            'subject_previous' => $this->subject_previous->toArray()
         ];
     }
 }
