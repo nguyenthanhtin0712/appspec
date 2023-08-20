@@ -10,11 +10,12 @@ class CompanyPositionDetail extends Model
 {
     use HasFactory, HasRoles;
 
+    protected $table = 'company_position_detail';
     protected $primaryKey = 'company_position_detail_id';
     public $timestamps = false;
     protected $fillable = [
         'company_position_detail_id',
-        'intern_registration_company_id',
+        'register_internship_company_id',
         'position_id',
         'position_quantity',
         'position_note',

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Collection;
-use App\Models\InternRegistration;
+use App\Models\RegisterInternship;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -24,13 +24,13 @@ class RegisterInternController extends Controller
         $sortBy = $request->input('sortBy');
         $sortOrder = $request->input('sortOrder', 'asc');
         $filters = $request->input('filters');
-        $intern_registration = InternRegistration::query();
-        $intern_registration->where("intern_registration_isDelete", "0")->latest();
-        if ($query) {
-            $intern_registration->where("intern_registration_name", "LIKE", "%$query%");
-        }
+        $intern_registration = RegisterInternship::query();
+        $intern_registration->where("register_internship_isDelete", "0")->latest();
+        // if ($query) {
+        //     $intern_registration->where("intern_registration_name", "LIKE", "%$query%");
+        // }
         if ($id) {
-            $intern_registration->where('intern_registration_id', $id);
+            $intern_registration->where('register_internship_id', $id);
         }
         if ($sortBy) {
             $intern_registration->orderBy($sortBy, $sortOrder);

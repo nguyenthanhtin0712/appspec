@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreInternCompanyRequest;
-use App\Http\Requests\UpdateInternCompanyRequest;
+use App\Http\Requests\StoreInternshipCompanyRequest;
+use App\Http\Requests\UpdateInternshipCompanyRequest;
 use App\Http\Resources\Collection;
-use App\Models\InternCompany;
+use App\Models\InternshipCompany;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -26,7 +26,7 @@ class InternCompanyController extends Controller
         $sortBy = $request->input('sortBy');
         $sortOrder = $request->input('sortOrder', 'asc');
         $filters = $request->input('filters');
-        $company = InternCompany::where("company_isDelete", "0");
+        $company = InternshipCompany::where("company_isDelete", "0");
         if ($query) {
             $company->where("company_code", "LIKE", "%$query%");
         }
@@ -65,14 +65,14 @@ class InternCompanyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreInternCompanyRequest $request)
+    public function store(StoreInternshipCompanyRequest $request)
     {
         $company_name = $request->input('company_name');
         $company_phone = $request->input('company_phone');
         $company_address = $request->input('company_address');
         $company_host = $request->input('company_host');
         $company_is_official = $request->input('company_is_official');
-        $company = InternCompany::create([
+        $company = InternshipCompany::create([
             'company_name' => "$company_name",
             'company_phone' => "$company_phone",
             'company_address' => "$company_address",
@@ -90,7 +90,7 @@ class InternCompanyController extends Controller
      */
     public function show($id)
     {
-        $comapny = InternCompany::where('company_id', $id)->firstOrFail();
+        $comapny = InternshipCompany::where('company_id', $id)->firstOrFail();
         if ($comapny->comapny_isDelete == 1) {
             return response()->json([
                 'message' => 'Comapny is deleted',
@@ -107,14 +107,14 @@ class InternCompanyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateInternCompanyRequest $request, $id)
+    public function update(UpdateInternshipCompanyRequest $request, $id)
     {
         $company_name = $request->input('company_name');
         $company_phone = $request->input('company_phone');
         $company_address = $request->input('company_address');
         $company_host = $request->input('company_host');
         $company_is_official = $request->input('company_is_official');
-        $comapny = InternCompany::where('company_id', $id)->firstOrFail();
+        $comapny = InternshipCompany::where('company_id', $id)->firstOrFail();
         $comapny->company_name = $company_name;
         $comapny->company_phone = $company_phone;
         $comapny->company_address = $company_address;
@@ -132,7 +132,7 @@ class InternCompanyController extends Controller
      */
     public function destroy($id)
     {
-        $company = InternCompany::where('company_id', $id)->firstOrFail();
+        $company = InternshipCompany::where('company_id', $id)->firstOrFail();
         $company->company_isDelete = 1;
         $company->save();
         return $this->sentSuccessResponse($company, "Delete user success", Response::HTTP_OK);

@@ -64,7 +64,7 @@ const AdminRoutes = {
       element: <PrivateRoute component={RegisterSpecialtyPageCreate} requiredPermissions={['major.view']} />
     },
     {
-      path: 'register_specialty_edit/:id',
+      path: 'register_specialty/edit/:id',
       element: <PrivateRoute component={RegisterSpecialtyPageEdit} requiredPermissions={['major.view']} />
     },
     {

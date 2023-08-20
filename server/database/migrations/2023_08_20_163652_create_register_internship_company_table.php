@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateInternRegistrationCompaniesTable extends Migration
+class CreateRegisterInternshipCompanyTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateInternRegistrationCompaniesTable extends Migration
      */
     public function up()
     {
-        Schema::create('intern_registration_companies', function (Blueprint $table) {
-            $table->id('intern_registration_company_id');
-            $table->integer('intern_registration_id');
+        Schema::create('register_internship_company', function (Blueprint $table) {
+            $table->id('register_internship_company_id');
+            $table->integer('register_internship_id');
             $table->integer('company_id');
         });
     }
@@ -27,6 +27,6 @@ class CreateInternRegistrationCompaniesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('intern_registration_companies');
+        Schema::dropIfExists('register_internship_company');
     }
 }

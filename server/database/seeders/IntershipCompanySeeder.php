@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class InterCompanySeeder extends Seeder
+class IntershipCompanySeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -106,6 +106,6 @@ class InterCompanySeeder extends Seeder
                 'company_isDelete' => 0,
             ],
         ];
-        DB::table('intern_companies')->insert($companies);
+        DB::table('internship_company')->insert($companies);
     }
 }

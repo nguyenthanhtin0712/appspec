@@ -13,9 +13,9 @@ class CreateCompanyPositionDetailsTable extends Migration
      */
     public function up()
     {
-        Schema::create('company_position_details', function (Blueprint $table) {
+        Schema::create('company_position_detail', function (Blueprint $table) {
             $table->integer('company_position_detail_id');
-            $table->integer('intern_registration_company_id');
+            $table->integer('register_internship_company_id');
             $table->integer('position_id');
             $table->integer('position_quantity');
             $table->string('position_note');
@@ -29,6 +29,6 @@ class CreateCompanyPositionDetailsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('company_position_details');
+        Schema::dropIfExists('company_position_detail');
     }
 }

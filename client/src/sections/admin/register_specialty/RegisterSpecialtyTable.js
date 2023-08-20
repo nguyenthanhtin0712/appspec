@@ -99,7 +99,7 @@ const RegisterSpecialtyTable = () => {
             <IconButton component={Link} to={`/admin/register_specialty/${row.id}`}>
               <Eye />
             </IconButton>
-            <IconButton component={Link} to={`/admin/register_specialty_edit/${row.id}`}>
+            <IconButton component={Link} to={`/admin/register_specialty/edit/${row.id}`}>
               <Edit />
             </IconButton>
             <IconButton color="error" onClick={() => handleDelete(row.id)}>
