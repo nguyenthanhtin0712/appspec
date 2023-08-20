@@ -29,7 +29,6 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import InputField from 'components/input/InputField';
 import DatePickerField from 'components/input/DatePickerField';
 import SelectField from 'components/input/SelectField';
-import CircularProgress from '@mui/material/CircularProgress';
 
 const gender = [
   { id: 1, name: 'Nữ' },
@@ -50,15 +49,6 @@ const JobholderForm = ({ initialValues, action }) => {
   const handleClose = useCallback(() => {
     dispatch(setCloseDialog());
   }, [dispatch]);
-
-  if (dataDegree.length == 0 || dataTitle.length == 0 || dataAcademicField.length == 0)
-    return (
-      <>
-        <DialogContent sx={{ height: '500px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-          <CircularProgress />
-        </DialogContent>
-      </>
-    );
 
   return (
     <Formik
@@ -185,7 +175,7 @@ const JobholderForm = ({ initialValues, action }) => {
                     name="academic_field_id"
                     labelId="academic_field_id_label"
                     label="Bộ môn"
-                    value={values.academic_field_id}
+                    value={dataAcademicField.length == 0 ? '' : values.academic_field_id}
                     error={Boolean(touched.academic_field_id && errors.academic_field_id)}
                     helperText={errors.academic_field_id}
                     onChange={handleChange}
@@ -197,8 +187,8 @@ const JobholderForm = ({ initialValues, action }) => {
                   <SelectField
                     id="degree_id"
                     labelId="degree_id_label"
-                    label="Chức vụ"
-                    value={values.degree_id}
+                    label="Học vị"
+                    value={dataDegree.length == 0 ? '' : values.degree_id}
                     name="degree_id"
                     error={Boolean(touched.degree_id && errors.degree_id)}
                     helperText={errors.degree_id}
@@ -212,8 +202,8 @@ const JobholderForm = ({ initialValues, action }) => {
                   <SelectField
                     id="title_id"
                     labelId="title_id_label"
-                    label="Học vị"
-                    value={values.title_id}
+                    label="Chức vụ"
+                    value={dataTitle.length == 0 ? '' : values.title_id}
                     name="title_id"
                     error={Boolean(touched.title_id && errors.title_id)}
                     helperText={errors.title_id}
