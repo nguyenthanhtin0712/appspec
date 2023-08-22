@@ -86,6 +86,15 @@ export const deleteMajor = createAsyncThunk('major/deleteMajor', async (id, { re
   }
 });
 
+const majorDialog = {
+  open: false,
+  action: 'add',
+  initValue: {
+    major_id: '',
+    major_name: ''
+  }
+};
+
 const initialState = {
   data: [],
   isError: false,
@@ -99,14 +108,9 @@ const initialState = {
     pageIndex: 0,
     pageSize: 10
   },
-  majorDialog: {
-    open: false,
-    action: 'add',
-    initValue: {
-      major_id: '',
-      major_name: ''
-    }
-  }
+  majorDialog,
+  idDelete: '',
+  openCofirmDialog: false
 };
 
 const major = createSlice({
@@ -127,6 +131,15 @@ const major = createSlice({
     },
     setMajorDialog: (state, action) => {
       state.majorDialog = { ...state.majorDialog, ...action.payload };
+    },
+    setCloseMajorDialog: (state) => {
+      state.majorDialog = majorDialog;
+    },
+    setIdDelete: (state, action) => {
+      state.idDelete = action.payload;
+    },
+    setOpenCofirmDialog: (state, action) => {
+      state.openCofirmDialog = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -165,6 +178,15 @@ const major = createSlice({
   }
 });
 
-export const { setColumnFilters, setGlobalFilter, setSorting, setPagination, setMajorDialog } = major.actions;
+export const {
+  setColumnFilters,
+  setGlobalFilter,
+  setSorting,
+  setPagination,
+  setMajorDialog,
+  setOpenCofirmDialog,
+  setCloseMajorDialog,
+  setIdDelete
+} = major.actions;
 
 export default major.reducer;

@@ -1,4 +1,4 @@
-import React, { memo, useMemo, useCallback } from 'react';
+import React, { memo, useMemo } from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -7,20 +7,14 @@ import FormHelperText from '@mui/material/FormHelperText';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import { toast } from 'react-toastify';
-import { createMajor, setMajorDialog, updateMajor } from 'store/reducers/majorSlice';
+import { createMajor, setCloseMajorDialog, updateMajor } from 'store/reducers/majorSlice';
 import { useSelector } from 'react-redux';
 import Button from '@mui/material/Button';
 import InputField from 'components/input/InputField';
-import { useDispatch } from 'react-redux';
 import DialogTitleCustom from 'components/DialogTitleCustom';
 import { dispatch } from 'store/index';
 
 const MajorForm = ({ initialValues, action }) => {
-  const dispatch = useDispatch();
-  const handleClose = useCallback(() => {
-    dispatch(setMajorDialog({ open: false, initValue: { major_id: '', major_name: '' } }));
-  }, [dispatch]);
-
   return (
     <Formik
       initialValues={initialValues}
@@ -93,7 +87,7 @@ const MajorForm = ({ initialValues, action }) => {
             </Grid>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose} variant="contained" color="error">
+            <Button onClick={() => dispatch(setCloseMajorDialog())} variant="contained" color="error">
               Cancel
             </Button>
             <Button variant="contained" type="submit" disabled={isSubmitting}>
@@ -111,12 +105,11 @@ const MajorDialog = () => {
   const initialValues = useMemo(() => majorDialog.initValue, [majorDialog.initValue]);
   const action = useMemo(() => majorDialog.action, [majorDialog.action]);
 
-  const handleClose = () => {
-    dispatch(setMajorDialog({ open: false, initValue: { major_id: '', major_name: '' } }));
-  };
   return (
-    <Dialog open={majorDialog.open} onClose={handleClose} maxWidth="xs">
-      <DialogTitleCustom onClose={handleClose}>{action === 'add' ? 'Thêm chuyên ngành' : 'Chỉnh sửa chuyên ngành'}</DialogTitleCustom>
+    <Dialog open={majorDialog.open} onClose={() => dispatch(setCloseMajorDialog())} maxWidth="xs">
+      <DialogTitleCustom onClose={() => dispatch(setCloseMajorDialog())}>
+        {action === 'add' ? 'Thêm chuyên ngành' : 'Chỉnh sửa chuyên ngành'}
+      </DialogTitleCustom>
       <MajorForm initialValues={initialValues} action={action} />
     </Dialog>
   );

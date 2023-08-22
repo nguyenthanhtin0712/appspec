@@ -2,7 +2,7 @@ import React, { memo, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useTheme } from '@mui/material/styles';
 import { Eye, Trash, Edit } from 'iconsax-react';
-import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
 import { MaterialReactTable } from 'material-react-table';
 import {
@@ -95,7 +95,7 @@ const RegisterSpecialtyTable = () => {
         enableRowActions
         positionActionsColumn="last"
         renderRowActions={({ row }) => (
-          <Box>
+          <Stack direction="row">
             <IconButton component={Link} to={`/admin/register_specialty/${row.id}`}>
               <Eye />
             </IconButton>
@@ -105,7 +105,7 @@ const RegisterSpecialtyTable = () => {
             <IconButton color="error" onClick={() => handleDelete(row.id)}>
               <Trash />
             </IconButton>
-          </Box>
+          </Stack>
         )}
         displayColumnDefOptions={{
           'mrt-row-actions': {

@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography';
 import MajorTable from 'sections/admin/major/MajorTable';
 import MajorDialog from 'sections/admin/major/MajorDialog';
 import { dispatch } from 'store/index';
+import MajorDeleteDialog from 'sections/admin/major/MajorDeleteDialog';
 
 const MajorPage = () => {
   const handleClickOpen = () => {
@@ -23,6 +24,7 @@ const MajorPage = () => {
       </Stack>
       <MajorDialog />
       <MajorTable />
+      <MajorDeleteDialog />
     </>
   );
 };

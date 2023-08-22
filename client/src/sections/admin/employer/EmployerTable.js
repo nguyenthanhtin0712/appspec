@@ -15,6 +15,7 @@ import { dispatch } from 'store/index';
 import { Export } from 'iconsax-react';
 import { utils, writeFileXLSX } from 'xlsx';
 import { useCallback } from 'react';
+import Stack from '@mui/material/Stack';
 
 const EmployerTable = () => {
   const theme = useTheme();
@@ -125,7 +126,7 @@ const EmployerTable = () => {
         positionActionsColumn="last"
         renderRowActions={({ row }) => {
           return (
-            <Box sx={{ display: 'flex' }}>
+            <Stack direction="row">
               <IconButton
                 onClick={() => {
                   handleUpdate(row.original);
@@ -141,7 +142,7 @@ const EmployerTable = () => {
               >
                 <Trash />
               </IconButton>
-            </Box>
+            </Stack>
           );
         }}
         muiTablePaperProps={{

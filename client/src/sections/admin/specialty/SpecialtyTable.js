@@ -2,7 +2,7 @@ import React, { memo, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useTheme } from '@mui/material/styles';
 import { Edit, Trash } from 'iconsax-react';
-import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
 import { MaterialReactTable } from 'material-react-table';
 import {
@@ -130,7 +130,7 @@ const SpecialtyTable = () => {
         positionActionsColumn="last"
         renderRowActions={({ row }) => {
           return (
-            <Box>
+            <Stack direction="row">
               <IconButton
                 onClick={() => {
                   handleUpdate(row.original);
@@ -141,7 +141,7 @@ const SpecialtyTable = () => {
               <IconButton color="error" onClick={() => handleDelete(row.id)}>
                 <Trash />
               </IconButton>
-            </Box>
+            </Stack>
           );
         }}
         muiTablePaperProps={{

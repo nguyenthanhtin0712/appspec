@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useEffect, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useTheme } from '@mui/material/styles';
 import { Edit, ExportSquare, Trash } from 'iconsax-react';
@@ -20,7 +20,6 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import { toast } from 'react-toastify';
 import { dispatch } from 'store/index';
-import { utils, writeFileXLSX } from 'xlsx';
 
 const JobholderTable = () => {
   const theme = useTheme();
@@ -32,27 +31,6 @@ const JobholderTable = () => {
   useEffect(() => {
     dispatch(fetchData({ columnFilters, globalFilter, sorting, pagination }));
   }, [columnFilters, globalFilter, sorting, pagination]);
-
-  const handleExportData = useCallback(() => {
-    const wb = utils.book_new();
-    const ws = utils.json_to_sheet(data);
-    const columnWidths = {};
-
-    data.forEach((row) => {
-      Object.entries(row).forEach(([key, cell]) => {
-        const cellValue = cell !== null ? cell.toString() : '';
-        const cellLength = cellValue.length;
-        columnWidths[key] = Math.max(columnWidths[key] || 0, cellLength);
-      });
-    });
-
-    ws['!cols'] = Object.keys(columnWidths).map((key) => ({
-      width: columnWidths[key] + 2 // Adding extra padding
-    }));
-
-    utils.book_append_sheet(wb, ws, 'jobholder');
-    writeFileXLSX(wb, 'jobholder.xlsx');
-  }, [data]);
 
   const handleCloseCofirm = () => {
     setOpenCofirm(false);
@@ -167,7 +145,13 @@ const JobholderTable = () => {
         }}
         renderTopToolbarCustomActions={() => (
           <Tooltip title="Xuất Excel">
-            <IconButton color="success" onClick={handleExportData} variant="contained">
+            <IconButton
+              color="success"
+              onClick={() => {
+                alert('Chưa khả dụng');
+              }}
+              variant="contained"
+            >
               <ExportSquare variant="Bulk" />
             </IconButton>
           </Tooltip>

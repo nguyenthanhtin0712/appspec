@@ -2,7 +2,7 @@ import React, { memo, useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useTheme } from '@mui/material/styles';
 import { Edit, Trash } from 'iconsax-react';
-import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
 import { MaterialReactTable } from 'material-react-table';
 import {
@@ -107,7 +107,7 @@ const DegreeTable = () => {
         enableRowActions
         positionActionsColumn="last"
         renderRowActions={({ row }) => (
-          <Box>
+          <Stack direction="row">
             <IconButton
               onClick={() => {
                 handleUpdate(row.original);
@@ -118,7 +118,7 @@ const DegreeTable = () => {
             <IconButton color="error" onClick={() => handleDelete(row.id)}>
               <Trash />
             </IconButton>
-          </Box>
+          </Stack>
         )}
         muiTablePaperProps={{
           elevation: 0,
