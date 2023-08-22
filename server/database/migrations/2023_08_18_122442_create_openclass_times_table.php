@@ -14,9 +14,9 @@ class CreateOpenclassTimesTable extends Migration
     public function up()
     {
         Schema::create('openclass_times', function (Blueprint $table) {
-            $table->id('openclass_id');
-            $table->integer('openclass_semester');
-            $table->integer('openclass_year');
+            $table->id('openclass_time_id');
+            $table->integer('openclass_time_semester');
+            $table->integer('openclass_time_year');
         });
     }
 

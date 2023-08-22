@@ -9,7 +9,7 @@ use App\Http\Controllers\Api\JobHolderController;
 use App\Http\Controllers\Api\MajorController;
 use App\Http\Controllers\Api\RecruitmentPositionController;
 use App\Http\Controllers\Api\RegisterController;
-use App\Http\Controllers\Api\RegisterInternController;
+use App\Http\Controllers\Api\RegisterInternshipController;
 use App\Http\Controllers\Api\RegisterSpecialtyController;
 use App\Http\Controllers\Api\SpecialtyController;
 use App\Http\Controllers\Api\StudentController;
@@ -150,5 +150,5 @@ Route::get('register-specialties', [RegisterSpecialtyController::class, 'getRegi
 
 
 Route::get('recruitment-positions', [RecruitmentPositionController::class, 'index']);
-Route::get('register-interns/admin', [RegisterInternController::class, 'index']);
+Route::get('register-interns/admin', [RegisterInternshipController::class, 'index']);
 

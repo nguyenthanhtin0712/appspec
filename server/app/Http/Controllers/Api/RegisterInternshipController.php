@@ -8,7 +8,7 @@ use App\Models\RegisterInternship;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class RegisterInternController extends Controller
+class RegisterInternshipController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -24,11 +24,11 @@ class RegisterInternController extends Controller
         $sortBy = $request->input('sortBy');
         $sortOrder = $request->input('sortOrder', 'asc');
         $filters = $request->input('filters');
-        $intern_registration = RegisterInternship::query();
-        $intern_registration->where("register_internship_isDelete", "0")->latest();
-        // if ($query) {
-        //     $intern_registration->where("intern_registration_name", "LIKE", "%$query%");
-        // }
+        $intern_registration = RegisterInternship::with('internship_graduation', 'internship_graduation.openclasstime')
+        ->where("register_internship_isDelete", "0")->latest();
+        if ($query) {
+            $intern_registration->where("register_internship_id", "LIKE", "%$query%");
+        }
         if ($id) {
             $intern_registration->where('register_internship_id', $id);
         }

@@ -19,4 +19,8 @@ class InternshipGraduation extends Model
         'internship_graduation_start_date',
         'internship_graduation_end_date',
     ];
+
+    public function openclasstime(){
+        return $this->hasOne(OpenclassTime::class, 'openclass_time_id', 'openclass_time_id');
+    }
 }
