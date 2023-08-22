@@ -19,4 +19,8 @@ class RegisterInternship extends Model
         'register_internship_end_date',
         'register_internship_isDelete',
     ];
+
+    public function internship_graduation(){
+        return $this->hasOne(InternshipGraduation::class, 'internship_graduation_id', 'register_internship_id');
+    }
 }

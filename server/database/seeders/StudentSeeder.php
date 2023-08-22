@@ -29,7 +29,8 @@ class StudentSeeder extends Seeder
                 'student_score' => round(randomDecimal(10, 40, 1) / 10, 2),
                 'student_course' => 2021,
                 'major_id' => $randomMajor,
-                'register_specialty_id' => 1
+                'register_specialty_id' => 1,
+                'company_position_detail_id' => 1
                 // 'specialty_id' => $randomSpecialty
             ]);
             $student->save();

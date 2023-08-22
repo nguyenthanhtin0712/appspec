@@ -10,12 +10,12 @@ class OpenclassTime extends Model
 {
     use HasFactory, HasRoles;
 
-    protected $primaryKey = 'openclass_id';
+    protected $primaryKey = 'openclass_time_id';
     public $timestamps = false;
 
     protected $fillable = [
-        'openclass_id',
-        'openclass_semester',
-        'openclass_year',
+        'openclass_time_id',
+        'openclass_time_semester',
+        'openclass_time_year',
     ];
 }

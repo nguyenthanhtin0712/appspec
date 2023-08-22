@@ -15,18 +15,18 @@ class OpenclassTimeSeeder extends Seeder
     public function run()
     {
         OpenclassTime::create([
-            'openclass_semester' => 1,
-            'openclass_year' => 2023,
+            'openclass_time_semester' => 1,
+            'openclass_time_year' => 2023,
         ]);
 
         OpenclassTime::create([
-            'openclass_semester' => 2,
-            'openclass_year' => 2023,
+            'openclass_time_semester' => 2,
+            'openclass_time_year' => 2023,
         ]);
 
         OpenclassTime::create([
-            'openclass_semester' => 3,
-            'openclass_year' => 2023,
+            'openclass_time_semester' => 3,
+            'openclass_time_year' => 2023,
         ]);
     }
 }
