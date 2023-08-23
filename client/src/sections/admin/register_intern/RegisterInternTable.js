@@ -1,7 +1,7 @@
 import React, { memo, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useTheme } from '@mui/material/styles';
-import { Eye, Trash, Edit } from 'iconsax-react';
+import { Eye, Trash, Edit, ArrowDown3 } from 'iconsax-react';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import { MaterialReactTable } from 'material-react-table';
@@ -42,14 +42,33 @@ const RegisterSpecialtyTable = () => {
   const columns = React.useMemo(
     () => [
       {
-        accessorKey: 'internship_graduation_id',
+        accessorKey: 'register_internship_id',
         header: 'ID',
         size: 30
       },
       {
-        accessorKey: 'intern_registration_name',
+        accessorKey: 'register_specialty_name',
         header: 'Tên đợt',
-        size: 240
+        size: 240,
+        Cell: ({ cell }) => {
+          console.log(cell.row.original.internship_graduation.openclasstime);
+          return (
+            <div>
+              Đợt đăng ký năm {cell.row.original.internship_graduation.openclasstime.openclass_time_year} học kỳ{' '}
+              {cell.row.original.internship_graduation.openclasstime.openclass_time_semester}
+            </div>
+          );
+        }
+      },
+      {
+        header: 'Năm',
+        size: 10,
+        Cell: ({ cell }) => cell.row.original.internship_graduation.openclasstime.openclass_time_year
+      },
+      {
+        header: 'Học kỳ',
+        size: 10,
+        Cell: ({ cell }) => cell.row.original.internship_graduation.openclasstime.openclass_time_semester
       },
       {
         accessorKey: 'intern_registration_start_date',
@@ -75,7 +94,7 @@ const RegisterSpecialtyTable = () => {
       <MaterialReactTable
         columns={columns}
         data={data}
-        getRowId={(row) => row.internship_graduation_id}
+        getRowId={(row) => row.register_internship_id}
         manualFiltering
         manualPagination
         manualSorting
@@ -97,7 +116,10 @@ const RegisterSpecialtyTable = () => {
         enableRowActions
         positionActionsColumn="last"
         renderRowActions={({ row }) => (
-          <Box>
+          <Box sx={{ display: 'flex' }}>
+            <IconButton component={Link} to={`/admin/assignment_intern/${row.id}`}>
+              <ArrowDown3 />
+            </IconButton>
             <IconButton component={Link} to={`/admin/register_specialty/${row.id}`}>
               <Eye />
             </IconButton>

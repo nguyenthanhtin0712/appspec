@@ -20,9 +20,6 @@ const RegisterInternPageCreate = Loadable(lazy(() => import('pages/admin/registe
 const RegisterInternPageEdit = Loadable(lazy(() => import('pages/admin/register-intern/register-intern-edit')));
 const RegisterInternPageIndex = Loadable(lazy(() => import('pages/admin/register-intern/register-intern-index')));
 const RegisterInternPageResult = Loadable(lazy(() => import('pages/admin/register-intern/register-intern-result')));
-const AssignmentInternPageCreate = Loadable(lazy(() => import('pages/admin/assignment-intern/assignment-intern-create')));
-const AssignmentInternPageEdit = Loadable(lazy(() => import('pages/admin/assignment-intern/assignment-intern-edit')));
-const AssignmentInternPageIndex = Loadable(lazy(() => import('pages/admin/assignment-intern/assignment-intern-index')));
 const AssignmentInternPageResult = Loadable(lazy(() => import('pages/admin/assignment-intern/assignment-intern-result')));
 const SpecialtyPage = Loadable(lazy(() => import('pages/admin/specialty')));
 const StudentPage = Loadable(lazy(() => import('pages/admin/student')));
@@ -89,23 +86,11 @@ const AdminRoutes = {
     },
     {
       path: 'register_intern/:Id',
-      element: <PrivateRoute component={AssignmentInternPageResult} requiredPermissions={['register_intern.view']} />
-    },
-    {
-      path: 'assignment_intern',
-      element: <PrivateRoute component={AssignmentInternPageIndex} requiredPermissions={[]} />
-    },
-    {
-      path: 'assignment_intern/create',
-      element: <PrivateRoute component={AssignmentInternPageCreate} requiredPermissions={[]} />
-    },
-    {
-      path: 'assignment_intern_edit/:id',
-      element: <PrivateRoute component={AssignmentInternPageEdit} requiredPermissions={[]} />
+      element: <PrivateRoute component={RegisterInternPageResult} requiredPermissions={['register_intern.view']} />
     },
     {
       path: 'assignment_intern/:Id',
-      element: <PrivateRoute component={RegisterInternPageResult} requiredPermissions={[]} />
+      element: <PrivateRoute component={AssignmentInternPageResult} requiredPermissions={[]} />
     },
     {
       path: 'specialty',

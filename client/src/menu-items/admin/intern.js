@@ -28,13 +28,6 @@ const intern = {
       title: 'Đăng ký thực tập',
       type: 'item',
       url: '/admin/register_intern',
-      icon: icons.intern
-    },
-    {
-      id: 'assignment_intern',
-      title: 'Phân công',
-      type: 'item',
-      url: '/admin/assignment_intern',
       icon: icons.assignment
     }
   ]

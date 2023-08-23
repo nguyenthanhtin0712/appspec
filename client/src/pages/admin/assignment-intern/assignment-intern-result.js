@@ -12,6 +12,7 @@ import { setColumnFilters } from 'store/reducers/registerSpecialtyUserSlice';
 import { useTheme } from '@mui/material/styles';
 import { formatDateTimeDisplay } from 'utils/formatDateTime';
 import { ExportResultRegisterSpecialty } from 'export-excel/export-result-register-specialty';
+import SpecialityItem from 'sections/user/register_speciality/register/SpecialityItem';
 const RegisterSpecialtyResult = () => {
   const { Id } = useParams();
   const theme = useTheme();
@@ -46,77 +47,99 @@ const RegisterSpecialtyResult = () => {
 
   return (
     <>
-      <Stack direction="row" justifyContent="space-between" flexWrap="wrap">
-        <Stack mb={3} spacing={1}>
-          <Typography variant="h4" component="h1">
-            {userRegistrationPeriod.register_specialty_name}
-          </Typography>
-          <Stack direction="row" spacing={2} alignItems={'center'}>
-            <Typography variant="h6">Từ {formatDateTimeDisplay(userRegistrationPeriod.register_specialty_start_date)}</Typography>
-            <ArrowRight size="25" color={theme.palette.primary.main} />
-            <Typography variant="h6">Đến {formatDateTimeDisplay(userRegistrationPeriod.register_specialty_end_date)}</Typography>
+      <Box marginRight="300px">
+        <Stack direction="row" justifyContent="space-between" flexWrap="wrap">
+          <Stack mb={3} spacing={1}>
+            <Typography variant="h4" component="h1">
+              {userRegistrationPeriod.register_specialty_name}
+            </Typography>
+            <Stack direction="row" spacing={2} alignItems={'center'}>
+              <Typography variant="h6">Từ {formatDateTimeDisplay(userRegistrationPeriod.register_specialty_start_date)}</Typography>
+              <ArrowRight size="25" color={theme.palette.primary.main} />
+              <Typography variant="h6">Đến {formatDateTimeDisplay(userRegistrationPeriod.register_specialty_end_date)}</Typography>
+            </Stack>
           </Stack>
-        </Stack>
-        <Box my="auto">
-          <Button
-            variant="contained"
-            color="success"
-            id="fade-button"
-            aria-controls={open ? 'fade-menu' : undefined}
-            aria-haspopup="true"
-            aria-expanded={open ? 'true' : undefined}
-            onClick={handleClick}
-            startIcon={<TableDocument />}
-          >
-            Xuất dữ liệu
-          </Button>
-          <Menu
-            id="fade-menu"
-            MenuListProps={{
-              'aria-labelledby': 'fade-button'
-            }}
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleClose}
-            TransitionComponent={Fade}
-            anchorOrigin={{
-              vertical: 'bottom',
-              horizontal: 'right'
-            }}
-            transformOrigin={{
-              vertical: 'top',
-              horizontal: 'right'
-            }}
-            sx={{ mt: 1 }}
-          >
-            {majors.map((major) => (
-              <MenuItem onClick={() => handleExport(major?.major_id)} key={major?.major_id}>
-                {major?.major_name}
-              </MenuItem>
-            ))}
-          </Menu>
-        </Box>
-      </Stack>
-      <Box>
-        <Stack spacing={2}>
-          <Box>
-            <Tabs
-              value={majorId}
-              onChange={handleChange}
-              variant="scrollable"
-              scrollButtons="auto"
-              aria-label="scrollable auto tabs example"
+          <Box my="auto">
+            <Button
+              variant="contained"
+              color="success"
+              id="fade-button"
+              aria-controls={open ? 'fade-menu' : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? 'true' : undefined}
+              onClick={handleClick}
+              startIcon={<TableDocument />}
+            >
+              Xuất dữ liệu
+            </Button>
+            <Menu
+              id="fade-menu"
+              MenuListProps={{
+                'aria-labelledby': 'fade-button'
+              }}
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              TransitionComponent={Fade}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'right'
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right'
+              }}
+              sx={{ mt: 1 }}
             >
               {majors.map((major) => (
-                <Tab key={major?.major_id} value={major?.major_id} label={`Ngành ${major?.major_name}`} />
+                <MenuItem onClick={() => handleExport(major?.major_id)} key={major?.major_id}>
+                  {major?.major_name}
+                </MenuItem>
               ))}
-            </Tabs>
-            <Divider />
+            </Menu>
           </Box>
-          <Box>
-            <SpecialityContainer></SpecialityContainer>
-          </Box>
-          <ResultTableAdmin></ResultTableAdmin>
+        </Stack>
+        <Box>
+          <Stack spacing={2}>
+            <Box>
+              <Tabs
+                value={majorId}
+                onChange={handleChange}
+                variant="scrollable"
+                scrollButtons="auto"
+                aria-label="scrollable auto tabs example"
+              >
+                {majors.map((major) => (
+                  <Tab key={major?.major_id} value={major?.major_id} label={`Ngành ${major?.major_name}`} />
+                ))}
+              </Tabs>
+              <Divider />
+            </Box>
+            <Box>
+              <SpecialityContainer></SpecialityContainer>
+            </Box>
+            <ResultTableAdmin></ResultTableAdmin>
+          </Stack>
+        </Box>
+      </Box>
+      <Box
+        sx={{
+          width: '300px',
+          height: '100vh',
+          position: 'fixed',
+          right: '0',
+          top: '74px',
+          bottom: '30px',
+          backgroundColor: '#ccc',
+          marginLeft: '100px'
+        }}
+      >
+        <Typography variant="h4" component="h1">
+          Danh sách giảng viên
+        </Typography>
+        <Stack direction="row" justifyContent="space-between" flexWrap="wrap">
+          <SpecialityItem width name="Nguyễn Thanh Sang" total="10" registered_quantity="12"></SpecialityItem>
+          <SpecialityItem name="Nguyễn Thanh Sang" total="10" registered_quantity="12"></SpecialityItem>
         </Stack>
       </Box>
     </>
