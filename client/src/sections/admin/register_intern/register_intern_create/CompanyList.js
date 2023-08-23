@@ -6,10 +6,13 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material';
 import Avatar from 'components/@extended/Avatar';
 import CompanySearchForm from 'sections/admin/register_intern/register_intern_create/CompanySearchForm';
+import CompanyItem from 'sections/admin/register_intern/register_intern_create/CompanyItem';
+import { useSelector } from 'react-redux';
 
 const CompanyList = () => {
   const theme = useTheme();
   const matches = useMediaQuery((theme) => theme.breakpoints.down('sm'));
+  const companySelected = useSelector((state) => state.create_register_intern.companySelected);
   return (
     <>
       <Grid container spacing={2}>
@@ -23,12 +26,19 @@ const CompanyList = () => {
             color="success"
             style={{ cursor: 'pointer' }}
             onClick={() => {
-              alert('ok');
+              alert('Tính năng chưa khả dụng');
             }}
           >
             <Add color={theme.palette.success.darker} />
           </Avatar>
         </Grid>
+      </Grid>
+      <Grid container mt={1} spacing={2}>
+        {companySelected.map((company) => (
+          <Grid item xs={12} sm={4} key={company.company_id}>
+            <CompanyItem company={company} />
+          </Grid>
+        ))}
       </Grid>
     </>
   );

@@ -28,7 +28,7 @@ class InternCompanyController extends Controller
         $filters = $request->input('filters');
         $company = InternshipCompany::where("company_isDelete", "0");
         if ($query) {
-            $company->where("company_code", "LIKE", "%$query%");
+            $company->where("company_name", "LIKE", "%$query%");
         }
         if ($id) {
             $company->where('company_id', $id);

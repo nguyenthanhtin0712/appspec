@@ -12,7 +12,7 @@ class InternshipGraduation extends Model
 
     protected $primaryKey = 'internship_graduation_id';
     public $timestamps = false;
-
+    protected $hidden = ['created_at', 'updated_at'];
     protected $fillable = [
         'internship_graduation_id',
         'openclass_time_id',
@@ -20,7 +20,8 @@ class InternshipGraduation extends Model
         'internship_graduation_end_date',
     ];
 
-    public function openclasstime(){
+    public function openclasstime()
+    {
         return $this->hasOne(OpenclassTime::class, 'openclass_time_id', 'openclass_time_id');
     }
 }

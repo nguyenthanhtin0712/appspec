@@ -13,6 +13,7 @@ class RegisterInternship extends Model
     protected $table = 'register_internship';
     protected $primaryKey = 'register_internship_id';
     public $timestamps = true;
+    protected $hidden = ['created_at', 'updated_at'];
     protected $fillable = [
         'register_internship_id',
         'register_internship_start_date',
@@ -20,7 +21,8 @@ class RegisterInternship extends Model
         'register_internship_isDelete',
     ];
 
-    public function internship_graduation(){
+    public function internship_graduation()
+    {
         return $this->hasOne(InternshipGraduation::class, 'internship_graduation_id', 'register_internship_id');
     }
 }
