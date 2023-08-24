@@ -16,10 +16,14 @@ class CreateJobHoldersTable extends Migration
         Schema::create('job_holders', function (Blueprint $table) {
             $table->integer('user_id');
             $table->string('jobholder_code');
-            $table->integer('degree_id');
             $table->integer('title_id');
             $table->string('academic_field_id');
             $table->integer('jobholder_isLeader');
+            $table->string('jobholder_unit');
+            $table->string('jobholder_specialty');
+            $table->string('jobholder_position');
+            $table->string('jobholder_type');
+            $table->string('jobholder_degree');
             $table->integer('jobholder_isDelete')->default(0);
         });
     }
