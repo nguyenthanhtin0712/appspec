@@ -130,7 +130,7 @@ const RegisterSpecialtyResult = () => {
           right: '0',
           top: '74px',
           bottom: '30px',
-          backgroundColor: '#ccc',
+          backgroundColor: '#fff',
           marginLeft: '100px'
         }}
       >

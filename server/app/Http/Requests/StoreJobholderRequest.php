@@ -33,7 +33,6 @@ class StoreJobholderRequest extends FormRequest
             "user_birthday" => "required",
             "user_password" => "required",
             "jobholder_code" => "required|unique:job_holders,jobholder_code",
-            "degree_id" => "required",
             "title_id" => "required",
             "academic_field_id" => "required",
             "jobholder_isLeader" => "required"

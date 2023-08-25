@@ -28,6 +28,7 @@ const JobholderTable = () => {
   const { data, isError, isLoading, isRefetching, rowCount, columnFilters, globalFilter, sorting, pagination } = useSelector(
     (state) => state.jobholder
   );
+  console.log('data', data);
   useEffect(() => {
     dispatch(fetchData({ columnFilters, globalFilter, sorting, pagination }));
   }, [columnFilters, globalFilter, sorting, pagination]);
@@ -53,7 +54,7 @@ const JobholderTable = () => {
         size: 5
       },
       {
-        accessorKey: 'degree.degree_name',
+        accessorKey: 'jobholder_degree',
         header: 'Học vị',
         size: 5
       },
@@ -78,16 +79,24 @@ const JobholderTable = () => {
 
   const handleUpdate = (data) => {
     const value = {
+      user_id: data?.user.user_id,
       user_firstname: data?.user?.user_firstname,
       user_lastname: data?.user?.user_lastname,
       user_gender: data?.user?.user_gender,
-      user_birthday: null,
-      user_password: 'password',
+      user_birthday: data?.user?.user_birthday || null,
+      user_password: '',
+      user_phone: data?.user?.user_phone,
+      user_email: data?.user?.user_email,
+      jobholder_unit: data?.jobholder_unit,
+      jobholder_specialty: data?.jobholder_specialty,
+      jobholder_position: data?.jobholder_position,
+      jobholder_type: data?.jobholder_type,
+      jobholder_degree: data?.jobholder_degree,
       jobholder_code: data?.jobholder_code,
       degree_id: data?.degree_id || '',
       title_id: data?.title_id || '',
       academic_field_id: data?.academic_field_id || '',
-      jobholder_isLeader: data?.jobholder_isLeader
+      jobholder_isLeader: data?.jobholder_isLeader == 1 ? true : false
     };
     dispatch(setJobholderDialog({ open: true, action: 'update', initValue: value }));
   };

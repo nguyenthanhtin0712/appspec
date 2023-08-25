@@ -87,7 +87,8 @@ export const createJobholder = createAsyncThunk('jobholder/createJobholder', asy
 
 export const updateJobholder = createAsyncThunk('jobholder/updateJobholder', async (jobholder, { rejectWithValue }) => {
   try {
-    const response = await axios.put(`${API_BASE_URL}/jobholders/${jobholder.jobholder_id}`, jobholder);
+    jobholder.user_birthday = formatDateTimeSubmit(jobholder.user_birthday);
+    const response = await axios.put(`${API_BASE_URL}/jobholders/${jobholder.user_id}`, jobholder);
     return response.data;
   } catch (error) {
     if (error.response && error.response.data && error.response.data.errors) {
@@ -138,8 +139,14 @@ const initialState = {
       user_gender: '',
       user_birthday: null,
       user_password: '',
+      user_phone: '',
+      user_email: '',
       jobholder_code: '',
-      degree_id: '',
+      jobholder_unit: '',
+      jobholder_specialty: '',
+      jobholder_position: '',
+      jobholder_type: '',
+      jobholder_degree: '',
       title_id: '',
       academic_field_id: '',
       jobholder_isLeader: false
@@ -174,8 +181,14 @@ const jobholder = createSlice({
         user_gender: '',
         user_birthday: null,
         user_password: '',
+        user_phone: '',
+        user_email: '',
         jobholder_code: '',
-        degree_id: '',
+        jobholder_unit: '',
+        jobholder_specialty: '',
+        jobholder_position: '',
+        jobholder_type: '',
+        jobholder_degree: '',
         title_id: '',
         academic_field_id: '',
         jobholder_isLeader: false
@@ -214,7 +227,7 @@ const jobholder = createSlice({
       })
       .addCase(updateJobholder.fulfilled, (state, action) => {
         const updatedJobholder = action.payload.data;
-        const index = state.data.findIndex((jobholder) => jobholder.jobholder_id === updatedJobholder.jobholder_id);
+        const index = state.data.findIndex((jobholder) => jobholder.jobholder_code === updatedJobholder.jobholder_code);
         if (index !== -1) {
           state.data[index] = updatedJobholder;
           state.jobholderDialog.open = false;

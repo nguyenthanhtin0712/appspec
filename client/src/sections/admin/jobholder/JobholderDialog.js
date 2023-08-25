@@ -13,14 +13,7 @@ import Button from '@mui/material/Button';
 import { useDispatch } from 'react-redux';
 import DialogTitleCustom from 'components/DialogTitleCustom';
 import { dispatch } from 'store/index';
-import {
-  createJobholder,
-  updateJobholder,
-  getAllDegree,
-  getAllTitle,
-  getAllAcademicField,
-  setCloseDialog
-} from 'store/reducers/jobholderSlice';
+import { createJobholder, updateJobholder, getAllTitle, getAllAcademicField, setCloseDialog } from 'store/reducers/jobholderSlice';
 import Stack from '@mui/material/Stack';
 import Switch from '@mui/material/Switch';
 import Box from '@mui/material/Box';
@@ -29,19 +22,22 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import InputField from 'components/input/InputField';
 import DatePickerField from 'components/input/DatePickerField';
 import SelectField from 'components/input/SelectField';
+import { IconButton, InputAdornment, InputLabel, OutlinedInput } from '@mui/material';
+import { Brush2 } from 'iconsax-react';
+import dayjs from 'dayjs';
 
 const gender = [
-  { id: 1, name: 'Nữ' },
-  { id: 0, name: 'Nam' }
+  { id: 0, name: 'Nam' },
+  { id: 1, name: 'Nữ' }
 ];
 
 const JobholderForm = ({ initialValues, action }) => {
   const dispatch = useDispatch();
-  const { dataDegree, dataTitle, dataAcademicField } = useSelector((state) => state.jobholder);
+  const { dataTitle, dataAcademicField } = useSelector((state) => state.jobholder);
 
   useEffect(() => {
     const fetchData = async () => {
-      await Promise.all([dispatch(getAllDegree()), dispatch(getAllTitle()), dispatch(getAllAcademicField())]);
+      await Promise.all([dispatch(getAllTitle()), dispatch(getAllAcademicField())]);
     };
     fetchData();
   }, [dispatch]);
@@ -50,25 +46,54 @@ const JobholderForm = ({ initialValues, action }) => {
     dispatch(setCloseDialog());
   }, [dispatch]);
 
+  const validateAdd = Yup.object().shape({
+    user_firstname: Yup.string().max(255).required('Họ sinh viên là bắt buộc!'),
+    user_lastname: Yup.string().max(255).required('Tên sinh viên là bắt buộc!'),
+    user_gender: Yup.string().max(255).required('Vui lòng chọn giới tính!'),
+    user_email: Yup.string().max(255).required('Vui nhập email'),
+    user_phone: Yup.string().max(255).required('Vui nhập số điện thoại'),
+    user_birthday: Yup.date().typeError('Vui lòng nhập đầy đủ!').required('Thời gian bắt đầu là bắt buộc'),
+    user_password: Yup.string().max(255).required('Vui lòng nhập mật khẩu'),
+    jobholder_code: Yup.string().max(255).required('Mã viên chức là bắt buộc!'),
+    jobholder_position: Yup.string().max(255).required('Vị trí việc làm là bắt buộc!'),
+    jobholder_type: Yup.string().max(255).required('Loại giảng viên là bắt buộc!'),
+    jobholder_unit: Yup.string().max(255).required('Đơn vị công tác là bắt buộc!'),
+    jobholder_degree: Yup.string().max(255).required('Học vị là  là bắt buộc!'),
+    jobholder_specialty: Yup.string().max(255).required('Chuyên ngành giảng viên là bắt buộc!'),
+    title_id: Yup.string().max(255).required('Chức vụ là bắt buộc!'),
+    academic_field_id: Yup.string().max(255).required('Bộ môn là bắt buộc!')
+  });
+
+  const validateUpdate = Yup.object().shape({
+    user_firstname: Yup.string().max(255).required('Họ sinh viên là bắt buộc!'),
+    user_lastname: Yup.string().max(255).required('Tên sinh viên là bắt buộc!'),
+    user_gender: Yup.string().max(255).required('Vui lòng chọn giới tính!'),
+    user_email: Yup.string().max(255).required('Vui nhập email'),
+    user_phone: Yup.string().max(255).required('Vui nhập số điện thoại'),
+    user_birthday: Yup.date().typeError('Vui lòng nhập đầy đủ!').required('Thời gian bắt đầu là bắt buộc'),
+    jobholder_code: Yup.string().max(255).required('Mã viên chức là bắt buộc!'),
+    jobholder_position: Yup.string().max(255).required('Vị trí việc làm là bắt buộc!'),
+    jobholder_type: Yup.string().max(255).required('Loại giảng viên là bắt buộc!'),
+    jobholder_unit: Yup.string().max(255).required('Đơn vị công tác là bắt buộc!'),
+    jobholder_degree: Yup.string().max(255).required('Học vị là  là bắt buộc!'),
+    jobholder_specialty: Yup.string().max(255).required('Chuyên ngành giảng viên là bắt buộc!'),
+    title_id: Yup.string().max(255).required('Chức vụ là bắt buộc!'),
+    academic_field_id: Yup.string().max(255).required('Bộ môn là bắt buộc!')
+  });
+
   return (
     <Formik
       initialValues={initialValues}
-      validationSchema={Yup.object().shape({
-        user_firstname: Yup.string().max(255).required('Họ sinh viên là bắt buộc!'),
-        user_lastname: Yup.string().max(255).required('Tên sinh viên là bắt buộc!'),
-        user_gender: Yup.string().max(255).required('Vui giới tính!'),
-        user_birthday: Yup.date().typeError('Vui lòng nhập đầy đủ!').required('Thời gian bắt đầu là bắt buộc'),
-        user_password: Yup.string().max(255).required('Vui lòng nhập mật khẩu'),
-        jobholder_code: Yup.string().max(255).required('Mã viên chức là bắt buộc!'),
-        degree_id: Yup.string().max(255).required('Học vị là bắt buộc!'),
-        title_id: Yup.string().max(255).required('Chức vụ là bắt buộc!'),
-        academic_field_id: Yup.string().max(255).required('Bộ môn là bắt buộc!')
-      })}
+      validationSchema={action == 'add' ? validateAdd : validateUpdate}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
-        values.jobholder_isLeader = values.jobholder_isLeader ? 1 : 0;
+        const value = {
+          ...values,
+          jobholder_isLeader: values.jobholder_isLeader ? 1 : 0
+        };
+        console.log('value', value);
         try {
           const actionType = action === 'update' ? updateJobholder : createJobholder;
-          const result = await dispatch(actionType(values));
+          const result = await dispatch(actionType(value));
           if (result && !result.error) {
             setStatus({ success: true });
             setSubmitting(false);
@@ -140,6 +165,30 @@ const JobholderForm = ({ initialValues, action }) => {
                     error={Boolean(touched.user_lastname && errors.user_lastname)}
                     helperText={errors.user_lastname}
                   />
+                  <InputField
+                    id="user_email"
+                    type="text"
+                    value={values.user_email}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    placeholder="Nhập email"
+                    label="Email"
+                    fullWidth
+                    error={Boolean(touched.user_email && errors.user_email)}
+                    helperText={errors.user_email}
+                  />
+                  <InputField
+                    id="user_phone"
+                    type="text"
+                    value={values.user_phone}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    placeholder="Nhập số điện thoại"
+                    label="SDT"
+                    fullWidth
+                    error={Boolean(touched.user_phone && errors.user_phone)}
+                    helperText={errors.user_phone}
+                  />
                   <SelectField
                     id="user_gender"
                     labelId="user_gender_label"
@@ -162,14 +211,74 @@ const JobholderForm = ({ initialValues, action }) => {
                     setFieldValue={setFieldValue}
                     setFieldError={setFieldError}
                     error={!!(touched.user_birthday && errors.user_birthday)}
-                    value={values.user_birthday}
+                    value={action == 'add' ? values.user_birthday : dayjs(dayjs(values.user_birthday).valueOf())}
                     helperText={errors.user_birthday}
+                    fullWidth
+                  />
+                  <InputField
+                    id="jobholder_position"
+                    type="text"
+                    value={values.jobholder_position}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    placeholder="Nhập vị trí việc làm"
+                    label="Vị trí việc làm"
+                    error={Boolean(touched.jobholder_position && errors.jobholder_position)}
+                    helperText={errors.jobholder_position}
                     fullWidth
                   />
                 </Stack>
               </Grid>
               <Grid item xs={12} sm={6}>
                 <Stack spacing={2}>
+                  <InputField
+                    id="jobholder_type"
+                    type="text"
+                    value={values.jobholder_type}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    placeholder="Nhập loại giảng viên"
+                    label="Loại giảng viên"
+                    fullWidth
+                    error={Boolean(touched.jobholder_type && errors.jobholder_type)}
+                    helperText={errors.jobholder_type}
+                  />
+                  <InputField
+                    id="jobholder_specialty"
+                    type="text"
+                    value={values.jobholder_specialty}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    placeholder="Nhập chuyên ngành"
+                    label="Chuyên ngành"
+                    fullWidth
+                    error={Boolean(touched.jobholder_specialty && errors.jobholder_specialty)}
+                    helperText={errors.jobholder_specialty}
+                  />
+                  <InputField
+                    id="jobholder_unit"
+                    type="text"
+                    value={values.jobholder_unit}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    placeholder="Nhập đơn vị công tác"
+                    label="Đơn vị"
+                    fullWidth
+                    error={Boolean(touched.jobholder_unit && errors.jobholder_unit)}
+                    helperText={errors.jobholder_unit}
+                  />
+                  <InputField
+                    id="jobholder_degree"
+                    type="text"
+                    value={values.jobholder_degree}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    placeholder="Nhập học vị"
+                    label="Học vị"
+                    fullWidth
+                    error={Boolean(touched.jobholder_degree && errors.jobholder_degree)}
+                    helperText={errors.jobholder_degree}
+                  />
                   <SelectField
                     id="academic_field_id"
                     name="academic_field_id"
@@ -185,21 +294,6 @@ const JobholderForm = ({ initialValues, action }) => {
                     itemText="academic_field_name"
                   />
                   <SelectField
-                    id="degree_id"
-                    labelId="degree_id_label"
-                    label="Học vị"
-                    value={dataDegree.length == 0 ? '' : values.degree_id}
-                    name="degree_id"
-                    error={Boolean(touched.degree_id && errors.degree_id)}
-                    helperText={errors.degree_id}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    list={dataDegree}
-                    itemValue="degree_id"
-                    itemText="degree_name"
-                  />
-
-                  <SelectField
                     id="title_id"
                     labelId="title_id_label"
                     label="Chức vụ"
@@ -213,20 +307,37 @@ const JobholderForm = ({ initialValues, action }) => {
                     itemValue="title_id"
                     itemText="title_name"
                   />
+                  {action == 'add' && (
+                    <Stack spacing={1} mb="10px">
+                      <InputLabel htmlFor="user_password">Mật khẩu</InputLabel>
+                      <OutlinedInput
+                        id="user_password"
+                        type="text"
+                        value={values.user_password}
+                        name="user_password"
+                        onBlur={handleBlur}
+                        onChange={handleChange}
+                        placeholder="Nhập mật khẩu"
+                        fullWidth
+                        endAdornment={
+                          <InputAdornment position="end">
+                            <IconButton
+                              component="span"
+                              sx={{ p: '0' }}
+                              onClick={() => {
+                                setFieldValue('user_password', 'password');
+                              }}
+                            >
+                              <Brush2 />
+                            </IconButton>
+                          </InputAdornment>
+                        }
+                        error={Boolean(touched.user_password && errors.user_password)}
+                      />
+                      {errors.user_password && <FormHelperText error>{errors.user_password}</FormHelperText>}
+                    </Stack>
+                  )}
 
-                  <InputField
-                    id="user_password"
-                    type="password"
-                    value={values.user_password}
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    placeholder="Nhập mật khẩu"
-                    label="Mật khẩu"
-                    fullWidth
-                    disabled={action == 'update' ? true : false}
-                    error={Boolean(touched.user_password && errors.user_password)}
-                    helperText={errors.user_password}
-                  />
                   <Box mt={2}>
                     <label htmlFor="jobholder_isLeader">Trưởng bộ môn</label>
                     <Switch

@@ -18,10 +18,14 @@ class JobHolder extends Model
     protected $fillable = [
         'user_id',
         'jobholder_code',
-        'degree_id',
         'title_id',
         'academic_field_id',
         'jobholder_isLeader',
+        'jobholder_unit',
+        'jobholder_specialty',
+        'jobholder_position',
+        'jobholder_type',
+        'jobholder_degree',
         'jobholder_isDelete'
     ];
 
@@ -29,9 +33,6 @@ class JobHolder extends Model
         return $this->hasOne(User::class, 'user_id', 'user_id');
     }
 
-    public function degree() {
-        return $this->belongsTo(Degree::class, 'degree_id', 'degree_id');
-    }
 
     public function title() {
         return $this->belongsTo(Title::class, 'title_id', 'title_id');

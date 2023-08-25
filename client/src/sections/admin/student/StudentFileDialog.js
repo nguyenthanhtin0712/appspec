@@ -105,7 +105,7 @@ const StudentFileDialog = () => {
                       fullWidth
                       error={Boolean(touched.file_student && errors.file_student)}
                     />
-                    {touched.file_student && errors.file_student && (
+                    {errors.file_student && (
                       <FormHelperText error id="standard-weight-helper-text-file_student">
                         {errors.file_student}
                       </FormHelperText>
