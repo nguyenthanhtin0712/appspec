@@ -31,6 +31,19 @@ export const getAllRecruitmentPosition = createAsyncThunk('create_register_inter
   }
 });
 
+export const getUnregisteredInternshipGraduations = createAsyncThunk(
+  'create_register_intern/getUnregisteredInternshipGraduations',
+  async () => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/intership-graduations/unregistered`);
+      return response.data;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+);
+
 export const createRecruitmentPosition = createAsyncThunk(
   'create_register_intern/createRecruitmentPosition',
   async (position, { rejectWithValue }) => {
@@ -58,7 +71,8 @@ const initialState = {
   positionOptions: {
     isLoading: false,
     data: []
-  }
+  },
+  unregisteredGraduations: []
 };
 
 const create_register_intern = createSlice({
@@ -152,6 +166,9 @@ const create_register_intern = createSlice({
       })
       .addCase(createRecruitmentPosition.fulfilled, (state, action) => {
         state.positionOptions.data.push(action.payload.data);
+      })
+      .addCase(getUnregisteredInternshipGraduations.fulfilled, (state, action) => {
+        state.unregisteredGraduations = action.payload.data;
       });
   }
 });

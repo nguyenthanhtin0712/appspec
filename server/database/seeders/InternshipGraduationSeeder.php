@@ -27,7 +27,7 @@ class InternshipGraduationSeeder extends Seeder
         ]);
 
         InternshipGraduation::create([
-            'openclass_time_id' => 1,
+            'openclass_time_id' => 3,
             'internship_graduation_start_date' => "2023-08-01",
             'internship_graduation_end_date' => "2023-12-01",
         ]);

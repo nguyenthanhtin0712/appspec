@@ -52,7 +52,7 @@ const CompanyList = () => {
 const CompanyEmpty = () => {
   const theme = useTheme();
   return (
-    <Stack justifyContent="center" alignItems="center" spacing={3} mt={3}>
+    <Stack justifyContent="center" alignItems="center" spacing={3} p={5}>
       <Building3 size={100} variant="Bulk" color={theme.palette.secondary.main} />
       <Typography fontSize={17}>Chưa có công ty nào được chọn</Typography>
     </Stack>

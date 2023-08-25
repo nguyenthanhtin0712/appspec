@@ -5,17 +5,17 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import FormHelperText from '@mui/material/FormHelperText';
 
-const SelectField = ({ id, labelId, label, value, name, error, helperText, list, itemValue, itemText, ...props }) => {
+const SelectField = ({ id, labelId, label, value, name, error, helperText, list, itemValue, itemText, getOptionLabel, ...props }) => {
   const memoizedOptions = React.useMemo(
     () =>
       list &&
       list.length > 0 &&
       list.map((item) => (
         <MenuItem key={item[itemValue] ?? item} value={item[itemValue] ?? item}>
-          {item[itemText] ?? item}
+          {getOptionLabel ? getOptionLabel(item) : item[itemText] ?? item}
         </MenuItem>
       )),
-    [itemText, itemValue, list]
+    [getOptionLabel, itemText, itemValue, list]
   );
 
   return (

@@ -18,6 +18,7 @@ use App\Http\Controllers\Api\TitleController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\DisplayConfigController;
 use App\Http\Controllers\Api\SubjectController;
+use App\Http\Controllers\InternshipGraduationController;
 use App\Http\Resources\LoginResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -136,7 +137,6 @@ Route::middleware(['auth:api'])->group(function () {
     // Academic_field api
     Route::get('academic-fields', [AcademicFieldController::class, 'index'])->middleware('check_user_role_permission:academic_field.view');;
 
-    // RecruitmentPosition
     // Config page
     Route::get('configs', [DisplayConfigController::class, 'index']);
     Route::put('/configs/{id}', [DisplayConfigController::class, 'update']);
@@ -150,3 +150,5 @@ Route::get('register-specialties', [RegisterSpecialtyController::class, 'getRegi
 Route::get('recruitment-positions', [RecruitmentPositionController::class, 'index']);
 Route::post('recruitment-positions', [RecruitmentPositionController::class, 'store']);
 Route::get('register-interns/admin', [RegisterInternshipController::class, 'index']);
+Route::get('intership-graduations', [InternshipGraduationController::class, 'index']);
+Route::get('intership-graduations/unregistered', [InternshipGraduationController::class, 'getUnregisteredInternshipGraduations']);
