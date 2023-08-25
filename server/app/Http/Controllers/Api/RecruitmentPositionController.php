@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreRecruitmentPositionRequest;
 use App\Http\Resources\Collection;
 use App\Models\RecruitmentPosition;
 use Illuminate\Http\Request;
@@ -18,45 +19,9 @@ class RecruitmentPositionController extends Controller
 
     public function index(Request $request)
     {
-        $all = $request->input('all');
-        $perPage = $request->input('perPage');
-        $query = $request->input('query');
-        $id = $request->input('id');
-        $sortBy = $request->input('sortBy');
-        $sortOrder = $request->input('sortOrder', 'asc');
-        $filters = $request->input('filters');
-        $positions = RecruitmentPosition::query();
-        $positions->where("position_isDelete", "0");
-        if ($query) {
-            $positions->where("position_name", "LIKE", "%$query%");
-        }
-        if ($id) {
-            $positions->where('position_id', $id);
-        }
-        if ($sortBy) {
-            $positions->orderBy($sortBy, $sortOrder);
-        }
-        if ($filters) {
-            $filters = json_decode($filters, true);
-            if (is_array($filters)) {
-                foreach ($filters as $filter) {
-                    $id = $filter['id'];
-                    $value = $filter['value'];
-                    $positions->where($id, 'LIKE', '%' . $value . '%');
-                }
-            }
-        }
-
-        if ($all && $all == true) {
-            $positions = $positions->get();
-        } else {
-            if ($perPage) {
-                $positions = $positions->paginate($perPage);
-            } else {
-                $positions = $positions->paginate(10);
-            }
-        }
-
+        $companyId = $request->input('companyId');
+        $positions = RecruitmentPosition::where('company_id', $companyId);
+        $positions = $positions->get();
         $positionCollection = new Collection($positions);
         return $this->sentSuccessResponse($positionCollection, "Get data success", Response::HTTP_OK);
     }
@@ -67,9 +32,11 @@ class RecruitmentPositionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRecruitmentPositionRequest $request)
     {
-        //
+        $positionCreate = $request->all();
+        $position = RecruitmentPosition::create($positionCreate);
+        return $this->sentSuccessResponse($position, 'Created posotion successfully', Response::HTTP_OK);
     }
 
     /**

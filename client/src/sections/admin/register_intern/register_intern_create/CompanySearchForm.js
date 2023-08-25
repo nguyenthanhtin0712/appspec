@@ -35,7 +35,7 @@ const CompanySearchForm = () => {
           <OutlinedInput
             ref={inputRef}
             size="small"
-            startAdornment={<SearchNormal1 />}
+            startAdornment={<SearchNormal1 variant="TwoTone" />}
             fullWidth
             placeholder="Tìm kiếm công ty..."
             value={companyQuery}

@@ -8,7 +8,7 @@ import { removeCompanySelected } from 'store/reducers/createRegisterInternSlice'
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import { Buildings } from 'iconsax-react';
 import { useTheme } from '@mui/material';
-import GitHubLabel from 'sections/admin/register_intern/register_intern_create/SelectPositions';
+import SelectPositions from 'sections/admin/register_intern/register_intern_create/SelectPositions';
 
 const CompanyItem = ({ company }) => {
   const theme = useTheme();
@@ -31,7 +31,7 @@ const CompanyItem = ({ company }) => {
           {company.company_name}
         </Typography>
       </Stack>
-      <GitHubLabel />
+      <SelectPositions company={company} />
     </Stack>
   );
 };

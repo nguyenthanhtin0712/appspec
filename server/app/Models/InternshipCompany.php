@@ -24,4 +24,9 @@ class InternshipCompany extends Model
         'company_is_official',
         'company_isDelete',
     ];
+
+    public function positions()
+    {
+        return $this->hasMany(RecruitmentPosition::class, 'company_id', 'company_id');
+    }
 }

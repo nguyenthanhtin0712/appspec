@@ -140,8 +140,6 @@ Route::middleware(['auth:api'])->group(function () {
     // Config page
     Route::get('configs', [DisplayConfigController::class, 'index']);
     Route::put('/configs/{id}', [DisplayConfigController::class, 'update']);
-
-    
 });
 Route::get('register-specialties/result', [RegisterSpecialtyController::class, 'getResult']);
 Route::get('register-specialties', [RegisterSpecialtyController::class, 'getRegisterSpecialtyByUser']);
@@ -150,5 +148,5 @@ Route::get('register-specialties', [RegisterSpecialtyController::class, 'getRegi
 
 
 Route::get('recruitment-positions', [RecruitmentPositionController::class, 'index']);
+Route::post('recruitment-positions', [RecruitmentPositionController::class, 'store']);
 Route::get('register-interns/admin', [RegisterInternshipController::class, 'index']);
-

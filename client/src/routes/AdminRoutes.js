@@ -9,7 +9,6 @@ import PrivateRoute from './route/PrivateRoute';
 const DashboardDefault = Loadable(lazy(() => import('pages/admin/dashboard')));
 
 // render - sample page
-const SamplePage = Loadable(lazy(() => import('pages/admin/sample')));
 const MajorPage = Loadable(lazy(() => import('pages/admin/major')));
 const ConfigPage = Loadable(lazy(() => import('pages/admin/config-page')));
 const RegisterSpecialtyPageCreate = Loadable(lazy(() => import('pages/admin/register-specialty/register-specialty-create')));
@@ -47,10 +46,6 @@ const AdminRoutes = {
     {
       path: 'config',
       element: <ConfigPage />
-    },
-    {
-      path: 'sample-page',
-      element: <SamplePage />
     },
     {
       path: 'major',

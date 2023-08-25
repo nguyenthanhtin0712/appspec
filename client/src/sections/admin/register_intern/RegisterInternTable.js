@@ -42,16 +42,10 @@ const RegisterSpecialtyTable = () => {
   const columns = React.useMemo(
     () => [
       {
-        accessorKey: 'register_internship_id',
-        header: 'ID',
-        size: 30
-      },
-      {
         accessorKey: 'register_specialty_name',
         header: 'Tên đợt',
         size: 240,
         Cell: ({ cell }) => {
-          console.log(cell.row.original.internship_graduation.openclasstime);
           return (
             <div>
               Đợt đăng ký năm {cell.row.original.internship_graduation.openclasstime.openclass_time_year} học kỳ{' '}

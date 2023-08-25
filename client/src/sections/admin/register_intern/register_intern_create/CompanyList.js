@@ -1,7 +1,8 @@
 import React from 'react';
-import { Add } from 'iconsax-react';
+import { Add, Building3 } from 'iconsax-react';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
+import Stack from '@mui/material/Stack';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material';
 import Avatar from 'components/@extended/Avatar';
@@ -33,14 +34,28 @@ const CompanyList = () => {
           </Avatar>
         </Grid>
       </Grid>
-      <Grid container mt={1} spacing={2}>
-        {companySelected.map((company) => (
-          <Grid item xs={12} sm={4} key={company.company_id}>
-            <CompanyItem company={company} />
-          </Grid>
-        ))}
-      </Grid>
+      {companySelected.length > 0 ? (
+        <Grid container mt={1} spacing={2}>
+          {companySelected.map((company) => (
+            <Grid item xs={12} sm={4} key={company.company_id}>
+              <CompanyItem company={company} />
+            </Grid>
+          ))}
+        </Grid>
+      ) : (
+        <CompanyEmpty />
+      )}
     </>
+  );
+};
+
+const CompanyEmpty = () => {
+  const theme = useTheme();
+  return (
+    <Stack justifyContent="center" alignItems="center" spacing={3} mt={3}>
+      <Building3 size={100} variant="Bulk" color={theme.palette.secondary.main} />
+      <Typography fontSize={17}>Chưa có công ty nào được chọn</Typography>
+    </Stack>
   );
 };
 
