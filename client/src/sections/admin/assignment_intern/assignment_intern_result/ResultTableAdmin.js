@@ -30,7 +30,7 @@ const ResultTable = () => {
     majorId,
     status,
     statistic
-  } = useSelector((state) => state.assignment_intern_user);
+  } = useSelector((state) => state.register_specialty_user);
   const [open, setOpen] = useState(false);
   const [rowSelection, setRowSelection] = useState({});
   console.log(rowSelection);

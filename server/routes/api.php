@@ -146,9 +146,7 @@ Route::middleware(['auth:api'])->group(function () {
 Route::get('register-specialties/result', [RegisterSpecialtyController::class, 'getResult']);
 Route::get('register-specialties', [RegisterSpecialtyController::class, 'getRegisterSpecialtyByUser']);
 
-
-
-
 Route::get('recruitment-positions', [RecruitmentPositionController::class, 'index']);
 Route::get('register-interns/admin', [RegisterInternshipController::class, 'index']);
+Route::get('register-interns/admin/{id}', [RegisterInternshipController::class, 'show']);
 
