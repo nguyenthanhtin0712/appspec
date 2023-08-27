@@ -1,24 +1,43 @@
 import React, { useEffect, useState } from 'react';
 import Typography from '@mui/material/Typography';
 import { dispatch } from 'store/index';
-import { getRegistrationInfoById, setMajorId, setRegisterSpecialtyId } from 'store/reducers/registerSpecialtyUserSlice';
-import { Box, Button, Divider, Fade, Menu, MenuItem, Stack, Tab, Tabs } from '@mui/material';
-import SpecialityContainer from 'sections/user/register_speciality/register/SpecialityContainer';
+import { getAssignmentInfoById, setRegisterSpecialtyId } from 'store/reducers/assignmentInternUserSlice';
+import { Box, Button, Fade, Grid, Menu, MenuItem, Stack } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router';
-import ResultTableAdmin from 'sections/admin/register_specialty/register_specialty_result/ResultTableAdmin';
 import { ArrowRight, TableDocument } from 'iconsax-react';
-import { setColumnFilters } from 'store/reducers/registerSpecialtyUserSlice';
 import { useTheme } from '@mui/material/styles';
 import { formatDateTimeDisplay } from 'utils/formatDateTime';
 import { ExportResultRegisterSpecialty } from 'export-excel/export-result-register-specialty';
-import SpecialityItem from 'sections/user/register_speciality/register/SpecialityItem';
+import JobholderItem from 'pages/admin/assignment-intern/JobholderItem';
+import ResultTableAdmin from 'sections/admin/register_specialty/register_specialty_result/ResultTableAdmin';
+
+const listJobholder = [
+  {
+    id: 1,
+    name: 'Nguyễn Thanh Sang',
+    total: 10
+  },
+  {
+    id: 2,
+    name: 'Phan Tấn Quốc',
+    total: 8
+  },
+  {
+    id: 3,
+    name: 'Nguyễn Trung Tín',
+    total: 6
+  }
+];
+
 const RegisterSpecialtyResult = () => {
   const { Id } = useParams();
   const theme = useTheme();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-  const { majors, majorId, userRegistrationPeriod } = useSelector((state) => state.register_specialty_user);
+  const { majors, infoAssignment } = useSelector((state) => state.assignment_intern_user);
+
+  console.log('infoAssignment', infoAssignment);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -29,34 +48,29 @@ const RegisterSpecialtyResult = () => {
   };
 
   const handleExport = (major_id) => {
-    ExportResultRegisterSpecialty(userRegistrationPeriod.register_specialty_id, major_id);
+    ExportResultRegisterSpecialty(infoAssignment.register_specialty_id, major_id);
     handleClose();
   };
 
   useEffect(() => {
-    dispatch(getRegistrationInfoById(Id));
+    dispatch(getAssignmentInfoById(Id));
     dispatch(setRegisterSpecialtyId(Id));
   }, [Id]);
 
-  const handleChange = (event, newValue) => {
-    dispatch(setMajorId(newValue));
-    dispatch(setColumnFilters([]));
-  };
-
-  if (!majors || !userRegistrationPeriod) return null;
+  if (!majors || !infoAssignment) return null;
 
   return (
-    <>
-      <Box marginRight="300px">
+    <Grid container spacing={2}>
+      <Grid item xs={9}>
         <Stack direction="row" justifyContent="space-between" flexWrap="wrap">
           <Stack mb={3} spacing={1}>
             <Typography variant="h4" component="h1">
-              {userRegistrationPeriod.register_specialty_name}
+              {infoAssignment.register_specialty_name}
             </Typography>
             <Stack direction="row" spacing={2} alignItems={'center'}>
-              <Typography variant="h6">Từ {formatDateTimeDisplay(userRegistrationPeriod.register_specialty_start_date)}</Typography>
+              <Typography variant="h6">Từ {formatDateTimeDisplay(infoAssignment.register_specialty_start_date)}</Typography>
               <ArrowRight size="25" color={theme.palette.primary.main} />
-              <Typography variant="h6">Đến {formatDateTimeDisplay(userRegistrationPeriod.register_specialty_end_date)}</Typography>
+              <Typography variant="h6">Đến {formatDateTimeDisplay(infoAssignment.register_specialty_end_date)}</Typography>
             </Stack>
           </Stack>
           <Box my="auto">
@@ -101,48 +115,20 @@ const RegisterSpecialtyResult = () => {
         </Stack>
         <Box>
           <Stack spacing={2}>
-            <Box>
-              <Tabs
-                value={majorId}
-                onChange={handleChange}
-                variant="scrollable"
-                scrollButtons="auto"
-                aria-label="scrollable auto tabs example"
-              >
-                {majors.map((major) => (
-                  <Tab key={major?.major_id} value={major?.major_id} label={`Ngành ${major?.major_name}`} />
-                ))}
-              </Tabs>
-              <Divider />
-            </Box>
-            <Box>
-              <SpecialityContainer></SpecialityContainer>
-            </Box>
             <ResultTableAdmin></ResultTableAdmin>
           </Stack>
         </Box>
-      </Box>
-      <Box
-        sx={{
-          width: '300px',
-          height: '100vh',
-          position: 'fixed',
-          right: '0',
-          top: '74px',
-          bottom: '30px',
-          backgroundColor: '#fff',
-          marginLeft: '100px'
-        }}
-      >
-        <Typography variant="h4" component="h1">
+      </Grid>
+      <Grid item xs={3} columnSpacing={2}>
+        <Typography variant="h5" mb={2}>
           Danh sách giảng viên
         </Typography>
-        <Stack direction="row" justifyContent="space-between" flexWrap="wrap">
-          <SpecialityItem width name="Nguyễn Thanh Sang" total="10" registered_quantity="12"></SpecialityItem>
-          <SpecialityItem name="Nguyễn Thanh Sang" total="10" registered_quantity="12"></SpecialityItem>
-        </Stack>
-      </Box>
-    </>
+        {listJobholder.length > 0 &&
+          listJobholder.map((jobholder) => (
+            <JobholderItem key={jobholder.id} name={jobholder.name} total={jobholder.total} mb={1}></JobholderItem>
+          ))}
+      </Grid>
+    </Grid>
   );
 };
 

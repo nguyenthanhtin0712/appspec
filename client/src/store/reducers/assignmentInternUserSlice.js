@@ -42,7 +42,7 @@ export const fetchData = createAsyncThunk('register_specialty_user/fetchData', a
   }
 });
 
-export const getRegistrationInformation = createAsyncThunk('register_specialty_user/getRegistrationInformation', async () => {
+export const getAssignmentInformation = createAsyncThunk('register_specialty_user/getAssignmentInformation', async () => {
   try {
     const response = await axios.get(`/register-specialties`);
     return response.data;
@@ -67,7 +67,7 @@ export const getSpecialtiesForRegister = createAsyncThunk('register_specialty_us
   return response.data;
 });
 
-export const getRegistrationInfoById = createAsyncThunk('register_specialty_user/getRegistrationInfoById', async (id) => {
+export const getAssignmentInfoById = createAsyncThunk('register_specialty_user/getAssignmentInfoById', async (id) => {
   try {
     const response = await axios.get(`/register-specialties/admin/${id}`);
     return response.data;
@@ -122,7 +122,7 @@ const initialState = {
   },
   status: '',
   majorId: '',
-  userRegistrationPeriod: null,
+  infoAssignment: null,
   registrationPageInfo: null,
   statistic: [],
   majors: [],
@@ -173,13 +173,13 @@ const assignment_intern_user = createSlice({
         state.isRefetching = false;
         state.isError = true;
       })
-      .addCase(getRegistrationInformation.fulfilled, (state, action) => {
-        state.userRegistrationPeriod = action.payload.data;
+      .addCase(getAssignmentInformation.fulfilled, (state, action) => {
+        state.infoAssignment = action.payload.data;
         state.majors = action.payload.data.register_specialty_detail;
         state.majorId = action.payload.data.register_specialty_detail[0]?.major_id;
       })
-      .addCase(getRegistrationInfoById.fulfilled, (state, action) => {
-        state.userRegistrationPeriod = action.payload.data;
+      .addCase(getAssignmentInfoById.fulfilled, (state, action) => {
+        state.infoAssignment = action.payload.data;
         state.majors = action.payload.data.register_specialty_detail;
         state.majorId = action.payload.data.register_specialty_detail[0]?.major_id;
       })

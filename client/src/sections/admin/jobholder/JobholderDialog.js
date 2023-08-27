@@ -336,18 +336,19 @@ const JobholderForm = ({ initialValues, action }) => {
                       {errors.user_password && <FormHelperText error>{errors.user_password}</FormHelperText>}
                     </Stack>
                   )}
-
-                  <Box mt={2}>
-                    <label htmlFor="jobholder_isLeader">Trưởng bộ môn</label>
-                    <Switch
-                      id="jobholder_isLeader"
-                      name="jobholder_isLeader"
-                      checked={values.jobholder_isLeader == 1}
-                      onBlur={handleBlur}
-                      onChange={(e) => setFieldValue('jobholder_isLeader', e.target.checked)}
-                      inputProps={{ 'aria-label': 'Switch A' }}
-                    />
-                  </Box>
+                  {values.academic_field_id.length > 0 && (
+                    <Box mt={2}>
+                      <label htmlFor="jobholder_isLeader">Trưởng bộ môn</label>
+                      <Switch
+                        id="jobholder_isLeader"
+                        name="jobholder_isLeader"
+                        checked={values.jobholder_isLeader == 1}
+                        onBlur={handleBlur}
+                        onChange={(e) => setFieldValue('jobholder_isLeader', e.target.checked)}
+                        inputProps={{ 'aria-label': 'Switch A' }}
+                      />
+                    </Box>
+                  )}
                 </Stack>
               </Grid>
               {errors.submit && (

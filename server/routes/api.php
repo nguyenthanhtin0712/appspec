@@ -144,11 +144,10 @@ Route::middleware(['auth:api'])->group(function () {
 Route::get('register-specialties/result', [RegisterSpecialtyController::class, 'getResult']);
 Route::get('register-specialties', [RegisterSpecialtyController::class, 'getRegisterSpecialtyByUser']);
 
-
-
-
 Route::get('recruitment-positions', [RecruitmentPositionController::class, 'index']);
 Route::post('recruitment-positions', [RecruitmentPositionController::class, 'store']);
 Route::get('register-interns/admin', [RegisterInternshipController::class, 'index']);
+Route::get('register-interns/admin/{id}', [RegisterInternshipController::class, 'show']);
+
 Route::get('intership-graduations', [InternshipGraduationController::class, 'index']);
 Route::get('intership-graduations/unregistered', [InternshipGraduationController::class, 'getUnregisteredInternshipGraduations']);
