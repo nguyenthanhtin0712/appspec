@@ -136,6 +136,18 @@ const create_register_intern = createSlice({
         }
         return company;
       });
+    },
+    deleteRecruitmentPosition: (state, action) => {
+      const { position_id, company_id } = action.payload;
+      state.companySelected = state.companySelected.map((company) => {
+        if (company.company_id === company_id) {
+          return {
+            ...company,
+            positions: company.positions.filter((position) => position.position_id !== position_id)
+          };
+        }
+        return company;
+      });
     }
   },
   extraReducers: (builder) => {
@@ -179,7 +191,8 @@ export const {
   removeCompanySelected,
   setPositionOptions,
   setRecruitmentPosition,
-  setPositionQuantity
+  setPositionQuantity,
+  deleteRecruitmentPosition
 } = create_register_intern.actions;
 
 export default create_register_intern.reducer;

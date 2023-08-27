@@ -236,7 +236,7 @@ const JobholderForm = ({ initialValues, action }) => {
                     value={values.jobholder_type}
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    placeholder="Nhập loại giảng viên"
+                    placeholder="Cơ hữu / Thỉnh giảng"
                     label="Loại giảng viên"
                     fullWidth
                     error={Boolean(touched.jobholder_type && errors.jobholder_type)}
@@ -295,7 +295,7 @@ const JobholderForm = ({ initialValues, action }) => {
                   <SelectField
                     id="title_id"
                     labelId="title_id_label"
-                    label="Chức vụ"
+                    label="Vị trí việc làm"
                     value={dataTitle.length == 0 ? '' : values.title_id}
                     name="title_id"
                     error={Boolean(touched.title_id && errors.title_id)}

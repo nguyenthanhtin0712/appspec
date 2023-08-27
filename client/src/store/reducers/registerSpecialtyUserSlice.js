@@ -77,6 +77,16 @@ export const getRegistrationInfoById = createAsyncThunk('register_specialty_user
   }
 });
 
+export const getStatistic = createAsyncThunk('register_specialty_user/getRegistrationInfoById', async (id) => {
+  try {
+    const response = await axios.get(`/register-specialties/admin/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+});
+
 export const userRegisteringForSpecialty = createAsyncThunk('register_specialty_user/userRegisteringForSpecialty', async (specialty_id) => {
   try {
     const response = await axios.post(`/register-specialties/register`, { specialty_id });

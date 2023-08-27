@@ -10,7 +10,7 @@ import App from './App';
 import { store } from 'store';
 import reportWebVitals from './reportWebVitals';
 import { APP_BASE_NAME } from './config';
-import './index.css';
+import { Suspense } from 'react';
 
 const container = document.getElementById('root');
 const root = createRoot(container);
@@ -18,8 +18,10 @@ const root = createRoot(container);
 root.render(
   <ReduxProvider store={store}>
     <BrowserRouter basename={APP_BASE_NAME}>
-      <App />
-      <ToastContainer />
+      <Suspense>
+        <App />
+        <ToastContainer />
+      </Suspense>
     </BrowserRouter>
   </ReduxProvider>
 );

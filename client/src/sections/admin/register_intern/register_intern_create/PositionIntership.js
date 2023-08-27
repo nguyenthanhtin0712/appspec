@@ -6,17 +6,21 @@ import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import { CloseCircle } from 'iconsax-react';
 import { dispatch } from 'store';
-import { setPositionQuantity } from 'store/reducers/createRegisterInternSlice';
+import { deleteRecruitmentPosition, setPositionQuantity } from 'store/reducers/createRegisterInternSlice';
 
 const PositionIntership = ({ position }) => {
   const handleChange = (e) => {
     dispatch(setPositionQuantity({ position, quantity: e.target.value }));
   };
+
+  const handleDelete = () => {
+    dispatch(deleteRecruitmentPosition(position));
+  };
   return (
-    <Grid container direction="row" alignItems="center">
+    <Grid container direction="row" alignItems="flex-start" mb={1.5}>
       <Grid item xs={10} display="flex" alignItems="center" columnGap={1}>
         <Tooltip title="Xoá vị trí" placement="top" arrow>
-          <IconButton size="small" shape="rounded" color="error">
+          <IconButton size="small" shape="rounded" color="error" onClick={handleDelete}>
             <CloseCircle />
           </IconButton>
         </Tooltip>

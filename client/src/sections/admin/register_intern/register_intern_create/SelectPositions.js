@@ -10,7 +10,7 @@ import Box from '@mui/material/Box';
 import InputAdornment from '@mui/material/InputAdornment';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import { Add, ArrowLeft } from 'iconsax-react';
+import { Add, ArrowLeft, CloseCircle } from 'iconsax-react';
 import PositionIntership from 'sections/admin/register_intern/register_intern_create/PositionIntership';
 import { dispatch } from 'store';
 import {
@@ -24,7 +24,10 @@ import { useCallback } from 'react';
 import { useState } from 'react';
 import IconButton from 'components/@extended/IconButton';
 import { toast } from 'react-toastify';
-import { Stack, Tooltip } from '@mui/material';
+import { Stack, Tooltip, Typography } from '@mui/material';
+import Collapse from '@mui/material/Collapse';
+import { useEffect } from 'react';
+import { TransitionGroup } from 'react-transition-group';
 
 const StyledAutocompletePopper = styled('div')(({ theme }) => ({
   [`& .${autocompleteClasses.paper}`]: {
@@ -70,12 +73,17 @@ const StyledPopper = styled(Popper)(({ theme }) => ({
 }));
 
 export default function SelectPositions({ company }) {
+  const theme = useTheme();
   const companyId = company.company_id;
   const recruitmentPosition = company.positions;
   const { isLoading, data } = useSelector((state) => state.create_register_intern.positionOptions);
   const [anchorEl, setAnchorEl] = useState(null);
   const [pendingValue, setPendingValue] = useState([]);
   const [openForm, setOpenForm] = useState(false);
+
+  useEffect(() => {
+    setPendingValue(recruitmentPosition);
+  }, [recruitmentPosition]);
 
   const handleClick = useCallback(
     async (event) => {
@@ -97,9 +105,13 @@ export default function SelectPositions({ company }) {
 
   return (
     <>
-      {recruitmentPosition.map((position) => (
-        <PositionIntership key={position.position_id} position={position} />
-      ))}
+      <TransitionGroup>
+        {recruitmentPosition.map((position) => (
+          <Collapse key={position.position_id}>
+            <PositionIntership position={position} />
+          </Collapse>
+        ))}
+      </TransitionGroup>
       <Button aria-describedby={id} variant="shadow" color="success" startIcon={<Add />} onClick={handleClick}>
         Thêm vị trí
       </Button>
@@ -111,7 +123,17 @@ export default function SelectPositions({ company }) {
             </div>
           ) : (
             <div>
-              <Box sx={{ borderBottom: `1px solid #eaecef`, padding: '8px 10px', fontWeight: 600 }}>Chọn danh sách vị trí</Box>
+              <Stack
+                direction="row"
+                alignItems="center"
+                justifyContent="space-between"
+                sx={{ borderBottom: `1px solid #eaecef`, padding: '8px 10px' }}
+              >
+                <Typography fontWeight={600} fontSize={13}>
+                  Chọn danh sách vị trí
+                </Typography>
+                <CloseCircle size={20} color={theme.palette.error.main} style={{ cursor: 'pointer' }} onClick={handleClose} />
+              </Stack>
               <Autocomplete
                 open
                 multiple

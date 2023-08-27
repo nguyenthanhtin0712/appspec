@@ -33,7 +33,6 @@ const ResultTable = () => {
   } = useSelector((state) => state.register_specialty_user);
   const [open, setOpen] = useState(false);
   const [rowSelection, setRowSelection] = useState({});
-  console.log(rowSelection);
   useEffect(() => {
     dispatch(fetchData({ columnFilters, globalFilter, sorting, pagination, majorId, registerSpecialtyId, status }));
   }, [columnFilters, globalFilter, sorting, pagination, majorId, registerSpecialtyId, status]);

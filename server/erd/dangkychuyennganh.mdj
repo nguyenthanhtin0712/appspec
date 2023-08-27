@@ -7967,7 +7967,7 @@
 									"font": "Arial;13;1",
 									"left": 2792,
 									"top": 1845,
-									"width": 318.69140625,
+									"width": 339.63232421875,
 									"height": 13,
 									"text": "internship_graduation"
 								},
@@ -7990,10 +7990,11 @@
 											"model": {
 												"$ref": "AAAAAAGKAVTgX0KNVoU="
 											},
+											"visible": false,
 											"font": "Arial;13;0",
 											"left": 2797,
 											"top": 1868,
-											"width": 308.69140625,
+											"width": 329.63232421875,
 											"height": 13
 										},
 										{
@@ -8007,8 +8008,8 @@
 											},
 											"font": "Arial;13;0",
 											"left": 2797,
-											"top": 1883,
-											"width": 308.69140625,
+											"top": 1870,
+											"width": 329.63232421875,
 											"height": 13
 										},
 										{
@@ -8022,8 +8023,8 @@
 											},
 											"font": "Arial;13;0",
 											"left": 2797,
-											"top": 1898,
-											"width": 308.69140625,
+											"top": 1885,
+											"width": 329.63232421875,
 											"height": 13
 										},
 										{
@@ -8037,22 +8038,22 @@
 											},
 											"font": "Arial;13;0",
 											"left": 2797,
-											"top": 1913,
-											"width": 308.69140625,
+											"top": 1900,
+											"width": 329.63232421875,
 											"height": 13
 										}
 									],
 									"font": "Arial;13;0",
 									"left": 2792,
 									"top": 1863,
-									"width": 318.69140625,
-									"height": 68
+									"width": 339.63232421875,
+									"height": 55
 								}
 							],
 							"font": "Arial;13;0",
 							"left": 2792,
 							"top": 1840,
-							"width": 318.69140625,
+							"width": 339.63232421875,
 							"height": 91,
 							"nameLabel": {
 								"$ref": "AAAAAAGKAVTWNEKDRQQ="
@@ -12610,6 +12611,7 @@
 							"name": "openclass_time_id",
 							"type": "VARCHAR",
 							"length": 0,
+							"primaryKey": true,
 							"foreignKey": true
 						},
 						{

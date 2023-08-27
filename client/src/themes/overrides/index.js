@@ -34,6 +34,7 @@ import Accordion from './Accordion';
 import Popover from './Popover';
 import Paper from './Paper';
 import Autocomplete from './Autocomplete';
+import { cssBaseline } from 'themes/overrides/cssBaseline';
 // import TextField from './TextField';
 
 // ==============================|| OVERRIDES - MAIN ||============================== //
@@ -46,6 +47,7 @@ export default function ComponentsOverrides(theme) {
     Button(theme),
     ButtonBase(),
     ButtonGroup(),
+    cssBaseline(),
     CardContent(),
     Checkbox(theme),
     Chip(theme),

@@ -21,7 +21,7 @@ export default function Dialog(theme) {
         root: {
           padding: theme.spacing(3),
           fontSize: '1.2rem',
-          fontWeight: 600
+          fontWeight: 500
         }
       }
     },

@@ -52,8 +52,8 @@ const Transitions = forwardRef(({ children, position = 'top-left', type = 'grow'
           {...others}
           timeout={{
             appear: 0,
-            enter: 150,
-            exit: 150
+            enter: 250,
+            exit: 250
           }}
         >
           <Box sx={positionSX}>{children}</Box>
