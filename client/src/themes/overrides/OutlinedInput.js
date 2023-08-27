@@ -1,6 +1,6 @@
 // project-imports
 import getColors from 'utils/getColors';
-import getShadow from 'utils/getShadow';
+// import getShadow from 'utils/getShadow';
 
 // ==============================|| OVERRIDES - INPUT BORDER & SHADOWS ||============================== //
 
@@ -8,14 +8,14 @@ function getColor({ variant, theme }) {
   const colors = getColors(theme, variant);
   const { light } = colors;
 
-  const shadows = getShadow(theme, `${variant}`);
+  // const shadows = getShadow(theme, `${variant}`);
 
   return {
     '&:hover .MuiOutlinedInput-notchedOutline': {
       borderColor: light
     },
     '&.Mui-focused': {
-      boxShadow: shadows,
+      // boxShadow: shadows,
       '& .MuiOutlinedInput-notchedOutline': {
         border: `2px solid ${light}`
       }

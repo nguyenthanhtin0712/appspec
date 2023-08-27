@@ -23,6 +23,6 @@ class RegisterInternship extends Model
 
     public function internship_graduation()
     {
-        return $this->hasOne(InternshipGraduation::class, 'internship_graduation_id', 'register_internship_id');
+        return $this->belongsTo(InternshipGraduation::class, 'register_internship_id', 'openclass_time_id');
     }
 }

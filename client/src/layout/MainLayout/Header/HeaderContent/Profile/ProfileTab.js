@@ -1,10 +1,9 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-
-// material-ui
-import { List, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
-
-// assets
+import List from '@mui/material/List';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
 import { Card, Edit2, Logout, Profile, Profile2User } from 'iconsax-react';
 
 // ==============================|| HEADER PROFILE - PROFILE TAB ||============================== //

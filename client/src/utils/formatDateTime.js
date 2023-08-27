@@ -15,3 +15,7 @@ export function formatDateTimeSubmit(date) {
 export function formatDateTimeDisplay(date) {
   return dayjs(date).format('HH:mm DD/MM/YYYY');
 }
+
+export function formatDDMMYYYY(date) {
+  return dayjs(date).format('DD/MM/YYYY');
+}

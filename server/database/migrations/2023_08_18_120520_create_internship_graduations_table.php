@@ -14,8 +14,7 @@ class CreateInternshipGraduationsTable extends Migration
     public function up()
     {
         Schema::create('internship_graduations', function (Blueprint $table) {
-            $table->id('internship_graduation_id');
-            $table->integer('openclass_time_id');
+            $table->integer('openclass_time_id')->primary();
             $table->date('internship_graduation_start_date');
             $table->date('internship_graduation_end_date');
         });

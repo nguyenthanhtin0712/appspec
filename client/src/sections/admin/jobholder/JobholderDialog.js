@@ -90,7 +90,6 @@ const JobholderForm = ({ initialValues, action }) => {
           ...values,
           jobholder_isLeader: values.jobholder_isLeader ? 1 : 0
         };
-        console.log('value', value);
         try {
           const actionType = action === 'update' ? updateJobholder : createJobholder;
           const result = await dispatch(actionType(value));
@@ -125,7 +124,7 @@ const JobholderForm = ({ initialValues, action }) => {
         setFieldError
       }) => (
         <form noValidate onSubmit={handleSubmit}>
-          <DialogContent>
+          <DialogContent dividers={true}>
             <Grid container spacing={3}>
               <Grid item xs={12} sm={6}>
                 <Stack spacing={2}>
@@ -360,7 +359,9 @@ const JobholderForm = ({ initialValues, action }) => {
             </Grid>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose}>Hủy</Button>
+            <Button onClick={handleClose} color="error">
+              Hủy
+            </Button>
             <Button variant="contained" type="submit" disabled={isSubmitting}>
               {action === 'add' ? 'Thêm viên chức' : 'Chỉnh sửa'}
             </Button>
@@ -380,7 +381,7 @@ const JobholderDialog = () => {
     dispatch(setCloseDialog());
   };
   return (
-    <Dialog open={jobholderDialog.open} onClose={handleClose} maxWidth="md" fullWidth>
+    <Dialog open={jobholderDialog.open} onClose={handleClose} scroll="paper" maxWidth="md" fullWidth>
       <DialogTitleCustom onClose={handleClose}>{action === 'add' ? 'Thêm viên chức' : 'Chỉnh sửa viên chức'}</DialogTitleCustom>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <JobholderForm initialValues={initialValues} action={action} />

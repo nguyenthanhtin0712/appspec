@@ -7,13 +7,24 @@ import CloseIcon from '@mui/icons-material/Close';
 import DoneIcon from '@mui/icons-material/Done';
 import Autocomplete, { autocompleteClasses } from '@mui/material/Autocomplete';
 import Box from '@mui/material/Box';
-import { Button, TextField } from '@mui/material';
-import { Add } from 'iconsax-react';
+import InputAdornment from '@mui/material/InputAdornment';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import { Add, ArrowLeft } from 'iconsax-react';
 import PositionIntership from 'sections/admin/register_intern/register_intern_create/PositionIntership';
 import { dispatch } from 'store';
-import { getAllRecruitmentPosition } from 'store/reducers/createRegisterInternSlice';
+import {
+  createRecruitmentPosition,
+  getAllRecruitmentPosition,
+  setPositionOptions,
+  setRecruitmentPosition
+} from 'store/reducers/createRegisterInternSlice';
 import { useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useCallback } from 'react';
+import { useState } from 'react';
+import IconButton from 'components/@extended/IconButton';
+import { toast } from 'react-toastify';
+import { Stack, Tooltip } from '@mui/material';
 
 const StyledAutocompletePopper = styled('div')(({ theme }) => ({
   [`& .${autocompleteClasses.paper}`]: {
@@ -54,127 +65,187 @@ const StyledPopper = styled(Popper)(({ theme }) => ({
   width: 300,
   zIndex: theme.zIndex.modal,
   fontSize: 13,
-  color: theme.palette.mode === 'light' ? '#24292e' : '#c9d1d9',
+  color: '#24292e',
   backgroundColor: '#fff'
 }));
 
-export default function GitHubLabel() {
-  const positionOptions = useSelector((state) => state.create_register_intern.positionOptions.data);
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [value, setValue] = React.useState([]);
-  const [pendingValue, setPendingValue] = React.useState([]);
-  const theme = useTheme();
+export default function SelectPositions({ company }) {
+  const companyId = company.company_id;
+  const recruitmentPosition = company.positions;
+  const { isLoading, data } = useSelector((state) => state.create_register_intern.positionOptions);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [pendingValue, setPendingValue] = useState([]);
+  const [openForm, setOpenForm] = useState(false);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      await dispatch(getAllRecruitmentPosition());
-    };
-    fetchData();
-  }, []);
+  const handleClick = useCallback(
+    async (event) => {
+      setAnchorEl(event.currentTarget);
+      await dispatch(getAllRecruitmentPosition(companyId));
+    },
+    [companyId]
+  );
 
-  const handleClick = (event) => {
-    setPendingValue(value);
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setValue(pendingValue);
+  const handleClose = useCallback(() => {
+    dispatch(setRecruitmentPosition({ companyId, positions: pendingValue }));
+    dispatch(setPositionOptions([]));
     if (anchorEl) anchorEl.focus();
     setAnchorEl(null);
-  };
+  }, [anchorEl, companyId, pendingValue]);
 
   const open = Boolean(anchorEl);
   const id = open ? 'select-position' : undefined;
 
-  console.log(positionOptions);
-
   return (
     <>
-      {value.map((position) => (
+      {recruitmentPosition.map((position) => (
         <PositionIntership key={position.position_id} position={position} />
       ))}
-      <Button aria-describedby={id} variant="dashed" color="success" startIcon={<Add />} onClick={handleClick}>
+      <Button aria-describedby={id} variant="shadow" color="success" startIcon={<Add />} onClick={handleClick}>
         Thêm vị trí
       </Button>
-      <StyledPopper id={id} open={open} anchorEl={anchorEl} placement="bottom-start">
+      <StyledPopper id={id} open={open} anchorEl={anchorEl} placement="top-start">
         <ClickAwayListener onClickAway={handleClose}>
-          <div>
-            <Box
-              sx={{
-                borderBottom: `1px solid #eaecef`,
-                padding: '8px 10px',
-                fontWeight: 600
-              }}
-            >
-              Chọn danh sách vị trí
-            </Box>
-            <Autocomplete
-              open
-              multiple
-              onClose={(event, reason) => {
-                if (reason === 'escape') handleClose();
-              }}
-              value={pendingValue}
-              onChange={(event, newValue, reason) => {
-                if (event.type === 'keydown' && event.key === 'Backspace' && reason === 'removeOption') {
-                  return;
-                }
-                setPendingValue(newValue);
-              }}
-              disableCloseOnSelect
-              PopperComponent={PopperComponent}
-              renderTags={() => null}
-              noOptionsText="No labels"
-              renderOption={(props, option, { selected }) => (
-                <li {...props}>
-                  <Box
-                    component={DoneIcon}
-                    sx={{ width: 17, height: 17, mr: '5px', ml: '-2px' }}
-                    style={{
-                      visibility: selected ? 'visible' : 'hidden'
-                    }}
-                  />
-                  <Box
-                    sx={{
-                      flexGrow: 1,
-                      '& span': {
-                        color: theme.palette.mode === 'light' ? '#586069' : '#8b949e'
-                      }
-                    }}
-                  >
-                    {option.position_name}
-                  </Box>
-                  <Box
-                    component={CloseIcon}
-                    sx={{ opacity: 0.6, width: 18, height: 18 }}
-                    style={{
-                      visibility: selected ? 'visible' : 'hidden'
-                    }}
-                  />
-                </li>
-              )}
-              options={[...positionOptions].sort((a, b) => {
-                let ai = value.indexOf(a);
-                ai = ai === -1 ? value.length + positionOptions.indexOf(a) : ai;
-                let bi = value.indexOf(b);
-                bi = bi === -1 ? value.length + positionOptions.indexOf(b) : bi;
-                return ai - bi;
-              })}
-              getOptionLabel={(option) => option.position_name}
-              renderInput={(params) => (
-                <TextField
-                  size="small"
-                  ref={params.InputProps.ref}
-                  inputProps={params.inputProps}
-                  autoFocus
-                  placeholder="Tìm kiếm vị trí thực tập"
-                  sx={{ padding: 1 }}
-                />
-              )}
-            />
-          </div>
+          {openForm ? (
+            <div>
+              <CreateRecruitmentPositionForm setOpenForm={setOpenForm} companyId={companyId} />
+            </div>
+          ) : (
+            <div>
+              <Box sx={{ borderBottom: `1px solid #eaecef`, padding: '8px 10px', fontWeight: 600 }}>Chọn danh sách vị trí</Box>
+              <Autocomplete
+                open
+                multiple
+                onClose={(event, reason) => {
+                  if (reason === 'escape') handleClose();
+                }}
+                value={pendingValue}
+                onChange={(event, newValue, reason) => {
+                  if (event.type === 'keydown' && event.key === 'Backspace' && reason === 'removeOption') {
+                    return;
+                  }
+                  setPendingValue(newValue);
+                }}
+                disableCloseOnSelect
+                PopperComponent={PopperComponent}
+                renderTags={() => null}
+                noOptionsText="Không có vị trí"
+                renderOption={(props, option, { selected }) => (
+                  <li {...props} style={{ padding: '10px 14px' }}>
+                    <Box
+                      component={DoneIcon}
+                      sx={{ width: 17, height: 17, mr: '5px', ml: '-2px' }}
+                      style={{ visibility: selected ? 'visible' : 'hidden' }}
+                    />
+                    <Box sx={{ flexGrow: 1, '& span': { color: '#586069' } }}>{option.position_name}</Box>
+                    <Box
+                      component={CloseIcon}
+                      sx={{ opacity: 0.6, width: 18, height: 18 }}
+                      style={{ visibility: selected ? 'visible' : 'hidden' }}
+                    />
+                  </li>
+                )}
+                loading={isLoading}
+                options={[...data].sort((a, b) => {
+                  let ai = recruitmentPosition.indexOf(a);
+                  ai = ai === -1 ? recruitmentPosition.length + data.indexOf(a) : ai;
+                  let bi = recruitmentPosition.indexOf(b);
+                  bi = bi === -1 ? recruitmentPosition.length + data.indexOf(b) : bi;
+                  return ai - bi;
+                })}
+                isOptionEqualToValue={(option, value) => option.position_id === value.position_id}
+                getOptionLabel={(option) => option.position_name}
+                renderInput={(params) => <SearchInput params={params} openForm={openForm} setOpenForm={setOpenForm} />}
+              />
+            </div>
+          )}
         </ClickAwayListener>
       </StyledPopper>
     </>
   );
 }
+
+const SearchInput = ({ params, setOpenForm }) => {
+  return (
+    <TextField
+      size="small"
+      ref={params.InputProps.ref}
+      inputProps={params.inputProps}
+      autoFocus
+      placeholder="Tìm kiếm vị trí thực tập"
+      InputProps={{
+        endAdornment: (
+          <InputAdornment position="end">
+            <Tooltip title="Thêm vị trí mới" arrow>
+              <IconButton variant="contained" shape="rounded" size="small" edge="end" onClick={() => setOpenForm(true)}>
+                <Add color="#fff" />
+              </IconButton>
+            </Tooltip>
+          </InputAdornment>
+        )
+      }}
+      sx={{
+        padding: 1,
+        '& .MuiInputBase-root': {
+          paddingRight: '16px!important'
+        }
+      }}
+    />
+  );
+};
+
+const CreateRecruitmentPositionForm = ({ setOpenForm, companyId }) => {
+  const [name, setName] = useState('');
+
+  const handleClick = async () => {
+    if (!name) {
+      toast.warning('Tên vị trí là bắt buộc !');
+    } else {
+      const positionCreate = { position_name: name, company_id: companyId };
+      try {
+        const result = await dispatch(createRecruitmentPosition(positionCreate));
+        if (result && !result.error) {
+          setOpenForm(false);
+          toast.success('Thêm vị trí thành công');
+        } else {
+          toast.error(result.payload.errors?.position_name[0]);
+        }
+        console.log(result);
+      } catch (error) {
+        toast.error(error);
+      }
+    }
+  };
+
+  return (
+    <>
+      <Stack direction="row" alignItems="center" spacing={1} sx={{ borderBottom: `1px solid #eaecef`, padding: '8px 10px' }}>
+        <ArrowLeft size={20} style={{ cursor: 'pointer' }} onClick={() => setOpenForm(false)} />
+        <span style={{ fontWeight: 600 }}>Thêm vị trí mới</span>
+      </Stack>
+      <TextField
+        size="small"
+        autoFocus
+        placeholder="Nhập tên vị trí "
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              <Tooltip title="Tạo vị trí" arrow>
+                <IconButton variant="contained" shape="rounded" size="small" edge="end" onClick={handleClick}>
+                  <Add color="#fff" />
+                </IconButton>
+              </Tooltip>
+            </InputAdornment>
+          )
+        }}
+        sx={{
+          padding: 1,
+          '& .MuiInputBase-root': {
+            paddingRight: '16px!important'
+          }
+        }}
+      />
+    </>
+  );
+};

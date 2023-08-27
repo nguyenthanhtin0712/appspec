@@ -3,7 +3,6 @@ import Typography from '@mui/material/Typography';
 import MainCard from 'components/MainCard';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import SelectPositionsDialog from 'sections/admin/register_intern/register_intern_create/SelectPositionsDialog';
 import CreateReigisterInternForm from 'sections/admin/register_intern/register_intern_create/CreateReigisterInternForm';
 
 const RegisterIntern = () => {
@@ -17,7 +16,6 @@ const RegisterIntern = () => {
           <CreateReigisterInternForm />
         </LocalizationProvider>
       </MainCard>
-      <SelectPositionsDialog />
     </>
   );
 };

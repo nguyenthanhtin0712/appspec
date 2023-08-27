@@ -21,15 +21,45 @@ export const fetchDataCompany = createAsyncThunk('create_register_intern/fetchDa
   }
 });
 
-export const getAllRecruitmentPosition = createAsyncThunk('create_register_intern/getAllRecruitmentPosition', async () => {
+export const getAllRecruitmentPosition = createAsyncThunk('create_register_intern/getAllRecruitmentPosition', async (company_id) => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/recruitment-positions?all=true`);
+    const response = await axios.get(`${API_BASE_URL}/recruitment-positions?companyId=${company_id}`);
     return response.data;
   } catch (error) {
     console.error(error);
     throw error;
   }
 });
+
+export const getUnregisteredInternshipGraduations = createAsyncThunk(
+  'create_register_intern/getUnregisteredInternshipGraduations',
+  async () => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/intership-graduations/unregistered`);
+      return response.data;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+);
+
+export const createRecruitmentPosition = createAsyncThunk(
+  'create_register_intern/createRecruitmentPosition',
+  async (position, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(`${API_BASE_URL}/recruitment-positions`, position);
+      return response.data;
+    } catch (error) {
+      if (error.response && error.response.data && error.response.data.errors) {
+        return rejectWithValue(error.response.data);
+      } else {
+        console.error(error);
+        throw error;
+      }
+    }
+  }
+);
 
 const initialState = {
   companyData: [],
@@ -38,11 +68,11 @@ const initialState = {
   isLoading: false,
   isRefetching: false,
   companyQuery: '',
-  openPositionDialog: false,
   positionOptions: {
     isLoading: false,
     data: []
-  }
+  },
+  unregisteredGraduations: []
 };
 
 const create_register_intern = createSlice({
@@ -54,13 +84,58 @@ const create_register_intern = createSlice({
     },
     setCompanySelected: (state, action) => {
       const isValid = !state.companySelected.find((item) => item.company_id === action.payload.company_id);
-      if (isValid) state.companySelected = [...state.companySelected, action.payload];
+      if (isValid) {
+        const compamy = { ...action.payload };
+        compamy.positions = [];
+        state.companySelected = [...state.companySelected, compamy];
+      }
     },
     removeCompanySelected: (state, action) => {
       state.companySelected = state.companySelected.filter((company) => company.company_id != action.payload.company_id);
     },
-    setOpenPositionDialog: (state, action) => {
-      state.openPositionDialog = action.payload;
+    setPositionOptions: (state, action) => {
+      state.positionOptions.data = action.payload;
+    },
+    setPositionQuantity: (state, action) => {
+      const { company_id, position_id } = action.payload.position;
+      const { quantity } = action.payload;
+      state.companySelected = state.companySelected.map((company) => {
+        if (company.company_id === company_id) {
+          return {
+            ...company,
+            positions: company.positions.map((position) => {
+              if (position.position_id === position_id) {
+                return {
+                  ...position,
+                  position_quantity: quantity
+                };
+              }
+              return position;
+            })
+          };
+        }
+        return company;
+      });
+    },
+    setRecruitmentPosition: (state, action) => {
+      const companyId = action.payload.companyId;
+      const positionsPayload = action.payload.positions;
+
+      state.companySelected = state.companySelected.map((company) => {
+        if (company.company_id === companyId) {
+          return {
+            ...company,
+            positions: positionsPayload.map((position) => {
+              const newPosition = company.positions.find((newPos) => newPos.position_id === position.position_id);
+              return {
+                ...position,
+                position_quantity: newPosition ? newPosition.position_quantity : 0
+              };
+            })
+          };
+        }
+        return company;
+      });
     }
   },
   extraReducers: (builder) => {
@@ -88,10 +163,23 @@ const create_register_intern = createSlice({
       })
       .addCase(getAllRecruitmentPosition.rejected, (state) => {
         state.positionOptions.isLoading = false;
+      })
+      .addCase(createRecruitmentPosition.fulfilled, (state, action) => {
+        state.positionOptions.data.push(action.payload.data);
+      })
+      .addCase(getUnregisteredInternshipGraduations.fulfilled, (state, action) => {
+        state.unregisteredGraduations = action.payload.data;
       });
   }
 });
 
-export const { setCompanyQuery, setCompanySelected, removeCompanySelected, setOpenPositionDialog } = create_register_intern.actions;
+export const {
+  setCompanyQuery,
+  setCompanySelected,
+  removeCompanySelected,
+  setPositionOptions,
+  setRecruitmentPosition,
+  setPositionQuantity
+} = create_register_intern.actions;
 
 export default create_register_intern.reducer;

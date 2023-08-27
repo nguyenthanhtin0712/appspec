@@ -23,13 +23,12 @@ class InternshipGraduationController extends Controller
         $sortBy = $request->input('sortBy');
         $sortOrder = $request->input('sortOrder', 'asc');
         $filters = $request->input('filters');
-        $jobholder = InternshipGraduation::with('openclasstime')
-        ->where("jobholder_isDelete", "0");
+        $jobholder = InternshipGraduation::with('openclasstime');
         if ($query) {
-            $jobholder->where("jobholder_code", "LIKE", "%$query%");
+            $jobholder->where("openclass_time_id", "LIKE", "%$query%");
         }
         if ($id) {
-            $jobholder->where('user_id', $id);
+            $jobholder->where('openclass_time_id', $id);
         }
         if ($sortBy) {
             $jobholder->orderBy($sortBy, $sortOrder);
@@ -100,5 +99,19 @@ class InternshipGraduationController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function getUnregisteredInternshipGraduations()
+    {
+        $unregisteredGraduations = InternshipGraduation::whereDoesntHave('register_internship')->with('openclasstime')->get();
+        $flattenedData = $unregisteredGraduations->map(function ($graduation) {
+            $flattenedItem = [
+                ...$graduation->toArray(),
+                ...$graduation->openclasstime->toArray()
+            ];
+            unset($flattenedItem['openclasstime']);
+            return $flattenedItem;
+        })->toArray();
+        return $this->sentSuccessResponse($flattenedData, 'Get data successfuly', Response::HTTP_OK);
     }
 }

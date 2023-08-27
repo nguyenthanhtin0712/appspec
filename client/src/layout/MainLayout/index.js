@@ -50,11 +50,13 @@ const MainLayout = () => {
       <Box component="main" sx={{ width: `calc(100% - ${DRAWER_WIDTH}px)`, flexGrow: 1, p: { xs: 2, sm: 3 } }}>
         <Toolbar sx={{ mt: 'inherit' }} />
         <Container
+          maxWidth="xl"
           sx={{
             position: 'relative',
             minHeight: 'calc(100vh - 110px)',
             display: 'flex',
-            flexDirection: 'column'
+            flexDirection: 'column',
+            paddingX: 0
           }}
         >
           <Outlet />

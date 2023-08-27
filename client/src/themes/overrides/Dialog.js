@@ -6,7 +6,10 @@ export default function Dialog(theme) {
           boxShadow: theme.customShadows.dialog,
           ...(!ownerState.fullScreen && {
             margin: theme.spacing(2)
-          })
+          }),
+          '& > form': {
+            display: 'contents'
+          }
         }),
         paperFullScreen: {
           borderRadius: 0

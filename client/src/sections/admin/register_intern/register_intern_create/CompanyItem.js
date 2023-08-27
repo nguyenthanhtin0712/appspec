@@ -1,17 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Tooltip from '@mui/material/Tooltip';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Switch from '@mui/material/Switch';
 import IconButton from 'components/@extended/IconButton';
 import { dispatch } from 'store';
 import { removeCompanySelected } from 'store/reducers/createRegisterInternSlice';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import { Buildings } from 'iconsax-react';
 import { useTheme } from '@mui/material';
-import GitHubLabel from 'sections/admin/register_intern/register_intern_create/SelectPositions';
+import SelectPositions from 'sections/admin/register_intern/register_intern_create/SelectPositions';
 
 const CompanyItem = ({ company }) => {
   const theme = useTheme();
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <Stack rowGap={2} sx={{ p: 2, border: '1px solid', borderRadius: 2, borderColor: theme.palette.divider, position: 'relative' }}>
       <Tooltip title="Xoá công ty" placement="top" arrow>
@@ -31,7 +34,22 @@ const CompanyItem = ({ company }) => {
           {company.company_name}
         </Typography>
       </Stack>
-      <GitHubLabel />
+      <SelectPositions company={company} />
+      <Stack direction="row" spacing={1} alignItems="center">
+        <FormControlLabel
+          control={
+            <Switch
+              id="isInterview"
+              name="isInterview"
+              checked={isOpen}
+              onChange={(e) => setIsOpen(e.target.checked)}
+              inputProps={{ 'aria-label': 'Switch A' }}
+            />
+          }
+          label="Yêu cầu phỏng vấn"
+          sx={{ '& .MuiFormControlLabel-label': { fontSize: 15 } }}
+        />
+      </Stack>
     </Stack>
   );
 };

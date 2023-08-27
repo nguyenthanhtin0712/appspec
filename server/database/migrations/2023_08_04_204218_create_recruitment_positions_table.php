@@ -16,7 +16,8 @@ class CreateRecruitmentPositionsTable extends Migration
         Schema::create('recruitment_positions', function (Blueprint $table) {
             $table->id('position_id');
             $table->string('position_name');
-            $table->string('position_isDelete')->default(0);
+            $table->integer('company_id');
+            $table->tinyInteger('position_isDelete')->default(0);
         });
     }
 

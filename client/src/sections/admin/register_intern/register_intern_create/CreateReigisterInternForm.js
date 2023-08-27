@@ -1,37 +1,48 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import FormHelperText from '@mui/material/FormHelperText';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
-import InputField from 'components/input/InputField';
 import DateTimePickerField from 'components/input/DateTimePickerField';
 import { dispatch } from 'store/index';
 import { createRegisterSpecalty } from 'store/reducers/registerSpecialtyAdminSlice';
 import { toast } from 'react-toastify';
 import CompanyList from 'sections/admin/register_intern/register_intern_create/CompanyList';
 import { useNavigate } from 'react-router-dom';
+import SelectField from 'components/input/SelectField';
+import { getUnregisteredInternshipGraduations } from 'store/reducers/createRegisterInternSlice';
+import { useSelector } from 'react-redux';
+import { formatDDMMYYYY } from 'utils/formatDateTime';
 
 const CreateReigisterInternForm = () => {
   const navigate = useNavigate();
+  const unregisteredGraduations = useSelector((state) => state.create_register_intern.unregisteredGraduations);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await dispatch(getUnregisteredInternshipGraduations());
+    };
+    fetchData();
+  }, []);
 
   return (
     <Formik
       initialValues={{
-        register_specialty_name: '',
-        register_specialty_start_date: null,
-        register_specialty_end_date: null,
+        register_internship_id: '',
+        register_internship_start_date: null,
+        register_internship_end_date: null,
         submit: null
       }}
       validationSchema={Yup.object().shape({
-        register_specialty_name: Yup.string().max(255).required('Tên đợt là bắt buộc !'),
-        register_specialty_start_date: Yup.date()
+        register_internship_id: Yup.string().max(255).required('Đợt thực tập là bắt buộc !'),
+        register_internship_start_date: Yup.date()
           .typeError('Vui lòng nhập đầy đủ')
           .min(new Date(), 'Thời gian bắt đầu phải lớn hơn thời gian hiện tại')
           .required('Thời gian bắt đầu là bắt buộc'),
-        register_specialty_end_date: Yup.date()
+        register_internship_end_date: Yup.date()
           .typeError('Vui lòng nhập đầy đủ')
-          .min(Yup.ref('register_specialty_start_date'), 'Thời gian kết thúc phải lớn hơn thời gian bắt đầu')
+          .min(Yup.ref('register_internship_start_date'), 'Thời gian kết thúc phải lớn hơn thời gian bắt đầu')
           .test('is-future-date', 'Thời gian kết thúc phải lớn hơn thời gian hiện tại', function (value) {
             return value === null || value > new Date();
           })
@@ -74,29 +85,36 @@ const CreateReigisterInternForm = () => {
         <form noValidate onSubmit={handleSubmit}>
           <Grid container spacing={3}>
             <Grid item xs={12}>
-              <InputField
-                id="register_specialty_name"
-                type="text"
-                value={values.register_specialty_name}
+              <SelectField
+                id="register_internship_id"
+                labelId="register_internship_id_label"
+                label="Đợt thực tập tốt nghiệp"
+                value={values.register_internship_id}
+                name="register_internship_id"
+                error={Boolean(touched.register_internship_id && errors.register_internship_id)}
+                helperText={errors.register_internship_id}
                 onBlur={handleBlur}
                 onChange={handleChange}
-                placeholder="Nhập tên đợt đăng ký"
-                label="Tên đợt đăng ký"
-                fullWidth
-                error={!!(touched.register_specialty_name && errors.register_specialty_name)}
-                helperText={errors.register_specialty_name}
+                list={unregisteredGraduations}
+                itemValue="openclass_time_id"
+                getOptionLabel={(option) =>
+                  `Học kỳ ${option.openclass_time_semester} - năm ${option.openclass_time_year} - Từ ${formatDDMMYYYY(
+                    option.internship_graduation_start_date
+                  )} đến ${formatDDMMYYYY(option.internship_graduation_end_date)}`
+                }
+                itemText="name"
               />
             </Grid>
             <Grid item xs={6}>
               <DateTimePickerField
                 label="Thời gian bắt đầu"
-                id="register_specialty_start_date"
+                id="register_internship_start_date"
                 setFieldTouched={setFieldTouched}
                 setFieldValue={setFieldValue}
                 setFieldError={setFieldError}
-                error={!!(touched.register_specialty_start_date && errors.register_specialty_start_date)}
-                value={values.register_specialty_start_date}
-                helperText={errors.register_specialty_start_date}
+                error={!!(touched.register_internship_start_date && errors.register_internship_start_date)}
+                value={values.register_internship_start_date}
+                helperText={errors.register_internship_start_date}
                 disablePast
                 fullWidth
               />
@@ -104,13 +122,13 @@ const CreateReigisterInternForm = () => {
             <Grid item xs={6}>
               <DateTimePickerField
                 label="Thời gian kết thúc"
-                id="register_specialty_end_date"
+                id="register_internship_end_date"
                 setFieldTouched={setFieldTouched}
                 setFieldValue={setFieldValue}
                 setFieldError={setFieldError}
-                error={!!(touched.register_specialty_end_date && errors.register_specialty_end_date)}
-                value={values.register_specialty_end_date}
-                helperText={errors.register_specialty_end_date}
+                error={!!(touched.register_internship_end_date && errors.register_internship_end_date)}
+                value={values.register_internship_end_date}
+                helperText={errors.register_internship_end_date}
                 disablePast
                 fullWidth
               />
