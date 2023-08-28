@@ -85,9 +85,10 @@ const create_register_intern = createSlice({
     setCompanySelected: (state, action) => {
       const isValid = !state.companySelected.find((item) => item.company_id === action.payload.company_id);
       if (isValid) {
-        const compamy = { ...action.payload };
-        compamy.positions = [];
-        state.companySelected = [...state.companySelected, compamy];
+        const company = { ...action.payload };
+        company.positions = [];
+        company.isInterview = false;
+        state.companySelected = [...state.companySelected, company];
       }
     },
     removeCompanySelected: (state, action) => {
@@ -148,6 +149,18 @@ const create_register_intern = createSlice({
         }
         return company;
       });
+    },
+    setIsInterview: (state, action) => {
+      const { company_id, isInterview } = action.payload;
+      state.companySelected = state.companySelected.map((company) => {
+        if (company.company_id === company_id) {
+          return {
+            ...company,
+            isInterview: isInterview
+          };
+        }
+        return company;
+      });
     }
   },
   extraReducers: (builder) => {
@@ -192,7 +205,8 @@ export const {
   setPositionOptions,
   setRecruitmentPosition,
   setPositionQuantity,
-  deleteRecruitmentPosition
+  deleteRecruitmentPosition,
+  setIsInterview
 } = create_register_intern.actions;
 
 export default create_register_intern.reducer;

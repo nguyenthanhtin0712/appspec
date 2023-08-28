@@ -115,13 +115,13 @@ const RegisterSpecialtyResult = () => {
         </Stack>
         <Box>
           <Stack spacing={2}>
-            <ResultTableAdmin></ResultTableAdmin>
+            <ResultTableAdmin />
           </Stack>
         </Box>
       </Grid>
-      <Grid item xs={3} columnSpacing={2}>
+      <Grid item xs={3} columnSpacing={2} position="static" top={0}>
         <Typography variant="h5" mb={2}>
-          Danh sách giảng viên
+          Danh sách giảng viên hướng dẫn
         </Typography>
         {listJobholder.length > 0 &&
           listJobholder.map((jobholder) => (

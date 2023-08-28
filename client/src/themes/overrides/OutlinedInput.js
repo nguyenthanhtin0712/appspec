@@ -33,6 +33,7 @@ export default function OutlinedInput(theme) {
           padding: 14
         },
         notchedOutline: {
+          border: `1.5px solid`,
           borderColor: theme.palette.secondary[400]
         },
         root: {

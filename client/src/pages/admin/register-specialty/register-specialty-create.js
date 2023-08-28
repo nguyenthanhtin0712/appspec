@@ -135,7 +135,7 @@ const RegisterSpecialty = () => {
                       helperText={errors.register_specialty_name}
                     />
                   </Grid>
-                  <Grid item xs={6}>
+                  <Grid item xs={12} md={6}>
                     <FileField
                       id="file_student"
                       name="file_student"
@@ -150,7 +150,7 @@ const RegisterSpecialty = () => {
                       multiple
                     />
                   </Grid>
-                  <Grid item xs={6}>
+                  <Grid item xs={12} md={6}>
                     <InputField
                       id="password_student"
                       type="text"
@@ -164,7 +164,7 @@ const RegisterSpecialty = () => {
                       helperText={errors.password_student}
                     />
                   </Grid>
-                  <Grid item xs={6}>
+                  <Grid item xs={12} sm={6}>
                     <DateTimePickerField
                       label="Thời gian bắt đầu"
                       id="register_specialty_start_date"
@@ -178,7 +178,7 @@ const RegisterSpecialty = () => {
                       fullWidth
                     />
                   </Grid>
-                  <Grid item xs={6}>
+                  <Grid item xs={12} sm={6}>
                     <DateTimePickerField
                       label="Thời gian kết thúc"
                       id="register_specialty_end_date"

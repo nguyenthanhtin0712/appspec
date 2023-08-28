@@ -28,7 +28,7 @@ class StoreRecruitmentPositionRequest extends FormRequest
     {
         return [
             'position_name' => 'required|unique:recruitment_positions,position_name,NULL,company_id,company_id,' . $this->input('company_id'),
-            'company_id' => 'required|exists:internship_company,company_id'
+            'company_id' => 'required|exists:companies,company_id'
         ];
     }
 

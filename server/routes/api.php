@@ -4,7 +4,7 @@ use App\Http\Controllers\Api\AcademicFieldController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\DegreeController;
 use App\Http\Controllers\Api\EmployerController;
-use App\Http\Controllers\Api\InternCompanyController;
+use App\Http\Controllers\Api\CompanyController;
 use App\Http\Controllers\Api\JobHolderController;
 use App\Http\Controllers\Api\MajorController;
 use App\Http\Controllers\Api\RecruitmentPositionController;
@@ -121,11 +121,11 @@ Route::middleware(['auth:api'])->group(function () {
     Route::delete('jobholders/{id}', [JobHolderController::class, 'destroy'])->middleware('check_user_role_permission:jobholder.delete');
 
     // Jobholder api
-    Route::get('companies', [InternCompanyController::class, 'index'])->middleware('check_user_role_permission:company.view');
-    Route::post('companies', [InternCompanyController::class, 'store'])->middleware('check_user_role_permission:company.view');
-    Route::get('companies/{id}', [InternCompanyController::class, 'show'])->middleware('check_user_role_permission:company.view');
-    Route::put('companies/{id}', [InternCompanyController::class, 'update'])->middleware('check_user_role_permission:company.view');
-    Route::delete('companies/{id}', [InternCompanyController::class, 'destroy'])->middleware('check_user_role_permission:company.view');
+    Route::get('companies', [CompanyController::class, 'index'])->middleware('check_user_role_permission:company.view');
+    Route::post('companies', [CompanyController::class, 'store'])->middleware('check_user_role_permission:company.view');
+    Route::get('companies/{id}', [CompanyController::class, 'show'])->middleware('check_user_role_permission:company.view');
+    Route::put('companies/{id}', [CompanyController::class, 'update'])->middleware('check_user_role_permission:company.view');
+    Route::delete('companies/{id}', [CompanyController::class, 'destroy'])->middleware('check_user_role_permission:company.view');
 
     // Subject api
     Route::get('subjects', [SubjectController::class, 'index'])->middleware('check_user_role_permission:title.view');

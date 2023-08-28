@@ -183,7 +183,7 @@ const JobholderForm = ({ initialValues, action }) => {
                     onBlur={handleBlur}
                     onChange={handleChange}
                     placeholder="Nhập số điện thoại"
-                    label="SDT"
+                    label="Số điện thoại"
                     fullWidth
                     error={Boolean(touched.user_phone && errors.user_phone)}
                     helperText={errors.user_phone}

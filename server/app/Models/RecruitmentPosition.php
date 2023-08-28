@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Database\Seeders\IntershipCompanySeeder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Permission\Traits\HasRoles;
@@ -22,6 +21,6 @@ class RecruitmentPosition extends Model
 
     public function company()
     {
-        return $this->belongsTo(IntershipCompanySeeder::class, 'company_id', 'company_id');
+        return $this->belongsTo(InternshipCompany::class, 'company_id', 'company_id');
     }
 }
