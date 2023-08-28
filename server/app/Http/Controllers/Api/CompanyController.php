@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreInternshipCompanyRequest;
-use App\Http\Requests\UpdateInternshipCompanyRequest;
+use App\Http\Requests\StoreCompanyRequest;
+use App\Http\Requests\UpdateCompanyRequest;
 use App\Http\Resources\Collection;
 use App\Models\Company;
 use Illuminate\Http\Request;
@@ -65,7 +65,7 @@ class CompanyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreInternshipCompanyRequest $request)
+    public function store(StoreCompanyRequest $request)
     {
         $company_name = $request->input('company_name');
         $company_phone = $request->input('company_phone');
@@ -107,7 +107,7 @@ class CompanyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateInternshipCompanyRequest $request, $id)
+    public function update(UpdateCompanyRequest $request, $id)
     {
         $company_name = $request->input('company_name');
         $company_phone = $request->input('company_phone');
