@@ -1,16 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
-
-// material-ui
 import { useTheme } from '@mui/material/styles';
-import { AppBar, Box, ClickAwayListener, Paper, Popper, Toolbar } from '@mui/material';
-
-// project-imports
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import ClickAwayListener from '@mui/material/ClickAwayListener';
+import Paper from '@mui/material/Paper';
+import Popper from '@mui/material/Popper';
+import Toolbar from '@mui/material/Toolbar';
 import Search from './Search';
 import Profile from './Profile';
 import IconButton from 'components/@extended/IconButton';
 import Transitions from 'components/@extended/Transitions';
-
-// assets
 import { More } from 'iconsax-react';
 
 // ==============================|| HEADER CONTENT - MOBILE ||============================== //
@@ -26,19 +25,16 @@ const MobileSection = () => {
   };
 
   const handleClose = (event) => {
-    if (anchorRef.current && anchorRef.current.contains(event.target)) {
-      return;
-    }
-
+    if (anchorRef.current && anchorRef.current.contains(event.target)) return;
     setOpen(false);
   };
 
   const prevOpen = useRef(open);
+
   useEffect(() => {
     if (prevOpen.current === true && open === false) {
       anchorRef.current.focus();
     }
-
     prevOpen.current = open;
   }, [open]);
 

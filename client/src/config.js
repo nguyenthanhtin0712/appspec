@@ -1,6 +1,6 @@
 export const APP_DEFAULT_PATH = '/';
 export const HORIZONTAL_MAX_ITEM = 6; // Pro Version
-export const DRAWER_WIDTH = 280;
+export const DRAWER_WIDTH = 270;
 export const MINI_DRAWER_WIDTH = 0; // Pro Version
 export const HEADER_HEIGHT = 74;
 

@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
-
-// material-ui
 import { useTheme } from '@mui/material/styles';
-import { useMediaQuery, Box, Container, Toolbar } from '@mui/material';
-
-// project-imports
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
+import Toolbar from '@mui/material/Toolbar';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import Drawer from './Drawer';
 import Header from './Header';
 import Footer from './Footer';
@@ -34,7 +33,6 @@ const MainLayout = () => {
   useEffect(() => {
     setOpen(!matchDownLG);
     dispatch(openAdminDrawer({ drawerAdminOpen: !matchDownLG }));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [matchDownLG]);
 
   useEffect(() => {

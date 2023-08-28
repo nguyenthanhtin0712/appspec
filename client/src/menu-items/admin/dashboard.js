@@ -1,11 +1,10 @@
 // type
-import { Home3, HomeTrendUp, Setting2 } from 'iconsax-react';
-import WebIcon from '@mui/icons-material/Web';
+import { DocumentCopy, Home3, HomeTrendUp, Setting2 } from 'iconsax-react';
 // icons
 const icons = {
   navigation: Home3,
   dashboard: HomeTrendUp,
-  page: WebIcon,
+  page: DocumentCopy,
   config: Setting2
 };
 

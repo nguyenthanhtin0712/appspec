@@ -12,7 +12,8 @@ import { useNavigate } from 'react-router-dom';
 import { dispatch } from 'store';
 import CountdownTimer from 'components/CountdownTimer';
 import { userRegisteringForSpecialty } from 'store/reducers/registerSpecialtyUserSlice';
-import { Container } from '@mui/material';
+import Container from '@mui/material/Container';
+import Stack from '@mui/material/Stack';
 
 const RegisterForm = () => {
   const navigate = useNavigate();
@@ -20,8 +21,6 @@ const RegisterForm = () => {
   const [error, setError] = useState(false);
   const { statistic, registrationPageInfo } = useSelector((state) => state.register_specialty_user);
   const { register_specialty_start_date, register_specialty_end_date } = registrationPageInfo;
-
-  console.log(registrationPageInfo);
 
   const handleChange = (event) => {
     setSpecialityId(event.target.value);
@@ -51,7 +50,7 @@ const RegisterForm = () => {
 
   const renderForm = () => {
     return (
-      <Fragment>
+      <Stack spacing={1}>
         <Typography gutterBottom>
           Sinh viên có thể THAY ĐỔI chuyên ngành đã đăng ký trong thời gian đăng ký còn hiệu lực. Kết quả cuối cùng sẽ được xét dựa theo
           Điều lệ đăng ký chuyên ngành.
@@ -74,7 +73,7 @@ const RegisterForm = () => {
             Đăng ký
           </Button>
         </form>
-      </Fragment>
+      </Stack>
     );
   };
 
