@@ -113,10 +113,8 @@ const RegisterSpecialtyResult = () => {
             </Tabs>
             <Divider />
           </Box>
-          <Box>
-            <SpecialityContainer></SpecialityContainer>
-          </Box>
-          <ResultTableAdmin></ResultTableAdmin>
+          <SpecialityContainer />
+          <ResultTableAdmin />
         </Stack>
       </Box>
     </>

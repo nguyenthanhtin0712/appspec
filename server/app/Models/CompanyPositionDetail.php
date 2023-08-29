@@ -18,6 +18,5 @@ class CompanyPositionDetail extends Model
         'register_internship_company_id',
         'position_id',
         'position_quantity',
-        'position_note',
     ];
 }

@@ -17,5 +17,16 @@ class RegisterIntershipCompany extends Model
         'register_internship_company_id',
         'register_internship_id',
         'company_id',
+        'company_isInterview'
     ];
+
+    public function positions()
+    {
+        return $this->hasMany(CompanyPositionDetail::class, 'register_internship_company_id', 'register_internship_company_id');
+    }
+
+    public function companies()
+    {
+        return $this->belongsToMany(Company::class, 'register_internship_company', 'register_internship_id', 'company_id')->withPivot('company_isInterview');
+    }
 }

@@ -18,7 +18,6 @@ class CreateCompanyPositionDetailsTable extends Migration
             $table->integer('register_internship_company_id');
             $table->integer('position_id');
             $table->integer('position_quantity');
-            $table->string('position_note');
         });
     }
 

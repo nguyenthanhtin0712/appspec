@@ -11,7 +11,7 @@ function HomeLayout() {
       <Box
         sx={{
           position: 'relative',
-          minHeight: '100vh',
+          minHeight: 'calc(100vh - 130px)',
           display: 'flex',
           flexDirection: 'column',
           paddingX: 0

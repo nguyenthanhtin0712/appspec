@@ -17,6 +17,7 @@ class CreateRegisterInternshipCompanyTable extends Migration
             $table->id('register_internship_company_id');
             $table->integer('register_internship_id');
             $table->integer('company_id');
+            $table->boolean('company_isInterview')->default(false);
         });
     }
 
