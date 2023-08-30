@@ -61,6 +61,16 @@ export const createRecruitmentPosition = createAsyncThunk(
   }
 );
 
+export const getCompany = createAsyncThunk('create_register_intern/getCompany', async (company_id) => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/register-interns/company/${company_id}`);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+});
+
 const initialState = {
   companyData: [],
   companySelected: [],
@@ -87,7 +97,7 @@ const create_register_intern = createSlice({
       if (isValid) {
         const company = { ...action.payload };
         company.positions = [];
-        company.isInterview = false;
+        company.company_isInterview = false;
         state.companySelected = [...state.companySelected, company];
       }
     },
@@ -156,7 +166,7 @@ const create_register_intern = createSlice({
         if (company.company_id === company_id) {
           return {
             ...company,
-            isInterview: isInterview
+            company_isInterview: isInterview
           };
         }
         return company;
@@ -194,6 +204,9 @@ const create_register_intern = createSlice({
       })
       .addCase(getUnregisteredInternshipGraduations.fulfilled, (state, action) => {
         state.unregisteredGraduations = action.payload.data;
+      })
+      .addCase(getCompany.fulfilled, (state, action) => {
+        state.companySelected = action.payload.data;
       });
   }
 });
