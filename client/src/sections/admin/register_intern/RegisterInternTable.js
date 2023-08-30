@@ -20,6 +20,7 @@ import { toast } from 'react-toastify';
 import { dispatch } from 'store/index';
 import { formatDateTimeDisplay } from 'utils/formatDateTime';
 import { Link } from 'react-router-dom';
+import { Tooltip } from '@mui/material';
 
 const RegisterSpecialtyTable = () => {
   const theme = useTheme();
@@ -98,9 +99,11 @@ const RegisterSpecialtyTable = () => {
         positionActionsColumn="last"
         renderRowActions={({ row }) => (
           <Box sx={{ display: 'flex' }}>
-            <IconButton component={Link} to={`/admin/assignment_intern/${row.id}`}>
-              <ArrowDown3 />
-            </IconButton>
+            <Tooltip title="Phân công">
+              <IconButton component={Link} to={`/admin/assignment_intern/${row.id}`}>
+                <ArrowDown3 />
+              </IconButton>
+            </Tooltip>
             <IconButton component={Link} to={`/admin/register_specialty/${row.id}`}>
               <Eye />
             </IconButton>

@@ -10,7 +10,7 @@ import { useTheme } from '@mui/material/styles';
 import { formatDateTimeDisplay } from 'utils/formatDateTime';
 import { ExportResultRegisterSpecialty } from 'export-excel/export-result-register-specialty';
 import JobholderItem from 'pages/admin/assignment-intern/JobholderItem';
-import ResultTableAdmin from 'sections/admin/register_specialty/register_specialty_result/ResultTableAdmin';
+import ResultTableAdmin from 'sections/admin/assignment_intern/assignment_intern_result/ResultTableAdmin';
 
 const listJobholder = [
   {

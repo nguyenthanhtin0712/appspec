@@ -114,37 +114,9 @@ class RegisterInternshipController extends Controller
         //
     }
 
-    public function getStudentOfInternship(Request $request)
+    public function getStudentOfInternship($id)
     {
-        $register_specialty_id = $request->input('register_specialty_id');
-        $major_id = $request->input('major_id');
-        $students = Student::select('students.student_code', 'users.user_firstname', 'users.user_lastname', 'students.specialty_id')
-            ->leftJoin('users', 'students.user_id', '=', 'users.user_id')
-            ->where('students.register_specialty_id', $register_specialty_id)
-            ->where('students.major_id', $major_id)
-            ->with('specialty')
-            ->get();
-        $formattedData = $students->groupBy('specialty_id')->map(function ($studentsGroup) {
-            $specialty = $studentsGroup->first()->specialty;
-            return [
-                "specialty_id" => $specialty->specialty_id ?? "CDK",
-                "specialty_name" => $specialty->specialty_name ?? "Chưa đăng ký",
-                "students" => $studentsGroup->map(function ($student) {
-                    return [
-                        "student_code" => $student->student_code,
-                        "user_firstname" => $student->user_firstname,
-                        "user_lastname" => $student->user_lastname,
-                    ];
-                })
-            ];
-        })->values();
-        $registerSpecialty = RegisterSpecialty::select('register_specialty_id', 'register_specialty_name')
-            ->find($register_specialty_id);
-        $result = [
-            ...$registerSpecialty->toArray(),
-            'specialties' => $formattedData
-        ];
-        return $this->sentSuccessResponse($result, "Get data success", Response::HTTP_OK);
+        
     }
 
     public function getCompany($id)

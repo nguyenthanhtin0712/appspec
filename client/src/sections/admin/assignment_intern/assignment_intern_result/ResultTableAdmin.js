@@ -9,7 +9,7 @@ import {
   setSorting,
   setPagination,
   setStatus
-} from 'store/reducers/registerSpecialtyUserSlice';
+} from 'store/reducers/assignmentInternUserSlice';
 import { dispatch } from 'store/index';
 import { Box, Button, MenuItem, Select } from '@mui/material';
 import ChangeSpecialtyDialog from 'sections/admin/register_specialty/register_specialty_result/ChangeSpecialtyDialog';
@@ -30,10 +30,11 @@ const ResultTable = () => {
     majorId,
     status,
     statistic
-  } = useSelector((state) => state.register_specialty_user);
+  } = useSelector((state) => state.assignment_intern_user);
   const [open, setOpen] = useState(false);
   const [rowSelection, setRowSelection] = useState({});
-  console.log(rowSelection);
+  console.log('rowSelection', rowSelection);
+  console.log('data', data);
   useEffect(() => {
     dispatch(fetchData({ columnFilters, globalFilter, sorting, pagination, majorId, registerSpecialtyId, status }));
   }, [columnFilters, globalFilter, sorting, pagination, majorId, registerSpecialtyId, status]);
