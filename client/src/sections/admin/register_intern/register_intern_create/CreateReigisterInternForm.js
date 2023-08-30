@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect } from 'react';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
@@ -15,9 +16,21 @@ import { getCompany, getUnregisteredInternshipGraduations } from 'store/reducers
 import { useSelector } from 'react-redux';
 import { formatDDMMYYYY } from 'utils/formatDateTime';
 
+const cleanData = (companies) => {
+  const result = companies.map(({ company_id, company_isInterview, positions }) => ({
+    company_id,
+    company_isInterview,
+    positions: positions.map(({ position_id, position_quantity }) => ({
+      position_id,
+      position_quantity
+    }))
+  }));
+  console.log(result);
+};
+
 const CreateReigisterInternForm = () => {
   const navigate = useNavigate();
-  const unregisteredGraduations = useSelector((state) => state.create_register_intern.unregisteredGraduations);
+  const { unregisteredGraduations, companySelected } = useSelector((state) => state.create_register_intern);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -49,29 +62,33 @@ const CreateReigisterInternForm = () => {
           .required('Thời gian kết thúc là bắt buộc')
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
-        try {
-          const result = await dispatch(createRegisterSpecalty({ values, data }));
-          if (result && !result.error) {
-            setStatus({ success: true });
-            setSubmitting(false);
-            toast.success('Tạo đợt đăng ký thành công!');
-            navigate('/admin/register_specialty');
-          } else {
-            setStatus({ success: false });
-            setErrors(result.payload.errors);
-            setSubmitting(false);
-            toast.error('Tạo đợt đăng ký không thành công');
-          }
-        } catch (err) {
-          console.error(err);
-          setStatus({ success: false });
-          setErrors({ submit: err.message });
-          setSubmitting(false);
-        }
+        console.log(values);
+        // try {
+        //   const result = await dispatch(createRegisterSpecalty({ values, data }));
+        //   if (result && !result.error) {
+        //     setStatus({ success: true });
+        //     setSubmitting(false);
+        //     toast.success('Tạo đợt đăng ký thành công!');
+        //     navigate('/admin/register_specialty');
+        //   } else {
+        //     setStatus({ success: false });
+        //     setErrors(result.payload.errors);
+        //     setSubmitting(false);
+        //     toast.error('Tạo đợt đăng ký không thành công');
+        //   }
+        // } catch (err) {
+        //   console.error(err);
+        //   setStatus({ success: false });
+        //   setErrors({ submit: err.message });
+        //   setSubmitting(false);
+        // }
       }}
     >
       {({ errors, handleBlur, handleSubmit, isSubmitting, touched, values, setFieldValue, setFieldError, setFieldTouched }) => (
         <form noValidate onSubmit={handleSubmit}>
+          <Button variant="contained" onClick={() => cleanData(companySelected)}>
+            ok
+          </Button>
           <Grid container spacing={3}>
             <Grid item xs={12}>
               <SelectField

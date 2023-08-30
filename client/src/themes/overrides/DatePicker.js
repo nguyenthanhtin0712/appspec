@@ -29,6 +29,13 @@ export default function DatePicker(theme) {
           }
         }
       }
+    },
+    MuiDateTimePickerToolbar: {
+      styleOverrides: {
+        timeDigitsContainer: {
+          alignItems: 'center'
+        }
+      }
     }
   };
 }
