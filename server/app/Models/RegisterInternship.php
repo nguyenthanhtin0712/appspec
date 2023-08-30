@@ -25,4 +25,8 @@ class RegisterInternship extends Model
     {
         return $this->belongsTo(InternshipGraduation::class, 'register_internship_id', 'openclass_time_id');
     }
+
+    // public function company() {
+    //     return $this->belongsToMany(Company::class)->withPivot('company_isInterview');
+    // }
 }

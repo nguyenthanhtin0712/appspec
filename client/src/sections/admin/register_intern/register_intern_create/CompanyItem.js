@@ -40,7 +40,7 @@ const CompanyItem = ({ company }) => {
           <Switch
             id="isInterview"
             name="isInterview"
-            checked={company.isInterview}
+            checked={!!company.company_isInterview}
             onChange={(e) => dispatch(setIsInterview({ company_id: company.company_id, isInterview: e.target.checked }))}
             inputProps={{ 'aria-label': 'Switch A' }}
           />

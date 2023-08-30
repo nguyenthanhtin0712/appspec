@@ -11,7 +11,7 @@ import { toast } from 'react-toastify';
 import CompanyList from 'sections/admin/register_intern/register_intern_create/CompanyList';
 import { useNavigate } from 'react-router-dom';
 import SelectField from 'components/input/SelectField';
-import { getUnregisteredInternshipGraduations } from 'store/reducers/createRegisterInternSlice';
+import { getCompany, getUnregisteredInternshipGraduations } from 'store/reducers/createRegisterInternSlice';
 import { useSelector } from 'react-redux';
 import { formatDDMMYYYY } from 'utils/formatDateTime';
 
@@ -70,18 +70,7 @@ const CreateReigisterInternForm = () => {
         }
       }}
     >
-      {({
-        errors,
-        handleBlur,
-        handleChange,
-        handleSubmit,
-        isSubmitting,
-        touched,
-        values,
-        setFieldValue,
-        setFieldError,
-        setFieldTouched
-      }) => (
+      {({ errors, handleBlur, handleSubmit, isSubmitting, touched, values, setFieldValue, setFieldError, setFieldTouched }) => (
         <form noValidate onSubmit={handleSubmit}>
           <Grid container spacing={3}>
             <Grid item xs={12}>
@@ -94,7 +83,10 @@ const CreateReigisterInternForm = () => {
                 error={Boolean(touched.register_internship_id && errors.register_internship_id)}
                 helperText={errors.register_internship_id}
                 onBlur={handleBlur}
-                onChange={handleChange}
+                onChange={async (e) => {
+                  setFieldValue('register_internship_id', e.target.value);
+                  await dispatch(getCompany(e.target.value));
+                }}
                 list={unregisteredGraduations}
                 itemValue="openclass_time_id"
                 getOptionLabel={(option) =>
