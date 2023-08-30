@@ -113,7 +113,9 @@ const RegisterSpecialtyResult = () => {
             </Tabs>
             <Divider />
           </Box>
-          <SpecialityContainer />
+          <Box sx={{ flexGrow: 1 }}>
+            <SpecialityContainer />
+          </Box>
           <ResultTableAdmin />
         </Stack>
       </Box>

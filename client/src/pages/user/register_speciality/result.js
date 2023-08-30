@@ -43,8 +43,10 @@ const SpecialityResult = () => {
         <Divider />
         <CardContent>
           <Stack spacing={2}>
-            <SpecialityContainer></SpecialityContainer>
-            <ResultTable></ResultTable>
+            <Box sx={{ flexGrow: 1 }}>
+              <SpecialityContainer />
+            </Box>
+            <ResultTable />
           </Stack>
         </CardContent>
       </Card>
