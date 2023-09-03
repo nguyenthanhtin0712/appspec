@@ -86,9 +86,6 @@ const CreateReigisterInternForm = () => {
     >
       {({ errors, handleBlur, handleSubmit, isSubmitting, touched, values, setFieldValue, setFieldError, setFieldTouched }) => (
         <form noValidate onSubmit={handleSubmit}>
-          <Button variant="contained" onClick={() => cleanData(companySelected)}>
-            ok
-          </Button>
           <Grid container spacing={3}>
             <Grid item xs={12}>
               <SelectField

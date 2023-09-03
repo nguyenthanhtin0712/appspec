@@ -26,6 +26,7 @@ class InternshipCompanyResoure extends JsonResource
                     'position_id' => $position->position_id,
                     'position_name' => $position->position_name,
                     'position_quantity' => $position->pivot->position_quantity,
+                    'company_id' => $position->company_id,
                 ];
             }),
         ];

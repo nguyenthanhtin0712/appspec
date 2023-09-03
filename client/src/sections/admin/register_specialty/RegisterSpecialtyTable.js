@@ -1,7 +1,7 @@
 import React, { memo, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useTheme } from '@mui/material/styles';
-import { Eye, Trash, Edit } from 'iconsax-react';
+import { Eye, Trash, Edit, SearchNormal } from 'iconsax-react';
 import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
 import { MaterialReactTable } from 'material-react-table';
@@ -20,6 +20,7 @@ import { toast } from 'react-toastify';
 import { dispatch } from 'store/index';
 import { formatDateTimeDisplay } from 'utils/formatDateTime';
 import { Link } from 'react-router-dom';
+import { InputAdornment } from '@mui/material';
 
 const RegisterSpecialtyTable = () => {
   const theme = useTheme();
@@ -135,7 +136,16 @@ const RegisterSpecialtyTable = () => {
           placeholder: 'Tìm kiếm đợt đăng ký ...',
           sx: { minWidth: '300px' },
           variant: 'outlined',
-          size: 'small'
+          size: 'small',
+          InputProps: {
+            startAdornment: (
+              <InputAdornment>
+                <IconButton variant="contained" shape="rounded" size="small">
+                  <SearchNormal />
+                </IconButton>
+              </InputAdornment>
+            )
+          }
         }}
       />
 

@@ -65,7 +65,6 @@ const StyledPopper = styled(Popper)(({ theme }) => ({
   border: `1px solid ${theme.palette.divider}`,
   boxShadow: `0 8px 24px rgba(149, 157, 165, 0.2)`,
   borderRadius: 6,
-  width: 300,
   zIndex: theme.zIndex.modal,
   fontSize: 13,
   color: '#24292e',

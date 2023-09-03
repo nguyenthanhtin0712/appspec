@@ -16,6 +16,7 @@ const PositionIntership = ({ position }) => {
   const handleDelete = () => {
     dispatch(deleteRecruitmentPosition(position));
   };
+
   return (
     <Grid container direction="row" alignItems="flex-start" mb={1.5}>
       <Grid item xs={10} display="flex" alignItems="center" columnGap={1}>
