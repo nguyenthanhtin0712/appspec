@@ -5,10 +5,9 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Collection;
 use App\Http\Resources\InternshipCompanyResoure;
+use App\Models\CompanyPositionDetail;
 use App\Models\RegisterInternship;
 use App\Models\RegisterIntershipCompany;
-use App\Models\RegisterSpecialty;
-use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -70,7 +69,25 @@ class RegisterInternshipController extends Controller
      */
     public function store(Request $request)
     {
-        
+        $registerInterData = $request->except(['companies', 'submit']);
+        RegisterIntershipCompany::where('register_internship_id', $registerInterData['register_internship_id'])
+            ->delete();
+        $registerInternCreated = RegisterInternship::create($registerInterData);
+        foreach ($request->input('companies') as $company) {
+            $com = RegisterIntershipCompany::create([
+                'register_internship_id' => $registerInternCreated->register_internship_id,
+                'company_id' => $company['company_id'],
+                'company_isInterview' => $company['company_isInterview']
+            ]);
+            foreach ($company['positions'] as $position) {
+                CompanyPositionDetail::create([
+                    'register_internship_company_id' => $com->register_internship_company_id,
+                    'position_id' => $position['position_id'],
+                    'position_quantity' => $position['position_quantity'],
+                ]);
+            }
+        }
+        return $this->sentSuccessResponse($registerInternCreated, "Created successful", Response::HTTP_OK);
     }
 
     /**
@@ -117,7 +134,6 @@ class RegisterInternshipController extends Controller
 
     public function getStudentOfInternship($id)
     {
-        
     }
 
     public function getCompany($id)

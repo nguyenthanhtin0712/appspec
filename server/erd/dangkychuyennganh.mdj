@@ -3956,7 +3956,7 @@
 									"top": 1389,
 									"width": 313.89892578125,
 									"height": 13,
-									"text": "internship_partnership"
+									"text": "register_internship_company"
 								},
 								{
 									"_type": "ERDColumnCompartmentView",
@@ -10692,7 +10692,7 @@
 					"_parent": {
 						"$ref": "AAAAAAGITK4l2657GSk="
 					},
-					"name": "internship_partnership",
+					"name": "register_internship_company",
 					"ownedElements": [
 						{
 							"_type": "ERDRelationship",
@@ -10730,7 +10730,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGITfFnoLRwydU="
 							},
-							"name": "internship_partnership_id",
+							"name": "register_internship_company_id",
 							"type": "INTEGER",
 							"length": 0,
 							"primaryKey": true

@@ -22,7 +22,12 @@ class RegisterIntershipCompany extends Model
 
     public function positions()
     {
-        return $this->belongsToMany(RecruitmentPosition::class, 'company_position_detail', 'register_internship_company_id', 'position_id')
+        return $this->belongsToMany(
+            RecruitmentPosition::class,
+            'company_position_detail',
+            'register_internship_company_id',
+            'position_id'
+        )
             ->withPivot('position_quantity');
     }
 
