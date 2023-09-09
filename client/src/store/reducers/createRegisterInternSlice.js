@@ -71,6 +71,23 @@ export const getCompany = createAsyncThunk('create_register_intern/getCompany', 
   }
 });
 
+export const createRegisterInternShip = createAsyncThunk(
+  'create_register_intern/createRegisterInternShip',
+  async (payload, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(`${API_BASE_URL}/register-interns/admin`, payload);
+      return response.data;
+    } catch (error) {
+      if (error.response && error.response.data && error.response.data.errors) {
+        return rejectWithValue(error.response.data);
+      } else {
+        console.error(error);
+        throw error;
+      }
+    }
+  }
+);
+
 const initialState = {
   companyData: [],
   companySelected: [],

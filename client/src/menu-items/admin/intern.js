@@ -25,7 +25,7 @@ const intern = {
     },
     {
       id: 'register_intern',
-      title: 'Đăng ký thực tập',
+      title: 'Thực tập tốt nghiệp',
       type: 'item',
       url: '/admin/register_intern',
       icon: icons.assignment

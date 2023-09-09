@@ -7,12 +7,11 @@ import * as Yup from 'yup';
 import { Formik } from 'formik';
 import DateTimePickerField from 'components/input/DateTimePickerField';
 import { dispatch } from 'store/index';
-import { createRegisterSpecalty } from 'store/reducers/registerSpecialtyAdminSlice';
 import { toast } from 'react-toastify';
 import CompanyList from 'sections/admin/register_intern/register_intern_create/CompanyList';
 import { useNavigate } from 'react-router-dom';
 import SelectField from 'components/input/SelectField';
-import { getCompany, getUnregisteredInternshipGraduations } from 'store/reducers/createRegisterInternSlice';
+import { createRegisterInternShip, getCompany, getUnregisteredInternshipGraduations } from 'store/reducers/createRegisterInternSlice';
 import { useSelector } from 'react-redux';
 import { formatDDMMYYYY, formatDateTimeSubmit } from 'utils/formatDateTime';
 
@@ -70,25 +69,25 @@ const CreateReigisterInternForm = () => {
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
         const payload = cleanData(companySelected, values);
         console.log(payload);
-        // try {
-        //   const result = await dispatch(createRegisterSpecalty({ values, data }));
-        //   if (result && !result.error) {
-        //     setStatus({ success: true });
-        //     setSubmitting(false);
-        //     toast.success('Tạo đợt đăng ký thành công!');
-        //     navigate('/admin/register_specialty');
-        //   } else {
-        //     setStatus({ success: false });
-        //     setErrors(result.payload.errors);
-        //     setSubmitting(false);
-        //     toast.error('Tạo đợt đăng ký không thành công');
-        //   }
-        // } catch (err) {
-        //   console.error(err);
-        //   setStatus({ success: false });
-        //   setErrors({ submit: err.message });
-        //   setSubmitting(false);
-        // }
+        try {
+          const result = await dispatch(createRegisterInternShip(payload));
+          if (result && !result.error) {
+            setStatus({ success: true });
+            setSubmitting(false);
+            toast.success('Tạo đợt đăng ký thành công!');
+            navigate('/admin/register_intern');
+          } else {
+            setStatus({ success: false });
+            setErrors(result.payload.errors);
+            setSubmitting(false);
+            toast.error('Tạo đợt đăng ký không thành công');
+          }
+        } catch (err) {
+          console.error(err);
+          setStatus({ success: false });
+          setErrors({ submit: err.message });
+          setSubmitting(false);
+        }
       }}
     >
       {({ errors, handleBlur, handleSubmit, isSubmitting, touched, values, setFieldValue, setFieldError, setFieldTouched }) => (

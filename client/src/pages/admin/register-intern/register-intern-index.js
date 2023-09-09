@@ -11,9 +11,14 @@ const RegisterInternIndex = () => {
     <>
       <Stack direction="row" justifyContent="space-between" alignItems="center" mb={2} flexWrap="wrap">
         <Typography variant="h4">Quản lý đợt đăng ký thực tập</Typography>
-        <Button variant="contained" component={Link} to="./create" startIcon={<Add />}>
-          Tạo đợt đăng ký
-        </Button>
+        <Stack spacing={2} direction="row">
+          <Button variant="contained" color="success" component={Link} to="/" startIcon={<Add />}>
+            Thêm đợt thực tập
+          </Button>
+          <Button variant="contained" component={Link} to="./create" startIcon={<Add />}>
+            Tạo đợt đăng ký
+          </Button>
+        </Stack>
       </Stack>
       <RegisterInternTable />
     </>

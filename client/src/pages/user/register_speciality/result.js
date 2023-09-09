@@ -16,7 +16,10 @@ const SpecialityResult = () => {
   };
 
   useEffect(() => {
-    dispatch(getRegistrationInformation());
+    const fetchData = async () => {
+      await dispatch(getRegistrationInformation());
+    };
+    fetchData();
   }, []);
 
   if (!majors) return null;

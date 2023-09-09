@@ -19,7 +19,9 @@ class CreateCompanyPositionDetailTable extends Migration
             $table->integer('position_id');
             $table->integer('position_quantity');
             $table->foreign('register_internship_company_id')
-                ->references('register_internship_company_id')->on('register_internship_company');
+                ->references('register_internship_company_id')
+                ->on('register_internship_company')
+                ->onDelete('cascade');
         });
     }
 

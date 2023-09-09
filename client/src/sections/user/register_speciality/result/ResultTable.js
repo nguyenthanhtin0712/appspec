@@ -13,9 +13,10 @@ const ResultTable = () => {
   );
 
   useEffect(() => {
-    if (majorId) {
-      dispatch(fetchData({ columnFilters, globalFilter, sorting, pagination, majorId }));
-    }
+    const fetch = async () => {
+      await dispatch(fetchData({ columnFilters, globalFilter, sorting, pagination, majorId }));
+    };
+    if (majorId) fetch();
   }, [columnFilters, globalFilter, sorting, pagination, majorId]);
 
   const columns = React.useMemo(
