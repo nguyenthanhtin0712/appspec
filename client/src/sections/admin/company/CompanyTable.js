@@ -29,7 +29,7 @@ const CompanyTable = () => {
   const { data, isError, isLoading, isRefetching, rowCount, columnFilters, globalFilter, sorting, pagination } = useSelector(
     (state) => state.company
   );
-
+  console.log('data', data);
   const handleExportData = useCallback(() => {
     const wb = utils.book_new();
     const ws = utils.json_to_sheet(data);
@@ -66,16 +66,16 @@ const CompanyTable = () => {
         header: 'Tên công ty'
       },
       {
-        accessorKey: 'company_phone',
-        header: 'SDT'
-      },
-      {
-        accessorKey: 'company_email',
-        header: 'Email'
-      },
-      {
         accessorKey: 'company_host',
         header: 'HOST'
+      },
+      {
+        accessorKey: 'user.user_firstname',
+        header: 'Họ'
+      },
+      {
+        accessorKey: 'user.user_lastname',
+        header: 'Tên'
       },
       {
         accessorKey: 'conpany_is_offcial',
