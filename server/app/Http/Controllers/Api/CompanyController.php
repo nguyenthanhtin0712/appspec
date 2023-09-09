@@ -26,7 +26,8 @@ class CompanyController extends Controller
         $sortBy = $request->input('sortBy');
         $sortOrder = $request->input('sortOrder', 'asc');
         $filters = $request->input('filters');
-        $company = Company::where("company_isDelete", "0");
+        $company = Company::with("user")
+        ->where("company_isDelete", "0");
         if ($query) {
             $company->where("company_name", "LIKE", "%$query%");
         }

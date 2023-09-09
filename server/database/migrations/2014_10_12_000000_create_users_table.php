@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('user_password');
             $table->integer('user_gender')->nullable();
             $table->integer('user_status')->default(1);
-            $table->date('user_birthday');
+            $table->date('user_birthday')->nullable();
             $table->integer('user_isDelete')->default(0);
             $table->rememberToken();
             $table->timestamps();

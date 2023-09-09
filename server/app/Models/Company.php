@@ -16,9 +16,8 @@ class Company extends Model
 
     protected $fillable = [
         'company_id',
+        'user_id',
         'company_name',
-        'company_phone',
-        'company_email',
         'company_address',
         'company_host',
         'company_is_official',
@@ -28,5 +27,10 @@ class Company extends Model
     public function positions()
     {
         return $this->hasMany(RecruitmentPosition::class, 'company_id', 'company_id');
+    }
+
+    public function user()
+    {
+        return $this->hasOne(User::class, 'user_id', 'user_id');
     }
 }

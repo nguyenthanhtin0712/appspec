@@ -59,7 +59,71 @@ const CompanyForm = ({ initialValues, action }) => {
         <form noValidate onSubmit={handleSubmit}>
           <DialogContent>
             <Grid container spacing={3}>
-              <Grid item xs={12}>
+              <Grid item xs={6}>
+                <Stack spacing={2}>
+                  <InputField
+                    id="user_firstname"
+                    type="text"
+                    value={values.user_firstname}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    placeholder="Nhập họ"
+                    label="Họ"
+                    fullWidth
+                    error={Boolean(touched.user_firstname && errors.user_firstname)}
+                    helperText={errors.user_firstname}
+                  />
+                  <InputField
+                    id="user_lastname"
+                    type="text"
+                    value={values.user_lastname}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    placeholder="Nhập tên"
+                    label="Tên"
+                    fullWidth
+                    error={Boolean(touched.user_lastname && errors.user_lastname)}
+                    helperText={errors.user_lastname}
+                  />
+                  <InputField
+                    id="user_phone"
+                    type="text"
+                    value={values.user_phone}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    placeholder="Nhập số điện thoại"
+                    label="SDT"
+                    fullWidth
+                    error={Boolean(touched.user_phone && errors.user_phone)}
+                    helperText={errors.user_phone}
+                  />
+                  <InputField
+                    id="user_email"
+                    type="text"
+                    value={values.user_email}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    placeholder="Nhập email"
+                    label="Email"
+                    fullWidth
+                    error={Boolean(touched.user_email && errors.user_email)}
+                    helperText={errors.user_email}
+                  />
+                  <InputField
+                    id="user_password"
+                    type="text"
+                    value={values.user_password}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    placeholder="Nhập mật khẩu"
+                    label="Mật khẩu"
+                    fullWidth
+                    error={Boolean(touched.user_password && errors.user_password)}
+                    helperText={errors.user_password}
+                  />
+                </Stack>
+              </Grid>
+              <Grid item xs={6}>
                 <Stack spacing={2}>
                   <InputField
                     id="company_name"
@@ -73,30 +137,7 @@ const CompanyForm = ({ initialValues, action }) => {
                     error={Boolean(touched.company_name && errors.company_name)}
                     helperText={errors.company_name}
                   />
-                  <InputField
-                    id="company_phone"
-                    type="text"
-                    value={values.company_phone}
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    placeholder="Nhập số điện thoại"
-                    label="SDT"
-                    fullWidth
-                    error={Boolean(touched.company_phone && errors.company_phone)}
-                    helperText={errors.company_phone}
-                  />
-                  <InputField
-                    id="company_email"
-                    type="text"
-                    value={values.company_email}
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    placeholder="Nhập email"
-                    label="Email"
-                    fullWidth
-                    error={Boolean(touched.company_email && errors.company_email)}
-                    helperText={errors.company_email}
-                  />
+
                   <InputField
                     id="company_address"
                     type="text"
@@ -160,7 +201,7 @@ const CompanyDialog = () => {
   };
 
   return (
-    <Dialog open={companyDialog.open} onClose={handleClose} maxWidth="xs" fullWidth>
+    <Dialog open={companyDialog.open} onClose={handleClose} maxWidth="md" fullWidth>
       <DialogTitleCustom onClose={handleClose}>{action === 'add' ? 'Thêm công ty' : 'Chỉnh sửa công ty'}</DialogTitleCustom>
       <CompanyForm initialValues={initialValues} action={action} />
     </Dialog>
