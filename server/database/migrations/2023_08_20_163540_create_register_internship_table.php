@@ -14,7 +14,7 @@ class CreateRegisterInternshipTable extends Migration
     public function up()
     {
         Schema::create('register_internship', function (Blueprint $table) {
-            $table->integer('register_internship_id');
+            $table->id('register_internship_id');
             $table->dateTime('register_internship_start_date');
             $table->dateTime('register_internship_end_date');
             $table->integer('register_internship_isDelete')->default(0);

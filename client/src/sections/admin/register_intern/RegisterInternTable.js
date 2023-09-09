@@ -18,7 +18,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { toast } from 'react-toastify';
 import { dispatch } from 'store/index';
-import { formatDateTimeDisplay } from 'utils/formatDateTime';
+import { formatDDMMYYYY } from 'utils/formatDateTime';
 import { Link } from 'react-router-dom';
 import { Tooltip } from '@mui/material';
 
@@ -53,14 +53,14 @@ const RegisterSpecialtyTable = () => {
         Cell: ({ cell }) => cell.row.original.internship_graduation.openclasstime.openclass_time_year
       },
       {
-        accessorKey: 'intern_registration_start_date',
+        accessorKey: 'register_internship_start_date',
         header: 'Thời gian bắt đầu',
-        Cell: ({ cell }) => formatDateTimeDisplay(cell.getValue())
+        Cell: ({ cell }) => formatDDMMYYYY(cell.getValue())
       },
       {
-        accessorKey: 'intern_registration_end_date',
+        accessorKey: 'register_internship_end_date',
         header: 'Thời gian kết thúc',
-        Cell: ({ cell }) => formatDateTimeDisplay(cell.getValue())
+        Cell: ({ cell }) => formatDDMMYYYY(cell.getValue())
       }
     ],
     []

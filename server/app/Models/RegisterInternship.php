@@ -14,6 +14,7 @@ class RegisterInternship extends Model
     protected $primaryKey = 'register_internship_id';
     public $timestamps = true;
     protected $hidden = ['created_at', 'updated_at'];
+    protected $attributes = ['register_internship_isDelete' => 0];
     protected $fillable = [
         'register_internship_id',
         'register_internship_start_date',

@@ -14,10 +14,10 @@ import { useNavigate } from 'react-router-dom';
 import SelectField from 'components/input/SelectField';
 import { getCompany, getUnregisteredInternshipGraduations } from 'store/reducers/createRegisterInternSlice';
 import { useSelector } from 'react-redux';
-import { formatDDMMYYYY } from 'utils/formatDateTime';
+import { formatDDMMYYYY, formatDateTimeSubmit } from 'utils/formatDateTime';
 
-const cleanData = (companies) => {
-  const result = companies.map(({ company_id, company_isInterview, positions }) => ({
+const cleanData = (companies, registerInternInfo) => {
+  const companiesResult = companies.map(({ company_id, company_isInterview, positions }) => ({
     company_id,
     company_isInterview,
     positions: positions.map(({ position_id, position_quantity }) => ({
@@ -25,7 +25,13 @@ const cleanData = (companies) => {
       position_quantity
     }))
   }));
-  console.log(result);
+  const payload = {
+    ...registerInternInfo,
+    register_internship_start_date: formatDateTimeSubmit(registerInternInfo.register_internship_start_date),
+    register_internship_end_date: formatDateTimeSubmit(registerInternInfo.register_internship_end_date),
+    companies: companiesResult
+  };
+  return payload;
 };
 
 const CreateReigisterInternForm = () => {
@@ -62,7 +68,8 @@ const CreateReigisterInternForm = () => {
           .required('Thời gian kết thúc là bắt buộc')
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
-        console.log(values);
+        const payload = cleanData(companySelected, values);
+        console.log(payload);
         // try {
         //   const result = await dispatch(createRegisterSpecalty({ values, data }));
         //   if (result && !result.error) {
