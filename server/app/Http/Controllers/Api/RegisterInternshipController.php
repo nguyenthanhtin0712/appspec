@@ -115,11 +115,6 @@ class RegisterInternshipController extends Controller
         //
     }
 
-    public function getStudentOfInternship($id)
-    {
-        
-    }
-
     public function getCompany($id)
     {
         $companies = RegisterIntershipCompany::with(['positions'])
@@ -128,5 +123,17 @@ class RegisterInternshipController extends Controller
             ->get();
 
         return $this->sentSuccessResponse(InternshipCompanyResoure::collection($companies), 'Get companies successful', Response::HTTP_OK);
+    }
+    
+    public function getStudentOfInternship($id)
+    {
+        $students = Student::query()
+        ->leftJoin('users','users.user_id','=','students.user_id')
+        ->leftJoin('company_position_detail','students.company_position_detail_id','=','company_position_detail.company_position_detail_id')
+        ->leftJoin('recruitment_positions', 'company_position_detail.position_id','=','recruitment_positions.position_id')
+        ->leftJoin('register_internship_company', 'company_position_detail.register_internship_company_id','=','register_internship_company.register_internship_company_id')
+        ->where('register_internship_company.register_internship_id', "$id")
+        ->get();
+        return $this->sentSuccessResponse($students, "Get students in intership success", Response::HTTP_OK);
     }
 }
