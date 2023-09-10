@@ -3,7 +3,7 @@ import Popover from '@mui/material/Popover';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import PopupState, { bindFocus, bindPopover } from 'material-ui-popup-state';
 import { SearchNormal1, Building4, SearchStatus1, EmojiSad } from 'iconsax-react';
-import { Box, CircularProgress, List, ListItemButton, ListItemIcon, ListItemText, Typography, useTheme } from '@mui/material';
+import { Box, CircularProgress, Fade, List, ListItemButton, ListItemIcon, ListItemText, Typography, useTheme } from '@mui/material';
 import SimpleBar from 'components/third-party/SimpleBar';
 import { dispatch } from 'store';
 import { fetchDataCompany, setCompanyQuery, setCompanySelected } from 'store/reducers/createRegisterInternSlice';
@@ -57,7 +57,8 @@ const CompanySearchForm = () => {
                 boxShadow: theme.customShadows.z1
               }
             }}
-            sx={{ left: -35, top: 10 }}
+            TransitionComponent={Fade}
+            sx={{ left: -35, top: 2 }}
           >
             <SimpleBar sx={{ width: inputWidth, minWidth: 345, maxHeight: 300 }}>
               {queryDebounce == '' ? (
