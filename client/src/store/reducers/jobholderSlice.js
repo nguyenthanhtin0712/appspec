@@ -198,7 +198,7 @@ const jobholder = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchData.pending, (state) => {
-        state.isLoading = false;
+        state.isLoading = true;
       })
       .addCase(fetchData.fulfilled, (state, action) => {
         state.isLoading = false;
