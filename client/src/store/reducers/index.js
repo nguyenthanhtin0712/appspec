@@ -20,7 +20,6 @@ import register_specialty_user from './registerSpecialtyUserSlice';
 import config_page from './configPageSlice';
 import create_register_intern from './createRegisterInternSlice';
 import register_intern from './registerInternAdminSlice';
-
 // ==============================|| COMBINE REDUCERS ||============================== //
 
 const reducers = combineReducers({
