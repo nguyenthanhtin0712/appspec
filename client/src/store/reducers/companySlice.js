@@ -51,6 +51,7 @@ export const createCompany = createAsyncThunk('company/createCompany', async (co
 
 export const updateCompany = createAsyncThunk('company/updateCompany', async (company, { rejectWithValue }) => {
   try {
+    console.log('Comapny', company);
     const response = await axios.put(`${API_BASE_URL}/companies/${company.company_id}`, company);
     return response.data;
   } catch (error) {
@@ -77,6 +78,18 @@ export const deleteCompany = createAsyncThunk('company/deleteCompany', async (id
   }
 });
 
+const initValueCompany = {
+  user_firstname: '',
+  user_lastname: '',
+  user_phone: '',
+  user_email: '',
+  user_password: '',
+  company_name: '',
+  company_address: '',
+  company_host: '',
+  company_is_official: 1
+};
+
 const initialState = {
   data: [],
   isError: false,
@@ -93,15 +106,10 @@ const initialState = {
   companyDialog: {
     open: false,
     action: 'add',
-    initValue: {
-      company_name: '',
-      company_email: '',
-      company_phone: '',
-      company_address: '',
-      company_host: '',
-      company_is_offcial: ''
-    }
-  }
+    initValue: initValueCompany
+  },
+  idDelete: '',
+  openCofirmDialog: false
 };
 
 const company = createSlice({
@@ -125,14 +133,13 @@ const company = createSlice({
     },
     setCloseDialog: (state) => {
       state.companyDialog.open = false;
-      state.companyDialog.initValue = {
-        company_name: '',
-        company_email: '',
-        company_phone: '',
-        company_address: '',
-        company_host: '',
-        company_is_offcial: ''
-      };
+      state.companyDialog.initValue = initValueCompany;
+    },
+    setIdDeleteCompany: (state, action) => {
+      state.idDelete = action.payload;
+    },
+    setOpenCofirmDialog: (state, action) => {
+      state.openCofirmDialog = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -171,6 +178,15 @@ const company = createSlice({
   }
 });
 
-export const { setColumnFilters, setGlobalFilter, setSorting, setPagination, setcompanyDialog, setCloseDialog } = company.actions;
+export const {
+  setColumnFilters,
+  setGlobalFilter,
+  setSorting,
+  setPagination,
+  setcompanyDialog,
+  setCloseDialog,
+  setIdDeleteCompany,
+  setOpenCofirmDialog
+} = company.actions;
 
 export default company.reducer;

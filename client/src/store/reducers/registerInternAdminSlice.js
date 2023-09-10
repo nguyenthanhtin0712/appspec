@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from '../../api/axios';
 import { API_BASE_URL } from 'config';
-import { formatDateTimeSubmit } from 'utils/formatDateTime';
 
 export const fetchData = createAsyncThunk('register_interns/fetchData', async (params, { rejectWithValue }) => {
   const {

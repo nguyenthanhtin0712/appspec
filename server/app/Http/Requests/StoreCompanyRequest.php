@@ -27,8 +27,12 @@ class StoreCompanyRequest extends FormRequest
     public function rules()
     {
         return [
+            'user_firstname' => 'required',
+            'user_lastname' => 'required',
+            'user_email' => 'required',
+            'user_phone' => 'required',
+            'user_password' => 'required',
             'company_name' => 'required',
-            'company_phone' => 'required',
             'company_address' => 'required',
             'company_host' => 'required',
             'company_is_official' => 'required',

@@ -7,6 +7,7 @@ use App\Http\Requests\StoreCompanyRequest;
 use App\Http\Requests\UpdateCompanyRequest;
 use App\Http\Resources\Collection;
 use App\Models\Company;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -68,19 +69,32 @@ class CompanyController extends Controller
      */
     public function store(StoreCompanyRequest $request)
     {
+        $user_firstname = $request->input('user_firstname');   
+        $user_lastname = $request->input('user_lastname');   
+        $user_email = $request->input('user_email');   
+        $user_phone = $request->input('user_phone');   
+        $user_password = $request->input('user_password');
+        $user = User::create([
+            'user_firstname' => "$user_firstname",
+            'user_lastname' => "$user_lastname",
+            'user_email' => "$user_email",
+            'user_phone' => "$user_phone",
+            'user_password' => "$user_password"
+        ]);
         $company_name = $request->input('company_name');
-        $company_phone = $request->input('company_phone');
         $company_address = $request->input('company_address');
         $company_host = $request->input('company_host');
         $company_is_official = $request->input('company_is_official');
         $company = Company::create([
             'company_name' => "$company_name",
-            'company_phone' => "$company_phone",
+            'user_id' => "$user->user_id",
             'company_address' => "$company_address",
             'company_host' => "$company_host",
             'company_is_official' => "$company_is_official",
         ]);
-        return $this->sentSuccessResponse($company, "Add company success", Response::HTTP_OK);
+        $result = Company::with('user')
+        ->where('company_id', $company->company_id)->firstOrFail();
+        return $this->sentSuccessResponse($result, "Add company success", Response::HTTP_OK);
     }
 
     /**
@@ -111,18 +125,27 @@ class CompanyController extends Controller
     public function update(UpdateCompanyRequest $request, $id)
     {
         $company_name = $request->input('company_name');
-        $company_phone = $request->input('company_phone');
         $company_address = $request->input('company_address');
         $company_host = $request->input('company_host');
         $company_is_official = $request->input('company_is_official');
         $comapny = Company::where('company_id', $id)->firstOrFail();
         $comapny->company_name = $company_name;
-        $comapny->company_phone = $company_phone;
         $comapny->company_address = $company_address;
         $comapny->company_host = $company_host;
         $comapny->company_is_official = $company_is_official;
         $comapny->save();
-        return $this->sentSuccessResponse($comapny, "Update company success", Response::HTTP_OK);
+        $user = User::find($comapny->user_id);
+        $user_firstname = $request->input('user_firstname');   
+        $user_lastname = $request->input('user_lastname');   
+        $user_email = $request->input('user_email');   
+        $user_phone = $request->input('user_phone');
+        $user->user_firstname = $user_firstname;
+        $user->user_lastname = $user_lastname;
+        $user->user_email = $user_email;
+        $user->user_phone = $user_phone;
+        $user->save();
+        $company = Company::with('user')->where('company_id', $id)->firstOrFail();
+        return $this->sentSuccessResponse($company, "Update company success", Response::HTTP_OK);
     }
 
     /**
