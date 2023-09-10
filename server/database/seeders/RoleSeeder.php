@@ -35,11 +35,6 @@ class RoleSeeder extends Seeder
         $student_create = Permission::create(['name' => 'student.create']);
         $student_update = Permission::create(['name' => 'student.update']);
         $student_delete = Permission::create(['name' => 'student.delete']);
-        //Role employer
-        $employer_view = Permission::create(['name' => 'employer.view']);
-        $employer_create = Permission::create(['name' => 'employer.create']);
-        $employer_update = Permission::create(['name' => 'employer.update']);
-        $employer_delete = Permission::create(['name' => 'employer.delete']);
         //Role teacher
         $teacher_view = Permission::create(['name' => 'teacher.view']);
         $teacher_create = Permission::create(['name' => 'teacher.create']);
@@ -65,11 +60,6 @@ class RoleSeeder extends Seeder
         $title_create = Permission::create(['name' => 'title.create']);
         $title_update = Permission::create(['name' => 'title.update']);
         $title_delete = Permission::create(['name' => 'title.delete']);
-        // Role degree
-        $degree_view = Permission::create(['name' => 'degree.view']);
-        $degree_create = Permission::create(['name' => 'degree.create']);
-        $degree_update = Permission::create(['name' => 'degree.update']);
-        $degree_delete = Permission::create(['name' => 'degree.delete']);
         // Role jobholder
         $jobholder_view = Permission::create(['name' => 'jobholder.view']);
         $jobholder_create = Permission::create(['name' => 'jobholder.create']);
@@ -105,10 +95,6 @@ class RoleSeeder extends Seeder
             $student_create,
             $student_update,
             $student_delete,
-            $employer_view,
-            $employer_create,
-            $employer_update,
-            $employer_delete,
             $teacher_view,
             $teacher_create,
             $teacher_update,
@@ -129,10 +115,6 @@ class RoleSeeder extends Seeder
             $title_create,
             $title_update,
             $title_delete,
-            $degree_view,
-            $degree_create,
-            $degree_update,
-            $degree_delete,
             $jobholder_view,
             $jobholder_create,
             $jobholder_update,

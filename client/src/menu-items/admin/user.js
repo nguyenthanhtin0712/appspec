@@ -29,13 +29,6 @@ const user = {
       type: 'item',
       url: '/admin/jobhodler',
       icon: icons.jobholder
-    },
-    {
-      id: 'employer',
-      title: 'Nhà tuyển dụng',
-      type: 'item',
-      url: '/admin/employer',
-      icon: icons.people
     }
   ]
 };

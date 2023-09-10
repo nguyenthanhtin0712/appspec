@@ -1,9 +1,8 @@
 // type
-import { Gemini2, MedalStar } from 'iconsax-react';
+import { Gemini2 } from 'iconsax-react';
 // icons
 const icons = {
-  title: Gemini2,
-  degree: MedalStar
+  title: Gemini2
 };
 
 // ==============================|| MENU ITEMS - DASHBOARD ||============================== //
@@ -19,13 +18,6 @@ const title = {
       type: 'item',
       url: '/admin/title',
       icon: icons.title
-    },
-    {
-      id: 'degree',
-      title: 'Học vị',
-      type: 'item',
-      url: '/admin/degree',
-      icon: icons.degree
     }
   ]
 };
