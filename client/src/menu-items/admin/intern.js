@@ -1,12 +1,12 @@
 // type
-import { Blur } from 'iconsax-react';
+import { BrifecaseTimer } from 'iconsax-react';
 import ApartmentIcon from '@mui/icons-material/Apartment';
 import SettingsEthernetIcon from '@mui/icons-material/SettingsEthernet';
 // icons
 const icons = {
   company: ApartmentIcon,
   intern: SettingsEthernetIcon,
-  assignment: Blur
+  assignment: BrifecaseTimer
 };
 
 // ==============================|| MENU ITEMS - DASHBOARD ||============================== //
