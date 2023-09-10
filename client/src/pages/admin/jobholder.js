@@ -7,12 +7,8 @@ import Typography from '@mui/material/Typography';
 import JobholderTable from 'sections/admin/jobholder/JobholderTable';
 import JobholderDialog from 'sections/admin/jobholder/JobholderDialog';
 import { dispatch } from 'store/index';
-import { useSelector } from 'react-redux';
-import Backdrop from '@mui/material/Backdrop';
-import CircularProgress from '@mui/material/CircularProgress';
 
 const JobholderPage = () => {
-  const { isLoading } = useSelector((state) => state.jobholder);
   const handleClickOpen = () => {
     dispatch(setJobholderDialog({ open: true, action: 'add' }));
   };
@@ -27,11 +23,6 @@ const JobholderPage = () => {
       </Stack>
       <JobholderDialog />
       <JobholderTable />
-      {isLoading && (
-        <Backdrop sx={{ color: '#fff', zIndex: 2000 }} open={isLoading}>
-          <CircularProgress color="inherit" />
-        </Backdrop>
-      )}
     </>
   );
 };
