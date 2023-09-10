@@ -5,14 +5,7 @@ import { Eye, Trash, Edit, ArrowDown3 } from 'iconsax-react';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import { MaterialReactTable } from 'material-react-table';
-import {
-  fetchData,
-  setColumnFilters,
-  setGlobalFilter,
-  setSorting,
-  setPagination,
-  deleteRegisterSpecalty
-} from 'store/reducers/registerInternAdminSlice';
+import { fetchData, setColumnFilters, setGlobalFilter, setSorting, setPagination } from 'store/reducers/registerInternAdminSlice';
 import ConfirmDialog from 'components/ConfirmDialog';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
@@ -25,12 +18,9 @@ import { Tooltip } from '@mui/material';
 const RegisterSpecialtyTable = () => {
   const theme = useTheme();
   const [openCofirm, setOpenCofirm] = useState(false);
-  const [idDelete, setIdDelete] = useState('');
   const { data, isError, isLoading, isRefetching, rowCount, columnFilters, globalFilter, sorting, pagination } = useSelector(
     (state) => state.register_intern
   );
-
-  console.log(data);
 
   const handleCloseCofirm = () => {
     setOpenCofirm(false);
@@ -158,7 +148,6 @@ const RegisterSpecialtyTable = () => {
             color="error"
             onClick={async () => {
               try {
-                await dispatch(deleteRegisterSpecalty(idDelete));
                 handleCloseCofirm();
                 toast.success('Xóa đợt đăng ký thành công!');
                 setIdDelete('');

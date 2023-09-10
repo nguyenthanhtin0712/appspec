@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useEffect, useState } from 'react';
+import React, { memo, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useTheme } from '@mui/material/styles';
 import { Edit, Trash } from 'iconsax-react';
@@ -11,49 +11,19 @@ import {
   setGlobalFilter,
   setSorting,
   setPagination,
-  deleteCompany,
-  setcompanyDialog
+  setcompanyDialog,
+  setOpenCofirmDialog,
+  setIdDeleteCompany
 } from 'store/reducers/companySlice';
-import ConfirmDialog from 'components/ConfirmDialog';
-import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import { toast } from 'react-toastify';
 import { dispatch } from 'store/index';
 import { Export } from 'iconsax-react';
-import { utils, writeFileXLSX } from 'xlsx';
 
 const CompanyTable = () => {
   const theme = useTheme();
-  const [openCofirm, setOpenCofirm] = useState(false);
-  const [idDelete, setIdDelete] = useState('');
   const { data, isError, isLoading, isRefetching, rowCount, columnFilters, globalFilter, sorting, pagination } = useSelector(
     (state) => state.company
   );
-  console.log('data', data);
-  const handleExportData = useCallback(() => {
-    const wb = utils.book_new();
-    const ws = utils.json_to_sheet(data);
-    const columnWidths = {};
-
-    data.forEach((row) => {
-      Object.entries(row).forEach(([key, cell]) => {
-        const cellValue = cell !== null ? cell.toString() : '';
-        const cellLength = cellValue.length;
-        columnWidths[key] = Math.max(columnWidths[key] || 0, cellLength);
-      });
-    });
-
-    ws['!cols'] = Object.keys(columnWidths).map((key) => ({
-      width: columnWidths[key] + 2 // Adding extra padding
-    }));
-
-    utils.book_append_sheet(wb, ws, 'title');
-    writeFileXLSX(wb, 'title.xlsx');
-  }, [data]);
-
-  const handleCloseCofirm = () => {
-    setOpenCofirm(false);
-  };
 
   useEffect(() => {
     dispatch(fetchData({ columnFilters, globalFilter, sorting, pagination }));
@@ -90,11 +60,21 @@ const CompanyTable = () => {
   );
 
   const handleDelete = (id) => {
-    setOpenCofirm(true);
-    setIdDelete(id);
+    dispatch(setOpenCofirmDialog(true));
+    dispatch(setIdDeleteCompany(id));
   };
 
   const handleUpdate = (data) => {
+    data = {
+      ...data,
+      company_is_official: data.company_is_official,
+      user_firstname: data.user.user_firstname,
+      user_lastname: data.user.user_lastname,
+      user_phone: data.user.user_phone,
+      user_email: data.user.user_email,
+      user_password: ''
+    };
+    delete data.user;
     dispatch(setcompanyDialog({ open: true, action: 'update', initValue: data }));
   };
 
@@ -155,36 +135,10 @@ const CompanyTable = () => {
           })
         }}
         renderTopToolbarCustomActions={() => (
-          <Button color="success" onClick={handleExportData} startIcon={<Export />} variant="contained">
+          <Button color="success" startIcon={<Export />} variant="contained">
             Xuất Excel
           </Button>
         )}
-      />
-
-      <ConfirmDialog
-        open={openCofirm}
-        onClose={handleCloseCofirm}
-        title="Delete"
-        content={<Typography variant="h6">Bạn có chắc chắn muốn xóa ?</Typography>}
-        action={
-          <Button
-            variant="contained"
-            color="error"
-            onClick={async () => {
-              try {
-                await dispatch(deleteCompany(idDelete));
-                handleCloseCofirm();
-                toast.success('Xóa ngành thành công!');
-                setIdDelete('');
-              } catch (err) {
-                console.error(err);
-                toast.error('Có lỗi trong quá trình xóa!' + err);
-              }
-            }}
-          >
-            Chắc chắn
-          </Button>
-        }
       />
     </>
   );

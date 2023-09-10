@@ -17,10 +17,9 @@ import jobholder from './jobholderSlice';
 import company from './companySlice';
 import register_specialty from './registerSpecialtyAdminSlice';
 import register_specialty_user from './registerSpecialtyUserSlice';
-import assignment_intern from './assignmentInternAdminSlice';
-import assignment_intern_user from './assignmentInternUserSlice';
 import config_page from './configPageSlice';
 import create_register_intern from './createRegisterInternSlice';
+import register_intern from './registerInternAdminSlice';
 
 // ==============================|| COMBINE REDUCERS ||============================== //
 
@@ -40,10 +39,9 @@ const reducers = combineReducers({
   company,
   register_specialty,
   register_specialty_user,
-  assignment_intern,
-  assignment_intern_user,
   create_register_intern,
-  config_page
+  config_page,
+  register_intern
 });
 
 export default reducers;
