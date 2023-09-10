@@ -9,9 +9,7 @@ import auth from './authSlice';
 import specialty from './specialtySlice';
 import student from './studentSlice';
 import teacher from './teacherSlice';
-import employer from './employerSlice';
 import title from './titleSlice';
-import degree from './degreeSlice';
 import subject from './subjectSlice';
 import jobholder from './jobholderSlice';
 import company from './companySlice';
@@ -30,10 +28,8 @@ const reducers = combineReducers({
   specialty,
   student,
   title,
-  degree,
   teacher,
   subject,
-  employer,
   jobholder,
   company,
   register_specialty,
