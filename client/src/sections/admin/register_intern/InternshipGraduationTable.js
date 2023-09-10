@@ -12,15 +12,15 @@ import {
   setPagination,
   setOpenCofirmDialog,
   setIdDeleteIntership
-} from 'store/reducers/registerInternAdminSlice';
+} from 'store/reducers/internshipGraduationSlice';
 import { dispatch } from 'store/index';
 import { formatDDMMYYYY } from 'utils/formatDateTime';
 import IconAction from 'components/IconAction';
 
-const RegisterSpecialtyTable = () => {
+const InternshipGraduationTable = () => {
   const theme = useTheme();
   const { data, isError, isLoading, isRefetching, rowCount, columnFilters, globalFilter, sorting, pagination } = useSelector(
-    (state) => state.register_intern
+    (state) => state.internship_graduation
   );
 
   useEffect(() => {
@@ -148,4 +148,4 @@ const RegisterSpecialtyTable = () => {
 //   );
 // };
 
-export default memo(RegisterSpecialtyTable);
+export default memo(InternshipGraduationTable);

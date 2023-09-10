@@ -17,7 +17,7 @@ import register_specialty from './registerSpecialtyAdminSlice';
 import register_specialty_user from './registerSpecialtyUserSlice';
 import config_page from './configPageSlice';
 import create_register_intern from './createRegisterInternSlice';
-import register_intern from './registerInternAdminSlice';
+import internship_graduation from './internshipGraduationSlice';
 // ==============================|| COMBINE REDUCERS ||============================== //
 
 const reducers = combineReducers({
@@ -36,7 +36,7 @@ const reducers = combineReducers({
   register_specialty_user,
   create_register_intern,
   config_page,
-  register_intern
+  internship_graduation
 });
 
 export default reducers;

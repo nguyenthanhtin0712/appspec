@@ -5,10 +5,10 @@ import Button from '@mui/material/Button';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { dispatch } from 'store';
-import { setOpenCofirmDialog } from 'store/reducers/registerInternAdminSlice';
+import { setOpenCofirmDialog } from 'store/reducers/internshipGraduationSlice';
 
-const RegisterInternDeleteDialog = () => {
-  const { idDelete, openCofirmDialog } = useSelector((state) => state.register_intern);
+const InternshipGraduationDeleteDialog = () => {
+  const { idDelete, openCofirmDialog } = useSelector((state) => state.internship_graduation);
   const handleDelete = async () => {
     try {
       await dispatch(deleteRegisterSpecalty(idDelete));
@@ -35,4 +35,4 @@ const RegisterInternDeleteDialog = () => {
   );
 };
 
-export default RegisterInternDeleteDialog;
+export default InternshipGraduationDeleteDialog;

@@ -15,10 +15,9 @@ const RegisterSpecialtyPageCreate = Loadable(lazy(() => import('pages/admin/regi
 const RegisterSpecialtyPageEdit = Loadable(lazy(() => import('pages/admin/register-specialty/register-specialty-edit')));
 const RegisterSpecialtyPageIndex = Loadable(lazy(() => import('pages/admin/register-specialty/register-specialty-index')));
 const RegisterSpecialtyPageResult = Loadable(lazy(() => import('pages/admin/register-specialty/register-specialty-result')));
-const RegisterInternPageCreate = Loadable(lazy(() => import('pages/admin/register-intern/register-intern-create')));
-const RegisterInternPageEdit = Loadable(lazy(() => import('pages/admin/register-intern/register-intern-edit')));
-const RegisterInternPageIndex = Loadable(lazy(() => import('pages/admin/register-intern/register-intern-index')));
-const RegisterInternPageResult = Loadable(lazy(() => import('pages/admin/register-intern/register-intern-result')));
+const RegisterInternPageCreate = Loadable(lazy(() => import('pages/admin/internship-graduation/register-intern-create')));
+const RegisterInternPageIndex = Loadable(lazy(() => import('pages/admin/internship-graduation/internship-graduation-index')));
+const RegisterInternPageResult = Loadable(lazy(() => import('pages/admin/internship-graduation/register-intern-result')));
 const AssignmentInternPageResult = Loadable(lazy(() => import('pages/admin/assignment-intern/assignment-intern-result')));
 const SpecialtyPage = Loadable(lazy(() => import('pages/admin/specialty')));
 const StudentPage = Loadable(lazy(() => import('pages/admin/student')));
@@ -72,10 +71,6 @@ const AdminRoutes = {
     {
       path: 'register_intern/create',
       element: <PrivateRoute component={RegisterInternPageCreate} requiredPermissions={['register_intern.view']} />
-    },
-    {
-      path: 'register_intern_edit/:id',
-      element: <PrivateRoute component={RegisterInternPageEdit} requiredPermissions={['register_intern.view']} />
     },
     {
       path: 'register_intern/:Id',

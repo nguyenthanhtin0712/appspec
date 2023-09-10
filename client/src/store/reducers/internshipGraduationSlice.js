@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from '../../api/axios';
 import { API_BASE_URL } from 'config';
 
-export const fetchData = createAsyncThunk('register_interns/fetchData', async (params, { rejectWithValue }) => {
+export const fetchData = createAsyncThunk('internship_graduation/fetchData', async (params, { rejectWithValue }) => {
   const {
     columnFilters,
     globalFilter,
@@ -113,8 +113,8 @@ const initialState = {
   openCofirmDialog: false
 };
 
-const register_intern = createSlice({
-  name: 'register_intern',
+const internship_graduation = createSlice({
+  name: 'internship_graduation',
   initialState,
   reducers: {
     setColumnFilters: (state, action) => {
@@ -172,6 +172,6 @@ const register_intern = createSlice({
 });
 
 export const { setColumnFilters, setGlobalFilter, setSorting, setPagination, setIdDeleteIntership, setOpenCofirmDialog } =
-  register_intern.actions;
+  internship_graduation.actions;
 
-export default register_intern.reducer;
+export default internship_graduation.reducer;

@@ -4,14 +4,14 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
-import RegisterInternTable from 'sections/admin/register_intern/RegisterInternTable';
-import RegisterInternDeleteDialog from 'sections/admin/register_intern/RegisterInternDeleteDialog';
+import RegisterInternTable from 'sections/admin/register_intern/InternshipGraduationTable';
+import RegisterInternDeleteDialog from 'sections/admin/register_intern/InternshipGraduationDeleteDialog';
 
-const RegisterInternIndex = () => {
+const InternShipGraduationIndex = () => {
   return (
     <>
       <Stack direction="row" justifyContent="space-between" alignItems="center" mb={2} flexWrap="wrap">
-        <Typography variant="h4">Quản lý đợt đăng ký thực tập</Typography>
+        <Typography variant="h4">Quản lý thực tập tốt nghiệp</Typography>
         <Button variant="contained" color="success" component={Link} to="/" startIcon={<Add />}>
           Thêm đợt thực tập
         </Button>
@@ -22,4 +22,4 @@ const RegisterInternIndex = () => {
   );
 };
 
-export default RegisterInternIndex;
+export default InternShipGraduationIndex;
