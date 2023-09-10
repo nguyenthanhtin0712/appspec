@@ -3,7 +3,6 @@ import axios from '../../api/axios';
 import { API_BASE_URL } from 'config';
 import { formatDateTimeSubmit } from 'utils/formatDateTime';
 
-// Async Thunk Actions
 export const fetchData = createAsyncThunk('register_interns/fetchData', async (params, { rejectWithValue }) => {
   const {
     columnFilters,
@@ -98,20 +97,6 @@ export const deleteRegisterSpecalty = createAsyncThunk('register_specialty/delet
   }
 });
 
-export const getRegisterSpecalty = createAsyncThunk('register_specialty/getRegisterSpecalty', async (id, { rejectWithValue }) => {
-  try {
-    const response = await axios.get(`/register-specialties/admin/${id}`);
-    return response.data;
-  } catch (error) {
-    if (error.response && error.response.data && error.response.data.errors) {
-      return rejectWithValue(error.response.data);
-    } else {
-      console.error(error);
-      throw error;
-    }
-  }
-});
-
 const initialState = {
   data: [],
   isError: false,
@@ -124,7 +109,9 @@ const initialState = {
   pagination: {
     pageIndex: 0,
     pageSize: 10
-  }
+  },
+  idDelete: '',
+  openCofirmDialog: false
 };
 
 const register_intern = createSlice({
@@ -142,6 +129,12 @@ const register_intern = createSlice({
     },
     setPagination: (state, action) => {
       state.pagination = action.payload;
+    },
+    setIdDeleteIntership: (state, action) => {
+      state.idDelete = action.payload;
+    },
+    setOpenCofirmDialog: (state, action) => {
+      state.openCofirmDialog = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -161,17 +154,8 @@ const register_intern = createSlice({
         state.isRefetching = false;
         state.isError = true;
       })
-      .addCase(createRegisterSpecalty.pending, (state) => {
-        state.isLoading = true;
-      })
       .addCase(createRegisterSpecalty.fulfilled, (state, action) => {
-        state.isLoading = false;
         state.data.push(action.payload.data);
-      })
-      .addCase(createRegisterSpecalty.rejected, (state) => {
-        state.isLoading = false;
-        state.isRefetching = false;
-        state.isError = true;
       })
       .addCase(updateRegisterSpecalty.fulfilled, (state, action) => {
         const updatedRegisterSpecalty = action.payload.data;
@@ -188,6 +172,7 @@ const register_intern = createSlice({
   }
 });
 
-export const { setColumnFilters, setGlobalFilter, setSorting, setPagination } = register_intern.actions;
+export const { setColumnFilters, setGlobalFilter, setSorting, setPagination, setIdDeleteIntership, setOpenCofirmDialog } =
+  register_intern.actions;
 
 export default register_intern.reducer;

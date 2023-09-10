@@ -151,10 +151,6 @@ const StudentTable = () => {
     setIdDelete(id);
   };
 
-  // const handleUpdate = (data) => {
-  //   dispatch(setStudentDialog({ open: true, action: 'update', initValue: data }));
-  // };
-
   return (
     <>
       <MaterialReactTable
@@ -254,7 +250,7 @@ const StudentTable = () => {
       <ConfirmDialog
         open={openCofirm}
         onClose={handleCloseCofirm}
-        title="Delete"
+        title="Xoá sinh viên"
         content={<Typography variant="h6">Bạn có chắc chắn muốn xóa ?</Typography>}
         action={
           <Button

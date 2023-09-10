@@ -7983,7 +7983,7 @@
 									},
 									"font": "Arial;13;1",
 									"left": 2792,
-									"top": 1845,
+									"top": 1773,
 									"width": 339.63232421875,
 									"height": 13,
 									"text": "internship_graduation"
@@ -8010,7 +8010,7 @@
 											"visible": false,
 											"font": "Arial;13;0",
 											"left": 2797,
-											"top": 1868,
+											"top": 1724,
 											"width": 329.63232421875,
 											"height": 13
 										},
@@ -8025,7 +8025,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 2797,
-											"top": 1870,
+											"top": 1798,
 											"width": 329.63232421875,
 											"height": 13
 										},
@@ -8040,7 +8040,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 2797,
-											"top": 1885,
+											"top": 1813,
 											"width": 329.63232421875,
 											"height": 13
 										},
@@ -8055,21 +8055,21 @@
 											},
 											"font": "Arial;13;0",
 											"left": 2797,
-											"top": 1900,
+											"top": 1828,
 											"width": 329.63232421875,
 											"height": 13
 										}
 									],
 									"font": "Arial;13;0",
 									"left": 2792,
-									"top": 1863,
+									"top": 1791,
 									"width": 339.63232421875,
 									"height": 55
 								}
 							],
 							"font": "Arial;13;0",
 							"left": 2792,
-							"top": 1840,
+							"top": 1768,
 							"width": 339.63232421875,
 							"height": 91,
 							"nameLabel": {
@@ -8097,8 +8097,8 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 2937,
-									"top": 1758,
+									"left": 2897,
+									"top": 1722,
 									"height": 13,
 									"alpha": 1.5707963267948966,
 									"distance": 15,
@@ -8114,8 +8114,8 @@
 										"$ref": "AAAAAAGKAVlY8EK3g64="
 									},
 									"font": "Arial;13;0",
-									"left": 2937,
-									"top": 1808,
+									"left": 2897,
+									"top": 1736,
 									"height": 13,
 									"alpha": 0.5235987755982988,
 									"distance": 30,
@@ -8131,7 +8131,7 @@
 										"$ref": "AAAAAAGKAVlY8EK3g64="
 									},
 									"font": "Arial;13;0",
-									"left": 2937,
+									"left": 2897,
 									"top": 1710,
 									"height": 13,
 									"alpha": -0.5235987755982988,
@@ -8149,7 +8149,7 @@
 								"$ref": "AAAAAAGKAVTWNEKCe0k="
 							},
 							"lineStyle": 2,
-							"points": "2952:1840;2952:1691",
+							"points": "2912:1768;2912:1691",
 							"nameLabel": {
 								"$ref": "AAAAAAGKAVlY8EK4I8w="
 							},
@@ -8441,6 +8441,19 @@
 							"headNameLabel": {
 								"$ref": "AAAAAAGKIxlA4ymBvbE="
 							}
+						},
+						{
+							"_type": "UMLTextView",
+							"_id": "AAAAAAGKf6rWS3CAMnU=",
+							"_parent": {
+								"$ref": "AAAAAAGITK4l26584jk="
+							},
+							"font": "Arial;13;0",
+							"left": 2936,
+							"top": 1736,
+							"width": 185,
+							"height": 25,
+							"text": "các đợt thực tập tốt nghiệp"
 						}
 					]
 				},

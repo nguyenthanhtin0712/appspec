@@ -19,13 +19,6 @@ const title = {
       type: 'item',
       url: '/admin/title',
       icon: icons.title
-    },
-    {
-      id: 'degree',
-      title: 'Học vị',
-      type: 'item',
-      url: '/admin/degree',
-      icon: icons.degree
     }
   ]
 };

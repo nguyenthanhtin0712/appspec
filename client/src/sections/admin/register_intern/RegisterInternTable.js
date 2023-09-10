@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from 'react';
+import React, { memo, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useTheme } from '@mui/material/styles';
 import { Eye, Trash, Edit, ArrowDown3 } from 'iconsax-react';
@@ -11,12 +11,9 @@ import {
   setGlobalFilter,
   setSorting,
   setPagination,
-  deleteRegisterSpecalty
+  setOpenCofirmDialog,
+  setIdDeleteIntership
 } from 'store/reducers/registerInternAdminSlice';
-import ConfirmDialog from 'components/ConfirmDialog';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import { toast } from 'react-toastify';
 import { dispatch } from 'store/index';
 import { formatDDMMYYYY } from 'utils/formatDateTime';
 import { Link } from 'react-router-dom';
@@ -24,17 +21,9 @@ import { Tooltip } from '@mui/material';
 
 const RegisterSpecialtyTable = () => {
   const theme = useTheme();
-  const [openCofirm, setOpenCofirm] = useState(false);
-  const [idDelete, setIdDelete] = useState('');
   const { data, isError, isLoading, isRefetching, rowCount, columnFilters, globalFilter, sorting, pagination } = useSelector(
     (state) => state.register_intern
   );
-
-  console.log(data);
-
-  const handleCloseCofirm = () => {
-    setOpenCofirm(false);
-  };
 
   useEffect(() => {
     dispatch(fetchData({ columnFilters, globalFilter, sorting, pagination }));
@@ -67,8 +56,8 @@ const RegisterSpecialtyTable = () => {
   );
 
   const handleDelete = (id) => {
-    setOpenCofirm(true);
-    setIdDelete(id);
+    dispatch(setOpenCofirmDialog(true));
+    dispatch(setIdDeleteIntership(id));
   };
 
   return (
@@ -146,34 +135,29 @@ const RegisterSpecialtyTable = () => {
           size: 'small'
         }}
       />
-
-      <ConfirmDialog
-        open={openCofirm}
-        onClose={handleCloseCofirm}
-        title="Delete"
-        content={<Typography variant="h6">Bạn có chắc chắn muốn xóa ?</Typography>}
-        action={
-          <Button
-            variant="contained"
-            color="error"
-            onClick={async () => {
-              try {
-                await dispatch(deleteRegisterSpecalty(idDelete));
-                handleCloseCofirm();
-                toast.success('Xóa đợt đăng ký thành công!');
-                setIdDelete('');
-              } catch (err) {
-                console.error(err);
-                toast.error('Có lỗi trong quá trình xóa!' + err);
-              }
-            }}
-          >
-            Chắc chắn
-          </Button>
-        }
-      />
     </>
   );
 };
+
+// const RowAction = ({ rowId, handleDelete }) => {
+//   return (
+//     <Box sx={{ display: 'flex' }}>
+//       <Tooltip title="Phân công">
+//         <IconButton component={Link} to={`/admin/assignment_intern/${rowId}`}>
+//           <ArrowDown3 />
+//         </IconButton>
+//       </Tooltip>
+//       <IconButton component={Link} to={`/admin/register_specialty/${rowId}`}>
+//         <Eye />
+//       </IconButton>
+//       <IconButton component={Link} to={`/admin/register_specialty_edit/${rowId}`}>
+//         <Edit />
+//       </IconButton>
+//       <IconButton color="error" onClick={() => handleDelete(rowId)}>
+//         <Trash />
+//       </IconButton>
+//     </Box>
+//   );
+// };
 
 export default memo(RegisterSpecialtyTable);
