@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import { useTheme } from '@mui/material/styles';
 import { Eye, Trash, Edit, ArrowDown3 } from 'iconsax-react';
 import Box from '@mui/material/Box';
-import IconButton from '@mui/material/IconButton';
 import { MaterialReactTable } from 'material-react-table';
 import {
   fetchData,
@@ -16,8 +15,7 @@ import {
 } from 'store/reducers/registerInternAdminSlice';
 import { dispatch } from 'store/index';
 import { formatDDMMYYYY } from 'utils/formatDateTime';
-import { Link } from 'react-router-dom';
-import { Tooltip } from '@mui/material';
+import IconAction from 'components/IconAction';
 
 const RegisterSpecialtyTable = () => {
   const theme = useTheme();
@@ -88,20 +86,10 @@ const RegisterSpecialtyTable = () => {
         positionActionsColumn="last"
         renderRowActions={({ row }) => (
           <Box sx={{ display: 'flex' }}>
-            <Tooltip title="Phân công">
-              <IconButton component={Link} to={`/admin/assignment_intern/${row.id}`}>
-                <ArrowDown3 />
-              </IconButton>
-            </Tooltip>
-            <IconButton component={Link} to={`/admin/register_specialty/${row.id}`}>
-              <Eye />
-            </IconButton>
-            <IconButton component={Link} to={`/admin/register_specialty_edit/${row.id}`}>
-              <Edit />
-            </IconButton>
-            <IconButton color="error" onClick={() => handleDelete(row.id)}>
-              <Trash />
-            </IconButton>
+            <IconAction title="Phân công" icon={<ArrowDown3 />} href={`/admin/assignment_intern/${row.id}`} />
+            <IconAction title="Xem chi tiết" icon={<Eye />} href={`/admin/register_specialty/${row.id}`} />
+            <IconAction title="Chỉnh sửa" icon={<Edit />} href={`/admin/register_specialty_edit/${row.id}`} />
+            <IconAction title="Xoá" icon={<Trash />} onClick={() => handleDelete(row.id)} color="error" />
           </Box>
         )}
         displayColumnDefOptions={{
