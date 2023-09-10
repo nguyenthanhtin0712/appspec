@@ -146,8 +146,8 @@ const JobholderForm = ({ initialValues, action }) => {
                     value={values.user_firstname}
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    placeholder="Nhập họ"
-                    label="Họ"
+                    placeholder="Nhập họ lót viên chức"
+                    label="Họ lót"
                     fullWidth
                     error={Boolean(touched.user_firstname && errors.user_firstname)}
                     helperText={errors.user_firstname}
@@ -158,8 +158,8 @@ const JobholderForm = ({ initialValues, action }) => {
                     value={values.user_lastname}
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    placeholder="Nhập tên"
-                    label="Tên"
+                    placeholder="Nhập tên viên chức"
+                    label="Tên viên chức"
                     fullWidth
                     error={Boolean(touched.user_lastname && errors.user_lastname)}
                     helperText={errors.user_lastname}
@@ -170,7 +170,7 @@ const JobholderForm = ({ initialValues, action }) => {
                     value={values.user_email}
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    placeholder="Nhập email"
+                    placeholder="Nhập email viên chức"
                     label="Email"
                     fullWidth
                     error={Boolean(touched.user_email && errors.user_email)}
@@ -220,7 +220,7 @@ const JobholderForm = ({ initialValues, action }) => {
                     value={values.jobholder_position}
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    placeholder="Nhập vị trí việc làm"
+                    placeholder="Giảng viên / Chuyên viên"
                     label="Vị trí việc làm"
                     error={Boolean(touched.jobholder_position && errors.jobholder_position)}
                     helperText={errors.jobholder_position}
@@ -295,7 +295,7 @@ const JobholderForm = ({ initialValues, action }) => {
                   <SelectField
                     id="title_id"
                     labelId="title_id_label"
-                    label="Vị trí việc làm"
+                    label="Chức vụ"
                     value={dataTitle.length == 0 ? '' : values.title_id}
                     name="title_id"
                     error={Boolean(touched.title_id && errors.title_id)}

@@ -20,10 +20,10 @@ const validateCreate = Yup.object().shape({
   user_lastname: Yup.string().max(255).required('Nhập tên người liên hệ'),
   user_phone: Yup.string().max(255).required('Nhập số điện thoại người liên hệ'),
   user_email: Yup.string().max(255).required('Nhập số email người liên hệ'),
-  user_password: Yup.string().max(255).required('Nhập mật khẩu'),
+  user_password: Yup.string().max(255).required('Nhập mật khẩu là bắt buộc '),
   company_name: Yup.string().max(255).required('Tên công ty là bắt buộc !'),
-  company_address: Yup.string().max(255).required('Địa chỉ là bắt buộc !'),
-  company_host: Yup.string().max(255).required('Địa chỉ hosting là bắt buộc !')
+  company_address: Yup.string().max(255).required('Địa chỉ công ty là bắt buộc !'),
+  company_host: Yup.string().max(255).required('Địa chỉ website là bắt buộc !')
 });
 
 const validateUpdate = Yup.object().shape({
@@ -175,8 +175,8 @@ const CompanyForm = ({ initialValues, action }) => {
                     value={values.company_host}
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    placeholder="Nhập host"
-                    label="Link"
+                    placeholder="Nhập địa chỉ website công ty"
+                    label="Địa chỉ website"
                     fullWidth
                     error={Boolean(touched.company_host && errors.company_host)}
                     helperText={errors.company_host}

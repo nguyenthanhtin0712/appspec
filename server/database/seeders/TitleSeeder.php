@@ -15,7 +15,11 @@ class TitleSeeder extends Seeder
     public function run()
     {
         Title::create([
-            'title_name' => 'Giảng viên',
+            'title_name' => 'Trưởng khoa',
+        ]);
+
+        Title::create([
+            'title_name' => 'Phó khoa',
         ]);
 
         Title::create([
