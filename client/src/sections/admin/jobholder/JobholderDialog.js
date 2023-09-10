@@ -331,9 +331,9 @@ const JobholderForm = ({ initialValues, action }) => {
                             </IconButton>
                           </InputAdornment>
                         }
-                        error={Boolean(touched.user_password && errors.user_password)}
+                        error={!!(touched.user_password && errors.user_password)}
                       />
-                      {errors.user_password && <FormHelperText error>{errors.user_password}</FormHelperText>}
+                      {!!(touched.user_password && errors.user_password) && <FormHelperText error>{errors.user_password}</FormHelperText>}
                     </Stack>
                   )}
                   {values.academic_field_id.length > 0 && (
