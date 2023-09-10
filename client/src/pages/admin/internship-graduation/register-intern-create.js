@@ -3,7 +3,7 @@ import Typography from '@mui/material/Typography';
 import MainCard from 'components/MainCard';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import CreateReigisterInternForm from 'sections/admin/register_intern/register_intern_create/CreateReigisterInternForm';
+import CreateReigisterInternForm from 'sections/admin/internship-graduation/register_intern_create/CreateReigisterInternForm';
 
 const RegisterIntern = () => {
   return (

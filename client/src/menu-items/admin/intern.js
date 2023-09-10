@@ -24,10 +24,10 @@ const intern = {
       icon: icons.company
     },
     {
-      id: 'register_intern',
+      id: 'internship-graduation',
       title: 'Thực tập tốt nghiệp',
       type: 'item',
-      url: '/admin/register_intern',
+      url: '/admin/internship-graduation',
       icon: icons.assignment
     }
   ]

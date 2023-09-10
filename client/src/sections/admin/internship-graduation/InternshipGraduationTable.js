@@ -1,7 +1,7 @@
 import React, { memo, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useTheme } from '@mui/material/styles';
-import { Eye, Trash, Edit, ArrowDown3 } from 'iconsax-react';
+import { Eye, Trash, Edit, ArrowDown3, Calendar } from 'iconsax-react';
 import Box from '@mui/material/Box';
 import { MaterialReactTable } from 'material-react-table';
 import {
@@ -87,6 +87,7 @@ const InternshipGraduationTable = () => {
         renderRowActions={({ row }) => (
           <Box sx={{ display: 'flex' }}>
             <IconAction title="Phân công" icon={<ArrowDown3 />} href={`/admin/assignment_intern/${row.id}`} />
+            <IconAction title="Đợt đăng ký" icon={<Calendar />} href={`/admin/register-intern/${row.id}`} />
             <IconAction title="Xem chi tiết" icon={<Eye />} href={`/admin/register_specialty/${row.id}`} />
             <IconAction title="Chỉnh sửa" icon={<Edit />} href={`/admin/register_specialty_edit/${row.id}`} />
             <IconAction title="Xoá" icon={<Trash />} onClick={() => handleDelete(row.id)} color="error" />

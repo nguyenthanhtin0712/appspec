@@ -4,8 +4,8 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
-import RegisterInternTable from 'sections/admin/register_intern/InternshipGraduationTable';
-import RegisterInternDeleteDialog from 'sections/admin/register_intern/InternshipGraduationDeleteDialog';
+import RegisterInternTable from 'sections/admin/internship-graduation/InternshipGraduationTable';
+import RegisterInternDeleteDialog from 'sections/admin/internship-graduation/InternshipGraduationDeleteDialog';
 
 const InternShipGraduationIndex = () => {
   return (

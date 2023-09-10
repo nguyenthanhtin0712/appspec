@@ -6,8 +6,8 @@ import Stack from '@mui/material/Stack';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material';
 import Avatar from 'components/@extended/Avatar';
-import CompanySearchForm from 'sections/admin/register_intern/register_intern_create/CompanySearchForm';
-import CompanyItem from 'sections/admin/register_intern/register_intern_create/CompanyItem';
+import CompanySearchForm from 'sections/admin/internship-graduation/register_intern_create/CompanySearchForm';
+import CompanyItem from 'sections/admin/internship-graduation/register_intern_create/CompanyItem';
 import { useSelector } from 'react-redux';
 
 const CompanyList = () => {
