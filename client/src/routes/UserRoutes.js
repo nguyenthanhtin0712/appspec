@@ -14,8 +14,8 @@ const RegisterSpeciality_Register = Loadable(lazy(() => import('pages/user/regis
 const RegisterSpeciality_Rules = Loadable(lazy(() => import('pages/user/register_speciality/rules')));
 const RegisterSpeciality_Result = Loadable(lazy(() => import('pages/user/register_speciality/result')));
 //intern
-const RegisterIntern_Index = Loadable(lazy(() => import('pages/user/register_intern')));
-
+const RegisterIntern_Index = Loadable(lazy(() => import('pages/user/internship-graduation')));
+const RegisterIntern_Register = Loadable(lazy(() => import('pages/user/internship-graduation/register')));
 // ==============================|| COMPONENTS ROUTES ||============================== //
 
 const UserRoutes = {
@@ -64,6 +64,10 @@ const UserRoutes = {
         {
           path: '/register_intern',
           element: <RegisterIntern_Index />
+        },
+        {
+          path: 'register',
+          element: <PrivateRoute component={RegisterIntern_Register} requiredPermissions={[]} />
         }
       ]
     }

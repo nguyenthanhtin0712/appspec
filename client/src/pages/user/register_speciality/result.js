@@ -22,7 +22,10 @@ const SpecialityResult = () => {
     fetchData();
   }, []);
 
-  if (!majors) return null;
+  if (majors.length === 0) return null;
+  // <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: 'calc(100vh - 100px)' }}>
+  //     <CircularProgress />
+  //   </Box>
 
   return (
     <Box component={Container} maxWidth="lg" sx={{ pt: 0, mt: 2 }}>

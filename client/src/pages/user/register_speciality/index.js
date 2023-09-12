@@ -43,23 +43,6 @@ const Register_speciality = () => {
         </Box>
         <Box sx={{ borderBottom: '1px solid', borderColor: theme.palette.divider, py: 2 }}>
           <Stack direction="row" alignItems="flex-end" spacing={1} mb={2}>
-            <Chart size="25" color={theme.palette.primary.main} variant="Bulk" />
-            <Typography variant="h5">Thống kê</Typography>
-          </Stack>
-          {register_specialty_detail.map((item) => (
-            <Box key={item.major_id}>
-              <Stack direction="row" alignItems="center" spacing={1.5} my={3}>
-                <RecordCircle size="18" color={theme.palette.success.main} variant="Bulk" />
-                <Typography fontWeight={600} fontSize={14}>
-                  Ngành {item.major_name}
-                </Typography>
-              </Stack>
-              <RegistrationInfoTable data={item.specialties} />
-            </Box>
-          ))}
-        </Box>
-        <Box sx={{ borderBottom: '1px solid', borderColor: theme.palette.divider, py: 2 }}>
-          <Stack direction="row" alignItems="flex-end" spacing={1} mb={2}>
             <InfoCircle size="25" color={theme.palette.primary.main} variant="Bulk" />
             <Typography variant="h5">Thông tin</Typography>
           </Stack>
@@ -85,6 +68,23 @@ const Register_speciality = () => {
               icon={<MedalStar variant="Bulk" size="32" color={theme.palette.primary.main} />}
             />
           </Grid>
+        </Box>
+        <Box sx={{ py: 2 }}>
+          <Stack direction="row" alignItems="flex-end" spacing={1} mb={2}>
+            <Chart size="25" color={theme.palette.primary.main} variant="Bulk" />
+            <Typography variant="h5">Thống kê</Typography>
+          </Stack>
+          {register_specialty_detail.map((item) => (
+            <Box key={item.major_id}>
+              <Stack direction="row" alignItems="center" spacing={1.5} my={3}>
+                <RecordCircle size="18" color={theme.palette.success.main} variant="Bulk" />
+                <Typography fontWeight={600} fontSize={14}>
+                  Ngành {item.major_name}
+                </Typography>
+              </Stack>
+              <RegistrationInfoTable data={item.specialties} />
+            </Box>
+          ))}
         </Box>
       </MainCard>
     </Container>
