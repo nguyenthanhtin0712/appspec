@@ -21,13 +21,13 @@ class RegisterIntershipCompanySeeder extends Seeder
         ]);
         RegisterIntershipCompany::create([
             'register_internship_company_id' => '2',
-            'register_internship_id' => '2',
-            'company_id' => '1',
+            'register_internship_id' => '1',
+            'company_id' => '3',
             'company_isInterview' => 1
         ]);
         RegisterIntershipCompany::create([
             'register_internship_company_id' => '3',
-            'register_internship_id' => '2',
+            'register_internship_id' => '1',
             'company_id' => '2',
         ]);
     }

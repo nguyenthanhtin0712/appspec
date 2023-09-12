@@ -9,8 +9,8 @@ import { Calendar, Chart, InfoCircle, Stickynote, ArchiveTick, Check, MedalStar,
 import { useTheme } from '@mui/material/styles';
 import InfoItem from 'sections/user/register_speciality/index/InfoItem';
 import RegistrationInfoTable from 'sections/user/register_speciality/index/RegistrationInfoTable';
-import { dispatch } from 'store/index';
 import { getRegistrationInformation } from 'store/reducers/registerSpecialtyUserSlice';
+import { dispatch } from 'store/index';
 import { useSelector } from 'react-redux';
 import { formatDateTimeDisplay } from 'utils/formatDateTime';
 

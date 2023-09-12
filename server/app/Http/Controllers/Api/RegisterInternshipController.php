@@ -5,10 +5,14 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Collection;
 use App\Http\Resources\InternshipCompanyResoure;
+use App\Models\Company;
 use App\Models\CompanyPositionDetail;
+use App\Models\DisplayConfig;
+use App\Models\RecruitmentPosition;
 use App\Models\RegisterInternship;
 use App\Models\RegisterIntershipCompany;
 use App\Models\Student;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -153,5 +157,32 @@ class RegisterInternshipController extends Controller
         ->where('register_internship_company.register_internship_id', "$id")
         ->get();
         return $this->sentSuccessResponse($students, "Get students in intership success", Response::HTTP_OK);
+    }
+
+    public function getInfoInternship(){
+        $displayConfig = DisplayConfig::find('register_intern')->display_config_value ?? RegisterInternship::latest()->first()->register_internship_id;
+
+        $registerInternship = RegisterInternship::find($displayConfig);
+        return $this->sentSuccessResponse($registerInternship, 'Get infoInternship success', 200);
+    }
+
+    public function getCompanyInternshipByUser(){
+        $displayConfig = DisplayConfig::find('register_intern')->display_config_value ?? RegisterInternship::latest()->first()->register_internship_id;
+        $companyInternship = RegisterIntershipCompany::where('register_internship_id', $displayConfig)->get()->map(function($companyInternship){
+            return [
+                'company_name' => Company::find($companyInternship->company_id)->company_name,
+                'company_address' => Company::find($companyInternship->company_id)->company_address,
+                'user_phone' => User::find(Company::find($companyInternship->company_id)->user_id)->user_phone,
+                'user_email' => User::find(Company::find($companyInternship->company_id)->user_id)->user_email,
+                'list_position' => CompanyPositionDetail::where('register_internship_company_id',$companyInternship->register_internship_company_id)->get()->map(function ($positon) {
+                    return [
+                        'position_name' => RecruitmentPosition::find($positon->position_id)->position_name,
+                        'position_quantity' => $positon->position_quantity,
+                        'position_total_register' => Student::where('company_position_detail_id', $positon->company_position_detail_id)->count()
+                    ];
+                })->values()
+            ];
+        });
+        return $this->sentSuccessResponse($companyInternship, "Get displayConfig success", 200);
     }
 }
