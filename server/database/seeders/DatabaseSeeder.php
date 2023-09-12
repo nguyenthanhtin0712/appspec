@@ -25,7 +25,6 @@ class DatabaseSeeder extends Seeder
         $this->call(RegisterSpecialtyDetailSeeder::class);
         $this->call(RecruitmentPositionSeeder::class);
         $this->call(CompanySeeder::class);
-        $this->call(RegisterInternshipSeeder::class);
         $this->call(RegisterIntershipCompanySeeder::class);
         $this->call(CompanyPositionDetailSeeder::class);
         $this->call(AcademicFieldSeeder::class);

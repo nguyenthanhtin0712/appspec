@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\InternshipGraduation;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Carbon;
 
 class InternshipGraduationSeeder extends Seeder
 {
@@ -14,22 +15,15 @@ class InternshipGraduationSeeder extends Seeder
      */
     public function run()
     {
+        $now = Carbon::now();
+        $start_date = $now->addMonths(1);
+        $end_date = $start_date->copy()->addMonths(3);
         InternshipGraduation::create([
-            'openclass_time_id' => 1,
+            'internship_graduation_id' => 1,
             'internship_graduation_start_date' => "2023-01-01",
             'internship_graduation_end_date' => "2023-04-01",
-        ]);
-
-        InternshipGraduation::create([
-            'openclass_time_id' => 2,
-            'internship_graduation_start_date' => "2023-05-01",
-            'internship_graduation_end_date' => "2023-08-01",
-        ]);
-
-        InternshipGraduation::create([
-            'openclass_time_id' => 3,
-            'internship_graduation_start_date' => "2023-08-01",
-            'internship_graduation_end_date' => "2023-12-01",
+            'register_internship_start_date' => $start_date,
+            'register_internship_end_date' => $end_date,
         ]);
     }
 }

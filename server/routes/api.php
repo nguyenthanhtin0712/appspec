@@ -16,7 +16,7 @@ use App\Http\Controllers\Api\TitleController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\DisplayConfigController;
 use App\Http\Controllers\Api\SubjectController;
-use App\Http\Controllers\InternshipGraduationController;
+use App\Http\Controllers\Api\InternshipGraduationController;
 use App\Http\Resources\LoginResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -131,15 +131,9 @@ Route::get('register-specialties', [RegisterSpecialtyController::class, 'getRegi
 Route::get('recruitment-positions', [RecruitmentPositionController::class, 'index']);
 Route::post('recruitment-positions', [RecruitmentPositionController::class, 'store']);
 
-Route::get('register-interns/admin', [RegisterInternshipController::class, 'index']);
-Route::post('register-interns/admin', [RegisterInternshipController::class, 'store']);
-Route::get('register-interns/admin/{id}', [RegisterInternshipController::class, 'show']);
-Route::get('register-interns/{id}', [RegisterInternshipController::class, 'getStudentOfInternship']);
-
-Route::get('register-interns/company/{id}', [RegisterInternshipController::class, 'getCompany']);
 
 Route::get('intership-graduations', [InternshipGraduationController::class, 'index']);
 Route::get('intership-graduations/unregistered', [InternshipGraduationController::class, 'getUnregisteredInternshipGraduations']);
 
-Route::get('company-internships', [RegisterInternshipController::class, 'getCompanyInternshipByUser']);
-Route::get('register-internship/infoInternship', [RegisterInternshipController::class, 'getInfoInternship']);
+Route::get('company-internships', [InternshipGraduationController::class, 'getCompanyInternshipByUser']);
+Route::get('register-internship/infoInternship', [InternshipGraduationController::class, 'getInfoInternship']);

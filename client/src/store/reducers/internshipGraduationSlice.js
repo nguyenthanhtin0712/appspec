@@ -9,7 +9,7 @@ export const fetchData = createAsyncThunk('internship_graduation/fetchData', asy
     sorting,
     pagination: { pageIndex, pageSize }
   } = params;
-  const url = new URL('/api/register-interns/admin', API_BASE_URL);
+  const url = new URL('/api/intership-graduations', API_BASE_URL);
   url.searchParams.set('page', `${pageIndex + 1}`);
   url.searchParams.set('perPage', `${pageSize}`);
   url.searchParams.set('filters', JSON.stringify(columnFilters ?? []));

@@ -15,7 +15,7 @@ class RegisterIntershipCompany extends Model
     public $timestamps = false;
     protected $fillable = [
         'register_internship_company_id',
-        'register_internship_id',
+        'internship_graduation_id',
         'company_id',
         'company_isInterview'
     ];
@@ -28,7 +28,7 @@ class RegisterIntershipCompany extends Model
             'register_internship_company_id',
             'position_id'
         )
-            ->withPivot('position_quantity');
+        ->withPivot('position_quantity');
     }
 
     public function companies()

@@ -22,6 +22,7 @@ const InternshipGraduationTable = () => {
   const { data, isError, isLoading, isRefetching, rowCount, columnFilters, globalFilter, sorting, pagination } = useSelector(
     (state) => state.internship_graduation
   );
+  console.log(data);
 
   useEffect(() => {
     dispatch(fetchData({ columnFilters, globalFilter, sorting, pagination }));
@@ -32,12 +33,12 @@ const InternshipGraduationTable = () => {
       {
         header: 'Học kỳ',
         size: 10,
-        Cell: ({ cell }) => cell.row.original.internship_graduation.openclasstime.openclass_time_semester
+        Cell: ({ cell }) => cell.row.original.openclasstime.openclass_time_semester
       },
       {
         header: 'Năm',
         size: 10,
-        Cell: ({ cell }) => cell.row.original.internship_graduation.openclasstime.openclass_time_year
+        Cell: ({ cell }) => cell.row.original.openclasstime.openclass_time_year
       },
       {
         accessorKey: 'register_internship_start_date',
