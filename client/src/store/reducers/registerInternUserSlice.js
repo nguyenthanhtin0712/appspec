@@ -31,6 +31,8 @@ export const getCopanies = createAsyncThunk('register_intern_user/getCompanies',
 });
 
 const initialState = {
+  isLoading: false,
+  isError: false,
   internship: '',
   list_copmnay: []
 };
@@ -45,11 +47,26 @@ const register_intern_user = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(getCopanies.pending, (state) => {
+        state.isLoading = true;
+      })
       .addCase(getCopanies.fulfilled, (state, action) => {
         state.list_copmnay = action.payload.data;
       })
+      .addCase(getCopanies.rejected, (state) => {
+        state.isLoading = false;
+        state.isError = true;
+      })
+      .addCase(fetchData.pending, (state) => {
+        state.isLoading = true;
+      })
       .addCase(fetchData.fulfilled, (state, action) => {
         state.internship = action.payload.data;
+        state.isLoading = false;
+      })
+      .addCase(fetchData.rejected, (state) => {
+        state.isLoading = false;
+        state.isError = true;
       });
   }
 });

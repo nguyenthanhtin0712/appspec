@@ -13,10 +13,11 @@ import { dispatch } from 'store/index';
 import { useSelector } from 'react-redux';
 import { formatDateTimeDisplay } from 'utils/formatDateTime';
 import CompanyList from 'sections/admin/register_intern/CompanyList';
+import { CircularProgress } from '@mui/material';
 
 const Register_speciality = () => {
   const theme = useTheme();
-  const { internship } = useSelector((state) => state.regsiter_intern_user);
+  const { internship, isLoading } = useSelector((state) => state.regsiter_intern_user);
   useEffect(() => {
     const getData = () => {
       dispatch(fetchData({}));
@@ -53,6 +54,11 @@ const Register_speciality = () => {
           </Grid>
         </Box>
         <CompanyList></CompanyList>
+        {isLoading && (
+          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+            <CircularProgress />
+          </Box>
+        )}
       </MainCard>
     </Container>
   );
