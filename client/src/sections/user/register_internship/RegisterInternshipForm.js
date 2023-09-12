@@ -46,7 +46,7 @@ const RegisterInternsipForm = ({ companies }) => {
         }
       }}
     >
-      {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values, setFieldValue }) => (
+      {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values, setFieldTouched, setFieldValue }) => (
         <form noValidate onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
           <Grid container spacing={3}>
             <Grid item xs={7}>
@@ -59,6 +59,7 @@ const RegisterInternsipForm = ({ companies }) => {
                 onChange={(e) => {
                   setFieldValue('company_id', e.target.value);
                   setFieldValue('position_id', '');
+                  setFieldTouched('position_id', false);
                   handleChangeCompany(e.target.value);
                 }}
                 onBlur={handleBlur}
