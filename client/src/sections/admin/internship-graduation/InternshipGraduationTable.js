@@ -88,7 +88,7 @@ const InternshipGraduationTable = () => {
         renderRowActions={({ row }) => (
           <Box sx={{ display: 'flex' }}>
             <IconAction title="Phân công" icon={<ArrowDown3 />} href={`/admin/assignment_intern/${row.id}`} />
-            <IconAction title="Đợt đăng ký" icon={<Calendar />} href={`/admin/register-intern/${row.id}`} />
+            <IconAction title="Đợt đăng ký  & Danh sách công ty" icon={<Calendar />} href={`/admin/register-intern/${row.id}`} />
             <IconAction title="Xem chi tiết" icon={<Eye />} href={`/admin/register_specialty/${row.id}`} />
             <IconAction title="Chỉnh sửa" icon={<Edit />} href={`/admin/register_specialty_edit/${row.id}`} />
             <IconAction title="Xoá" icon={<Trash />} onClick={() => handleDelete(row.id)} color="error" />

@@ -68,7 +68,7 @@ const RegisterInternshipGraduation = () => {
       <MainCard title="Hiện trạng đăng ký" sx={{ mb: 2 }}>
         Hiển thị hiện trạng đăng ký
       </MainCard>
-      <MainCard title="Đăng ký thực tập">
+      <MainCard title="Đăng ký thực tập trong danh sách">
         <Container maxWidth="sm">
           <Typography mb={2}>Sinh viên có thể THAY ĐỔI nơi thực tập đã đăng ký khi thời gian đăng ký còn hiệu lực</Typography>
           <MainCard>
