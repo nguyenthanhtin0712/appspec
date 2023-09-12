@@ -5,7 +5,7 @@ import MainCard from 'components/MainCard';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import { Calendar, InfoCircle, Stickynote, Call, Check, MedalStar } from 'iconsax-react';
+import { Calendar, InfoCircle, Stickynote, Call, Check, MedalStar, Chart } from 'iconsax-react';
 import { useTheme } from '@mui/material/styles';
 import InfoItem from 'sections/user/register_speciality/index/InfoItem';
 import { fetchData } from 'store/reducers/registerInternUserSlice';
@@ -13,11 +13,10 @@ import { dispatch } from 'store/index';
 import { useSelector } from 'react-redux';
 import { formatDateTimeDisplay } from 'utils/formatDateTime';
 import CompanyList from 'sections/admin/register_intern/CompanyList';
-import { CircularProgress } from '@mui/material';
 
 const Register_speciality = () => {
   const theme = useTheme();
-  const { internship, isLoading } = useSelector((state) => state.regsiter_intern_user);
+  const { internship } = useSelector((state) => state.regsiter_intern_user);
   useEffect(() => {
     const getData = () => {
       dispatch(fetchData({}));
@@ -53,12 +52,13 @@ const Register_speciality = () => {
             <InfoItem href="/" title="Liên hệ với Ban quản trị website" icon={<Call size="32" color={theme.palette.primary.main} />} />
           </Grid>
         </Box>
-        <CompanyList></CompanyList>
-        {isLoading && (
-          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-            <CircularProgress />
-          </Box>
-        )}
+        <Box sx={{ borderBottom: '1px solid', borderColor: theme.palette.divider, py: 2 }}>
+          <Stack direction="row" alignItems="flex-end" spacing={1} mb={2}>
+            <Chart size="25" color={theme.palette.primary.main} variant="Bulk" />
+            <Typography variant="h5">Thống kê</Typography>
+          </Stack>
+          <CompanyList></CompanyList>
+        </Box>
       </MainCard>
     </Container>
   );

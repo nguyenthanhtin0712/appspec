@@ -1,31 +1,30 @@
-import { useTheme } from '@emotion/react';
-import { Box, Grid, Stack, Typography } from '@mui/material';
-import { Chart } from 'iconsax-react';
+import { Box, CircularProgress, Grid } from '@mui/material';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import CompanyItem from 'sections/admin/register_intern/CompanyItem';
 import { dispatch } from 'store/index';
-import { getCopanies } from 'store/reducers/registerInternUserSlice';
+import { getCompanies } from 'store/reducers/registerInternUserSlice';
 
 const CompanyList = () => {
-  const theme = useTheme();
-  const { list_copmnay } = useSelector((state) => state.regsiter_intern_user);
+  const { list_company } = useSelector((state) => state.regsiter_intern_user);
   useEffect(() => {
-    const getData = () => {
-      dispatch(getCopanies({}));
+    const getData = async () => {
+      await dispatch(getCompanies());
     };
     getData();
   }, []);
+
+  if (list_company.length === 0)
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100px' }}>
+        <CircularProgress />
+      </Box>
+    );
+
   return (
-    <Box sx={{ borderBottom: '1px solid', borderColor: theme.palette.divider, py: 2 }}>
-      <Stack direction="row" alignItems="flex-end" spacing={1} mb={2}>
-        <Chart size="25" color={theme.palette.primary.main} variant="Bulk" />
-        <Typography variant="h5">Thống kê</Typography>
-      </Stack>
-      <Grid container spacing={2}>
-        {list_copmnay.length > 0 && list_copmnay.map((data, index) => <CompanyItem key={index} data={data} />)}
-      </Grid>
-    </Box>
+    <Grid container spacing={2}>
+      {list_company.length > 0 && list_company.map((data, index) => <CompanyItem key={index} data={data} />)}
+    </Grid>
   );
 };
 

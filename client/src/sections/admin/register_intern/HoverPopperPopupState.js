@@ -33,7 +33,7 @@ const HoverPopperPopupState = ({ data }) => {
                 <Typography>{data.user_email}</Typography>
               </Stack>
               <Stack direction="row" spacing={2} alignItems="center">
-                <Building4 size="42" color={theme.palette.secondary.main} variant="Bold" />
+                <Building4 size="25" color={theme.palette.secondary.main} variant="Bold" />
                 <Typography>{data.company_address}</Typography>
               </Stack>
             </Stack>
