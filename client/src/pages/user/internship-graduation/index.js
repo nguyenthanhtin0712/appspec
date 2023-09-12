@@ -12,7 +12,7 @@ import { fetchData } from 'store/reducers/registerInternUserSlice';
 import { dispatch } from 'store/index';
 import { useSelector } from 'react-redux';
 import { formatDateTimeDisplay } from 'utils/formatDateTime';
-import CompanyList from 'sections/admin/register_intern/CompanyList';
+import CompanyList from 'sections/user/register_internship/CompanyList';
 
 const Register_speciality = () => {
   const theme = useTheme();

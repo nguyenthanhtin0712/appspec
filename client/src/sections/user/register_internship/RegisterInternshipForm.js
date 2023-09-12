@@ -26,6 +26,7 @@ const RegisterInternsipForm = ({ companies }) => {
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
         try {
+          console.log('values', values);
           const actionType = updateMajor;
           const result = await dispatch(actionType(values));
           if (result && !result.error) {

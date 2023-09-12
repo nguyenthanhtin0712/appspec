@@ -118,6 +118,10 @@ Route::middleware(['auth:api'])->group(function () {
     Route::put('subjects/{id}', [SubjectController::class, 'update'])->middleware('check_user_role_permission:subject.update');
     Route::delete('subjects/{id}', [SubjectController::class, 'destroy'])->middleware('check_user_role_permission:subject.delete');
 
+
+    //Internship Graduation
+    Route::post('intership-graduations/register', [InternshipGraduationController::class, 'submitRegisterInternship']);
+
     // Academic_field api
     Route::get('academic-fields', [AcademicFieldController::class, 'index'])->middleware('check_user_role_permission:academic_field.view');;
 
@@ -137,3 +141,4 @@ Route::get('intership-graduations/unregistered', [InternshipGraduationController
 
 Route::get('company-internships', [InternshipGraduationController::class, 'getCompanyInternshipByUser']);
 Route::get('register-internship/infoInternship', [InternshipGraduationController::class, 'getInfoInternship']);
+Route::get('register-internships', [InternshipGraduationController::class, 'getRegisterInternshipByUser']);
