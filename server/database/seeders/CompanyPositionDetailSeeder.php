@@ -41,11 +41,6 @@ class CompanyPositionDetailSeeder extends Seeder
         ]);
         CompanyPositionDetail::create([
             'register_internship_company_id' => '3',
-            'position_id' => '5',
-            'position_quantity' => '2',
-        ]);
-        CompanyPositionDetail::create([
-            'register_internship_company_id' => '3',
             'position_id' => '6',
             'position_quantity' => '9',
         ]);
