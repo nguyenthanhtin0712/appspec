@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SubmitRegisterInternshipRequest;
-use App\Http\Requests\SubmitRegisterSpecialtyRequest;
 use App\Http\Resources\Collection;
 use App\Http\Resources\InternshipCompanyResoure;
 use App\Models\Company;
@@ -12,7 +11,6 @@ use App\Models\CompanyPositionDetail;
 use App\Models\DisplayConfig;
 use App\Models\InternshipGraduation;
 use App\Models\RecruitmentPosition;
-use App\Models\RegisterInternship;
 use App\Models\RegisterIntershipCompany;
 use App\Models\Student;
 use App\Models\User;
@@ -158,19 +156,87 @@ class InternshipGraduationController extends Controller
     {
         $internship_graduation_id = $request->input('internship_graduation_id');
         $companiesDB = RegisterIntershipCompany::where('internship_graduation_id', $internship_graduation_id)
-            ->with('companies.positions');
+            ->leftJoin('company_position_detail', 'company_position_detail.register_internship_company_id', '=', 'register_internship_company.register_internship_company_id');
         $companiesUpdate = collect($request->input('companies'));
 
         $listIdUpdate = $companiesUpdate->pluck('company_id');
         $listIdCompany = $companiesDB->pluck('company_id');
 
-        $companiesCreate = $listIdUpdate->diff($listIdCompany);
-        $companiesDelete = $listIdCompany->diff($listIdUpdate);
+        // tách dữ liệu
+        $companiesCreate = $listIdUpdate->diff($listIdCompany)->unique();
+        $companiesDelete = $listIdCompany->diff($listIdUpdate)->unique();
+        $intersect = $listIdUpdate->intersect($listIdCompany)->unique();
 
-        // echo json_encode($companiesCreate);
-        // echo json_encode($companiesDelete);
+        // intersect
+        foreach ($intersect as $company) {
+            $positionIdUpdate = [];
+            $positionList = $companiesUpdate->where('company_id', $company)->first()['positions'];
+            foreach ($positionList as $position) {
+                array_push($positionIdUpdate, $position['position_id']);
+            }
+            $positionIdDB = [];
+            foreach ($companiesDB->get() as $position) {
+                if ($position['company_id'] === $company) {
+                    array_push($positionIdDB, $position['position_id']);
+                }
+            };
 
-        // echo json_encode($companiesDB->get());
+            $positionCreate = array_diff($positionIdUpdate, $positionIdDB);
+            $positionDelete = array_diff($positionIdDB, $positionIdUpdate);
+            $positionIntersect = array_intersect($positionIdUpdate, $positionIdDB);
+
+            $company_record_update = $companiesUpdate->where('company_id', $company)->first();
+            $isInternview = $company_record_update['company_isInterview'];
+
+            $registerIntershipCompany = RegisterIntershipCompany::where('internship_graduation_id', $internship_graduation_id)
+                ->where('company_id', $company);
+            $registerIntershipCompany->update([
+                'company_isInterview' => $isInternview
+            ]);
+
+            // 
+            $arrPo = $company_record_update['positions'];
+            foreach ($positionIntersect as $position_id) {
+                $position_quantity = 0;
+                foreach ($arrPo as $po) {
+                    if ($po['position_id'] == $position_id) {
+                        $position_quantity = $po['position_quantity'];
+                        break;
+                    }
+                }
+                $query = clone $companiesDB;
+                $instance = $query->where('position_id', $position_id)->first();
+                $com = CompanyPositionDetail::find($instance->company_position_detail_id);
+                $com->update([
+                    "position_quantity" => $position_quantity
+                ]);
+            }
+
+            // Delte
+            foreach ($positionDelete as $position_id) {
+                $query = clone $companiesDB;
+                $instance = $query->where('position_id', $position_id)->first();
+                $com = CompanyPositionDetail::find($instance->company_position_detail_id);
+                $com->delete();
+            }
+
+            // Create
+
+            foreach ($positionCreate as $position_id) {
+                foreach ($arrPo as $po) {
+                    if ($po['position_id'] == $position_id) {
+                        $query = clone $companiesDB;
+                        $instance = $query->where('company_id', $company)->first();
+                        $com->create([
+                            "register_internship_company_id" => $instance->register_internship_company_id,
+                            "position_id" => $po['position_id'],
+                            "position_quantity" => $po['position_quantity'],
+                        ]);
+                        break;
+                    }
+                }
+            }
+        }
 
         // Delete company
         foreach ($companiesDelete as $company) {
@@ -178,11 +244,22 @@ class InternshipGraduationController extends Controller
             $instance->delete();
         }
 
-        echo json_encode($companiesUpdate);
+        // Create
+        foreach ($companiesCreate as $company) {
+            $instance = $companiesUpdate->where('company_id', $company)->first();
+            $registerInternship_Company = RegisterIntershipCompany::create([
+                'internship_graduation_id' => $internship_graduation_id,
+                ...$instance
+            ]);
+            foreach ($instance['positions'] as $position) {
+                CompanyPositionDetail::create([
+                    'register_internship_company_id' => $registerInternship_Company->register_internship_company_id,
+                    ...$position
+                ]);
+            }
+        }
 
-        // foreach ($companiesCreate as $company) {
-        //     $companiesUpdate->where()
-        // }
+        return $this->sentSuccessResponse(null, 'Update successfully', Response::HTTP_OK);
     }
 
     public function getRegisterInternshipByUser()
@@ -205,13 +282,14 @@ class InternshipGraduationController extends Controller
         return $this->sentSuccessResponse($companyInternship, "Get RegisterInternship success", 200);
     }
 
-    public function submitRegisterInternship(SubmitRegisterInternshipRequest $request){
+    public function submitRegisterInternship(SubmitRegisterInternshipRequest $request)
+    {
         $user = $request->user();
         $position_id = $request->input('position_id');
         $company_id = $request->input('company_id');
         $internship_graduation_id = DisplayConfig::find('register_intern')->display_config_value ?? InternshipGraduation::latest()->first()->internship_graduation_id;
         $register_internship_company_id = (RegisterIntershipCompany::where('internship_graduation_id', $internship_graduation_id)->where('company_id', $company_id)->firstOrFail())->register_internship_company_id;
-        $company_position_detail_id = (CompanyPositionDetail::where('position_id', $position_id)->where('register_internship_company_id',$register_internship_company_id)->firstOrFail())->company_position_detail_id;
+        $company_position_detail_id = (CompanyPositionDetail::where('position_id', $position_id)->where('register_internship_company_id', $register_internship_company_id)->firstOrFail())->company_position_detail_id;
         $student = Student::where('user_id', $user->user_id)->firstOrFail();
         $student->company_position_detail_id = $company_position_detail_id;
         $student->save();

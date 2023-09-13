@@ -10,7 +10,6 @@ use App\Http\Resources\RegisterSpecialtyResource;
 use App\Models\DisplayConfig;
 use App\Models\RegisterSpecialty;
 use App\Models\RegisterSpecialtyDetail;
-use App\Models\Specialty;
 use App\Models\Student;
 use App\Models\User;
 use Illuminate\Http\Request;

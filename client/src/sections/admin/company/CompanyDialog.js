@@ -17,7 +17,7 @@ const CompanyDialog = () => {
   };
 
   return (
-    <Dialog open={companyDialog.open} onClose={handleClose} maxWidth="md" fullWidth>
+    <Dialog open={companyDialog.open} onClose={handleClose} maxWidth="sm" fullWidth>
       <DialogTitleCustom onClose={handleClose}>{action === 'add' ? 'Thêm công ty' : 'Chỉnh sửa công ty'}</DialogTitleCustom>
       <CompanyForm initialValues={initialValues} action={action} />
     </Dialog>
