@@ -182,4 +182,28 @@ class InternshipGraduationController extends Controller
         //     $companiesUpdate->where()
         // }
     }
+
+    public function getRegisterInternshipByUser()
+    {
+        $displayConfig = DisplayConfig::find('register_intern')->display_config_value ?? InternshipGraduation::latest()->first()->internship_graduation_id;
+        $companyInternship = RegisterIntershipCompany::where('internship_graduation_id', $displayConfig)->get()->map(function ($companyInternship) {
+            return [
+                'company_id' => Company::find($companyInternship->company_id)->company_id,
+                'company_name' => Company::find($companyInternship->company_id)->company_name,
+                'positions' => CompanyPositionDetail::where('register_internship_company_id', $companyInternship->register_internship_company_id)->get()->map(function ($positon) {
+                    return [
+                        'position_id' => RecruitmentPosition::find($positon->position_id)->position_id,
+                        'position_name' => RecruitmentPosition::find($positon->position_id)->position_name,
+                    ];
+                })->values()
+            ];
+        });
+        return $this->sentSuccessResponse($companyInternship, "Get RegisterInternship success", 200);
+    }
+
+    public function submitRegisterInternship(Request $request)
+    {
+        $user = $request->user();
+        return $this->sentSuccessResponse($user, 'getUserSuccess', 200);
+    }
 }

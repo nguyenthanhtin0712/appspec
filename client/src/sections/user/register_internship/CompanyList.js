@@ -1,7 +1,7 @@
 import { Box, CircularProgress, Grid } from '@mui/material';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import CompanyItem from 'sections/admin/register_intern/CompanyItem';
+import CompanyItem from 'sections/user/register_internship/CompanyItem';
 import { dispatch } from 'store/index';
 import { getCompanies } from 'store/reducers/registerInternUserSlice';
 

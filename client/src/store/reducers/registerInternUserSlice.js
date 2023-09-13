@@ -22,9 +22,20 @@ export const getCompanies = createAsyncThunk('register_intern_user/getCompanies'
   }
 });
 
+export const getRegisterInternship = createAsyncThunk('register_intern_user/getRegisterInternship', async () => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/register-internships`);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+});
+
 const initialState = {
   internship: '',
-  list_company: []
+  list_company: [],
+  register_internship: []
 };
 
 const register_intern_user = createSlice({
@@ -42,6 +53,9 @@ const register_intern_user = createSlice({
       })
       .addCase(fetchData.fulfilled, (state, action) => {
         state.internship = action.payload.data;
+      })
+      .addCase(getRegisterInternship.fulfilled, (state, action) => {
+        state.register_internship = action.payload.data;
       });
   }
 });
