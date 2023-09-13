@@ -32,6 +32,16 @@ export const getRegisterInternship = createAsyncThunk('register_intern_user/getR
   }
 });
 
+export const regsiterInternshipUser = createAsyncThunk('register_intern_user/registerInternshipUser', async (position) => {
+  try {
+    const response = await axios.post(`/intership-graduations/register`, position);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+});
+
 const initialState = {
   internship: '',
   list_company: [],

@@ -6,12 +6,16 @@ import { toast } from 'react-toastify';
 import FormHelperText from '@mui/material/FormHelperText';
 import Button from '@mui/material/Button';
 import SelectField from 'components/input/SelectField';
+import { regsiterInternshipUser } from 'store/reducers/registerInternUserSlice';
+import { dispatch } from 'store/index';
+import { useNavigate } from 'react-router';
 
 const RegisterInternsipForm = ({ companies }) => {
-  const [positionList, setPositionList] = useState([]);
+  const navigate = useNavigate();
+  const [positions, setPositions] = useState([]);
 
   const handleChangeCompany = (company_id) => {
-    setPositionList(companies.find((company) => company.company_id === company_id).positions);
+    setPositions(companies.find((company) => company.company_id === company_id).positions);
   };
 
   return (
@@ -26,13 +30,10 @@ const RegisterInternsipForm = ({ companies }) => {
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
         try {
-          console.log('values', values);
-          const actionType = updateMajor;
-          const result = await dispatch(actionType(values));
-          if (result && !result.error) {
-            setStatus({ success: true });
-            setSubmitting(false);
+          const result = await dispatch(regsiterInternshipUser(values));
+          if (result) {
             toast.success('Đăng ký thực tập thành công');
+            navigate('/register_intern/result');
           } else {
             setStatus({ success: false });
             setErrors(result.payload.errors);
@@ -47,7 +48,7 @@ const RegisterInternsipForm = ({ companies }) => {
         }
       }}
     >
-      {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values, setFieldTouched, setFieldValue }) => (
+      {({ errors, handleBlur, handleSubmit, isSubmitting, touched, values, setFieldTouched, setFieldValue }) => (
         <form noValidate onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
           <Grid container spacing={3}>
             <Grid item xs={7}>
@@ -79,11 +80,18 @@ const RegisterInternsipForm = ({ companies }) => {
                 name="position_id"
                 label="Vị trí thực tập"
                 value={values.position_id}
-                onChange={handleChange}
+                onChange={(e) => {
+                  const checkPosition = positions.find((position) => position.position_id === e.target.value);
+                  if (checkPosition?.position_total_register >= checkPosition?.position_quantity) {
+                    toast.warning('Vị trí của công ty đã đủ!');
+                  } else {
+                    setFieldValue('position_id', e.target.value);
+                  }
+                }}
                 onBlur={handleBlur}
                 error={Boolean(touched.position_id && errors.position_id)}
                 helperText={errors.position_id}
-                list={positionList}
+                list={positions}
                 itemValue="position_id"
                 itemText="position_name"
                 fullWidth

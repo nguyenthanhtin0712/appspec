@@ -18,11 +18,12 @@ const Register_speciality = () => {
   const theme = useTheme();
   const { internship } = useSelector((state) => state.regsiter_intern_user);
   useEffect(() => {
-    const getData = () => {
-      dispatch(fetchData({}));
+    const getData = async () => {
+      await dispatch(fetchData({}));
     };
     getData();
   }, []);
+  if (!internship) return null;
   return (
     <Container maxWidth="md" sx={{ mt: 2 }}>
       <MainCard title="Thông tin đăng ký thực tập">
@@ -34,8 +35,8 @@ const Register_speciality = () => {
             </Typography>
           </Stack>
           <Stack ml={4}>
-            <Typography variant="h6">Thời gian bắt đầu: {formatDateTimeDisplay(internship.register_internship_start_date)}</Typography>
-            <Typography variant="h6">Thời gian kết thúc: {formatDateTimeDisplay(internship.register_internship_end_date)}</Typography>
+            <Typography variant="h6">Thời gian bắt đầu: {formatDateTimeDisplay(internship?.register_internship_start_date)}</Typography>
+            <Typography variant="h6">Thời gian kết thúc: {formatDateTimeDisplay(internship?.register_internship_end_date)}</Typography>
           </Stack>
         </Box>
         <Box sx={{ borderBottom: '1px solid', borderColor: theme.palette.divider, py: 2 }}>
