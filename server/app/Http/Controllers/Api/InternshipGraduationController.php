@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SubmitRegisterInternshipRequest;
+use App\Http\Requests\SubmitRegisterSpecialtyRequest;
 use App\Http\Resources\Collection;
 use App\Http\Resources\InternshipCompanyResoure;
 use App\Models\Company;
@@ -194,6 +196,8 @@ class InternshipGraduationController extends Controller
                     return [
                         'position_id' => RecruitmentPosition::find($positon->position_id)->position_id,
                         'position_name' => RecruitmentPosition::find($positon->position_id)->position_name,
+                        'position_quantity' => $positon->position_quantity,
+                        'position_total_register' => Student::where('company_position_detail_id', $positon->company_position_detail_id)->count()
                     ];
                 })->values()
             ];
@@ -201,9 +205,16 @@ class InternshipGraduationController extends Controller
         return $this->sentSuccessResponse($companyInternship, "Get RegisterInternship success", 200);
     }
 
-    public function submitRegisterInternship(Request $request)
-    {
+    public function submitRegisterInternship(SubmitRegisterInternshipRequest $request){
         $user = $request->user();
-        return $this->sentSuccessResponse($user, 'getUserSuccess', 200);
+        $position_id = $request->input('position_id');
+        $company_id = $request->input('company_id');
+        $internship_graduation_id = DisplayConfig::find('register_intern')->display_config_value ?? InternshipGraduation::latest()->first()->internship_graduation_id;
+        $register_internship_company_id = (RegisterIntershipCompany::where('internship_graduation_id', $internship_graduation_id)->where('company_id', $company_id)->firstOrFail())->register_internship_company_id;
+        $company_position_detail_id = (CompanyPositionDetail::where('position_id', $position_id)->where('register_internship_company_id',$register_internship_company_id)->firstOrFail())->company_position_detail_id;
+        $student = Student::where('user_id', $user->user_id)->firstOrFail();
+        $student->company_position_detail_id = $company_position_detail_id;
+        $student->save();
+        return $this->sentSuccessResponse($student, 'getUserSuccess', 200);
     }
 }

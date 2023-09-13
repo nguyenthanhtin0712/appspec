@@ -46,7 +46,6 @@ export const createRegisterSpecalty = createAsyncThunk(
         register_specialty_end_date: formatDateTimeSubmit(values.register_specialty_end_date),
         register_specialty_start_date: formatDateTimeSubmit(values.register_specialty_start_date)
       };
-      console.log(formattedSpecialty);
       const response = await axios.post(`/register-specialties/admin`, formattedSpecialty);
       return response.data;
     } catch (error) {
@@ -69,9 +68,7 @@ export const updateRegisterSpecalty = createAsyncThunk(
         register_specialty_end_date: formatDateTimeSubmit(values.register_specialty_end_date),
         register_specialty_start_date: formatDateTimeSubmit(values.register_specialty_start_date)
       };
-      console.log('formattedSpecialty', formattedSpecialty);
       const response = await axios.put(`/register-specialties/admin/${id}`, formattedSpecialty);
-      console.log('response.data', response.data);
       return response.data;
     } catch (error) {
       if (error.response && error.response.data && error.response.data.errors) {
