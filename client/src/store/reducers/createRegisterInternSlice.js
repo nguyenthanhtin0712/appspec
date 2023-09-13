@@ -31,18 +31,15 @@ export const getAllRecruitmentPosition = createAsyncThunk('create_register_inter
   }
 });
 
-export const getUnregisteredInternshipGraduations = createAsyncThunk(
-  'create_register_intern/getUnregisteredInternshipGraduations',
-  async () => {
-    try {
-      const response = await axios.get(`${API_BASE_URL}/intership-graduations/unregistered`);
-      return response.data;
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
+export const getInternshipGradutionInfo = createAsyncThunk('create_register_intern/getInternshipGradutionInfo', async (id) => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/intership-graduations/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
   }
-);
+});
 
 export const createRecruitmentPosition = createAsyncThunk(
   'create_register_intern/createRecruitmentPosition',
@@ -61,9 +58,9 @@ export const createRecruitmentPosition = createAsyncThunk(
   }
 );
 
-export const getCompany = createAsyncThunk('create_register_intern/getCompany', async (company_id) => {
+export const getCompany = createAsyncThunk('create_register_intern/getCompany', async (id) => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/register-interns/company/${company_id}`);
+    const response = await axios.get(`${API_BASE_URL}/intership-graduations/company/${id}`);
     return response.data;
   } catch (error) {
     console.error(error);
@@ -99,7 +96,8 @@ const initialState = {
     isLoading: false,
     data: []
   },
-  unregisteredGraduations: []
+  isLoadingCompanySelected: false,
+  internshipGraduationInfo: null
 };
 
 const create_register_intern = createSlice({
@@ -219,11 +217,18 @@ const create_register_intern = createSlice({
       .addCase(createRecruitmentPosition.fulfilled, (state, action) => {
         state.positionOptions.data.push(action.payload.data);
       })
-      .addCase(getUnregisteredInternshipGraduations.fulfilled, (state, action) => {
-        state.unregisteredGraduations = action.payload.data;
+      .addCase(getInternshipGradutionInfo.fulfilled, (state, action) => {
+        state.internshipGraduationInfo = action.payload.data;
+      })
+      .addCase(getCompany.pending, (state) => {
+        state.isLoadingCompanySelected = true;
       })
       .addCase(getCompany.fulfilled, (state, action) => {
         state.companySelected = action.payload.data;
+        state.isLoadingCompanySelected = false;
+      })
+      .addCase(getCompany.rejected, (state) => {
+        state.isLoadingCompanySelected = false;
       });
   }
 });

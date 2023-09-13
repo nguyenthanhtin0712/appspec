@@ -28,11 +28,11 @@ class RegisterIntershipCompany extends Model
             'register_internship_company_id',
             'position_id'
         )
-        ->withPivot('position_quantity');
+            ->withPivot('position_quantity');
     }
 
     public function companies()
     {
-        return $this->belongsToMany(Company::class, 'register_internship_company', 'register_internship_id', 'company_id')->withPivot('company_isInterview');
+        return $this->belongsToMany(Company::class, 'register_internship_company', 'internship_graduation_id', 'company_id')->withPivot('company_isInterview');
     }
 }

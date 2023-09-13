@@ -3,6 +3,8 @@ import { Add, Building3 } from 'iconsax-react';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
+import Box from '@mui/material/Box';
+import CircularProgress from '@mui/material/CircularProgress';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material';
 import Avatar from 'components/@extended/Avatar';
@@ -13,7 +15,15 @@ import { useSelector } from 'react-redux';
 const CompanyList = () => {
   const theme = useTheme();
   const matches = useMediaQuery((theme) => theme.breakpoints.down('sm'));
-  const companySelected = useSelector((state) => state.create_register_intern.companySelected);
+  const { isLoadingCompanySelected, companySelected } = useSelector((state) => state.create_register_intern);
+
+  if (isLoadingCompanySelected)
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '150px' }}>
+        <CircularProgress />
+      </Box>
+    );
+
   return (
     <>
       <Grid container spacing={2}>

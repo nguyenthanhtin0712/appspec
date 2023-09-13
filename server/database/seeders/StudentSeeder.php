@@ -30,7 +30,7 @@ class StudentSeeder extends Seeder
                 'student_course' => 2021,
                 'major_id' => $randomMajor,
                 'register_specialty_id' => 1,
-                'company_position_detail_id' => random_int(1, 7),
+                'company_position_detail_id' => random_int(1, 6),
                 // 'specialty_id' => $randomSpecialty
             ]);
             $student->save();

@@ -64,7 +64,7 @@ const InternshipGraduationTable = () => {
       <MaterialReactTable
         columns={columns}
         data={data}
-        getRowId={(row) => row.register_internship_id}
+        getRowId={(row) => row.internship_graduation_id}
         manualFiltering
         manualPagination
         manualSorting
@@ -128,26 +128,5 @@ const InternshipGraduationTable = () => {
     </>
   );
 };
-
-// const RowAction = ({ rowId, handleDelete }) => {
-//   return (
-//     <Box sx={{ display: 'flex' }}>
-//       <Tooltip title="Phân công">
-//         <IconButton component={Link} to={`/admin/assignment_intern/${rowId}`}>
-//           <ArrowDown3 />
-//         </IconButton>
-//       </Tooltip>
-//       <IconButton component={Link} to={`/admin/register_specialty/${rowId}`}>
-//         <Eye />
-//       </IconButton>
-//       <IconButton component={Link} to={`/admin/register_specialty_edit/${rowId}`}>
-//         <Edit />
-//       </IconButton>
-//       <IconButton color="error" onClick={() => handleDelete(rowId)}>
-//         <Trash />
-//       </IconButton>
-//     </Box>
-//   );
-// };
 
 export default memo(InternshipGraduationTable);

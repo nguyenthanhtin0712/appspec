@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Collection;
+use App\Http\Resources\InternshipCompanyResoure;
 use App\Models\Company;
 use App\Models\CompanyPositionDetail;
 use App\Models\DisplayConfig;
@@ -84,7 +85,9 @@ class InternshipGraduationController extends Controller
      */
     public function show($id)
     {
-        //
+        InternshipGraduation::find($id);
+        $internshipGraduation = InternshipGraduation::where('internship_graduation_id', $id)->where('internship_graduation_isDelete', 0)->firstOrFail();
+        return $this->sentSuccessResponse($internshipGraduation, 'Displayed internship graduation successfully', Response::HTTP_OK);
     }
 
     /**
@@ -110,36 +113,24 @@ class InternshipGraduationController extends Controller
         //
     }
 
-    public function getUnregisteredInternshipGraduations()
-    {
-        $unregisteredGraduations = InternshipGraduation::whereDoesntHave('register_internship')->with('openclasstime')->get();
-        $flattenedData = $unregisteredGraduations->map(function ($graduation) {
-            $flattenedItem = [
-                ...$graduation->toArray(),
-                ...$graduation->openclasstime->toArray()
-            ];
-            unset($flattenedItem['openclasstime']);
-            return $flattenedItem;
-        })->toArray();
-        return $this->sentSuccessResponse($flattenedData, 'Get data successfuly', Response::HTTP_OK);
-    }
 
-    
-    public function getInfoInternship(){
+    public function getInfoInternship()
+    {
         $displayConfig = DisplayConfig::find('register_intern')->display_config_value ?? InternshipGraduation::latest()->first()->internship_graduation_id;
         $registerInternship = InternshipGraduation::find($displayConfig);
         return $this->sentSuccessResponse($registerInternship, 'Get infoInternship success', 200);
     }
 
-    public function getCompanyInternshipByUser(){
+    public function getCompanyInternshipByUser()
+    {
         $displayConfig = DisplayConfig::find('register_intern')->display_config_value ?? InternshipGraduation::latest()->first()->internship_graduation_id;
-        $companyInternship = RegisterIntershipCompany::where('internship_graduation_id', $displayConfig)->get()->map(function($companyInternship){
+        $companyInternship = RegisterIntershipCompany::where('internship_graduation_id', $displayConfig)->get()->map(function ($companyInternship) {
             return [
                 'company_name' => Company::find($companyInternship->company_id)->company_name,
                 'company_address' => Company::find($companyInternship->company_id)->company_address,
                 'user_phone' => User::find(Company::find($companyInternship->company_id)->user_id)->user_phone,
                 'user_email' => User::find(Company::find($companyInternship->company_id)->user_id)->user_email,
-                'list_position' => CompanyPositionDetail::where('register_internship_company_id',$companyInternship->register_internship_company_id)->get()->map(function ($positon) {
+                'list_position' => CompanyPositionDetail::where('register_internship_company_id', $companyInternship->register_internship_company_id)->get()->map(function ($positon) {
                     return [
                         'position_name' => RecruitmentPosition::find($positon->position_id)->position_name,
                         'position_quantity' => $positon->position_quantity,
@@ -149,5 +140,46 @@ class InternshipGraduationController extends Controller
             ];
         });
         return $this->sentSuccessResponse($companyInternship, "Get displayConfig success", 200);
+    }
+
+    public function getCompany($id)
+    {
+        $companies = RegisterIntershipCompany::with(['positions'])
+            ->leftJoin('companies', 'register_internship_company.company_id', '=', 'companies.company_id')
+            ->where('internship_graduation_id', $id)
+            ->get();
+
+        return $this->sentSuccessResponse(InternshipCompanyResoure::collection($companies), 'Get companies successful', Response::HTTP_OK);
+    }
+
+    public function storeRegisterInfo(Request $request)
+    {
+        $internship_graduation_id = $request->input('internship_graduation_id');
+        $companiesDB = RegisterIntershipCompany::where('internship_graduation_id', $internship_graduation_id)
+            ->with('companies.positions');
+        $companiesUpdate = collect($request->input('companies'));
+
+        $listIdUpdate = $companiesUpdate->pluck('company_id');
+        $listIdCompany = $companiesDB->pluck('company_id');
+
+        $companiesCreate = $listIdUpdate->diff($listIdCompany);
+        $companiesDelete = $listIdCompany->diff($listIdUpdate);
+
+        // echo json_encode($companiesCreate);
+        // echo json_encode($companiesDelete);
+
+        // echo json_encode($companiesDB->get());
+
+        // Delete company
+        foreach ($companiesDelete as $company) {
+            $instance = $companiesDB->where('company_id', $company);
+            $instance->delete();
+        }
+
+        echo json_encode($companiesUpdate);
+
+        // foreach ($companiesCreate as $company) {
+        //     $companiesUpdate->where()
+        // }
     }
 }

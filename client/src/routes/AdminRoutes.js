@@ -26,10 +26,12 @@ const CompanyPage = Loadable(lazy(() => import('pages/admin/company')));
 const SubjectPage = Loadable(lazy(() => import('pages/admin/subject-page')));
 const Page = Loadable(lazy(() => import('pages/admin/page/page_index')));
 const PageCreate = Loadable(lazy(() => import('pages/admin/page/page_create')));
+const Page404 = Loadable(lazy(() => import('pages/error/page404')));
 
 const AdminRoutes = {
   path: '/admin',
   element: <MainLayout />,
+  errorElement: <Page404 />,
   children: [
     {
       path: '',

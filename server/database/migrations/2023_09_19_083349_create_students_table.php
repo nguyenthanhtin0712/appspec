@@ -15,7 +15,7 @@ class CreateStudentsTable extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->integer('user_id');
-            $table->string('student_code');
+            $table->string('student_code')->primary();
             $table->string('student_class');
             $table->float('student_score')->nullable();
             $table->integer('student_course')->nullable();
@@ -23,12 +23,17 @@ class CreateStudentsTable extends Migration
             $table->string('specialty_id')->nullable();
             $table->dateTime('specialty_date')->nullable();
             $table->integer('register_specialty_id')->nullable();
-            $table->integer('company_position_detail_id')->nullable();
+            $table->unsignedBigInteger('company_position_detail_id')->nullable();
             $table->integer('student_status')->default(1);
             $table->string('mentor_code')->nullable();
             $table->string('teacher_code')->nullable();
             $table->integer('student_isDelete')->default(0);
             $table->timestamps();
+
+            $table->foreign('company_position_detail_id')
+                ->references('company_position_detail_id')
+                ->on('company_position_detail')
+                ->onDelete('cascade');
         });
     }
 

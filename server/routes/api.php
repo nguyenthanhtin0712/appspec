@@ -133,7 +133,12 @@ Route::post('recruitment-positions', [RecruitmentPositionController::class, 'sto
 
 
 Route::get('intership-graduations', [InternshipGraduationController::class, 'index']);
-Route::get('intership-graduations/unregistered', [InternshipGraduationController::class, 'getUnregisteredInternshipGraduations']);
 
 Route::get('company-internships', [InternshipGraduationController::class, 'getCompanyInternshipByUser']);
 Route::get('register-internship/infoInternship', [InternshipGraduationController::class, 'getInfoInternship']);
+
+Route::get('intership-graduations/{id}', [InternshipGraduationController::class, 'show']);
+Route::get('intership-graduations/company/{id}', [InternshipGraduationController::class, 'getCompany']);
+
+
+Route::post('intership-graduations/register-info', [InternshipGraduationController::class, 'storeRegisterInfo']);

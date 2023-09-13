@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars */
-import React, { useEffect } from 'react';
+import React from 'react';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import FormHelperText from '@mui/material/FormHelperText';
@@ -10,10 +9,10 @@ import { dispatch } from 'store/index';
 import { toast } from 'react-toastify';
 import CompanyList from 'sections/admin/internship-graduation/register_intern_create/CompanyList';
 import { useNavigate } from 'react-router-dom';
-import SelectField from 'components/input/SelectField';
-import { createRegisterInternShip, getCompany, getUnregisteredInternshipGraduations } from 'store/reducers/createRegisterInternSlice';
+import { createRegisterInternShip } from 'store/reducers/createRegisterInternSlice';
 import { useSelector } from 'react-redux';
-import { formatDDMMYYYY, formatDateTimeSubmit } from 'utils/formatDateTime';
+import { formatDateTimeSubmit } from 'utils/formatDateTime';
+import dayjs from 'dayjs';
 
 const cleanData = (companies, registerInternInfo) => {
   const companiesResult = companies.map(({ company_id, company_isInterview, positions }) => ({
@@ -35,25 +34,19 @@ const cleanData = (companies, registerInternInfo) => {
 
 const CreateReigisterInternForm = () => {
   const navigate = useNavigate();
-  const { unregisteredGraduations, companySelected } = useSelector((state) => state.create_register_intern);
+  const { companySelected, internshipGraduationInfo } = useSelector((state) => state.create_register_intern);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      await dispatch(getUnregisteredInternshipGraduations());
-    };
-    fetchData();
-  }, []);
+  const { internship_graduation_id, register_internship_start_date, register_internship_end_date } = internshipGraduationInfo;
 
   return (
     <Formik
       initialValues={{
-        register_internship_id: '',
-        register_internship_start_date: null,
-        register_internship_end_date: null,
+        internship_graduation_id: internship_graduation_id,
+        register_internship_start_date: dayjs(dayjs(register_internship_start_date).valueOf()) || null,
+        register_internship_end_date: dayjs(dayjs(register_internship_end_date).valueOf()) || null,
         submit: null
       }}
       validationSchema={Yup.object().shape({
-        register_internship_id: Yup.string().max(255).required('Đợt thực tập là bắt buộc !'),
         register_internship_start_date: Yup.date()
           .typeError('Vui lòng nhập đầy đủ')
           .min(new Date(), 'Thời gian bắt đầu phải lớn hơn thời gian hiện tại')
@@ -68,7 +61,6 @@ const CreateReigisterInternForm = () => {
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
         const payload = cleanData(companySelected, values);
-        console.log(payload);
         try {
           const result = await dispatch(createRegisterInternShip(payload));
           if (result && !result.error) {
@@ -90,33 +82,9 @@ const CreateReigisterInternForm = () => {
         }
       }}
     >
-      {({ errors, handleBlur, handleSubmit, isSubmitting, touched, values, setFieldValue, setFieldError, setFieldTouched }) => (
+      {({ errors, handleSubmit, isSubmitting, touched, values, setFieldValue, setFieldError, setFieldTouched }) => (
         <form noValidate onSubmit={handleSubmit}>
           <Grid container spacing={3}>
-            <Grid item xs={12}>
-              <SelectField
-                id="register_internship_id"
-                labelId="register_internship_id_label"
-                label="Đợt thực tập tốt nghiệp"
-                value={values.register_internship_id}
-                name="register_internship_id"
-                error={Boolean(touched.register_internship_id && errors.register_internship_id)}
-                helperText={errors.register_internship_id}
-                onBlur={handleBlur}
-                onChange={async (e) => {
-                  setFieldValue('register_internship_id', e.target.value);
-                  await dispatch(getCompany(e.target.value));
-                }}
-                list={unregisteredGraduations}
-                itemValue="openclass_time_id"
-                getOptionLabel={(option) =>
-                  `Học kỳ ${option.openclass_time_semester} - năm ${option.openclass_time_year} - Từ ${formatDDMMYYYY(
-                    option.internship_graduation_start_date
-                  )} đến ${formatDDMMYYYY(option.internship_graduation_end_date)}`
-                }
-                itemText="name"
-              />
-            </Grid>
             <Grid item xs={6}>
               <DateTimePickerField
                 label="Thời gian bắt đầu"
