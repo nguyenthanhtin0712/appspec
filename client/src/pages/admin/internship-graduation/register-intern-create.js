@@ -17,7 +17,6 @@ const RegisterIntern = () => {
   useEffect(() => {
     const fetchData = async () => {
       const res = await dispatch(getInternshipGradutionInfo(Id));
-      console.log(res.error);
       if (res.error) {
         navigate('/');
       }

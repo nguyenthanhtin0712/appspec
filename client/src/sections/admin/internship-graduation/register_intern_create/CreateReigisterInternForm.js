@@ -9,7 +9,7 @@ import { dispatch } from 'store/index';
 import { toast } from 'react-toastify';
 import CompanyList from 'sections/admin/internship-graduation/register_intern_create/CompanyList';
 import { useNavigate } from 'react-router-dom';
-import { createRegisterInternShip } from 'store/reducers/createRegisterInternSlice';
+import { updateRegisterInternShip } from 'store/reducers/createRegisterInternSlice';
 import { useSelector } from 'react-redux';
 import { formatDateTimeSubmit } from 'utils/formatDateTime';
 import dayjs from 'dayjs';
@@ -62,12 +62,12 @@ const CreateReigisterInternForm = () => {
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
         const payload = cleanData(companySelected, values);
         try {
-          const result = await dispatch(createRegisterInternShip(payload));
+          const result = await dispatch(updateRegisterInternShip(payload));
           if (result && !result.error) {
             setStatus({ success: true });
             setSubmitting(false);
             toast.success('Tạo đợt đăng ký thành công!');
-            navigate('/admin/register_intern');
+            navigate('/admin/internship-graduation');
           } else {
             setStatus({ success: false });
             setErrors(result.payload.errors);
@@ -131,7 +131,7 @@ const CreateReigisterInternForm = () => {
                 color="primary"
                 style={{ float: 'right' }}
               >
-                Tạo đợt đăng ký thực tập
+                Cập nhật đợt thực tập
               </Button>
             </Grid>
           </Grid>

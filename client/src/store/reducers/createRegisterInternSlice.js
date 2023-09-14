@@ -68,11 +68,11 @@ export const getCompany = createAsyncThunk('create_register_intern/getCompany', 
   }
 });
 
-export const createRegisterInternShip = createAsyncThunk(
-  'create_register_intern/createRegisterInternShip',
+export const updateRegisterInternShip = createAsyncThunk(
+  'create_register_intern/updateRegisterInternShip',
   async (payload, { rejectWithValue }) => {
     try {
-      const response = await axios.post(`${API_BASE_URL}/register-interns/admin`, payload);
+      const response = await axios.post(`${API_BASE_URL}/intership-graduations/register-info`, payload);
       return response.data;
     } catch (error) {
       if (error.response && error.response.data && error.response.data.errors) {
