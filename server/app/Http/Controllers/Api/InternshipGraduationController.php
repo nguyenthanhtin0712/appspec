@@ -74,7 +74,7 @@ class InternshipGraduationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        echo json_encode($request->all());
     }
 
     /**
@@ -85,8 +85,7 @@ class InternshipGraduationController extends Controller
      */
     public function show($id)
     {
-        InternshipGraduation::find($id);
-        $internshipGraduation = InternshipGraduation::where('internship_graduation_id', $id)->where('internship_graduation_isDelete', 0)->firstOrFail();
+        $internshipGraduation = InternshipGraduation::with(['openclasstime'])->where('internship_graduation_id', $id)->where('internship_graduation_isDelete', 0)->firstOrFail();
         return $this->sentSuccessResponse($internshipGraduation, 'Displayed internship graduation successfully', Response::HTTP_OK);
     }
 
@@ -156,116 +155,84 @@ class InternshipGraduationController extends Controller
     {
         $internship_graduation_id = $request->input('internship_graduation_id');
         $companiesUpdate = collect($request->input('companies'));
-        
-        $existingCompanies = RegisterIntershipCompany::where('internship_graduation_id', $internship_graduation_id)
-            ->leftJoin('company_position_detail', 'register_internship_company.register_internship_company_id', '=', 'company_position_detail.register_internship_company_id');
 
-        // Tách thành mảng company_id để xác định những phần tử nào cần thêm / cần xoá / cần chỉnh sửa
-        $listIdUpdate = $companiesUpdate->pluck('company_id');
-        $listIdCompany = $existingCompanies->pluck('company_id');
+        // Get existing companies with positions
+        $existingCompanies = RegisterIntershipCompany::with('positions')
+            ->where('internship_graduation_id', $internship_graduation_id)
+            ->get();
 
-        // tách dữ liệu
-        $companiesCreate = $listIdUpdate->diff($listIdCompany)->unique();
-        $companiesDelete = $listIdCompany->diff($listIdUpdate)->unique();
-        $intersect = $listIdUpdate->intersect($listIdCompany)->unique();
+        // Process companies
+        foreach ($companiesUpdate as $companyUpdate) {
+            $company_id = $companyUpdate['company_id'];
+            $existingCompany = $existingCompanies->firstWhere('company_id', $company_id);
 
-        // intersect
-        foreach ($intersect as $company) {
-            // Xử lý dữ liệu - Tách ra danh sách vị trí cần thêm / cần xoá
-            $positionIdUpdate = [];
-            $positionList = $companiesUpdate->where('company_id', $company)->first()['positions'];
-            foreach ($positionList as $position) {
-                array_push($positionIdUpdate, $position['position_id']);
-            }
-            $positionIdDB = [];
-            foreach ($existingCompanies->get() as $position) {
-                if ($position['company_id'] === $company) {
-                    array_push($positionIdDB, $position['position_id']);
-                }
-            };
-
-            // Lọc danh sách id vị trí
-            $positionCreate = array_diff($positionIdUpdate, $positionIdDB);
-            $positionDelete = array_diff($positionIdDB, $positionIdUpdate);
-            $positionIntersect = array_intersect($positionIdUpdate, $positionIdDB);
-
-            // Cập nhật trường is_Interview
-            $company_record_update = $companiesUpdate->where('company_id', $company)->first();
-            $isInternview = $company_record_update['company_isInterview'];
-
-            $registerIntershipCompany = RegisterIntershipCompany::where('internship_graduation_id', $internship_graduation_id)
-                ->where('company_id', $company);
-            $registerIntershipCompany->update([
-                'company_isInterview' => $isInternview
-            ]);
-
-            // Cập nhật vị trí
-            $arrPo = $company_record_update['positions'];
-            foreach ($positionIntersect as $position_id) {
-                $position_quantity = 0;
-                foreach ($arrPo as $positionItem) {
-                    if ($positionItem['position_id'] == $position_id) {
-                        $position_quantity = $positionItem['position_quantity'];
-                        break;
-                    }
-                }
-                $query = clone $existingCompanies;
-                $instance = $query->where('position_id', $position_id)->first();
-                $com = CompanyPositionDetail::find($instance->company_position_detail_id);
-                $com->update([
-                    "position_quantity" => $position_quantity
+            if ($existingCompany) {
+                // Update existing company
+                $existingCompany->update([
+                    'company_isInterview' => $companyUpdate['company_isInterview'],
                 ]);
-            }
 
-            // Delete position
-            foreach ($positionDelete as $position_id) {
-                $query = clone $existingCompanies;
-                $instance = $query->where('position_id', $position_id)->first();
-                $com = CompanyPositionDetail::find($instance->company_position_detail_id);
-                if ($com) $com->delete();
-            }
+                // Create an array to store position IDs for this company
+                $existingPositionIds = $existingCompany->positions->pluck('position_id')->toArray();
 
-            // Create
+                // Update positions
+                foreach ($companyUpdate['positions'] as $position) {
+                    $existingPosition = $existingCompany->positions->firstWhere('position_id', $position['position_id']);
+                    if ($existingPosition) {
+                        // Update existing position
+                        CompanyPositionDetail::where('register_internship_company_id', $existingCompany->register_internship_company_id)
+                            ->where('position_id', $position['position_id'])->update([
+                                'position_quantity' => $position['position_quantity'],
+                            ]);
 
-            foreach ($positionCreate as $position_id) {
-                foreach ($arrPo as $positionItem) {
-                    if ($positionItem['position_id'] == $position_id) {
-                        $query = clone $existingCompanies;
-                        $instance = $query->where('company_id', $company)->first();
+                        // Remove the position ID from the existingPositionIds array
+                        $key = array_search($position['position_id'], $existingPositionIds);
+                        if ($key !== false) {
+                            unset($existingPositionIds[$key]);
+                        }
+                    } else {
+                        // Create new position
                         CompanyPositionDetail::create([
-                            "register_internship_company_id" => $instance->register_internship_company_id,
-                            "position_id" => $positionItem['position_id'],
-                            "position_quantity" => $positionItem['position_quantity'],
+                            'register_internship_company_id' => $existingCompany->register_internship_company_id,
+                            'position_id' => $position['position_id'],
+                            'position_quantity' => $position['position_quantity'],
                         ]);
-                        break;
                     }
+                }
+
+                // Delete positions that are not in the updated list
+                CompanyPositionDetail::where('register_internship_company_id', $existingCompany->register_internship_company_id)
+                    ->whereIn('position_id', $existingPositionIds)
+                    ->delete();
+            } else {
+                // Create new company
+                $registerInternshipCompany = RegisterIntershipCompany::create([
+                    'internship_graduation_id' => $internship_graduation_id,
+                    'company_id' => $company_id,
+                    'company_isInterview' => $companyUpdate['company_isInterview'],
+                ]);
+
+                // Create positions for the new company
+                foreach ($companyUpdate['positions'] as $position) {
+                    CompanyPositionDetail::create([
+                        'register_internship_company_id' => $registerInternshipCompany->register_internship_company_id,
+                        'position_id' => $position['position_id'],
+                        'position_quantity' => $position['position_quantity'],
+                    ]);
                 }
             }
         }
 
-        // Delete company
-        foreach ($companiesDelete as $company) {
-            $instance = $existingCompanies->where('company_id', $company);
-            $instance->delete();
-        }
-
-        // Create
-        foreach ($companiesCreate as $company) {
-            $instance = $companiesUpdate->where('company_id', $company)->first();
-            $registerInternship_Company = RegisterIntershipCompany::create([
-                'internship_graduation_id' => $internship_graduation_id,
-                ...$instance
-            ]);
-            foreach ($instance['positions'] as $position) {
-                CompanyPositionDetail::create([
-                    'register_internship_company_id' => $registerInternship_Company->register_internship_company_id,
-                    ...$position
-                ]);
-            }
+        // Delete companies that are not in the updated list
+        $companiesToDelete = $existingCompanies->whereNotIn('company_id', $companiesUpdate->pluck('company_id')->toArray());
+        foreach ($companiesToDelete as $companyToDelete) {
+            $companyToDelete->positions()->delete();
+            $companyToDelete->delete();
         }
 
         return $this->sentSuccessResponse(null, 'Update successfully', Response::HTTP_OK);
     }
+
 
     public function getRegisterInternshipByUser()
     {

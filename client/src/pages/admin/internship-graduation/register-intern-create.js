@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect } from 'react';
 import Typography from '@mui/material/Typography';
 import MainCard from 'components/MainCard';
@@ -8,9 +9,14 @@ import { useNavigate, useParams } from 'react-router';
 import { getCompany, getInternshipGradutionInfo } from 'store/reducers/createRegisterInternSlice';
 import { useSelector } from 'react-redux';
 import { dispatch } from 'store';
+import Stack from '@mui/material/Stack';
+import { ArrowRight } from 'iconsax-react';
+import { useTheme } from '@mui/material';
+import { formatDDMMYYYY } from 'utils/formatDateTime';
 
 const RegisterIntern = () => {
   const navigate = useNavigate();
+  const theme = useTheme();
   const { Id } = useParams();
   const internshipGraduationInfo = useSelector((state) => state.create_register_intern.internshipGraduationInfo);
 
@@ -27,11 +33,21 @@ const RegisterIntern = () => {
 
   if (!internshipGraduationInfo) return null;
 
+  console.log(formatDDMMYYYY(internshipGraduationInfo.internship_graduation_start_date));
+  const { openclass_time_semester, openclass_time_year } = internshipGraduationInfo.openclasstime;
+
   return (
     <>
-      <Typography variant="h4" component="h1" mb={2}>
-        Tạo đợt đăng ký thực tập
-      </Typography>
+      <Stack mb={2}>
+        <Typography variant="h4" component="h1" mb={2}>
+          Thực tập tốt nghiệp học kỳ {openclass_time_semester} năm học {openclass_time_year}
+        </Typography>
+        <Stack direction="row" spacing={2} alignItems={'center'}>
+          <Typography variant="h6">Từ {formatDDMMYYYY(internshipGraduationInfo.internship_graduation_start_date)}</Typography>
+          <ArrowRight size="25" color={theme.palette.primary.main} />
+          <Typography variant="h6">Đến {formatDDMMYYYY(internshipGraduationInfo.internship_graduation_end_date)}</Typography>
+        </Stack>
+      </Stack>
       <MainCard sx={{ mb: 2 }}>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <CreateReigisterInternForm />

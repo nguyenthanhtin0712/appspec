@@ -8,7 +8,6 @@ import DateTimePickerField from 'components/input/DateTimePickerField';
 import { dispatch } from 'store/index';
 import { toast } from 'react-toastify';
 import CompanyList from 'sections/admin/internship-graduation/register_intern_create/CompanyList';
-import { useNavigate } from 'react-router-dom';
 import { updateRegisterInternShip } from 'store/reducers/createRegisterInternSlice';
 import { useSelector } from 'react-redux';
 import { formatDateTimeSubmit } from 'utils/formatDateTime';
@@ -33,7 +32,6 @@ const cleanData = (companies, registerInternInfo) => {
 };
 
 const CreateReigisterInternForm = () => {
-  const navigate = useNavigate();
   const { companySelected, internshipGraduationInfo } = useSelector((state) => state.create_register_intern);
 
   const { internship_graduation_id, register_internship_start_date, register_internship_end_date } = internshipGraduationInfo;
@@ -67,7 +65,6 @@ const CreateReigisterInternForm = () => {
             setStatus({ success: true });
             setSubmitting(false);
             toast.success('Tạo đợt đăng ký thành công!');
-            navigate('/admin/internship-graduation');
           } else {
             setStatus({ success: false });
             setErrors(result.payload.errors);
@@ -87,7 +84,7 @@ const CreateReigisterInternForm = () => {
           <Grid container spacing={3}>
             <Grid item xs={6}>
               <DateTimePickerField
-                label="Thời gian bắt đầu"
+                label="Thời gian bắt đầu đăng ký"
                 id="register_internship_start_date"
                 setFieldTouched={setFieldTouched}
                 setFieldValue={setFieldValue}
@@ -101,7 +98,7 @@ const CreateReigisterInternForm = () => {
             </Grid>
             <Grid item xs={6}>
               <DateTimePickerField
-                label="Thời gian kết thúc"
+                label="Thời gian kết thúc đăng ký"
                 id="register_internship_end_date"
                 setFieldTouched={setFieldTouched}
                 setFieldValue={setFieldValue}
