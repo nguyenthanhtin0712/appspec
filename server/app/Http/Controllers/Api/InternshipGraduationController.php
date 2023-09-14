@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SubmitRegisterInternshipRequest;
+use App\Http\Requests\SubmitRegisterSpecialtyRequest;
+use App\Http\Requests\SubmitRegsiterInternshipOutOfficial;
 use App\Http\Resources\Collection;
 use App\Http\Resources\InternshipCompanyResoure;
 use App\Models\Company;
@@ -123,7 +125,11 @@ class InternshipGraduationController extends Controller
     public function getCompanyInternshipByUser()
     {
         $displayConfig = DisplayConfig::find('register_intern')->display_config_value ?? InternshipGraduation::latest()->first()->internship_graduation_id;
-        $companyInternship = RegisterIntershipCompany::where('internship_graduation_id', $displayConfig)->get()->map(function ($companyInternship) {
+        $companyInternship = RegisterIntershipCompany::
+        leftJoin('companies', 'companies.company_id', 'register_internship_company.company_id')
+        ->where('internship_graduation_id', $displayConfig)
+        ->where('companies.company_is_official', '1')
+        ->get()->map(function ($companyInternship) {
             return [
                 'company_name' => Company::find($companyInternship->company_id)->company_name,
                 'company_address' => Company::find($companyInternship->company_id)->company_address,
@@ -237,7 +243,10 @@ class InternshipGraduationController extends Controller
     public function getRegisterInternshipByUser()
     {
         $displayConfig = DisplayConfig::find('register_intern')->display_config_value ?? InternshipGraduation::latest()->first()->internship_graduation_id;
-        $companyInternship = RegisterIntershipCompany::where('internship_graduation_id', $displayConfig)->get()->map(function ($companyInternship) {
+        $companyInternship = RegisterIntershipCompany::
+        leftJoin('companies', 'companies.company_id', 'register_internship_company.company_id')
+        ->where('internship_graduation_id', $displayConfig)
+        ->where('companies.company_is_official', '1')->get()->map(function ($companyInternship) {
             return [
                 'company_id' => Company::find($companyInternship->company_id)->company_id,
                 'company_name' => Company::find($companyInternship->company_id)->company_name,
@@ -267,4 +276,71 @@ class InternshipGraduationController extends Controller
         $student->save();
         return $this->sentSuccessResponse($student, 'getUserSuccess', 200);
     }
+
+    public function submitRegisterInternshipOutOffcail(SubmitRegsiterInternshipOutOfficial $request){
+        $user = $request->user();
+        $company_name = $request->input('company_name');
+        $company_address = $request->input('company_address');
+        $position_name = $request->input('position_name');
+        $company = Company::create([
+            'company_name' => $company_name,
+            'company_address' => $company_address,
+        ]);
+        $position = RecruitmentPosition::create([
+            'position_name' => $position_name,
+            'company_id' => $company->company_id
+        ]);
+        
+    }
+
+    public function registerResultStudent(Request $request)
+    {
+    $displayConfig = DisplayConfig::find('register_intern')->display_config_value ?? InternshipGraduation::latest()->first()->internship_graduation_id;
+
+    $students = Student::leftJoin('users', 'users.user_id', '=', 'students.user_id')
+        ->leftJoin('company_position_detail', 'company_position_detail.company_position_detail_id', '=', 'students.company_position_detail_id')
+        ->leftJoin('register_internship_company', 'register_internship_company.register_internship_company_id', '=', 'company_position_detail.register_internship_company_id')
+        ->leftJoin('companies', 'companies.company_id', '=', 'register_internship_company.company_id')
+        ->leftJoin('recruitment_positions', 'recruitment_positions.position_id', '=', 'company_position_detail.position_id')
+        ->leftJoin('job_holders', 'students.jobholder_code', '=', 'job_holders.jobholder_code')
+        ->select('students.student_code', 'users.user_firstname', 'users.user_lastname', 'recruitment_positions.position_name', 'companies.company_name')
+        ->where('student_isDelete', '0')
+        ->where('register_internship_company.internship_graduation_id', $displayConfig);
+
+    $query = $request->input('query');
+    $id = $request->input('id');
+    $sortBy = $request->input('sortBy');
+    $sortOrder = $request->input('sortOrder', 'asc');
+    $filters = $request->input('filters');
+
+    if ($query) {
+        $students->where("student_code", "LIKE", "%$query%");
+    }
+    if ($id) {
+        $students->where('user_id', $id);
+    }
+    if ($sortBy) {
+        $students->orderBy($sortBy, $sortOrder);
+    }
+    if ($filters) {
+        $filters = json_decode($filters, true);
+        if (is_array($filters)) {
+            foreach ($filters as $filter) {
+                $id = $filter['id'];
+                $value = $filter['value'];
+                $students->where($id, 'LIKE', '%' . $value . '%');
+            }
+        }
+    }
+    $perPage = $request->input('perPage', 10);
+
+    if ($request->input('all')) {
+        $students = $students->get();
+    } else {
+        $students = $students->paginate($perPage);
+    }
+    $studentCollection = new Collection($students);
+    return $this->sentSuccessResponse($studentCollection, 'regsiterResultStudent', 200);
+    }
+
 }

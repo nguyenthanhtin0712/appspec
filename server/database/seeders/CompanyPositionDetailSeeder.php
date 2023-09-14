@@ -17,12 +17,12 @@ class CompanyPositionDetailSeeder extends Seeder
         CompanyPositionDetail::create([
             'register_internship_company_id' => '1',
             'position_id' => '1',
-            'position_quantity' => '5',
+            'position_quantity' => '20',
         ]);
         CompanyPositionDetail::create([
             'register_internship_company_id' => '2',
             'position_id' => '10',
-            'position_quantity' => '1',
+            'position_quantity' => '40',
         ]);
         CompanyPositionDetail::create([
             'register_internship_company_id' => '2',
@@ -32,17 +32,17 @@ class CompanyPositionDetailSeeder extends Seeder
         CompanyPositionDetail::create([
             'register_internship_company_id' => '2',
             'position_id' => '12',
-            'position_quantity' => '3',
+            'position_quantity' => '30',
         ]);
         CompanyPositionDetail::create([
             'register_internship_company_id' => '3',
             'position_id' => '5',
-            'position_quantity' => '1',
+            'position_quantity' => '20',
         ]);
         CompanyPositionDetail::create([
             'register_internship_company_id' => '3',
             'position_id' => '6',
-            'position_quantity' => '9',
+            'position_quantity' => '15',
         ]);
     }
 }

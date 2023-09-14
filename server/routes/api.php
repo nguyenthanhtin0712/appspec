@@ -122,6 +122,7 @@ Route::middleware(['auth:api'])->group(function () {
     //Internship Graduation
     Route::post('intership-graduations/register', [InternshipGraduationController::class, 'submitRegisterInternship']);
     Route::post('intership-graduations', [InternshipGraduationController::class, 'store']);
+    Route::post('intership-graduations/register-out-offcial', [InternshipGraduationController::class, 'submitRegisterInternshipOutOffcail']);
 
     // Academic_field api
     Route::get('academic-fields', [AcademicFieldController::class, 'index'])->middleware('check_user_role_permission:academic_field.view');;
@@ -144,3 +145,5 @@ Route::get('intership-graduations/{id}', [InternshipGraduationController::class,
 Route::get('intership-graduations/company/{id}', [InternshipGraduationController::class, 'getCompany']);
 Route::post('intership-graduations/register-info', [InternshipGraduationController::class, 'storeRegisterInfo']);
 Route::get('register-internships', [InternshipGraduationController::class, 'getRegisterInternshipByUser']);
+Route::get('register-internships/result', [InternshipGraduationController::class, 'registerResultStudent']);
+

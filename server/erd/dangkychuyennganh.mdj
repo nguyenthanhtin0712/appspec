@@ -9106,7 +9106,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGITM/acK+OzsI="
 							},
-							"name": "jobholder_id",
+							"name": "jobholder_code",
 							"type": "VARCHAR",
 							"length": "10",
 							"foreignKey": true
