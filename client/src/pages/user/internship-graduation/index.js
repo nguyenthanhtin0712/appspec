@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 import { Calendar, InfoCircle, Stickynote, Call, Check, MedalStar, Chart } from 'iconsax-react';
 import { useTheme } from '@mui/material/styles';
 import InfoItem from 'sections/user/register_speciality/index/InfoItem';
-import { fetchData } from 'store/reducers/registerInternUserSlice';
+import { getInternship } from 'store/reducers/registerInternUserSlice';
 import { dispatch } from 'store/index';
 import { useSelector } from 'react-redux';
 import { formatDateTimeDisplay } from 'utils/formatDateTime';
@@ -19,7 +19,7 @@ const Register_speciality = () => {
   const { internship } = useSelector((state) => state.regsiter_intern_user);
   useEffect(() => {
     const getData = async () => {
-      await dispatch(fetchData({}));
+      await dispatch(getInternship({}));
     };
     getData();
   }, []);

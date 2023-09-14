@@ -87,11 +87,11 @@ export const navItems = [
       },
       {
         name: 'Đăng ký ngoài danh sách',
-        url: '#'
+        url: '/register_intern/register_out_offcial'
       },
       {
         name: 'Kết quả đăng ký',
-        url: '#'
+        url: '/register_intern/result'
       }
     ]
   },

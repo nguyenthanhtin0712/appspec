@@ -15,10 +15,10 @@ class CreateCompaniesTable extends Migration
     {
         Schema::create('companies', function (Blueprint $table) {
             $table->id('company_id');
-            $table->integer('user_id');
+            $table->integer('user_id')->nullable();
             $table->string('company_name');
             $table->string('company_address');
-            $table->string('company_host');
+            $table->string('company_host')->nullable();
             $table->integer('company_is_official');
             $table->integer('company_isDelete')->default(0);
         });
