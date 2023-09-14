@@ -7,8 +7,13 @@ import Stack from '@mui/material/Stack';
 import InputField from 'components/input/InputField';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import { dispatch } from 'store/index';
+import { regsiterInternshipOutOffcial } from 'store/reducers/registerInternUserSlice';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router';
 
 const RegisterOutInternshipForm = () => {
+  const navigate = useNavigate();
   return (
     <Formik
       initialValues={{
@@ -23,17 +28,17 @@ const RegisterOutInternshipForm = () => {
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
         try {
-          console.log('values', values);
-          const actionType = action === 'update' ? updateCompany : createCompany;
-          const result = await dispatch(actionType(value));
+          const result = await dispatch(regsiterInternshipOutOffcial(values));
           if (result && !result.error) {
             setStatus({ success: true });
             setSubmitting(false);
+            toast.success('Đăng ký thực tập thành công');
+            navigate('/register_intern/result');
           } else {
             setStatus({ success: false });
             setErrors(result.payload.errors);
             setSubmitting(false);
-            toast.error(action === 'update' ? 'Có lỗi xảy ra khi sửa công ty!' : 'Có lỗi xảy ra khi thêm công ty!');
+            toast.error('Có lỗi khi đăng ký thực tập');
           }
         } catch (err) {
           console.error(err);

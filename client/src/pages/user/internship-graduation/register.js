@@ -6,7 +6,7 @@ import MainCard from 'components/MainCard';
 import RegisterInternsipForm from 'sections/user/register_internship/RegisterInternshipForm';
 import CompanyList from 'sections/user/register_internship/CompanyList';
 import { useSelector } from 'react-redux';
-import { getRegisterInternship, fetchData } from 'store/reducers/registerInternUserSlice';
+import { getRegisterInternship, fetchData, getInternship } from 'store/reducers/registerInternUserSlice';
 import { dispatch } from 'store/index';
 import CountdownTimer from 'components/CountdownTimer';
 
@@ -27,6 +27,7 @@ const RegisterInternshipGraduation = () => {
     const fetch = async () => {
       await dispatch(getRegisterInternship());
       await dispatch(fetchData());
+      await dispatch(getInternship());
     };
     fetch();
   }, []);
