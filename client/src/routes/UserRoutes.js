@@ -77,7 +77,7 @@ const UserRoutes = {
         },
         {
           path: 'register_out_offcial',
-          element: <RegisterIntern_RegisterOutOffcial requiredPermissions={[]} />
+          element: <PrivateRoute component={RegisterIntern_RegisterOutOffcial} requiredPermissions={[]} />
         }
       ]
     }

@@ -9,8 +9,14 @@ import { useSelector } from 'react-redux';
 import { getRegisterInternship, fetchData, getInternship } from 'store/reducers/registerInternUserSlice';
 import { dispatch } from 'store/index';
 import CountdownTimer from 'components/CountdownTimer';
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
+import { LockCircle } from 'iconsax-react';
+import { Link } from 'react-router-dom';
+import { useTheme } from '@mui/material/styles';
 
 const RegisterInternshipGraduation = () => {
+  const theme = useTheme();
   const { register_internship, internship } = useSelector((state) => state.regsiter_intern_user);
   const { register_internship_start_date, register_internship_end_date } = internship;
   const currentTime = useMemo(() => new Date(), []);
@@ -32,7 +38,21 @@ const RegisterInternshipGraduation = () => {
     fetch();
   }, []);
 
-  if (!internship) return null;
+  if (!internship && !register_internship) {
+    return (
+      <Container maxWidth="lg" sx={{ mt: 2 }}>
+        <Stack justifyContent="center" alignItems="center" spacing={4} minHeight={500}>
+          <LockCircle size="150" color={theme.palette.warning.main} variant="Bulk" />
+          <Typography variant="h4" textAlign="center">
+            Bạn không được phép đăng ký thực tập
+          </Typography>
+          <Button variant="contained" component={Link} to="/">
+            Trở về trang chủ
+          </Button>
+        </Stack>
+      </Container>
+    );
+  }
 
   const renderForm = () => {
     return (

@@ -19,6 +19,7 @@ import config_page from './configPageSlice';
 import create_register_intern from './createRegisterInternSlice';
 import internship_graduation from './internshipGraduationSlice';
 import regsiter_intern_user from './registerInternUserSlice';
+import assignment_internship from './assignmentIntenship';
 // ==============================|| COMBINE REDUCERS ||============================== //
 
 const reducers = combineReducers({
@@ -38,7 +39,8 @@ const reducers = combineReducers({
   create_register_intern,
   regsiter_intern_user,
   config_page,
-  internship_graduation
+  internship_graduation,
+  assignment_internship
 });
 
 export default reducers;
