@@ -124,6 +124,7 @@ const register_intern_user = createSlice({
     builder
       .addCase(fetchData.pending, (state) => {
         state.isLoading = true;
+        state.isError = false;
       })
       .addCase(fetchData.fulfilled, (state, action) => {
         state.data = action.payload.data;

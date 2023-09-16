@@ -1,4 +1,5 @@
-import React from 'react';
+/* eslint-disable no-unused-vars */
+import React, { useEffect } from 'react';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import FormHelperText from '@mui/material/FormHelperText';
@@ -33,15 +34,16 @@ const cleanData = (companies, registerInternInfo) => {
 
 const CreateReigisterInternForm = () => {
   const { companySelected, internshipGraduationInfo } = useSelector((state) => state.create_register_intern);
-
   const { internship_graduation_id, register_internship_start_date, register_internship_end_date } = internshipGraduationInfo;
+
+  console.log(internshipGraduationInfo);
 
   return (
     <Formik
       initialValues={{
         internship_graduation_id: internship_graduation_id,
-        register_internship_start_date: dayjs(dayjs(register_internship_start_date).valueOf()) || null,
-        register_internship_end_date: dayjs(dayjs(register_internship_end_date).valueOf()) || null,
+        register_internship_start_date: register_internship_start_date ? dayjs(register_internship_start_date) : null,
+        register_internship_end_date: register_internship_end_date ? dayjs(register_internship_end_date) : null,
         submit: null
       }}
       validationSchema={Yup.object().shape({
@@ -64,12 +66,12 @@ const CreateReigisterInternForm = () => {
           if (result && !result.error) {
             setStatus({ success: true });
             setSubmitting(false);
-            toast.success('Tạo đợt đăng ký thành công!');
+            toast.success('Cập nhật đợt thực tập thành công!');
           } else {
             setStatus({ success: false });
             setErrors(result.payload.errors);
             setSubmitting(false);
-            toast.error('Tạo đợt đăng ký không thành công');
+            toast.error('Cập nhật đợt thực tập không thành công');
           }
         } catch (err) {
           console.error(err);

@@ -5,13 +5,13 @@ import Button from '@mui/material/Button';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { dispatch } from 'store';
-import { setOpenCofirmDialog } from 'store/reducers/internshipGraduationSlice';
+import { deleteInternshipGraduation, setOpenCofirmDialog } from 'store/reducers/internshipGraduationSlice';
 
 const InternshipGraduationDeleteDialog = () => {
   const { idDelete, openCofirmDialog } = useSelector((state) => state.internship_graduation);
   const handleDelete = async () => {
     try {
-      await dispatch(deleteRegisterSpecalty(idDelete));
+      await dispatch(deleteInternshipGraduation(idDelete));
       dispatch(setOpenCofirmDialog(false));
       toast.success('Xóa đợt đăng ký thành công!');
     } catch (err) {

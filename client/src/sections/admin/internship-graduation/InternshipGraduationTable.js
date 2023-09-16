@@ -22,7 +22,6 @@ const InternshipGraduationTable = () => {
   const { data, isError, isLoading, isRefetching, rowCount, columnFilters, globalFilter, sorting, pagination } = useSelector(
     (state) => state.internship_graduation
   );
-  console.log(data);
 
   useEffect(() => {
     dispatch(fetchData({ columnFilters, globalFilter, sorting, pagination }));
@@ -41,12 +40,12 @@ const InternshipGraduationTable = () => {
         Cell: ({ cell }) => cell.row.original.openclasstime.openclass_time_year
       },
       {
-        accessorKey: 'register_internship_start_date',
+        accessorKey: 'internship_graduation_start_date',
         header: 'Thời gian bắt đầu',
         Cell: ({ cell }) => formatDDMMYYYY(cell.getValue())
       },
       {
-        accessorKey: 'register_internship_end_date',
+        accessorKey: 'internship_graduation_end_date',
         header: 'Thời gian kết thúc',
         Cell: ({ cell }) => formatDDMMYYYY(cell.getValue())
       }
@@ -57,6 +56,10 @@ const InternshipGraduationTable = () => {
   const handleDelete = (id) => {
     dispatch(setOpenCofirmDialog(true));
     dispatch(setIdDeleteIntership(id));
+  };
+
+  const handleUpdate = (row) => {
+    console.log(row);
   };
 
   return (
@@ -90,7 +93,7 @@ const InternshipGraduationTable = () => {
             <IconAction title="Phân công" icon={<ArrowDown3 />} href={`/admin/assignment_intern/${row.id}`} />
             <IconAction title="Đợt đăng ký  & Danh sách công ty" icon={<Calendar />} href={`/admin/register-intern/${row.id}`} />
             <IconAction title="Xem chi tiết" icon={<Eye />} href={`/admin/register_specialty/${row.id}`} />
-            <IconAction title="Chỉnh sửa" icon={<Edit />} href={`/admin/register_specialty_edit/${row.id}`} />
+            <IconAction title="Chỉnh sửa" icon={<Edit />} onClick={() => handleUpdate(row.original)} />
             <IconAction title="Xoá" icon={<Trash />} onClick={() => handleDelete(row.id)} color="error" />
           </Box>
         )}

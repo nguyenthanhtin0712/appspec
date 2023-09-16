@@ -23,17 +23,16 @@ const RegisterIntern = () => {
   useEffect(() => {
     const fetchData = async () => {
       const res = await dispatch(getInternshipGradutionInfo(Id));
+      await dispatch(getCompany(Id));
       if (res.error) {
         navigate('/');
       }
-      await dispatch(getCompany(Id));
     };
     fetchData();
   }, [Id, navigate]);
 
-  if (!internshipGraduationInfo) return null;
+  if (!internshipGraduationInfo || internshipGraduationInfo.internship_graduation_id != Id) return null;
 
-  console.log(formatDDMMYYYY(internshipGraduationInfo.internship_graduation_start_date));
   const { openclass_time_semester, openclass_time_year } = internshipGraduationInfo.openclasstime;
 
   return (

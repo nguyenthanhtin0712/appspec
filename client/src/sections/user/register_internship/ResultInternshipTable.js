@@ -24,15 +24,18 @@ const ResultInternshipTable = () => {
     () => [
       {
         accessorKey: 'student_code',
-        header: 'Mã sinh viên'
+        header: 'Mã sinh viên',
+        size: 5
       },
       {
         accessorKey: 'user_firstname',
-        header: 'Họ lót'
+        header: 'Họ lót',
+        size: 12
       },
       {
         accessorKey: 'user_lastname',
-        header: 'Tên'
+        header: 'Tên',
+        size: 5
       },
       {
         accessorKey: 'company_name',

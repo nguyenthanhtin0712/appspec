@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SubmitRegisterInternshipRequest;
-use App\Http\Requests\SubmitRegisterSpecialtyRequest;
 use App\Http\Requests\SubmitRegsiterInternshipOutOfficial;
 use App\Http\Resources\Collection;
 use App\Http\Resources\InternshipCompanyResoure;
@@ -12,6 +11,7 @@ use App\Models\Company;
 use App\Models\CompanyPositionDetail;
 use App\Models\DisplayConfig;
 use App\Models\InternshipGraduation;
+use App\Models\OpenclassTime;
 use App\Models\RecruitmentPosition;
 use App\Models\RegisterIntershipCompany;
 use App\Models\Student;
@@ -35,15 +35,15 @@ class InternshipGraduationController extends Controller
         $sortBy = $request->input('sortBy');
         $sortOrder = $request->input('sortOrder', 'asc');
         $filters = $request->input('filters');
-        $jobholder = InternshipGraduation::with('openclasstime');
+        $internshipGraduation = InternshipGraduation::with('openclasstime')->where('internship_graduation_isDelete', 0);
         if ($query) {
-            $jobholder->where("openclass_time_id", "LIKE", "%$query%");
+            $internshipGraduation->where("openclass_time_id", "LIKE", "%$query%");
         }
         if ($id) {
-            $jobholder->where('openclass_time_id', $id);
+            $internshipGraduation->where('openclass_time_id', $id);
         }
         if ($sortBy) {
-            $jobholder->orderBy($sortBy, $sortOrder);
+            $internshipGraduation->orderBy($sortBy, $sortOrder);
         }
         if ($filters) {
             $filters = json_decode($filters, true);
@@ -51,21 +51,21 @@ class InternshipGraduationController extends Controller
                 foreach ($filters as $filter) {
                     $id = $filter['id'];
                     $value = $filter['value'];
-                    $jobholder->where($id, 'LIKE', '%' . $value . '%');
+                    $internshipGraduation->where($id, 'LIKE', '%' . $value . '%');
                 }
             }
         }
         if ($all && $all == true) {
-            $jobholder = $jobholder->get();
+            $internshipGraduation = $internshipGraduation->get();
         } else {
             if ($perPage) {
-                $jobholder = $jobholder->paginate($perPage);
+                $internshipGraduation = $internshipGraduation->paginate($perPage);
             } else {
-                $jobholder = $jobholder->paginate(10);
+                $internshipGraduation = $internshipGraduation->paginate(10);
             }
         }
-        $jobholderCollection = new Collection($jobholder);
-        return $this->sentSuccessResponse($jobholderCollection, "Get data success", Response::HTTP_OK);
+        $internshipGraduationCollection = new Collection($internshipGraduation);
+        return $this->sentSuccessResponse($internshipGraduationCollection, "Get data success", Response::HTTP_OK);
     }
 
     /**
@@ -76,7 +76,40 @@ class InternshipGraduationController extends Controller
      */
     public function store(Request $request)
     {
-        echo json_encode($request->all());
+        $openclass_semester = $request->input('openclass_semester');
+        $openclass_year = $request->input('openclass_year');
+        $internship_graduation_start_date = $request->input('internship_graduation_start_date');
+        $internship_graduation_end_date = $request->input('internship_graduation_end_date');
+
+        $openclass_time = OpenclassTime::where('openclass_time_semester', $openclass_semester)
+            ->where('openclass_time_year', $openclass_year)->first();
+
+        $internshipGraduationCreate = null;
+        if ($openclass_time) {
+            $valid = InternshipGraduation::find($openclass_time->openclass_time_id);
+            if (!$valid) {
+                $internshipGraduationCreate = InternshipGraduation::create([
+                    'internship_graduation_id' => $openclass_time->openclass_time_id,
+                    'internship_graduation_start_date' => $internship_graduation_start_date,
+                    'internship_graduation_end_date' => $internship_graduation_end_date
+                ]);
+            } else {
+                $valid->openclasstime;
+                return $this->sentErrorResponse($valid, "Đợt thực tập đã tồn tại", Response::HTTP_CONFLICT);
+            }
+        } else {
+            $openclassTimeCreate = OpenclassTime::create([
+                'openclass_time_semester' => $openclass_semester,
+                'openclass_time_year' => $openclass_year
+            ]);
+            $internshipGraduationCreate = InternshipGraduation::create([
+                'internship_graduation_id' => $openclassTimeCreate->openclass_time_id,
+                'internship_graduation_start_date' => $internship_graduation_start_date,
+                'internship_graduation_end_date' => $internship_graduation_end_date
+            ]);
+        }
+        $internshipGraduationCreate->openclasstime;
+        return $this->sentSuccessResponse($internshipGraduationCreate, "Internship Gradution created", Response::HTTP_OK);
     }
 
     /**
@@ -111,7 +144,10 @@ class InternshipGraduationController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $internshipGraduation = InternshipGraduation::where('internship_graduation_id', $id)->firstOrFail();
+        $internshipGraduation->internship_graduation_isDelete = 1;
+        $internshipGraduation->save();
+        return $this->sentSuccessResponse($internshipGraduation, 'Deleted successfully', Response::HTTP_OK);
     }
 
 
@@ -159,7 +195,14 @@ class InternshipGraduationController extends Controller
     public function storeRegisterInfo(Request $request)
     {
         $internship_graduation_id = $request->input('internship_graduation_id');
+        $register_internship_start_date = $request->input('register_internship_start_date');
+        $register_internship_end_date = $request->input('register_internship_end_date');
         $companiesUpdate = collect($request->input('companies'));
+
+        InternshipGraduation::find($internship_graduation_id)->update([
+            'register_internship_start_date' => $register_internship_start_date,
+            'register_internship_end_date' => $register_internship_end_date
+        ]);
 
         // Get existing companies with positions
         $existingCompanies = RegisterIntershipCompany::with('positions')
