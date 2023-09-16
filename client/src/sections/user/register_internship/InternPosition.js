@@ -13,7 +13,7 @@ const InternPosition = ({ position }) => {
         <RecordCircle size="20" color={theme.palette.primary.main} variant="Bulk" />
         <Typography>{position.position_name}</Typography>
       </Stack>
-      <Box bgcolor={theme.palette.success.main} color="#fff" px={1} py={0.5} borderRadius={50}>
+      <Box bgcolor={theme.palette.success.main} color="#fff" px={1} py={0.5} borderRadius={50} height={'100%'}>
         {position.position_total_register}/{position.position_quantity}
       </Box>
     </Stack>

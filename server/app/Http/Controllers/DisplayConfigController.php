@@ -13,6 +13,7 @@ class DisplayConfigController extends Controller
     public function index(Request $request)
     {
         $registerSpecialtyId = DisplayConfig::find('register_specialty')->display_config_value;
+        $internshipGraduation = DisplayConfig::find('register_intern');
         if ($registerSpecialtyId) {
             $registerSpecialty = RegisterSpecialty::find($registerSpecialtyId);
             $result = [

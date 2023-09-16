@@ -96,7 +96,7 @@ const InternshipGraduationForm = ({ initialValues, action }) => {
                   fullWidth
                   error={Boolean(touched.openclass_semester && errors.openclass_semester)}
                   helperText={errors.openclass_semester}
-                  disabled={action === 'update'}
+                  readOnly={action === 'update'}
                 />
               </Grid>
               <Grid item xs={6}>
@@ -112,7 +112,7 @@ const InternshipGraduationForm = ({ initialValues, action }) => {
                   fullWidth
                   error={Boolean(touched.openclass_year && errors.openclass_year)}
                   helperText={errors.openclass_year}
-                  disabled={action === 'update'}
+                  readOnly={action === 'update'}
                 />
               </Grid>
               <Grid item xs={6}>
