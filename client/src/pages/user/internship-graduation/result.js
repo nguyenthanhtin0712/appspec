@@ -5,7 +5,7 @@ import ResultInternshipTable from 'sections/user/register_internship/ResultInter
 
 const result = () => {
   return (
-    <Container maxWidth="md" sx={{ mt: 2 }}>
+    <Container maxWidth="lg" sx={{ mt: 2 }}>
       <Stack spacing={2}>
         <MainCard title="Danh sách công ty" sx={{ mb: 2 }}>
           <CompanyList />
