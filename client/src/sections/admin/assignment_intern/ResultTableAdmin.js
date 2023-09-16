@@ -109,6 +109,10 @@ const ResultTable = () => {
         manualFiltering
         manualPagination
         manualSorting
+        enableHiding={false}
+        enableFullScreenToggle={false}
+        enableFilters={false}
+        enableDensityToggle={false}
         muiToolbarAlertBannerProps={isError ? { color: 'error', children: 'Error loading data' } : null}
         onColumnFiltersChange={(updater) => dispatch(setColumnFilters(updater(columnFilters)))}
         onGlobalFilterChange={(filter) => dispatch(setGlobalFilter(filter))}

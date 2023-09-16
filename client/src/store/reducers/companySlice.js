@@ -51,7 +51,6 @@ export const createCompany = createAsyncThunk('company/createCompany', async (co
 
 export const updateCompany = createAsyncThunk('company/updateCompany', async (company, { rejectWithValue }) => {
   try {
-    console.log('Comapny', company);
     const response = await axios.put(`${API_BASE_URL}/companies/${company.company_id}`, company);
     return response.data;
   } catch (error) {

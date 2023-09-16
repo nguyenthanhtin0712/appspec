@@ -133,12 +133,15 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('configs', [DisplayConfigController::class, 'index']);
     Route::put('/configs/{id}', [DisplayConfigController::class, 'update']);
 });
+
+Route::get('test-email', [InternshipGraduationController::class, 'testEmail']);
+
+
 Route::get('register-specialties/result', [RegisterSpecialtyController::class, 'getResult']);
 Route::get('register-specialties', [RegisterSpecialtyController::class, 'getRegisterSpecialtyByUser']);
 
 Route::get('recruitment-positions', [RecruitmentPositionController::class, 'index']);
 Route::post('recruitment-positions', [RecruitmentPositionController::class, 'store']);
-
 
 Route::get('intership-graduations', [InternshipGraduationController::class, 'index']);
 Route::get('company-internships', [InternshipGraduationController::class, 'getCompanyInternshipByUser']);

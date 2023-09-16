@@ -33,7 +33,6 @@ export const fetchData = createAsyncThunk('teacher/fetchData', async (params) =>
 
 export const createTeacher = createAsyncThunk('teacher/createTeacher', async (student) => {
   try {
-    console.log(student);
     const response = await axios.post(`${API_BASE_URL}/students`, student);
     return response.data;
   } catch (error) {

@@ -36,8 +36,6 @@ const CreateReigisterInternForm = () => {
   const { companySelected, internshipGraduationInfo } = useSelector((state) => state.create_register_intern);
   const { internship_graduation_id, register_internship_start_date, register_internship_end_date } = internshipGraduationInfo;
 
-  console.log(internshipGraduationInfo);
-
   return (
     <Formik
       initialValues={{

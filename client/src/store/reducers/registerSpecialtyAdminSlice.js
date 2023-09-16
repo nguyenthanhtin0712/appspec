@@ -178,7 +178,6 @@ const register_specialty = createSlice({
         }
       })
       .addCase(deleteRegisterSpecalty.fulfilled, (state, action) => {
-        console.log(action.payload.data);
         const deletedRegisterSpecaltyId = action.payload.data.register_specialty_id;
         state.data = state.data.filter((item) => item.register_specialty_id !== deletedRegisterSpecaltyId);
       });

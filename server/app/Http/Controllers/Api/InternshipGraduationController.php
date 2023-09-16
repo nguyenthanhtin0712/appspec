@@ -7,6 +7,7 @@ use App\Http\Requests\SubmitRegisterInternshipRequest;
 use App\Http\Requests\SubmitRegsiterInternshipOutOfficial;
 use App\Http\Resources\Collection;
 use App\Http\Resources\InternshipCompanyResoure;
+use App\Jobs\SendEmail;
 use App\Models\Company;
 use App\Models\CompanyPositionDetail;
 use App\Models\DisplayConfig;
@@ -416,5 +417,16 @@ class InternshipGraduationController extends Controller
         }
         $studentCollection = new Collection($students);
         return $this->sentSuccessResponse($studentCollection, 'regsiterResultStudent', 200);
+    }
+
+    public function testEmail()
+    {
+        $message = [
+            'type' => 'Create task',
+            'content' => 'has been created!',
+        ];
+        SendEmail::dispatch($message, [
+            'transinh085@gmail.com'
+        ])->delay(now()->addMinute(1));
     }
 }
