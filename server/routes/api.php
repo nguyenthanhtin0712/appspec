@@ -123,6 +123,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::post('intership-graduations/register', [InternshipGraduationController::class, 'submitRegisterInternship']);
     Route::post('intership-graduations', [InternshipGraduationController::class, 'store']);
     Route::delete('intership-graduations/{id}', [InternshipGraduationController::class, 'destroy']);
+    Route::put('intership-graduations/{id}', [InternshipGraduationController::class, 'update']);
     Route::post('intership-graduations/register-out-offcial', [InternshipGraduationController::class, 'submitRegisterInternshipOutOffcail']);
 
     // Academic_field api

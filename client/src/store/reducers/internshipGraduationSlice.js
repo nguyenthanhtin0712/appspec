@@ -36,15 +36,15 @@ export const fetchData = createAsyncThunk('internship_graduation/fetchData', asy
 });
 
 export const createInternshipGraduation = createAsyncThunk(
-  'register_specialty/createInternshipGraduation',
+  'internship_graduation/createInternshipGraduation',
   async (internshipGraduation, { rejectWithValue }) => {
     try {
-      const formattedSpecialty = {
+      const formattedData = {
         ...internshipGraduation,
         internship_graduation_start_date: formatDateTimeSubmit(internshipGraduation.internship_graduation_start_date),
         internship_graduation_end_date: formatDateTimeSubmit(internshipGraduation.internship_graduation_end_date)
       };
-      const response = await axios.post(`/intership-graduations`, formattedSpecialty);
+      const response = await axios.post(`/intership-graduations`, formattedData);
       return response.data;
     } catch (error) {
       if (error.response?.data?.errors) {
@@ -57,18 +57,16 @@ export const createInternshipGraduation = createAsyncThunk(
   }
 );
 
-export const updateRegisterSpecalty = createAsyncThunk(
-  'register_specialty/updateRegisterSpecalty',
-  async ({ values, id }, { rejectWithValue }) => {
+export const updateInternshipGraduation = createAsyncThunk(
+  'internship_graduation/updateInternshipGraduation',
+  async (internshipGraduation, { rejectWithValue }) => {
     try {
-      const formattedSpecialty = {
-        ...values,
-        register_specialty_end_date: formatDateTimeSubmit(values.register_specialty_end_date),
-        register_specialty_start_date: formatDateTimeSubmit(values.register_specialty_start_date)
+      const formattedData = {
+        ...internshipGraduation,
+        internship_graduation_start_date: formatDateTimeSubmit(internshipGraduation.internship_graduation_start_date),
+        internship_graduation_end_date: formatDateTimeSubmit(internshipGraduation.internship_graduation_end_date)
       };
-      console.log('formattedSpecialty', formattedSpecialty);
-      const response = await axios.put(`/register-specialties/admin/${id}`, formattedSpecialty);
-      console.log('response.data', response.data);
+      const response = await axios.put(`/intership-graduations/${internshipGraduation.internship_graduation_id}`, formattedData);
       return response.data;
     } catch (error) {
       if (error.response && error.response.data && error.response.data.errors) {
@@ -82,7 +80,7 @@ export const updateRegisterSpecalty = createAsyncThunk(
 );
 
 export const deleteInternshipGraduation = createAsyncThunk(
-  'register_specialty/deleteInternshipGraduation',
+  'internship_graduation/deleteInternshipGraduation',
   async (id, { rejectWithValue }) => {
     try {
       const response = await axios.delete(`/intership-graduations/${id}`);
@@ -123,6 +121,7 @@ const initialState = {
     action: 'add',
     initValue
   },
+  idUpdate: '',
   idDelete: '',
   openCofirmDialog: false
 };
@@ -158,6 +157,9 @@ const internship_graduation = createSlice({
         action: 'add',
         initValue
       };
+    },
+    setIdUpdate: (state, action) => {
+      state.idUpdate = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -183,11 +185,12 @@ const internship_graduation = createSlice({
           state.internshipGraduationDialog.open = false;
         }
       })
-      .addCase(updateRegisterSpecalty.fulfilled, (state, action) => {
+      .addCase(updateInternshipGraduation.fulfilled, (state, action) => {
         const updatedRegisterSpecalty = action.payload.data;
         const index = state.data.findIndex((item) => item.internship_graduation_id === updatedRegisterSpecalty.internship_graduation_id);
         if (index !== -1) {
           state.data[index] = updatedRegisterSpecalty;
+          state.internshipGraduationDialog.open = false;
         }
       })
       .addCase(deleteInternshipGraduation.fulfilled, (state, action) => {
@@ -205,7 +208,8 @@ export const {
   setIdDeleteIntership,
   setOpenCofirmDialog,
   setInternshipGraduationDialog,
-  closeInternshipGraduationDialog
+  closeInternshipGraduationDialog,
+  setIdUpdate
 } = internship_graduation.actions;
 
 export default internship_graduation.reducer;

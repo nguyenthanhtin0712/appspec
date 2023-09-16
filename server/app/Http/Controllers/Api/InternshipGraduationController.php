@@ -133,7 +133,13 @@ class InternshipGraduationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $internshipGraduation = InternshipGraduation::find($id);
+        $internshipGraduation->update([
+            'internship_graduation_start_date' => $request->input('internship_graduation_start_date'),
+            'internship_graduation_end_date' => $request->input('internship_graduation_end_date'),
+        ]);
+        $internshipGraduation->openclasstime;
+        return $this->sentSuccessResponse($internshipGraduation, "Update successfully", Response::HTTP_OK);
     }
 
     /**

@@ -7,16 +7,20 @@ import FormHelperText from '@mui/material/FormHelperText';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import { toast } from 'react-toastify';
-import { updateMajor } from 'store/reducers/majorSlice';
 import { useSelector } from 'react-redux';
 import Button from '@mui/material/Button';
 import InputField from 'components/input/InputField';
 import DialogTitleCustom from 'components/DialogTitleCustom';
 import { dispatch } from 'store/index';
-import { closeInternshipGraduationDialog, createInternshipGraduation } from 'store/reducers/internshipGraduationSlice';
+import {
+  closeInternshipGraduationDialog,
+  createInternshipGraduation,
+  updateInternshipGraduation
+} from 'store/reducers/internshipGraduationSlice';
 import DatePickerField from 'components/input/DatePickerField';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import dayjs from 'dayjs';
 
 const InternshipGraduationForm = ({ initialValues, action }) => {
   return (
@@ -39,7 +43,7 @@ const InternshipGraduationForm = ({ initialValues, action }) => {
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
         try {
-          const actionType = action === 'update' ? updateMajor : createInternshipGraduation;
+          const actionType = action === 'update' ? updateInternshipGraduation : createInternshipGraduation;
           const result = await dispatch(actionType(values));
           console.log(result);
           if (result && !result.error) {
@@ -108,6 +112,7 @@ const InternshipGraduationForm = ({ initialValues, action }) => {
                   fullWidth
                   error={Boolean(touched.openclass_year && errors.openclass_year)}
                   helperText={errors.openclass_year}
+                  disabled={action === 'update'}
                 />
               </Grid>
               <Grid item xs={6}>

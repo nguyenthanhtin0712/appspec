@@ -11,7 +11,9 @@ import {
   setSorting,
   setPagination,
   setOpenCofirmDialog,
-  setIdDeleteIntership
+  setIdDeleteIntership,
+  setInternshipGraduationDialog,
+  setIdUpdate
 } from 'store/reducers/internshipGraduationSlice';
 import { dispatch } from 'store/index';
 import { formatDDMMYYYY } from 'utils/formatDateTime';
@@ -59,7 +61,15 @@ const InternshipGraduationTable = () => {
   };
 
   const handleUpdate = (row) => {
-    console.log(row);
+    const data = {
+      internship_graduation_id: row.internship_graduation_id,
+      openclass_semester: row.openclasstime.openclass_time_semester,
+      openclass_year: row.openclasstime.openclass_time_year,
+      internship_graduation_start_date: row.internship_graduation_start_date,
+      internship_graduation_end_date: row.internship_graduation_end_date
+    };
+    dispatch(setIdUpdate(row.internship_graduation_id));
+    dispatch(setInternshipGraduationDialog({ open: true, action: 'update', initValue: data }));
   };
 
   return (
