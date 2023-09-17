@@ -21,6 +21,16 @@ export const getAllRegisterSpecialty = createAsyncThunk('config_page/getAllRegis
   }
 });
 
+export const getAllInternshipGraduation = createAsyncThunk('config_page/getAllInternshipGraduation', async () => {
+  try {
+    const response = await axios.get(`/internship-graduations?all=true`);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+});
+
 export const updateConfig = createAsyncThunk('config_page/updateConfig', async (config, { rejectWithValue }) => {
   try {
     const response = await axios.put(`/configs/${config.display_config_id}`, config);
@@ -37,7 +47,8 @@ export const updateConfig = createAsyncThunk('config_page/updateConfig', async (
 
 const initialState = {
   dataConfig: [],
-  dataRegisterSpecialty: []
+  dataRegisterSpecialty: [],
+  dataInternshipGraduation: []
 };
 
 const config_page = createSlice({
@@ -51,6 +62,9 @@ const config_page = createSlice({
       })
       .addCase(getAllRegisterSpecialty.fulfilled, (state, action) => {
         state.dataRegisterSpecialty = action.payload.data.result;
+      })
+      .addCase(getAllInternshipGraduation.fulfilled, (state, action) => {
+        state.dataInternshipGraduation = action.payload.data.result;
       });
   }
 });

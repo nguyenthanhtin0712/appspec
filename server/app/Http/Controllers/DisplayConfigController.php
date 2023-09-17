@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateDisplayConfigRequest;
 use App\Models\DisplayConfig;
+use App\Models\InternshipGraduation;
 use App\Models\RegisterSpecialty;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
@@ -12,19 +13,31 @@ class DisplayConfigController extends Controller
 {
     public function index(Request $request)
     {
+        $resultRegisterSpecialty = [];
+        $resultRegisterIntern = [];
+
         $registerSpecialtyId = DisplayConfig::find('register_specialty')->display_config_value;
-        $internshipGraduation = DisplayConfig::find('register_intern');
+        $internshipGraduationId = DisplayConfig::find('register_intern')->display_config_value;
+
         if ($registerSpecialtyId) {
             $registerSpecialty = RegisterSpecialty::find($registerSpecialtyId);
-            $result = [
-                'register_specialty' => [
-                    'id' => $registerSpecialty->register_specialty_id,
-                    'name' => $registerSpecialty->register_specialty_name
-                ]
+            $resultRegisterSpecialty = [
+                'id' => $registerSpecialty->register_specialty_id,
+                'name' => $registerSpecialty->register_specialty_name
             ];
-            return $this->sentSuccessResponse($result, "Get data success", Response::HTTP_OK);
         }
-        return response()->json(['message' => 'Không tìm thấy',], 404);
+        if ($internshipGraduationId) {
+            $registerIntern = InternshipGraduation::find($internshipGraduationId);
+            $resultRegisterIntern = [
+                'id' => $internshipGraduationId,
+                'name' => 'Thực tập tốt nghiệp học kỳ ' . $registerIntern->openclasstime->openclass_time_semester . ' năm học ' . $registerIntern->openclasstime->openclass_time_year
+            ];
+        }
+        $result = [
+            'register_specialty' => $resultRegisterSpecialty,
+            'register_internship' => $resultRegisterIntern
+        ];
+        return $this->sentSuccessResponse($result, "Get data success", Response::HTTP_OK);
     }
 
     public function update(UpdateDisplayConfigRequest $request, $id)

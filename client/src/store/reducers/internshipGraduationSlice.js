@@ -10,7 +10,7 @@ export const fetchData = createAsyncThunk('internship_graduation/fetchData', asy
     sorting,
     pagination: { pageIndex, pageSize }
   } = params;
-  const url = new URL('/api/intership-graduations', API_BASE_URL);
+  const url = new URL('/api/internship-graduations', API_BASE_URL);
   url.searchParams.set('page', `${pageIndex + 1}`);
   url.searchParams.set('perPage', `${pageSize}`);
   url.searchParams.set('filters', JSON.stringify(columnFilters ?? []));
@@ -44,7 +44,7 @@ export const createInternshipGraduation = createAsyncThunk(
         internship_graduation_start_date: formatDateTimeSubmit(internshipGraduation.internship_graduation_start_date),
         internship_graduation_end_date: formatDateTimeSubmit(internshipGraduation.internship_graduation_end_date)
       };
-      const response = await axios.post(`/intership-graduations`, formattedData);
+      const response = await axios.post(`/internship-graduations`, formattedData);
       return response.data;
     } catch (error) {
       if (error.response?.data?.errors) {
@@ -66,7 +66,7 @@ export const updateInternshipGraduation = createAsyncThunk(
         internship_graduation_start_date: formatDateTimeSubmit(internshipGraduation.internship_graduation_start_date),
         internship_graduation_end_date: formatDateTimeSubmit(internshipGraduation.internship_graduation_end_date)
       };
-      const response = await axios.put(`/intership-graduations/${internshipGraduation.internship_graduation_id}`, formattedData);
+      const response = await axios.put(`/internship-graduations/${internshipGraduation.internship_graduation_id}`, formattedData);
       return response.data;
     } catch (error) {
       if (error.response && error.response.data && error.response.data.errors) {
@@ -83,7 +83,7 @@ export const deleteInternshipGraduation = createAsyncThunk(
   'internship_graduation/deleteInternshipGraduation',
   async (id, { rejectWithValue }) => {
     try {
-      const response = await axios.delete(`/intership-graduations/${id}`);
+      const response = await axios.delete(`/internship-graduations/${id}`);
       return response.data;
     } catch (error) {
       if (error.response && error.response.data && error.response.data.errors) {

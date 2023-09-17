@@ -460,6 +460,10 @@ class InternshipGraduationController extends Controller
         return $this->sentSuccessResponse($formattedStudents, 'Get data success', 200);
     }
 
+    public function getResult() {
+        
+    }
+
     public function assignmentInternshipStudent(Request $request){
         $displayConfig = $request->input('id');
         $studentsQuery = Student::select(

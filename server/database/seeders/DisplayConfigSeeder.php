@@ -17,7 +17,7 @@ class DisplayConfigSeeder extends Seeder
         DisplayConfig::insert([
             'display_config_id' => 'register_specialty',
             'display_config_name' => 'Đăng ký chuyên ngành',
-            'display_config_value' => null
+            'display_config_value' => 1
         ]);
         DisplayConfig::insert([
             'display_config_id' => 'register_intern',

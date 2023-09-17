@@ -33,7 +33,7 @@ export const getAllRecruitmentPosition = createAsyncThunk('create_register_inter
 
 export const getInternshipGradutionInfo = createAsyncThunk('create_register_intern/getInternshipGradutionInfo', async (id) => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/intership-graduations/${id}`);
+    const response = await axios.get(`${API_BASE_URL}/internship-graduations/${id}`);
     return response.data;
   } catch (error) {
     console.error(error);
@@ -60,7 +60,7 @@ export const createRecruitmentPosition = createAsyncThunk(
 
 export const getCompany = createAsyncThunk('create_register_intern/getCompany', async (id) => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/intership-graduations/company/${id}`);
+    const response = await axios.get(`${API_BASE_URL}/internship-graduations/company/${id}`);
     return response.data;
   } catch (error) {
     console.error(error);
@@ -72,7 +72,7 @@ export const updateRegisterInternShip = createAsyncThunk(
   'create_register_intern/updateRegisterInternShip',
   async (payload, { rejectWithValue }) => {
     try {
-      const response = await axios.post(`${API_BASE_URL}/intership-graduations/register-info`, payload);
+      const response = await axios.post(`${API_BASE_URL}/internship-graduations/register-info`, payload);
       return response.data;
     } catch (error) {
       if (error.response && error.response.data && error.response.data.errors) {
