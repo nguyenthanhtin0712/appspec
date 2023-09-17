@@ -15,6 +15,8 @@ function ExcelReader() {
           const sheetName = workbook.SheetNames[0];
           const sheetData = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
 
+          console.log(sheetData);
+
           const dataSlice = sheetData?.slice(6, -4);
           let dataFormated = [];
 
@@ -37,7 +39,7 @@ function ExcelReader() {
 
   return (
     <div>
-      <input type="file" onChange={handleFileChange} accept=".xlsx" />
+      <input type="file" onChange={handleFileChange} />
     </div>
   );
 }
