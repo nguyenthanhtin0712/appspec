@@ -5,7 +5,6 @@ import { MaterialReactTable } from 'material-react-table';
 import { fetchData, setColumnFilters, setGlobalFilter, setSorting, setPagination, setStatus } from 'store/reducers/assignmentIntenship';
 import { dispatch } from 'store/index';
 import { Box, Button, Drawer, MenuItem, Select } from '@mui/material';
-import ChangeSpecialtyDialog from 'sections/admin/register_specialty/register_specialty_result/ChangeSpecialtyDialog';
 import ProjectRelease from 'sections/admin/assignment_intern/ProjectRelease';
 
 const ResultTable = () => {
@@ -22,11 +21,10 @@ const ResultTable = () => {
     pagination,
     registerSpecialtyId,
     majorId,
-    status,
-    statistic
+    status
   } = useSelector((state) => state.assignment_internship);
-  const [open, setOpen] = useState(false);
   const [rowSelection, setRowSelection] = useState({});
+
   useEffect(() => {
     dispatch(fetchData({ columnFilters, globalFilter, sorting, pagination, majorId, registerSpecialtyId, status }));
   }, [columnFilters, globalFilter, sorting, pagination, majorId, registerSpecialtyId, status]);
@@ -40,7 +38,8 @@ const ResultTable = () => {
       },
       {
         accessorKey: 'user_firstname',
-        header: 'Họ lót'
+        header: 'Họ lót',
+        size: 10
       },
       {
         accessorKey: 'user_lastname',
@@ -48,26 +47,23 @@ const ResultTable = () => {
         size: 10
       },
       {
-        accessorKey: 'student_score',
-        header: 'Điểm',
-        size: 10,
-        Cell: ({ cell }) => cell.getValue().toFixed(2)
+        accessorKey: 'company_name',
+        header: 'Công ty'
       },
       {
-        accessorKey: 'specialty_name',
-        header: 'Chuyên ngành',
-        Cell: ({ cell }) => (cell.getValue() ? cell.getValue() : 'Chưa đăng ký'),
+        accessorKey: 'position_name',
+        header: 'Vị trí'
+      },
+      {
+        accessorKey: 'jobholder_name',
+        header: 'Giảng viên',
+        Cell: ({ cell }) => (cell.getValue() ? cell.getValue() : 'Chưa phân công'),
         filterVariant: 'select',
-        filterSelectOptions: statistic.map((item) => item.specialty_name),
         size: 10
       }
     ],
-    [statistic]
+    []
   );
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   const [state, setState] = React.useState({
     right: false
@@ -102,13 +98,12 @@ const ResultTable = () => {
       <MaterialReactTable
         columns={columns}
         data={data}
-        getRowId={(row) => row.student_code}
-        enableRowNumbers
-        enableRowSelection
-        onRowSelectionChange={setRowSelection}
+        getRowId={(row) => row.major_id}
         manualFiltering
         manualPagination
         manualSorting
+        enableRowSelection
+        onRowSelectionChange={setRowSelection}
         enableHiding={false}
         enableFullScreenToggle={false}
         enableFilters={false}
@@ -162,7 +157,7 @@ const ResultTable = () => {
                 id="register-status"
                 onChange={(e) => dispatch(setStatus(e.target.value))}
                 size="small"
-                value={status}
+                value={1}
                 displayEmpty
                 inputProps={{ 'aria-label': 'Without label' }}
               >
@@ -180,7 +175,6 @@ const ResultTable = () => {
           </Box>
         )}
       />
-      <ChangeSpecialtyDialog open={open} handleClose={handleClose} rowSelection={rowSelection} setRowSelection={setRowSelection} />
       <Drawer anchor="right" open={state['right']} onClose={toggleDrawer('right', false)}>
         {list('right')}
       </Drawer>

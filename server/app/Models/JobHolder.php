@@ -11,7 +11,7 @@ class JobHolder extends Model
     use HasFactory, HasRoles;
 
     protected $table = 'job_holders';
-    protected $primaryKey = 'user_id';
+    protected $primaryKey = 'jobholder_code';
     public $incrementing = false;
     public $timestamps = false;
 

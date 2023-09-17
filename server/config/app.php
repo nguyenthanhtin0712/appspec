@@ -176,6 +176,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         Laravel\Sanctum\SanctumServiceProvider::class,
+        Spatie\CollectionMacros\CollectionMacroServiceProvider::class,
     ],
 
     /*
