@@ -419,6 +419,10 @@ class InternshipGraduationController extends Controller
         return $this->sentSuccessResponse($studentCollection, 'regsiterResultStudent', 200);
     }
 
+    public function getResult() {
+        
+    }
+
     public function testEmail()
     {
         $message = [

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { Box, Stack, useTheme } from '@mui/material';
 import Typography from '@mui/material/Typography';
@@ -12,21 +13,22 @@ import Autocomplete from '@mui/material/Autocomplete';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { dispatch } from 'store';
-import { getAllRegisterSpecialty, getPageConfigInfo, updateConfig } from 'store/reducers/configPageSlice';
+import { getAllInternshipGraduation, getAllRegisterSpecialty, getPageConfigInfo, updateConfig } from 'store/reducers/configPageSlice';
 
 const ConfigPage = () => {
   const [open, setOpen] = useState(false);
+  const [open1, setOpen1] = useState(false);
+
   const dataConfig = useSelector((state) => state.config_page.dataConfig);
 
   useEffect(() => {
     dispatch(getPageConfigInfo());
   }, []);
 
-  if (!dataConfig) return null;
+  if (dataConfig.length === 0) return null;
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+  console.log(dataConfig);
+
   return (
     <>
       <MainCard>
@@ -40,10 +42,15 @@ const ConfigPage = () => {
             onClick={() => setOpen(true)}
           />
 
-          <BoxCofig name="Đăng ký thực tập" value="Đăng ký thực tập học kỳ 2, năm học 2022 - 2023" onClick={() => setOpen(true)} />
+          <BoxCofig
+            name="Đăng ký thực tập"
+            value={dataConfig['register_internship']?.name ?? 'Chưa chọn đợt hiển thị'}
+            onClick={() => setOpen1(true)}
+          />
         </Stack>
       </MainCard>
-      <SpecialtyDisplayDialog open={open} handleClose={handleClose} />
+      <SpecialtyDisplayDialog open={open} handleClose={() => setOpen(false)} />
+      <InternshipGraduationDisplayDialog open={open1} handleClose={() => setOpen1(false)} />
     </>
   );
 };
@@ -108,6 +115,59 @@ const SpecialtyDisplayDialog = ({ open, handleClose }) => {
             </Box>
           )}
           renderInput={(params) => <TextField {...params} placeholder="Chọn đợt đăng ký chuyên ngành" />}
+        />
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleClose}>Hủy</Button>
+        <Button variant="contained" disabled={Boolean(!value)} onClick={handleSubmit}>
+          Lưu
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
+};
+
+const InternshipGraduationDisplayDialog = ({ open, handleClose }) => {
+  const [value, setValue] = React.useState(null);
+  const [inputValue, setInputValue] = React.useState('');
+
+  const dataInternshipGraduation = useSelector((state) => state.config_page.dataInternshipGraduation);
+  useEffect(() => {
+    dispatch(getAllInternshipGraduation());
+  }, []);
+
+  if (!dataInternshipGraduation) return null;
+
+  const handleSubmit = () => {
+    const result = dispatch(updateConfig({ display_config_id: 'register_intern', display_config_value: value.internship_graduation_id }));
+    if (result) {
+      dispatch(getPageConfigInfo());
+      handleClose();
+      toast.success('Lưu thành công');
+    }
+  };
+  return (
+    <Dialog open={open} onClose={handleClose}>
+      <DialogTitle>Chọn đợt thực tập tốt nghiệp</DialogTitle>
+      <DialogContent>
+        <Autocomplete
+          value={value}
+          onChange={(event, newValue) => setValue(newValue)}
+          inputValue={inputValue}
+          onInputChange={(event, newInputValue) => {
+            setInputValue(newInputValue);
+          }}
+          id="select-internship-graduation"
+          options={dataInternshipGraduation}
+          getOptionLabel={(option) =>
+            `Học kỳ ${option.openclasstime.openclass_time_semester} - Năm học ${option.openclasstime.openclass_time_year}`
+          }
+          renderOption={(props, option) => (
+            <Box component="li" {...props} key={option.internship_graduation_id}>
+              {`Học kỳ ${option.openclasstime.openclass_time_semester} - Năm học ${option.openclasstime.openclass_time_year}`}
+            </Box>
+          )}
+          renderInput={(params) => <TextField {...params} placeholder="Chọn đợt thực tập tốt nghiệp" />}
         />
       </DialogContent>
       <DialogActions>

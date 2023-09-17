@@ -120,11 +120,11 @@ Route::middleware(['auth:api'])->group(function () {
 
 
     //Internship Graduation
-    Route::post('intership-graduations/register', [InternshipGraduationController::class, 'submitRegisterInternship']);
-    Route::post('intership-graduations', [InternshipGraduationController::class, 'store']);
-    Route::delete('intership-graduations/{id}', [InternshipGraduationController::class, 'destroy']);
-    Route::put('intership-graduations/{id}', [InternshipGraduationController::class, 'update']);
-    Route::post('intership-graduations/register-out-offcial', [InternshipGraduationController::class, 'submitRegisterInternshipOutOffcail']);
+    Route::post('internship-graduations/register', [InternshipGraduationController::class, 'submitRegisterInternship']);
+    Route::post('internship-graduations', [InternshipGraduationController::class, 'store']);
+    Route::delete('internship-graduations/{id}', [InternshipGraduationController::class, 'destroy']);
+    Route::put('internship-graduations/{id}', [InternshipGraduationController::class, 'update']);
+    Route::post('internship-graduations/register-out-offcial', [InternshipGraduationController::class, 'submitRegisterInternshipOutOffcail']);
 
     // Academic_field api
     Route::get('academic-fields', [AcademicFieldController::class, 'index'])->middleware('check_user_role_permission:academic_field.view');;
@@ -143,11 +143,11 @@ Route::get('register-specialties', [RegisterSpecialtyController::class, 'getRegi
 Route::get('recruitment-positions', [RecruitmentPositionController::class, 'index']);
 Route::post('recruitment-positions', [RecruitmentPositionController::class, 'store']);
 
-Route::get('intership-graduations', [InternshipGraduationController::class, 'index']);
+Route::get('internship-graduations', [InternshipGraduationController::class, 'index']);
 Route::get('company-internships', [InternshipGraduationController::class, 'getCompanyInternshipByUser']);
 Route::get('register-internship/infoInternship', [InternshipGraduationController::class, 'getInfoInternship']);
-Route::get('intership-graduations/{id}', [InternshipGraduationController::class, 'show']);
-Route::get('intership-graduations/company/{id}', [InternshipGraduationController::class, 'getCompany']);
-Route::post('intership-graduations/register-info', [InternshipGraduationController::class, 'storeRegisterInfo']);
+Route::get('internship-graduations/{id}', [InternshipGraduationController::class, 'show']);
+Route::get('internship-graduations/company/{id}', [InternshipGraduationController::class, 'getCompany']);
+Route::post('internship-graduations/register-info', [InternshipGraduationController::class, 'storeRegisterInfo']);
 Route::get('register-internships', [InternshipGraduationController::class, 'getRegisterInternshipByUser']);
 Route::get('register-internships/result', [InternshipGraduationController::class, 'registerResultStudent']);
