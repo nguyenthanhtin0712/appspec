@@ -10,6 +10,7 @@ class JobhodlerInternship extends Model
 {
     use HasFactory, HasRoles;
     public $incrementing = false;
+    public $timestamps = false;
     protected $fillable = [
         'jobholder_code',
         'internship_graduation_id',

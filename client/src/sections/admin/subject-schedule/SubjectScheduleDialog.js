@@ -13,6 +13,7 @@ import { dispatch } from 'store/index';
 import FileField from 'components/input/FileField';
 import InputField from 'components/input/InputField';
 import { closeSubjectScheduleDialog } from 'store/reducers/subjectScheduleSlice';
+import * as XLSX from 'xlsx';
 
 const SubjectScheduleDialog = () => {
   const { open, initValue } = useSelector((state) => state.subject_schedule.subjectScheduleDialog);
@@ -31,9 +32,7 @@ const SubjectScheduleDialog = () => {
           file_schedule: Yup.mixed().required('Vui lòng chọn file!')
         })}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
-          console.log(values);
-          const result = await handleImportData(values.file_schedule);
-          console.log(result);
+          const result = await handleImportData(values.file_schedule[0]);
           try {
             if (result && !result.error) {
               setStatus({ success: true });
@@ -122,27 +121,21 @@ const SubjectScheduleDialog = () => {
 function handleImportData(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
-
-    // Xử lý sự kiện khi đọc file hoàn tất
     reader.onload = (e) => {
       try {
-        const data = new Uint8Array(e.target.result);
-        const workbook = XLSX.read(data, { type: 'array' });
+        const data = e.target.result;
+        const workbook = XLSX.read(data, { type: 'binary' });
         const sheetName = workbook.SheetNames[0];
-        const sheetData = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
-
-        console.log(sheetData);
-
-        const dataSlice = sheetData?.slice(6, -4);
-        let dataFormated = [];
-
-        dataSlice?.forEach((item) => {
-          dataFormated.push(Object.values(item)[1]);
-        });
-
-        console.log(dataFormated);
-
-        resolve(dataFormated);
+        if (!sheetName) {
+          const error = new Error('Không đúng định dạng.');
+          toast.error('File không đúng format!' + error);
+          reject(error);
+          return;
+        }
+        const sheet = workbook.Sheets[sheetName];
+        const jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+        console.log(jsonData);
+        resolve(jsonData);
       } catch (error) {
         toast.error('' + error);
         reject(error);
@@ -152,8 +145,7 @@ function handleImportData(file) {
       reject(error);
       toast.error('' + error);
     };
-
-    reader.readAsArrayBuffer(file);
+    reader.readAsBinaryString(file);
   });
 }
 
