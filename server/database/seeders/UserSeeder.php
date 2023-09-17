@@ -65,10 +65,35 @@ class UserSeeder extends Seeder
             'user_status' => '1',
             'user_birthday' => '2003-12-20',
         ]);
+
+        $user4 = User::create([
+            'user_email' => 'tankhoa@sgu.edu.vn',
+            'user_firstname' => 'Trương Tấn',
+            'user_lastname' => 'Khoa',
+            'user_phone' => '0987262151',
+            'user_avatar' => 'https://vapa.vn/wp-content/uploads/2022/12/anh-3d-thien-nhien.jpeg',
+            'user_password' => bcrypt('password'),
+            'user_gender' => '0',
+            'user_status' => '1',
+            'user_birthday' => '2003-12-20',
+        ]);
+
+        $user4 = User::create([
+            'user_email' => 'minhhuan@sgu.edu.vn',
+            'user_firstname' => 'Lương Minh',
+            'user_lastname' => 'Huấn',
+            'user_phone' => '098721151',
+            'user_avatar' => 'https://vapa.vn/wp-content/uploads/2022/12/anh-3d-thien-nhien.jpeg',
+            'user_password' => bcrypt('password'),
+            'user_gender' => '0',
+            'user_status' => '1',
+            'user_birthday' => '2003-12-20',
+        ]);
         
         $admin->assignRole($admin_role);
         $user1->assignRole($admin_role);
         $user2->assignRole($admin_role);
         $user3->assignRole($admin_role);
+        $user4->assignRole($admin_role);
     }
 }

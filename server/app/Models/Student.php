@@ -42,4 +42,9 @@ class Student extends Model
     {
         return $this->belongsTo(User::class, 'user_id', 'user_id');
     }
+
+    public function jobholder()
+    {
+        return $this->hasOne(JobHolder::class, 'jobholder_code', 'jobholder_code');
+    }
 }

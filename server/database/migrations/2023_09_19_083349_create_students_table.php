@@ -29,7 +29,6 @@ class CreateStudentsTable extends Migration
             $table->string('jobholder_code')->nullable();
             $table->integer('student_isDelete')->default(0);
             $table->timestamps();
-
             $table->foreign('company_position_detail_id')
                 ->references('company_position_detail_id')
                 ->on('company_position_detail')

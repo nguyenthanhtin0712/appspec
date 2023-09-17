@@ -12,6 +12,7 @@ use App\Models\Company;
 use App\Models\CompanyPositionDetail;
 use App\Models\DisplayConfig;
 use App\Models\InternshipGraduation;
+use App\Models\JobHolder;
 use App\Models\OpenclassTime;
 use App\Models\RecruitmentPosition;
 use App\Models\RegisterIntershipCompany;
@@ -165,8 +166,9 @@ class InternshipGraduationController extends Controller
         return $this->sentSuccessResponse($registerInternship, 'Get infoInternship success', 200);
     }
 
-    public function getCompanyInternshipByUser()
+    public function getCompanyInternshipByUser(Request $request)
     {
+
         $displayConfig = DisplayConfig::find('register_intern')->display_config_value ?? InternshipGraduation::latest()->first()->internship_graduation_id;
         $companyInternship = RegisterIntershipCompany::leftJoin('companies', 'companies.company_id', 'register_internship_company.company_id')
             ->where('internship_graduation_id', $displayConfig)
@@ -371,15 +373,22 @@ class InternshipGraduationController extends Controller
 
     public function registerResultStudent(Request $request)
     {
-        $displayConfig = DisplayConfig::find('register_intern')->display_config_value ?? InternshipGraduation::latest()->first()->internship_graduation_id;
 
-        $students = Student::leftJoin('users', 'users.user_id', '=', 'students.user_id')
+        $displayConfig = DisplayConfig::find('register_intern')->display_config_value ?? InternshipGraduation::latest()->value('internship_graduation_id');
+
+        $studentsQuery = Student::select(
+            'students.student_code',
+            'users.user_firstname',
+            'users.user_lastname',
+            'recruitment_positions.position_name',
+            'companies.company_name',
+            'students.jobholder_code'
+        )
+            ->leftJoin('users', 'users.user_id', '=', 'students.user_id')
             ->leftJoin('company_position_detail', 'company_position_detail.company_position_detail_id', '=', 'students.company_position_detail_id')
             ->leftJoin('register_internship_company', 'register_internship_company.register_internship_company_id', '=', 'company_position_detail.register_internship_company_id')
             ->leftJoin('companies', 'companies.company_id', '=', 'register_internship_company.company_id')
             ->leftJoin('recruitment_positions', 'recruitment_positions.position_id', '=', 'company_position_detail.position_id')
-            ->leftJoin('job_holders', 'students.jobholder_code', '=', 'job_holders.jobholder_code')
-            ->select('students.student_code', 'users.user_firstname', 'users.user_lastname', 'recruitment_positions.position_name', 'companies.company_name')
             ->where('student_isDelete', '0')
             ->where('register_internship_company.internship_graduation_id', $displayConfig);
 
@@ -390,34 +399,146 @@ class InternshipGraduationController extends Controller
         $filters = $request->input('filters');
 
         if ($query) {
-            $students->where("student_code", "LIKE", "%$query%");
+            $studentsQuery->where('student_code', 'LIKE', "%$query%");
         }
         if ($id) {
-            $students->where('user_id', $id);
+            $studentsQuery->where('user_id', $id);
         }
         if ($sortBy) {
-            $students->orderBy($sortBy, $sortOrder);
+            $studentsQuery->orderBy($sortBy, $sortOrder);
         }
         if ($filters) {
             $filters = json_decode($filters, true);
             if (is_array($filters)) {
                 foreach ($filters as $filter) {
-                    $id = $filter['id'];
+                    $field = $filter['id'];
                     $value = $filter['value'];
-                    $students->where($id, 'LIKE', '%' . $value . '%');
+                    $studentsQuery->where($field, 'LIKE', "%$value%");
                 }
             }
         }
-        $perPage = $request->input('perPage', 10);
 
-        if ($request->input('all')) {
-            $students = $students->get();
-        } else {
-            $students = $students->paginate($perPage);
+        $perPage = $request->input('perPage', 10);
+        $all = $request->input('all', false);
+
+        $students = $studentsQuery->get();
+
+        $formatStudent = function ($student) {
+            $jobholder = JobHolder::find($student->jobholder_code);
+            $jobholderUser = $jobholder ? User::find($jobholder->user_id) : null;
+            return [
+                'student_code' => $student->student_code,
+                'user_firstname' => $student->user_firstname,
+                'user_lastname' => $student->user_lastname,
+                'position_name' => $student->position_name,
+                'company_name' => $student->company_name,
+                'jobholder_name' => $jobholderUser ? "{$jobholderUser->user_firstname} {$jobholderUser->user_lastname}" : null,
+            ];
+        };
+
+        $formattedStudents = $students->map($formatStudent);
+
+        if (!$all) {
+            $paginatedStudents = $formattedStudents->paginate($perPage);
+            $data = [
+                "data" => [
+                    "result" => $paginatedStudents->items(),
+                    "meta" => [
+                        "total" => $paginatedStudents->total(),
+                        "current_page" => $paginatedStudents->currentPage(),
+                        "last_page" => $paginatedStudents->lastPage(),
+                        "per_page" => $paginatedStudents->perPage(),
+                    ],
+                ],
+                "message" => "Get data success",
+                'status' => 200
+            ];
+            return response()->json($data);
         }
-        $studentCollection = new Collection($students);
-        return $this->sentSuccessResponse($studentCollection, 'regsiterResultStudent', 200);
+
+        return $this->sentSuccessResponse($formattedStudents, 'Get data success', 200);
     }
+
+    public function assignmentInternshipStudent(Request $request){
+        $displayConfig = $request->input('id');
+        $studentsQuery = Student::select(
+            'students.student_code',
+            'users.user_firstname',
+            'users.user_lastname',
+            'recruitment_positions.position_name',
+            'companies.company_name',
+            'students.jobholder_code'
+        )
+            ->leftJoin('users', 'users.user_id', '=', 'students.user_id')
+            ->leftJoin('company_position_detail', 'company_position_detail.company_position_detail_id', '=', 'students.company_position_detail_id')
+            ->leftJoin('register_internship_company', 'register_internship_company.register_internship_company_id', '=', 'company_position_detail.register_internship_company_id')
+            ->leftJoin('companies', 'companies.company_id', '=', 'register_internship_company.company_id')
+            ->leftJoin('recruitment_positions', 'recruitment_positions.position_id', '=', 'company_position_detail.position_id')
+            ->where('student_isDelete', '0')
+            ->where('register_internship_company.internship_graduation_id', $displayConfig);
+
+        $query = $request->input('query');
+        $sortBy = $request->input('sortBy');
+        $sortOrder = $request->input('sortOrder', 'asc');
+        $filters = $request->input('filters');
+        if ($query) {
+            $studentsQuery->where('student_code', 'LIKE', "%$query%");
+        }
+        if ($sortBy) {
+            $studentsQuery->orderBy($sortBy, $sortOrder);
+        }
+        if ($filters) {
+            $filters = json_decode($filters, true);
+            if (is_array($filters)) {
+                foreach ($filters as $filter) {
+                    $field = $filter['id'];
+                    $value = $filter['value'];
+                    $studentsQuery->where($field, 'LIKE', "%$value%");
+                }
+            }
+        }
+
+        $perPage = $request->input('perPage', 10);
+        $all = $request->input('all', false);
+
+        $students = $studentsQuery->get();
+
+        $formatStudent = function ($student) {
+            $jobholder = JobHolder::find($student->jobholder_code);
+            $jobholderUser = $jobholder ? User::find($jobholder->user_id) : null;
+            return [
+                'student_code' => $student->student_code,
+                'user_firstname' => $student->user_firstname,
+                'user_lastname' => $student->user_lastname,
+                'position_name' => $student->position_name,
+                'company_name' => $student->company_name,
+                'jobholder_name' => $jobholderUser ? "{$jobholderUser->user_firstname} {$jobholderUser->user_lastname}" : null,
+            ];
+        };
+
+        $formattedStudents = $students->map($formatStudent);
+
+        if (!$all) {
+            $paginatedStudents = $formattedStudents->paginate($perPage);
+            $data = [
+                "data" => [
+                    "result" => $paginatedStudents->items(),
+                    "meta" => [
+                        "total" => $paginatedStudents->total(),
+                        "current_page" => $paginatedStudents->currentPage(),
+                        "last_page" => $paginatedStudents->lastPage(),
+                        "per_page" => $paginatedStudents->perPage(),
+                    ],
+                ],
+                "message" => "Get data success",
+                'status' => 200
+            ];
+            return response()->json($data);
+        }
+
+        return $this->sentSuccessResponse($formattedStudents, 'Get data success', 200);
+    }
+
 
     public function testEmail()
     {

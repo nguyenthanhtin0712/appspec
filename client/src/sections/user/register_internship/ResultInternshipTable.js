@@ -11,8 +11,6 @@ const ResultInternshipTable = () => {
     (state) => state.regsiter_intern_user
   );
 
-  console.log('data', data);
-
   useEffect(() => {
     const fetch = async () => {
       await dispatch(fetchData({ columnFilters, globalFilter, sorting, pagination }));
@@ -44,6 +42,11 @@ const ResultInternshipTable = () => {
       {
         accessorKey: 'position_name',
         header: 'Vị trí'
+      },
+      {
+        accessorKey: 'jobholder_name',
+        header: 'Giảng viên',
+        Cell: ({ cell }) => (cell.getValue() ? cell.getValue() : 'Chưa phân công')
       }
     ],
     []
@@ -55,7 +58,6 @@ const ResultInternshipTable = () => {
         columns={columns}
         data={data}
         getRowId={(row) => row.student_code}
-        enableRowNumbers
         manualFiltering
         manualPagination
         manualSorting
