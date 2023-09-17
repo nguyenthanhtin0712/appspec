@@ -23,7 +23,6 @@ const AssignmentIntern = () => {
     getAssignmentIntern();
   }, [Id]);
   if (!assignment_intern) return null;
-  console.log('assignment_intern', assignment_intern);
 
   return (
     <Grid container spacing={2}>

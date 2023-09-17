@@ -42,11 +42,6 @@ const ResultTable = () => {
   const columns = React.useMemo(
     () => [
       {
-        accessorKey: 'student_code',
-        header: 'Mã sinh viên',
-        size: 10
-      },
-      {
         accessorKey: 'user_firstname',
         header: 'Họ lót',
         size: 10
@@ -68,8 +63,7 @@ const ResultTable = () => {
         accessorKey: 'jobholder_name',
         header: 'Giảng viên',
         Cell: ({ cell }) => (cell.getValue() ? cell.getValue() : 'Chưa phân công'),
-        filterVariant: 'select',
-        size: 10
+        filterVariant: 'select'
       }
     ],
     []

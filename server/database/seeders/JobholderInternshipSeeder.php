@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\JobhodlerInternship;
+use App\Models\JobholderInternship;
 use Illuminate\Database\Seeder;
 
 class JobholderInternshipSeeder extends Seeder
@@ -14,15 +14,15 @@ class JobholderInternshipSeeder extends Seeder
      */
     public function run()
     {
-        JobhodlerInternship::create([
+        JobholderInternship::create([
             'jobholder_code' => 111111,
             'internship_graduation_id' => 1
         ]);
-        JobhodlerInternship::create([
+        JobholderInternship::create([
             'jobholder_code' => 222222,
             'internship_graduation_id' => 1
         ]);
-        JobhodlerInternship::create([
+        JobholderInternship::create([
             'jobholder_code' => 333333,
             'internship_graduation_id' => 1
         ]);

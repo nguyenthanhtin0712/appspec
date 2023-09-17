@@ -152,3 +152,4 @@ Route::post('internship-graduations/register-info', [InternshipGraduationControl
 Route::get('register-internships', [InternshipGraduationController::class, 'getRegisterInternshipByUser']);
 Route::get('register-internships/result', [InternshipGraduationController::class, 'registerResultStudent']);
 Route::get('register-internships/assignmentInternship', [InternshipGraduationController::class, 'assignmentInternshipStudent']);
+Route::get('register-internships/jobholder/{id}', [InternshipGraduationController::class, 'getJobholderAssinmentInteship']);

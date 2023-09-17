@@ -41,7 +41,17 @@ export const fetchData = createAsyncThunk('assignment_internship/fetchData', asy
 
 export const getRegisterInternship = createAsyncThunk('assignment_internship/getRegisterInternship', async (id) => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/intership-graduations/${id}`);
+    const response = await axios.get(`${API_BASE_URL}/internship-graduations/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+});
+
+export const getJobholderIntenship = createAsyncThunk('assignment_internship/getJobholderIntenship', async (id) => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/register-internships/jobholder/${id}`);
     return response.data;
   } catch (error) {
     console.error(error);
@@ -53,6 +63,8 @@ const initialState = {
   assignment_intern_id: '',
   assignment_intern: '',
   data: [],
+  jobholders: [],
+  jobholders_isLoading: false,
   isError: false,
   isLoading: false,
   isRefetching: false,
@@ -114,6 +126,16 @@ const assignment_internship = createSlice({
       })
       .addCase(getRegisterInternship.fulfilled, (state, action) => {
         state.assignment_intern = action.payload.data;
+      })
+      .addCase(getJobholderIntenship.pending, (state) => {
+        state.jobholders_isLoading = true;
+      })
+      .addCase(getJobholderIntenship.fulfilled, (state, action) => {
+        state.jobholders = action.payload.data;
+        state.jobholders_isLoading = false;
+      })
+      .addCase(getJobholderIntenship.rejected, (state) => {
+        state.jobholders_isLoading = false;
       });
   }
 });

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateJobhodlerInternshipsTable extends Migration
+class CreateJobholderInternshipsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateJobhodlerInternshipsTable extends Migration
      */
     public function up()
     {
-        Schema::create('jobhodler_internships', function (Blueprint $table) {
+        Schema::create('jobholder_internships', function (Blueprint $table) {
             $table->integer('jobholder_code');
             $table->integer('internship_graduation_id');
             $table->primary(['jobholder_code', 'internship_graduation_id'], 'jobholder_internship_id');
@@ -27,6 +27,6 @@ class CreateJobhodlerInternshipsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('jobhodler_internships');
+        Schema::dropIfExists('jobholder_internships');
     }
 }

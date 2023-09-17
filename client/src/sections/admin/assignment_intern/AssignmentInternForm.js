@@ -1,18 +1,34 @@
-import { Button, Stack } from '@mui/material';
+import { Box, Button, CircularProgress, Stack } from '@mui/material';
 import MainCard from 'components/MainCard';
 import { Add } from 'iconsax-react';
-import React from 'react';
-import JobholderAssignItem from 'sections/admin/assignment_intern/JobholderAssignItem';
+import React, { useEffect } from 'react';
 import JobholderItem from 'sections/admin/assignment_intern/JobholderItem';
-import { setOpen } from 'store/reducers/assignmentIntenship';
+import { setOpen, getJobholderIntenship } from 'store/reducers/assignmentIntenship';
 import { dispatch } from 'store/index';
+import { useSelector } from 'react-redux';
 
 const AssignmentInternForm = () => {
+  const { assignment_intern_id, jobholders, jobholders_isLoading } = useSelector((state) => state.assignment_internship);
+  useEffect(() => {
+    const getJobholders = async () => {
+      await dispatch(getJobholderIntenship(assignment_intern_id));
+    };
+    getJobholders();
+  }, [assignment_intern_id]);
+  console.log('jobholders', jobholders);
   return (
     <MainCard title="Danh sách phân công">
-      <Stack justifyContent="space-between" flexWrap="wrap" spacing={1}>
-        <JobholderAssignItem name="Nguyễn Thanh Sang" total="10"></JobholderAssignItem>
-        <JobholderItem name="Nguyễn Thanh Sang" total="10"></JobholderItem>
+      <Stack justifyContent="center" flexWrap="wrap" spacing={1}>
+        {jobholders_isLoading ? (
+          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+            <CircularProgress />
+          </Box>
+        ) : (
+          jobholders.length > 0 &&
+          jobholders.map((jobholder) => (
+            <JobholderItem key={jobholder.jobholder_code} name={jobholder.jobholder_name} total={jobholder.total}></JobholderItem>
+          ))
+        )}
       </Stack>
       <Stack mt={2}>
         <Button
