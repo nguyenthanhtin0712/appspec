@@ -399,7 +399,8 @@ class InternshipGraduationController extends Controller
         $filters = $request->input('filters');
 
         if ($query) {
-            $studentsQuery->where('student_code', 'LIKE', "%$query%");
+            $studentsQuery->where('student_code', 'LIKE', "%$query%")
+            ->orWhereRaw("CONCAT(user_firstname, ' ', user_lastname) LIKE '%$query%'");
         }
         if ($id) {
             $studentsQuery->where('user_id', $id);
@@ -481,11 +482,19 @@ class InternshipGraduationController extends Controller
         $sortBy = $request->input('sortBy');
         $sortOrder = $request->input('sortOrder', 'asc');
         $filters = $request->input('filters');
+        $status = $request->input('status');
         if ($query) {
-            $studentsQuery->where('student_code', 'LIKE', "%$query%");
+            $studentsQuery->where('student_code', 'LIKE', "%$query%")
+            ->orWhereRaw("CONCAT(user_firstname, ' ', user_lastname) LIKE '%$query%'");
         }
         if ($sortBy) {
             $studentsQuery->orderBy($sortBy, $sortOrder);
+        }
+        if ($status == 1) {
+            $studentsQuery->whereNotNull('students.jobholder_code');
+        }
+        if ($status == 2) {
+            $studentsQuery->whereNull('students.jobholder_code');
         }
         if ($filters) {
             $filters = json_decode($filters, true);

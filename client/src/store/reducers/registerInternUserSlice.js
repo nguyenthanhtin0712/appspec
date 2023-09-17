@@ -125,6 +125,7 @@ const register_intern_user = createSlice({
       .addCase(fetchData.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
+        state.isRefetching = false;
       })
       .addCase(fetchData.fulfilled, (state, action) => {
         state.data = action.payload.data;
@@ -135,8 +136,8 @@ const register_intern_user = createSlice({
       })
       .addCase(fetchData.rejected, (state) => {
         state.isLoading = false;
-        state.isRefetching = false;
-        state.isError = true;
+        state.isRefetching = true;
+        state.isError = false;
       })
       .addCase(getCompanies.fulfilled, (state, action) => {
         state.list_company = action.payload.data;

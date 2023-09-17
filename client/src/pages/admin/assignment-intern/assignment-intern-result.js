@@ -4,27 +4,40 @@ import { ArrowRight } from 'iconsax-react';
 import { Grid, Stack, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { useParams } from 'react-router';
-import MainCard from 'components/MainCard';
 import ResultTableAdmin from 'sections/admin/assignment_intern/ResultTableAdmin';
-import JobholderItem from 'sections/admin/assignment_intern/JobholderItem';
+import { dispatch } from 'store/index';
+import { getRegisterInternship, setAssignmentInternId } from 'store/reducers/assignmentIntenship';
+import { useSelector } from 'react-redux';
+import { formatDateTimeDisplay } from 'utils/formatDateTime';
+import AssignmentInternForm from 'sections/admin/assignment_intern/AssignmentInternForm';
 
 const AssignmentIntern = () => {
   const theme = useTheme();
   const { Id } = useParams();
-  console.log('id', Id);
+  const { assignment_intern } = useSelector((state) => state.assignment_internship);
+  React.useEffect(() => {
+    const getAssignmentIntern = async () => {
+      await dispatch(setAssignmentInternId(Id));
+      await dispatch(getRegisterInternship(Id));
+    };
+    getAssignmentIntern();
+  }, [Id]);
+  if (!assignment_intern) return null;
+  console.log('assignment_intern', assignment_intern);
 
   return (
     <Grid container spacing={2}>
-      <Grid item xs={9}>
+      <Grid item xs={12} md={9}>
         <Stack direction="row" justifyContent="space-between" flexWrap="wrap">
           <Stack mb={3} spacing={1}>
             <Typography variant="h4" component="h1">
-              Phân công thực tập học kỳ 1 năm 2023
+              Phân công thực tập học kỳ {assignment_intern.openclasstime.openclass_time_semester} năm{' '}
+              {assignment_intern.openclasstime.openclass_time_year}
             </Typography>
             <Stack direction="row" spacing={2} alignItems={'center'}>
-              <Typography variant="h6">Từ 00:00 30/09/2023</Typography>
+              <Typography variant="h6">Từ {formatDateTimeDisplay(assignment_intern.register_internship_start_date)}</Typography>
               <ArrowRight size="25" color={theme.palette.primary.main} />
-              <Typography variant="h6">Đến 00:00 30/09/2023</Typography>
+              <Typography variant="h6">Đến {formatDateTimeDisplay(assignment_intern.register_internship_end_date)}</Typography>
             </Stack>
           </Stack>
         </Stack>
@@ -34,13 +47,8 @@ const AssignmentIntern = () => {
           </Stack>
         </Box>
       </Grid>
-      <Grid item xs={3}>
-        <MainCard title="Danh sách phân công">
-          <Stack justifyContent="space-between" flexWrap="wrap" spacing={1}>
-            <JobholderItem name="Nguyễn Sang" total="10"></JobholderItem>
-            <JobholderItem name="Nguyễn Sang" total="10"></JobholderItem>
-          </Stack>
-        </MainCard>
+      <Grid item xs={12} md={3}>
+        <AssignmentInternForm />
       </Grid>
     </Grid>
   );

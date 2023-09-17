@@ -2,10 +2,21 @@ import React, { memo, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useTheme } from '@mui/material/styles';
 import { MaterialReactTable } from 'material-react-table';
-import { fetchData, setColumnFilters, setGlobalFilter, setSorting, setPagination, setStatus } from 'store/reducers/assignmentIntenship';
+import {
+  fetchData,
+  setColumnFilters,
+  setGlobalFilter,
+  setSorting,
+  setPagination,
+  setStatus,
+  setOpen
+} from 'store/reducers/assignmentIntenship';
 import { dispatch } from 'store/index';
-import { Box, Button, Drawer, MenuItem, Select } from '@mui/material';
-import ProjectRelease from 'sections/admin/assignment_intern/ProjectRelease';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
+import JobholderDialog from 'sections/admin/assignment_intern/JobholderDialog';
 
 const ResultTable = () => {
   const theme = useTheme();
@@ -19,15 +30,14 @@ const ResultTable = () => {
     globalFilter,
     sorting,
     pagination,
-    registerSpecialtyId,
-    majorId,
-    status
+    status,
+    assignment_intern_id
   } = useSelector((state) => state.assignment_internship);
   const [rowSelection, setRowSelection] = useState({});
 
   useEffect(() => {
-    dispatch(fetchData({ columnFilters, globalFilter, sorting, pagination, majorId, registerSpecialtyId, status }));
-  }, [columnFilters, globalFilter, sorting, pagination, majorId, registerSpecialtyId, status]);
+    dispatch(fetchData({ columnFilters, globalFilter, sorting, pagination, status, assignment_intern_id }));
+  }, [columnFilters, globalFilter, sorting, pagination, status, assignment_intern_id]);
 
   const columns = React.useMemo(
     () => [
@@ -63,34 +73,6 @@ const ResultTable = () => {
       }
     ],
     []
-  );
-
-  const [state, setState] = React.useState({
-    right: false
-  });
-
-  const toggleDrawer = (anchor, open) => (event) => {
-    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-      return;
-    }
-
-    setState({ ...state, [anchor]: open });
-  };
-
-  const list = (anchor) => (
-    <Box
-      sx={{
-        width: 300,
-        '& .MuiDrawer-paper': {
-          height: '90%!important'
-        }
-      }}
-      role="presentation"
-      // onClick={toggleDrawer(anchor, false)}
-      onKeyDown={toggleDrawer(anchor, false)}
-    >
-      <ProjectRelease />
-    </Box>
   );
 
   return (
@@ -157,27 +139,30 @@ const ResultTable = () => {
                 id="register-status"
                 onChange={(e) => dispatch(setStatus(e.target.value))}
                 size="small"
-                value={1}
+                value={status}
                 displayEmpty
                 inputProps={{ 'aria-label': 'Without label' }}
               >
                 <MenuItem value="" sx={{ color: 'text.secondary' }}>
                   Tất cả
                 </MenuItem>
-                <MenuItem value={1}>Đã đăng ký</MenuItem>
-                <MenuItem value={2}>Chưa đăng ký</MenuItem>
+                <MenuItem value={1}>Đã phân công</MenuItem>
+                <MenuItem value={2}>Chưa phân công</MenuItem>
               </Select>
             ) : (
-              <Button onClick={toggleDrawer('right', true)} variant="contained">
+              <Button
+                onClick={() => {
+                  dispatch(setOpen(true));
+                }}
+                variant="contained"
+              >
                 Phân công
               </Button>
             )}
           </Box>
         )}
       />
-      <Drawer anchor="right" open={state['right']} onClose={toggleDrawer('right', false)}>
-        {list('right')}
-      </Drawer>
+      <JobholderDialog></JobholderDialog>
     </>
   );
 };
