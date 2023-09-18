@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreSubjectRequest;
 use App\Http\Resources\Collection;
 use App\Http\Resources\SubjectResource;
+use App\Models\OpenclassTime;
 use App\Models\Subject;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -133,5 +134,46 @@ class SubjectController extends Controller
         $subject->save();
         $subjectResource = new SubjectResource($subject);
         return $this->sentSuccessResponse($subjectResource, 'Deleted subject successfully', Response::HTTP_OK);
+    }
+
+    public function storeSchedule(Request $request)
+    {
+        $openclass_time_semester = $request->input('openclass_time_semester');
+        $openclass_time_year = $request->input('openclass_time_year');
+        $subjects = $request->input('subjects');
+
+        $openClassTime = OpenclassTime::where('openclass_time_semester', $openclass_time_semester)
+            ->where('openclass_time_year', $openclass_time_year)->first();
+
+        if (!$openClassTime) {
+            $openClassTime = OpenclassTime::create([
+                'openclass_time_semester' => $openclass_time_semester,
+                'openclass_time_year' => $openclass_time_year
+            ]);
+        }
+
+        foreach ($subjects as $subject) {
+            $sj = Subject::find($subject['subject_id']);
+            if (!$sj) {
+                $sj = Subject::create([
+                    'subject_id' => $subject['subject_id'],
+                    'subject_name' => $subject['subject_name'],
+                    'subject_credit' => $subject['subject_credit'],
+                    'subject_LT' => $subject['subject_LT'],
+                    'subject_BT' => $subject['subject_BT'],
+                    'subject_TH' => $subject['subject_TH'],
+                    'subject_coeffcient' => $subject['subject_coeffcient'],
+                    'academic_field_id' => $subject['academic_field_id'],
+                ]);
+            }
+            OpenclassTime::create([
+                'subject_id' => $sj->subject_id,
+                'openclass_time_id' => $openClassTime->openclass_time_id,
+                'openclass_totalgroup' => $subject['openclass_totalgroup'],
+                'openclass_totalstudent' => $subject['openclass_totalstudent'],
+                'openclass_course' => $subject['openclass_course'],
+            ]);
+        }
+        return response()->json(['message' => 'Create subject schedule successfully',], 200);
     }
 }

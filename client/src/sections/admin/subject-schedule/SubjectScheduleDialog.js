@@ -32,7 +32,13 @@ const SubjectScheduleDialog = () => {
           file_schedule: Yup.mixed().required('Vui lòng chọn file!')
         })}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
-          const result = await handleImportData(values.file_schedule[0]);
+          const formatedData = {
+            openclass_time_semester: values.openclass_time_semester,
+            openclass_time_year: values.openclass_time_year,
+            subjects: await handleImportData(values.file_schedule[0])
+          };
+          console.log(formatedData);
+          result = 0;
           try {
             if (result && !result.error) {
               setStatus({ success: true });
@@ -123,19 +129,33 @@ function handleImportData(file) {
     const reader = new FileReader();
     reader.onload = (e) => {
       try {
-        const data = e.target.result;
-        const workbook = XLSX.read(data, { type: 'binary' });
+        const data = new Uint8Array(e.target.result);
+        const workbook = XLSX.read(data, { type: 'array' });
         const sheetName = workbook.SheetNames[0];
-        if (!sheetName) {
-          const error = new Error('Không đúng định dạng.');
-          toast.error('File không đúng format!' + error);
-          reject(error);
-          return;
-        }
-        const sheet = workbook.Sheets[sheetName];
-        const jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
-        console.log(jsonData);
-        resolve(jsonData);
+        const sheetData = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
+
+        // Cắt dữ liệu thừa
+        const dataSlice = sheetData?.slice(8, -3);
+        let dataFormated = [];
+
+        dataSlice?.forEach((item) => {
+          const obj = Object.values(item);
+          const subject = {
+            subject_id: obj[1],
+            subject_name: obj[2],
+            subject_credit: obj[3],
+            openclass_course: obj[4],
+            subject_LT: obj[5],
+            subject_BT: obj[6],
+            subject_TH: obj[7],
+            subject_coeffcient: obj[9],
+            openclass_totalgroup: obj[10],
+            openclass_totalstudent: obj[11],
+            academic_field_id: obj[12]
+          };
+          dataFormated.push(subject);
+        });
+        resolve(dataFormated);
       } catch (error) {
         toast.error('' + error);
         reject(error);
@@ -145,7 +165,7 @@ function handleImportData(file) {
       reject(error);
       toast.error('' + error);
     };
-    reader.readAsBinaryString(file);
+    reader.readAsArrayBuffer(file);
   });
 }
 
