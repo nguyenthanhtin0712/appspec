@@ -13,6 +13,7 @@ use App\Models\CompanyPositionDetail;
 use App\Models\DisplayConfig;
 use App\Models\InternshipGraduation;
 use App\Models\JobHolder;
+use App\Models\JobholderInternship;
 use App\Models\OpenclassTime;
 use App\Models\RecruitmentPosition;
 use App\Models\RegisterIntershipCompany;
@@ -550,6 +551,26 @@ class InternshipGraduationController extends Controller
         }
 
         return $this->sentSuccessResponse($formattedStudents, 'Get data success', 200);
+    }
+
+    public function getJobholderAssinmentInteship($id){
+        $jobholderInternship = JobholderInternship::leftJoin('job_holders', 'job_holders.jobholder_code', '=','jobholder_internships.jobholder_code')
+        ->leftJoin('users', 'users.user_id', 'job_holders.user_id')
+        ->where('internship_graduation_id', $id)->get()->map(function($jobholder){
+            return [
+                'jobholder_code' => $jobholder->jobholder_code,
+                'jobholder_name' => $jobholder->user_firstname . ' ' . $jobholder->user_lastname,
+                'total' => Student::leftJoin('company_position_detail', 'company_position_detail.company_position_detail_id', '=', 'students.company_position_detail_id')
+                    ->leftJoin('register_internship_company', 'register_internship_company.register_internship_company_id', '=', 'company_position_detail.register_internship_company_id')
+                    ->leftJoin('companies', 'companies.company_id', '=', 'register_internship_company.company_id')
+                    ->leftJoin('recruitment_positions', 'recruitment_positions.position_id', '=', 'company_position_detail.position_id')
+                    ->where('student_isDelete', '0')
+                    ->where('register_internship_company.internship_graduation_id', $jobholder->internship_graduation_id)
+                    ->where('students.jobholder_code', $jobholder->jobholder_code)
+                    ->count()
+            ];
+        });
+        return $this->sentSuccessResponse($jobholderInternship, 'Get data success', 200);
     }
 
 
