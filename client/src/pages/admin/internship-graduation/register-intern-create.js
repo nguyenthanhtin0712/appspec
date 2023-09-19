@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useEffect } from 'react';
 import Typography from '@mui/material/Typography';
 import MainCard from 'components/MainCard';
@@ -13,7 +12,6 @@ import Stack from '@mui/material/Stack';
 import { ArrowRight } from 'iconsax-react';
 import { useTheme } from '@mui/material';
 import { formatDDMMYYYY } from 'utils/formatDateTime';
-import ExcelReader from 'components/ExcelReader';
 
 const RegisterIntern = () => {
   const navigate = useNavigate();
@@ -38,7 +36,6 @@ const RegisterIntern = () => {
 
   return (
     <>
-      <ExcelReader />
       <Stack mb={2}>
         <Typography variant="h4" component="h1" mb={2}>
           Thực tập tốt nghiệp học kỳ {openclass_time_semester} năm học {openclass_time_year}

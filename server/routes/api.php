@@ -108,6 +108,8 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('subjects/{id}', [SubjectController::class, 'show'])->middleware('check_user_role_permission:subject.view');
     Route::put('subjects/{id}', [SubjectController::class, 'update'])->middleware('check_user_role_permission:subject.update');
     Route::delete('subjects/{id}', [SubjectController::class, 'destroy'])->middleware('check_user_role_permission:subject.delete');
+    
+    Route::post('subjects/schedule', [SubjectController::class, 'storeSchedule'])->middleware('check_user_role_permission:subject.create');
 
 
     //Internship Graduation

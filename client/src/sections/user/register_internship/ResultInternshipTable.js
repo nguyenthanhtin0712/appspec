@@ -45,7 +45,7 @@ const ResultInternshipTable = () => {
       },
       {
         accessorKey: 'jobholder_name',
-        header: 'Giảng viên',
+        header: 'Giảng viên HD',
         Cell: ({ cell }) => (cell.getValue() ? cell.getValue() : 'Chưa phân công')
       }
     ],
