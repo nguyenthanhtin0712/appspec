@@ -8,7 +8,7 @@ import ResultTableAdmin from 'sections/admin/assignment_intern/ResultTableAdmin'
 import { dispatch } from 'store/index';
 import { getRegisterInternship, setAssignmentInternId } from 'store/reducers/assignmentIntenship';
 import { useSelector } from 'react-redux';
-import { formatDateTimeDisplay } from 'utils/formatDateTime';
+import { formatDDMMYYYY } from 'utils/formatDateTime';
 import AssignmentInternForm from 'sections/admin/assignment_intern/AssignmentInternForm';
 
 const AssignmentIntern = () => {
@@ -34,9 +34,9 @@ const AssignmentIntern = () => {
               {assignment_intern.openclasstime.openclass_time_year}
             </Typography>
             <Stack direction="row" spacing={2} alignItems={'center'}>
-              <Typography variant="h6">Từ {formatDateTimeDisplay(assignment_intern.register_internship_start_date)}</Typography>
+              <Typography variant="h6">Từ {formatDDMMYYYY(assignment_intern.internship_graduation_start_date)}</Typography>
               <ArrowRight size="25" color={theme.palette.primary.main} />
-              <Typography variant="h6">Đến {formatDateTimeDisplay(assignment_intern.register_internship_end_date)}</Typography>
+              <Typography variant="h6">Đến {formatDDMMYYYY(assignment_intern.internship_graduation_end_date)}</Typography>
             </Stack>
           </Stack>
         </Stack>
