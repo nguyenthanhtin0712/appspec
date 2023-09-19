@@ -32,8 +32,6 @@ const JobholderSearch = () => {
     fetchData();
   }, [queryDebounce, assignment_intern_id]);
 
-  console.log('jobholder_search', jobholder_search);
-
   return (
     <MainCard title="Danh sách giảng viên" style={{ height: '100%' }}>
       <Grid container spacing={1.5}>
