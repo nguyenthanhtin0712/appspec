@@ -15,7 +15,7 @@ class CreateJobHoldersTable extends Migration
     {
         Schema::create('job_holders', function (Blueprint $table) {
             $table->integer('user_id');
-            $table->string('jobholder_code');
+            $table->string('jobholder_code')->unique();
             $table->integer('title_id');
             $table->string('academic_field_id');
             $table->integer('jobholder_isLeader');

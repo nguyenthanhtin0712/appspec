@@ -9,7 +9,7 @@ import {
   setSorting,
   setPagination,
   setStatus,
-  setOpen
+  setDialog
 } from 'store/reducers/assignmentIntenship';
 import { dispatch } from 'store/index';
 import Box from '@mui/material/Box';
@@ -17,6 +17,7 @@ import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import JobholderDialog from 'sections/admin/assignment_intern/JobholderDialog';
+import AssignmentInternDialog from 'sections/admin/assignment_intern/AssignmentInternDialog';
 
 const ResultTable = () => {
   const theme = useTheme();
@@ -74,7 +75,7 @@ const ResultTable = () => {
       <MaterialReactTable
         columns={columns}
         data={data}
-        getRowId={(row) => row.major_id}
+        getRowId={(row) => row.student_code}
         manualFiltering
         manualPagination
         manualSorting
@@ -146,7 +147,7 @@ const ResultTable = () => {
             ) : (
               <Button
                 onClick={() => {
-                  dispatch(setOpen(true));
+                  dispatch(setDialog(true));
                 }}
                 variant="contained"
               >
@@ -157,6 +158,7 @@ const ResultTable = () => {
         )}
       />
       <JobholderDialog></JobholderDialog>
+      <AssignmentInternDialog rowSelection={rowSelection} setRowSelection={setRowSelection} />
     </>
   );
 };

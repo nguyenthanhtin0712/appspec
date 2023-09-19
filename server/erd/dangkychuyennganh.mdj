@@ -8363,6 +8363,21 @@
 									"subViews": [
 										{
 											"_type": "ERDColumnView",
+											"_id": "AAAAAAGKq+n13Go5itk=",
+											"_parent": {
+												"$ref": "AAAAAAGKo4FHHdxMxC8="
+											},
+											"model": {
+												"$ref": "AAAAAAGKq+n1uWo2VQM="
+											},
+											"font": "Arial;13;0",
+											"left": 2893,
+											"top": 2060,
+											"width": 176.0126953125,
+											"height": 13
+										},
+										{
+											"_type": "ERDColumnView",
 											"_id": "AAAAAAGKo4HuINxZxx8=",
 											"_parent": {
 												"$ref": "AAAAAAGKo4FHHdxMxC8="
@@ -8372,7 +8387,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 2893,
-											"top": 2060,
+											"top": 2075,
 											"width": 176.0126953125,
 											"height": 13
 										},
@@ -8387,7 +8402,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 2893,
-											"top": 2075,
+											"top": 2090,
 											"width": 176.0126953125,
 											"height": 13
 										}
@@ -8396,14 +8411,14 @@
 									"left": 2888,
 									"top": 2055,
 									"width": 186.0126953125,
-									"height": 38
+									"height": 53
 								}
 							],
 							"font": "Arial;13;0",
 							"left": 2888,
 							"top": 2032,
 							"width": 186.0126953125,
-							"height": 61,
+							"height": 76,
 							"nameLabel": {
 								"$ref": "AAAAAAGKo4FHHdxLk+o="
 							},
@@ -9351,7 +9366,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGITM/acK+OzsI="
 							},
-							"name": "jobholder_code",
+							"name": "jobholder_internship_id",
 							"type": "VARCHAR",
 							"length": "10",
 							"foreignKey": true
@@ -12985,6 +13000,15 @@
 						}
 					],
 					"columns": [
+						{
+							"_type": "ERDColumn",
+							"_id": "AAAAAAGKq+n1uWo2VQM=",
+							"_parent": {
+								"$ref": "AAAAAAGKo4FHHNxI3yI="
+							},
+							"name": "jobholder_internship_id",
+							"length": 0
+						},
 						{
 							"_type": "ERDColumn",
 							"_id": "AAAAAAGKo4HuB9xW0K8=",

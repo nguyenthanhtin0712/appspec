@@ -14,9 +14,9 @@ class CreateJobholderInternshipsTable extends Migration
     public function up()
     {
         Schema::create('jobholder_internships', function (Blueprint $table) {
+            $table->id('jobholder_internship_id');
             $table->integer('jobholder_code');
             $table->integer('internship_graduation_id');
-            $table->primary(['jobholder_code', 'internship_graduation_id'], 'jobholder_internship_id');
         });
     }
 

@@ -16,7 +16,7 @@ class StudentSeeder extends Seeder
     public function run()
     {
         // $specialtyOptions = ['HTTT', 'KTPM', 'MMT', 'KHMT'];
-        $jobholderOptions = ['111111', '222222', '333333', null];
+        $jobholderOptions = ['1', '2', '3', null];
         $major = ['DCT', 'DKP'];
         $users = User::take(103)->get();
         $index = 0;
@@ -32,7 +32,7 @@ class StudentSeeder extends Seeder
                 'major_id' => $randomMajor,
                 'register_specialty_id' => 1,
                 'company_position_detail_id' => random_int(1, 6),
-                'jobholder_code' => $jobholderOptions[array_rand($jobholderOptions)]
+                'jobholder_internship_id' => $jobholderOptions[array_rand($jobholderOptions)]
                 // 'specialty_id' => $randomSpecialty
             ]);
             $student->save();

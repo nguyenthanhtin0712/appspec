@@ -15,7 +15,6 @@ const AssignmentInternForm = () => {
     };
     getJobholders();
   }, [assignment_intern_id]);
-  console.log('jobholders', jobholders);
   return (
     <MainCard title="Danh sách phân công">
       <Stack justifyContent="center" flexWrap="wrap" spacing={1}>
