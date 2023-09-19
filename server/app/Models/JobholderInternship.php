@@ -10,12 +10,14 @@ class JobholderInternship extends Model
 {
     use HasFactory, HasRoles;
     public $table = 'jobholder_internships';
+    public $primaryKey = 'jobholder_internship_id';
+    public $incrementing = true;
     public $timestamps = false;
-    public $incrementing = false;
     protected $fillable = [
-        'jobholder_code', 'internship_graduation_id'
+        'jobholder_internship_id',
+        'jobholder_code',
+        'internship_graduation_id'
     ];
-
     public function jobholder()
     {
         return $this->hasOne(JobHolder::class, 'jobholder_code', 'jobholder_code');

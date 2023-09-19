@@ -39,6 +39,26 @@ export const fetchData = createAsyncThunk('assignment_internship/fetchData', asy
   }
 });
 
+export const fetchJobholder = createAsyncThunk('assignment_internship/fetchJobholder', async (params, { rejectWithValue }) => {
+  const { id, query } = params;
+  const url = new URL('api/register-internships/queryJobholder', API_BASE_URL);
+  url.searchParams.set('id', id ?? '');
+  url.searchParams.set('query', query ?? '');
+
+  try {
+    const response = await axios.get(url.href);
+    const { data } = response;
+    return data;
+  } catch (error) {
+    if (error.response && error.response.data && error.response.data.errors) {
+      return rejectWithValue(error.response.data);
+    } else {
+      console.error(error);
+      throw error;
+    }
+  }
+});
+
 export const getRegisterInternship = createAsyncThunk('assignment_internship/getRegisterInternship', async (id) => {
   try {
     const response = await axios.get(`${API_BASE_URL}/internship-graduations/${id}`);
@@ -59,12 +79,34 @@ export const getJobholderIntenship = createAsyncThunk('assignment_internship/get
   }
 });
 
+export const changeJobholder = createAsyncThunk('assignment_internship/changeJobholder', async (values) => {
+  try {
+    const response = await axios.post(`${API_BASE_URL}/register-internships/jobholder`, values);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+});
+
+export const joinInternship = createAsyncThunk('assignment_internship/joinInternship', async (values) => {
+  try {
+    const response = await axios.post(`${API_BASE_URL}/register-internships/addJobholderIternship`, values);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+});
+
 const initialState = {
   assignment_intern_id: '',
   assignment_intern: '',
   data: [],
   jobholders: [],
+  jobholder_search: [],
   jobholders_isLoading: false,
+  jobholderSearch_isLoading: false,
   isError: false,
   isLoading: false,
   isRefetching: false,
@@ -77,7 +119,8 @@ const initialState = {
   pagination: {
     pageIndex: 0,
     pageSize: 10
-  }
+  },
+  dialog: false
 };
 
 const assignment_internship = createSlice({
@@ -104,6 +147,9 @@ const assignment_internship = createSlice({
     },
     setStatus: (state, action) => {
       state.status = action.payload;
+    },
+    setDialog: (state, action) => {
+      state.dialog = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -136,11 +182,21 @@ const assignment_internship = createSlice({
       })
       .addCase(getJobholderIntenship.rejected, (state) => {
         state.jobholders_isLoading = false;
+      })
+      .addCase(fetchJobholder.pending, (state) => {
+        state.jobholderSearch_isLoading = true;
+      })
+      .addCase(fetchJobholder.fulfilled, (state, action) => {
+        state.jobholder_search = action.payload.data;
+        state.jobholderSearch_isLoading = false;
+      })
+      .addCase(fetchJobholder.rejected, (state) => {
+        state.jobholderSearch_isLoading = false;
       });
   }
 });
 
-export const { setColumnFilters, setGlobalFilter, setSorting, setPagination, setStatus, setOpen, setAssignmentInternId } =
+export const { setColumnFilters, setGlobalFilter, setSorting, setPagination, setStatus, setOpen, setAssignmentInternId, setDialog } =
   assignment_internship.actions;
 
 export default assignment_internship.reducer;

@@ -59,11 +59,11 @@ class UserSeeder extends Seeder
             'user_firstname' => 'Nguyễn Thanh',
             'user_lastname' => 'Sang',
             'user_phone' => '098765432',
-            'user_avatar' => 'https://vapa.vn/wp-content/uploads/2022/12/anh-3d-thien-nhien.jpeg',
+            'user_avatar' => 'http://fit.sgu.edu.vn/site/wp-content/uploads/2019/01/thanhsang.jpg',
             'user_password' => bcrypt('password'),
             'user_gender' => '0',
             'user_status' => '1',
-            'user_birthday' => '2003-12-20',
+            'user_birthday' => '2003-01-01',
         ]);
 
         $user4 = User::create([
@@ -75,10 +75,10 @@ class UserSeeder extends Seeder
             'user_password' => bcrypt('password'),
             'user_gender' => '0',
             'user_status' => '1',
-            'user_birthday' => '2003-12-20',
+            'user_birthday' => '2003-01-01',
         ]);
 
-        $user4 = User::create([
+        $user5 = User::create([
             'user_email' => 'minhhuan@sgu.edu.vn',
             'user_firstname' => 'Lương Minh',
             'user_lastname' => 'Huấn',
@@ -87,7 +87,43 @@ class UserSeeder extends Seeder
             'user_password' => bcrypt('password'),
             'user_gender' => '0',
             'user_status' => '1',
-            'user_birthday' => '2003-12-20',
+            'user_birthday' => '2003-01-01',
+        ]);
+
+        $user6 = User::create([
+            'user_email' => 'minhhuan@sgu.edu.vn',
+            'user_firstname' => 'Phan Tấn',
+            'user_lastname' => 'Quốc',
+            'user_phone' => '098222151',
+            'user_avatar' => 'https://vapa.vn/wp-content/uploads/2022/12/anh-3d-thien-nhien.jpeg',
+            'user_password' => bcrypt('password'),
+            'user_gender' => '0',
+            'user_status' => '1',
+            'user_birthday' => '2003-01-01',
+        ]);
+        // 
+        $user7 = User::create([
+            'user_email' => 'nqhuy@sgu.edu.vn',
+            'user_firstname' => 'Nguyễn Quốc',
+            'user_lastname' => 'Huy',
+            'user_phone' => '098222151',
+            'user_avatar' => 'http://fit.sgu.edu.vn/site/wp-content/uploads/2019/01/nguyenquochuy.jpg',
+            'user_password' => bcrypt('password'),
+            'user_gender' => '0',
+            'user_status' => '1',
+            'user_birthday' => '2003-01-01',
+        ]);
+
+        $user8 = User::create([
+            'user_email' => 'langphieu@sgu.edu.vn',
+            'user_firstname' => 'Từ Lãng',
+            'user_lastname' => 'Phiêu',
+            'user_phone' => '098222151',
+            'user_avatar' => 'http://fit.sgu.edu.vn/site/wp-content/uploads/2019/01/nguyenquochuy.jpg',
+            'user_password' => bcrypt('password'),
+            'user_gender' => '0',
+            'user_status' => '1',
+            'user_birthday' => '2003-01-01',
         ]);
         
         $admin->assignRole($admin_role);
@@ -95,5 +131,9 @@ class UserSeeder extends Seeder
         $user2->assignRole($admin_role);
         $user3->assignRole($admin_role);
         $user4->assignRole($admin_role);
+        $user5->assignRole($admin_role);
+        $user6->assignRole($admin_role);
+        $user7->assignRole($admin_role);
+        $user8->assignRole($admin_role);
     }
 }

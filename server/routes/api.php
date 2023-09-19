@@ -7,11 +7,9 @@ use App\Http\Controllers\Api\JobHolderController;
 use App\Http\Controllers\Api\MajorController;
 use App\Http\Controllers\Api\RecruitmentPositionController;
 use App\Http\Controllers\Api\RegisterController;
-use App\Http\Controllers\Api\RegisterInternshipController;
 use App\Http\Controllers\Api\RegisterSpecialtyController;
 use App\Http\Controllers\Api\SpecialtyController;
 use App\Http\Controllers\Api\StudentController;
-use App\Http\Controllers\Api\TeacherController;
 use App\Http\Controllers\Api\TitleController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\DisplayConfigController;
@@ -70,13 +68,6 @@ Route::middleware(['auth:api'])->group(function () {
     //Import sinh viên đầu khóa vào hệ thóng
     Route::post('/addFileStudents', [StudentController::class, 'addFileStudent'])->middleware('check_user_role_permission:student.create');
     Route::post('/addScoreStudents', [StudentController::class, 'addScoreStudent'])->middleware('check_user_role_permission:student.create');
-
-    //Teacher controller api
-    Route::get('teachers', [TeacherController::class, 'index'])->middleware('check_user_role_permission:teacher.view');
-    Route::post('teachers', [TeacherController::class, 'store'])->middleware('check_user_role_permission:teacher.create');
-    Route::get('/teachers/{id}', [TeacherController::class, 'show'])->middleware('check_user_role_permission:teacher.view');
-    Route::put('/teachers/{id}', [TeacherController::class, 'update'])->middleware('check_user_role_permission:teacher.update');
-    Route::delete('/teachers/{id}', [TeacherController::class, 'destroy'])->middleware('check_user_role_permission:teacher.delete');
 
     // Register Specialty api
     Route::get('register-specialties/admin', [RegisterSpecialtyController::class, 'index'])->middleware('check_user_role_permission:register_specialty.view');
@@ -155,3 +146,6 @@ Route::get('register-internships', [InternshipGraduationController::class, 'getR
 Route::get('register-internships/result', [InternshipGraduationController::class, 'registerResultStudent']);
 Route::get('register-internships/assignmentInternship', [InternshipGraduationController::class, 'assignmentInternshipStudent']);
 Route::get('register-internships/jobholder/{id}', [InternshipGraduationController::class, 'getJobholderAssinmentInteship']);
+Route::post('register-internships/jobholder', [InternshipGraduationController::class, 'changeJobholder']);
+Route::get('register-internships/queryJobholder', [InternshipGraduationController::class, 'queryJobholder']);
+Route::post('register-internships/addJobholderIternship', [InternshipGraduationController::class, 'addJobholderIternship']);

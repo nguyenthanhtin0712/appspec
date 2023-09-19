@@ -10,7 +10,7 @@ class Student extends Model
 {
     use HasFactory, HasRoles;
 
-    protected $primaryKey = 'user_id';
+    protected $primaryKey = 'student_code';
 
     protected $fillable = [
         'user_id',
@@ -24,7 +24,7 @@ class Student extends Model
         'speciality_registration_id',
         'company_position_detail_id',
         'mentor_code',
-        'teacher_code',
+        'jobholder_internship_id',
         'student_isDelete',
     ];
 
@@ -43,8 +43,4 @@ class Student extends Model
         return $this->belongsTo(User::class, 'user_id', 'user_id');
     }
 
-    public function jobholder()
-    {
-        return $this->hasOne(JobHolder::class, 'jobholder_code', 'jobholder_code');
-    }
 }

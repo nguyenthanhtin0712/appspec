@@ -32,7 +32,7 @@ class JobHolderController extends Controller
             $jobholder->where("jobholder_code", "LIKE", "%$query%");
         }
         if ($id) {
-            $jobholder->where('user_id', $id);
+            $jobholder->where('jobholder_code', $id);
         }
         if ($sortBy) {
             $jobholder->orderBy($sortBy, $sortOrder);
