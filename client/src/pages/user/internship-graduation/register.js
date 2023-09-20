@@ -76,7 +76,7 @@ const RegisterInternshipGraduation = () => {
         }}
       >
         <Typography gutterBottom textAlign={'center'} fontSize={'18px'} fontWeight={'600'} textTransform={'uppercase'}>
-          Chưa tới thời gian đăng ký chuyên ngành
+          Chưa tới thời gian đăng ký thực tập
         </Typography>
         <CountdownTimer targetTime={new Date(register_internship_start_date).getTime()} />
       </Box>
@@ -86,7 +86,7 @@ const RegisterInternshipGraduation = () => {
   const OutOfTime = () => {
     return (
       <>
-        <Typography gutterBottom>Đã hết thời gian đăng ký chuyên ngành....</Typography>
+        <Typography gutterBottom>Đã hết thời gian đăng ký thực tập....</Typography>
       </>
     );
   };
