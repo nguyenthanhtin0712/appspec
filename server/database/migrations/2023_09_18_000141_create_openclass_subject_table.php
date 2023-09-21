@@ -19,7 +19,6 @@ class CreateOpenclassSubjectTable extends Migration
             $table->unsignedBigInteger('openclass_time_id');
             $table->integer('openclass_totalgroup');
             $table->integer('openclass_totalstudent');
-            $table->integer('openclass_course');
         });
     }
 
