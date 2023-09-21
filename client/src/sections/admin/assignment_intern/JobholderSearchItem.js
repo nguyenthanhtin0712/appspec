@@ -15,18 +15,19 @@ const JobholderSearchItem = ({ jobholder_code, id, name, join }) => {
 
   return (
     <ListItemButton
-      sx={{ flexWrap: 'wrap', rowGap: 1 }}
+      sx={{
+        flexWrap: 'wrap',
+        rowGap: 1,
+        bgcolor: state == 1 ? 'primary.lighter' : null
+      }}
       onClick={handleClick}
-      style={
-        state == 1
-          ? {
-              backgroundColor: 'lightgreen',
-              fontWeight: 'bold'
-            }
-          : {}
-      }
     >
-      <ListItemText primary={name} />
+      <ListItemText
+        primary={name}
+        sx={{
+          fontWeight: state == 1 ? 600 : 400
+        }}
+      />
     </ListItemButton>
   );
 };

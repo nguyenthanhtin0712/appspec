@@ -45,7 +45,7 @@ const JobholderSearch = () => {
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <IconButton style={{ padding: '2px' }}>
+                    <IconButton>
                       <SearchIcon />
                     </IconButton>
                   </InputAdornment>
