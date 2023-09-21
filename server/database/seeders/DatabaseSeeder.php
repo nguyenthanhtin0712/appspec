@@ -34,5 +34,6 @@ class DatabaseSeeder extends Seeder
         $this->call(OpenclassTimeSeeder::class);
         $this->call(JobholderInternshipSeeder::class);
         $this->call(StudentSeeder::class);
+        $this->call(ContactSeeder::class);
     }
 }

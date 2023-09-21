@@ -11,6 +11,7 @@ const DashboardDefault = Loadable(lazy(() => import('pages/admin/dashboard')));
 // render - sample page
 const MajorPage = Loadable(lazy(() => import('pages/admin/major')));
 const ConfigPage = Loadable(lazy(() => import('pages/admin/config-page')));
+const ContactPage = Loadable(lazy(() => import('pages/admin/contact')));
 const RegisterSpecialtyPageCreate = Loadable(lazy(() => import('pages/admin/register-specialty/register-specialty-create')));
 const RegisterSpecialtyPageEdit = Loadable(lazy(() => import('pages/admin/register-specialty/register-specialty-edit')));
 const RegisterSpecialtyPageIndex = Loadable(lazy(() => import('pages/admin/register-specialty/register-specialty-index')));
@@ -45,6 +46,10 @@ const AdminRoutes = {
     {
       path: 'config',
       element: <ConfigPage />
+    },
+    {
+      path: 'contact',
+      element: <ContactPage />
     },
     {
       path: 'major',
