@@ -17,6 +17,11 @@ class CreateOpenclassSubjectCourse extends Migration
             $table->id('openclass_subject_course_id');
             $table->unsignedBigInteger('openclass_subject_id');
             $table->string('openclass_subject_for_course');
+
+            $table->foreign('openclass_subject_id')
+                ->references('openclass_subject_id')
+                ->on('openclass_subject')
+                ->onDelete('cascade');
         });
     }
 

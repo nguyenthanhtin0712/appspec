@@ -8363,7 +8363,7 @@
 									"font": "Arial;13;1",
 									"left": 3568,
 									"top": 1709,
-									"width": 290.8125,
+									"width": 302.84130859375,
 									"height": 13,
 									"text": "openclass_subject_course"
 								},
@@ -8389,7 +8389,7 @@
 											"font": "Arial;13;0",
 											"left": 3573,
 											"top": 1732,
-											"width": 280.8125,
+											"width": 292.84130859375,
 											"height": 13
 										},
 										{
@@ -8404,7 +8404,7 @@
 											"font": "Arial;13;0",
 											"left": 3573,
 											"top": 1747,
-											"width": 280.8125,
+											"width": 292.84130859375,
 											"height": 13
 										},
 										{
@@ -8419,7 +8419,7 @@
 											"font": "Arial;13;0",
 											"left": 3573,
 											"top": 1762,
-											"width": 280.8125,
+											"width": 292.84130859375,
 											"height": 13
 										},
 										{
@@ -8435,21 +8435,21 @@
 											"font": "Arial;13;0",
 											"left": 4333,
 											"top": 2034,
-											"width": 280.8125,
+											"width": 292.84130859375,
 											"height": 13
 										}
 									],
 									"font": "Arial;13;0",
 									"left": 3568,
 									"top": 1727,
-									"width": 290.8125,
+									"width": 302.84130859375,
 									"height": 53
 								}
 							],
 							"font": "Arial;13;0",
 							"left": 3568,
 							"top": 1704,
-							"width": 290.8125,
+							"width": 302.84130859375,
 							"height": 76,
 							"nameLabel": {
 								"$ref": "AAAAAAGKpk02dBQH3ok="
@@ -8512,7 +8512,7 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 3631,
+									"left": 3639,
 									"top": 1481,
 									"height": 13,
 									"alpha": 1.5707963267948966,
@@ -8546,7 +8546,7 @@
 										"$ref": "AAAAAAGKrkVBK5Csl6A="
 									},
 									"font": "Arial;13;0",
-									"left": 3631,
+									"left": 3639,
 									"top": 1672,
 									"height": 13,
 									"alpha": -0.5235987755982988,
@@ -8564,7 +8564,7 @@
 								"$ref": "AAAAAAGITT2vRLLuSq8="
 							},
 							"lineStyle": 2,
-							"points": "3438:1488;3616:1488;3616:1704",
+							"points": "3438:1488;3624:1488;3624:1704",
 							"nameLabel": {
 								"$ref": "AAAAAAGKrkVBK5CtQcI="
 							},
@@ -12988,7 +12988,8 @@
 							},
 							"name": "openclass_subject_id",
 							"type": "INTEGER",
-							"length": 0
+							"length": 0,
+							"foreignKey": true
 						},
 						{
 							"_type": "ERDColumn",
@@ -12996,8 +12997,8 @@
 							"_parent": {
 								"$ref": "AAAAAAGKpk02cxQEnh0="
 							},
-							"name": "course",
-							"type": "INTEGER",
+							"name": "openclass_subject_for_course",
+							"type": "VARCHAR",
 							"length": 0
 						},
 						{

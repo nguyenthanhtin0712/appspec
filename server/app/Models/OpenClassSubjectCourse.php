@@ -6,18 +6,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Permission\Traits\HasRoles;
 
-class OpenClassSubject extends Model
+class OpenClassSubjectCourse extends Model
 {
     use HasFactory, HasRoles;
 
-    protected $table = 'openclass_subject';
-    protected $primaryKey = 'openclass_subject_id';
+    protected $table = 'openclass_subject_course';
+    protected $primaryKey = 'openclass_subject_course_id';
     public $timestamps = false;
     protected $fillable = [
+        'openclass_subject_course_id',
         'openclass_subject_id',
-        'openclass_time_id',
-        'subject_id',
-        'openclass_totalgroup',
-        'openclass_totalstudent',
+        'openclass_subject_for_course'
     ];
 }
