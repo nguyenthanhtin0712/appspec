@@ -69,11 +69,11 @@ export const navItems = [
     children: [
       {
         name: 'Đăng ký',
-        url: '#'
+        url: 'register_improvement/register'
       },
       {
         name: 'Kết quả đăng ký',
-        url: '#'
+        url: 'register_improvement/result'
       }
     ]
   },

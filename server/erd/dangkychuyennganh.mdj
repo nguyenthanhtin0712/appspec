@@ -6833,7 +6833,7 @@
 									"font": "Arial;13;1",
 									"left": 3704,
 									"top": 1285,
-									"width": 224.0478515625,
+									"width": 230.560546875,
 									"height": 13,
 									"text": "contact"
 								},
@@ -6859,7 +6859,7 @@
 											"font": "Arial;13;0",
 											"left": 3709,
 											"top": 1308,
-											"width": 214.0478515625,
+											"width": 220.560546875,
 											"height": 13
 										},
 										{
@@ -6874,7 +6874,7 @@
 											"font": "Arial;13;0",
 											"left": 3709,
 											"top": 1323,
-											"width": 214.0478515625,
+											"width": 220.560546875,
 											"height": 13
 										},
 										{
@@ -6889,7 +6889,7 @@
 											"font": "Arial;13;0",
 											"left": 3709,
 											"top": 1338,
-											"width": 214.0478515625,
+											"width": 220.560546875,
 											"height": 13
 										},
 										{
@@ -6904,7 +6904,7 @@
 											"font": "Arial;13;0",
 											"left": 3709,
 											"top": 1353,
-											"width": 214.0478515625,
+											"width": 220.560546875,
 											"height": 13
 										},
 										{
@@ -6919,7 +6919,7 @@
 											"font": "Arial;13;0",
 											"left": 3709,
 											"top": 1368,
-											"width": 214.0478515625,
+											"width": 220.560546875,
 											"height": 13
 										},
 										{
@@ -6935,7 +6935,7 @@
 											"font": "Arial;13;0",
 											"left": 3709,
 											"top": 1383,
-											"width": 214.0478515625,
+											"width": 220.560546875,
 											"height": 13
 										},
 										{
@@ -6950,7 +6950,7 @@
 											"font": "Arial;13;0",
 											"left": 3709,
 											"top": 1383,
-											"width": 214.0478515625,
+											"width": 220.560546875,
 											"height": 13
 										},
 										{
@@ -6965,21 +6965,21 @@
 											"font": "Arial;13;0",
 											"left": 3709,
 											"top": 1398,
-											"width": 214.0478515625,
+											"width": 220.560546875,
 											"height": 13
 										}
 									],
 									"font": "Arial;13;0",
 									"left": 3704,
 									"top": 1303,
-									"width": 224.0478515625,
+									"width": 230.560546875,
 									"height": 113
 								}
 							],
 							"font": "Arial;13;0",
 							"left": 3704,
 							"top": 1280,
-							"width": 224.0478515625,
+							"width": 230.560546875,
 							"height": 136,
 							"nameLabel": {
 								"$ref": "AAAAAAGKAQmL9EET65s="
@@ -12614,7 +12614,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGKAQmL9EEQwUc="
 							},
-							"name": "id",
+							"name": "contact_id",
 							"type": "INTEGER",
 							"length": 0,
 							"primaryKey": true
@@ -12625,7 +12625,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGKAQmL9EEQwUc="
 							},
-							"name": "fullname",
+							"name": "contact_fullname",
 							"type": "VARCHAR",
 							"length": 0
 						},
@@ -12635,7 +12635,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGKAQmL9EEQwUc="
 							},
-							"name": "email",
+							"name": "contact_email",
 							"type": "VARCHAR",
 							"length": 0
 						},
@@ -12645,7 +12645,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGKAQmL9EEQwUc="
 							},
-							"name": "phone_number",
+							"name": "contact_phone",
 							"type": "VARCHAR",
 							"length": 0
 						},
@@ -12675,7 +12675,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGKAQmL9EEQwUc="
 							},
-							"name": "is_Delete",
+							"name": "contact_isDelete",
 							"type": "BOOLEAN",
 							"length": 0
 						},
