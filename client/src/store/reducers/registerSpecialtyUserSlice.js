@@ -186,14 +186,14 @@ const register_specialty_user = createSlice({
       .addCase(getRegistrationInformation.fulfilled, (state, action) => {
         state.userRegistrationPeriod = action.payload.data;
         state.majors = action.payload.data.register_specialty_detail;
-        if (state.majorId == '') {
+        if (state.majorId === '') {
           state.majorId = action.payload.data.register_specialty_detail[0]?.major_id;
         }
       })
       .addCase(getRegistrationInfoById.fulfilled, (state, action) => {
         state.userRegistrationPeriod = action.payload.data;
         state.majors = action.payload.data.register_specialty_detail;
-        if (state.majorId == '') {
+        if (state.majorId === '') {
           state.majorId = action.payload.data.register_specialty_detail[0]?.major_id;
         }
       })

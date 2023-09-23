@@ -33,7 +33,7 @@ const FileField = ({
         autoComplete="off"
         value={value ? value.map((item) => item.name) : ''}
         error={error}
-        onBlur={() => setFieldTouched(name, true)}
+        // onBlur={() => setFieldTouched(name, true)}
         placeholder={placeholder}
         endAdornment={
           <InputAdornment position="end">
@@ -53,6 +53,7 @@ const FileField = ({
         name={name}
         ref={fileInputRef}
         onChange={(e) => {
+          setFieldTouched(name, true);
           const selectedFiles = Array.from(e.target.files);
           setFieldValue(name, selectedFiles);
         }}
