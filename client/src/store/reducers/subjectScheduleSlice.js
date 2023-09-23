@@ -34,37 +34,9 @@ export const fetchData = createAsyncThunk('subject_schedule/fetchData', async (p
   }
 });
 
-export const createSubject = createAsyncThunk('subject_schedule/createSubject', async (subject, { rejectWithValue }) => {
+export const createSubjectSchedule = createAsyncThunk('subject_schedule/createSubjectSchedule', async (subject, { rejectWithValue }) => {
   try {
     const response = await axios.post(`${API_BASE_URL}/subjects`, subject);
-    return response.data;
-  } catch (error) {
-    if (error.response && error.response.data && error.response.data.errors) {
-      return rejectWithValue(error.response.data);
-    } else {
-      console.error(error);
-      throw error;
-    }
-  }
-});
-
-export const updateSubject = createAsyncThunk('subject_schedule/updateSubject', async (subject, { rejectWithValue }) => {
-  try {
-    const response = await axios.put(`${API_BASE_URL}/subjects/${subject.subject_id}`, subject);
-    return response.data;
-  } catch (error) {
-    if (error.response && error.response.data && error.response.data.errors) {
-      return rejectWithValue(error.response.data);
-    } else {
-      console.error(error);
-      throw error;
-    }
-  }
-});
-
-export const deleteSubject = createAsyncThunk('subject_schedule/deleteSubject', async (id, { rejectWithValue }) => {
-  try {
-    const response = await axios.delete(`${API_BASE_URL}/subjects/${id}`);
     return response.data;
   } catch (error) {
     if (error.response && error.response.data && error.response.data.errors) {
@@ -152,21 +124,9 @@ const subject_schedule = createSlice({
         state.isRefetching = false;
         state.isError = true;
       })
-      .addCase(createSubject.fulfilled, (state, action) => {
+      .addCase(createSubjectSchedule.fulfilled, (state, action) => {
         state.data.push(action.payload.data);
         state.subjectScheduleDialog.open = false;
-      })
-      .addCase(updateSubject.fulfilled, (state, action) => {
-        const updatedSubject = action.payload.data;
-        const index = state.data.findIndex((subject) => subject.subject_id === updatedSubject.subject_id);
-        if (index !== -1) {
-          state.data[index] = updatedSubject;
-          state.subjectScheduleDialog.open = false;
-        }
-      })
-      .addCase(deleteSubject.fulfilled, (state, action) => {
-        const deletedSubjectId = action.payload.data.subject_id;
-        state.data = state.data.filter((subject) => subject.subject_id !== deletedSubjectId);
       });
   }
 });

@@ -61,7 +61,7 @@ const MajorForm = ({ initialValues, action }) => {
                   fullWidth
                   error={Boolean(touched.major_id && errors.major_id)}
                   helperText={errors.major_id}
-                  disabled={action === 'update'}
+                  readOnly={action === 'update'}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -108,7 +108,7 @@ const MajorDialog = () => {
   return (
     <Dialog open={majorDialog.open} onClose={() => dispatch(setCloseMajorDialog())} maxWidth="xs">
       <DialogTitleCustom onClose={() => dispatch(setCloseMajorDialog())}>
-        {action === 'add' ? 'Thêm chuyên ngành' : 'Chỉnh sửa chuyên ngành'}
+        {action === 'add' ? 'Thêm ngành' : 'Chỉnh sửa ngành'}
       </DialogTitleCustom>
       <MajorForm initialValues={initialValues} action={action} />
     </Dialog>

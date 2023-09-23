@@ -14,6 +14,7 @@ import FileField from 'components/input/FileField';
 import InputField from 'components/input/InputField';
 import { closeSubjectScheduleDialog } from 'store/reducers/subjectScheduleSlice';
 import * as XLSX from 'xlsx';
+import { Typography } from '@mui/material';
 
 const SubjectScheduleDialog = () => {
   const { open, initValue } = useSelector((state) => state.subject_schedule.subjectScheduleDialog);
@@ -107,8 +108,11 @@ const SubjectScheduleDialog = () => {
                   />
                 </Grid>
               </Grid>
+              <Typography mt={2}>
+                Lưu ý: Nếu kế hoạch mở nhóm vào học kỳ và năm học ở trên đã tồn tại thì hệ thống sẽ xoá và tạo lại mới dựa vào nội dung file
+                mới
+              </Typography>
             </DialogContent>
-
             <DialogActions>
               <Button onClick={handleClose} variant="contained" color="error">
                 Cancel
