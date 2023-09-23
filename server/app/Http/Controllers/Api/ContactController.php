@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Collection;
+use App\Jobs\SendEmail;
 use App\Models\Contact;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -101,5 +102,22 @@ class ContactController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function sendMail(Request $request)
+    {
+        $message = $request->input('message');
+        $message = [
+            'contact_fullname' => 'Hoàng Gia Bảo',
+            'contact_email' => 'musicanime2501@gmail.com',
+            'contact_phone' => '0355374322',
+            'contact_content' => 'Xin chào thầy em muốn liên hệ thầy để hỏi về vấn đề đăng ký chuyên ngành',
+        ];
+        $message['subject'] = 'Liên hệ từ trang đăng ký chuyên ngành';
+        $message['view'] = 'mails.mail-contact';
+        SendEmail::dispatch($message, [
+            'musicanime2501@gmail.com'
+        ])->delay(now()->addMinute(1));
+        return $this->sentSuccessResponse($message, 'SendEmail success', 200);
     }
 }

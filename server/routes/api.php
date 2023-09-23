@@ -151,3 +151,4 @@ Route::post('register-internships/jobholder', [InternshipGraduationController::c
 Route::get('register-internships/queryJobholder', [InternshipGraduationController::class, 'queryJobholder']);
 Route::post('register-internships/addJobholderIternship', [InternshipGraduationController::class, 'addJobholderIternship']);
 Route::get('contacts', [ContactController::class, 'index']);
+Route::post('contacts/sendMail', [ContactController::class, 'sendMail']);
