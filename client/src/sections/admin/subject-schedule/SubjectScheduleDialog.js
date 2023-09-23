@@ -12,7 +12,7 @@ import Button from '@mui/material/Button';
 import { dispatch } from 'store/index';
 import FileField from 'components/input/FileField';
 import InputField from 'components/input/InputField';
-import { closeSubjectScheduleDialog } from 'store/reducers/subjectScheduleSlice';
+import { closeSubjectScheduleDialog, createSubjectSchedule } from 'store/reducers/subjectScheduleSlice';
 import * as XLSX from 'xlsx';
 import { Typography } from '@mui/material';
 
@@ -38,8 +38,7 @@ const SubjectScheduleDialog = () => {
             openclass_time_year: values.openclass_time_year,
             subjects: await handleImportData(values.file_schedule[0])
           };
-          console.log(formatedData);
-          result = 0;
+          const result = dispatch(createSubjectSchedule(formatedData));
           try {
             if (result && !result.error) {
               setStatus({ success: true });

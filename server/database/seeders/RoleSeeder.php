@@ -76,7 +76,12 @@ class RoleSeeder extends Seeder
         $company_create = Permission::create(['name' => 'company.create']);
         $company_update = Permission::create(['name' => 'company.update']);
         $company_delete = Permission::create(['name' => 'company.delete']);
-    
+
+        // Subject Schedule
+        $subject_schedule_view = Permission::create(['name' => 'subject_schedule.view']);
+        $subject_schedule_create = Permission::create(['name' => 'subject_schedule.create']);
+        $subject_schedule_delete = Permission::create(['name' => 'subject_schedule.delete']);
+
         $admin_role = Role::create(['name' => 'admin']);
         $admin_role->givePermissionTo([
             $user_view,
@@ -126,7 +131,10 @@ class RoleSeeder extends Seeder
             $company_view,
             $company_create,
             $company_update,
-            $company_delete
+            $company_delete,
+            $subject_schedule_view,
+            $subject_schedule_create,
+            $subject_schedule_delete
         ]);
     }
 }

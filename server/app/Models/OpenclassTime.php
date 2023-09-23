@@ -18,4 +18,9 @@ class OpenclassTime extends Model
         'openclass_time_semester',
         'openclass_time_year',
     ];
+
+    public function subjects()
+    {
+        return $this->hasMany(OpenClassSubject::class, 'openclass_time_id', 'openclass_time_id');
+    }
 }
