@@ -34,19 +34,22 @@ export const fetchData = createAsyncThunk('subject_schedule/fetchData', async (p
   }
 });
 
-export const createSubjectSchedule = createAsyncThunk('subject_schedule/createSubjectSchedule', async (subject, { rejectWithValue }) => {
-  try {
-    const response = await axios.post(`${API_BASE_URL}/subjects`, subject);
-    return response.data;
-  } catch (error) {
-    if (error.response && error.response.data && error.response.data.errors) {
-      return rejectWithValue(error.response.data);
-    } else {
-      console.error(error);
-      throw error;
+export const createSubjectSchedule = createAsyncThunk(
+  'subject_schedule/createSubjectSchedule',
+  async (subjectSchedule, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(`${API_BASE_URL}/subjects-schedule`, subjectSchedule);
+      return response.data;
+    } catch (error) {
+      if (error.response && error.response.data && error.response.data.errors) {
+        return rejectWithValue(error.response.data);
+      } else {
+        console.error(error);
+        throw error;
+      }
     }
   }
-});
+);
 
 const initValue = {
   openclass_time_semester: '',

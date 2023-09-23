@@ -6,9 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreSubjectRequest;
 use App\Http\Resources\Collection;
 use App\Http\Resources\SubjectResource;
-use App\Models\OpenClassSubject;
-use App\Models\OpenClassSubjectCourse;
-use App\Models\OpenclassTime;
 use App\Models\Subject;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -136,61 +133,5 @@ class SubjectController extends Controller
         $subject->save();
         $subjectResource = new SubjectResource($subject);
         return $this->sentSuccessResponse($subjectResource, 'Deleted subject successfully', Response::HTTP_OK);
-    }
-
-    public function storeSchedule(Request $request)
-    {
-        $openclass_time_semester = $request->input('openclass_time_semester');
-        $openclass_time_year = $request->input('openclass_time_year');
-        $subjects = $request->input('subjects');
-
-        $openClassTime = OpenclassTime::where('openclass_time_semester', $openclass_time_semester)
-            ->where('openclass_time_year', $openclass_time_year)->first();
-
-        if (!$openClassTime) {
-            $openClassTime = OpenclassTime::create([
-                'openclass_time_semester' => $openclass_time_semester,
-                'openclass_time_year' => $openclass_time_year
-            ]);
-        } else {
-            OpenClassSubject::where('openclass_time_id', $openClassTime->openclass_time_id)
-                ->delete();
-        }
-
-        foreach ($subjects as $subject) {
-            $openClassSubjectCreated = OpenClassSubject::create([
-                'openclass_time_id' => $openClassTime->openclass_time_id,
-                'subject_id' => $subject['subject_id'],
-                'openclass_totalgroup' => $subject['openclass_totalgroup'],
-                'openclass_totalstudent' => $subject['openclass_totalstudent'],
-            ]);
-
-            $courses = $this->handleCourseString($subject['openclass_course']);
-            foreach ($courses as $course) {
-                OpenClassSubjectCourse::create([
-                    'openclass_subject_id' => $openClassSubjectCreated->openclass_subject_id,
-                    'openclass_subject_for_course' => $course
-                ]);
-            }
-        }
-        return response()->json(['message' => 'Create subject schedule successfully',], 200);
-    }
-
-    public function handleCourseString($string)
-    {
-        $result = [];
-        if (trim($string) == "ALL" || $string == "") {
-            array_push($result, $string);
-        } else {
-            $parts = explode("+", $string);
-            for ($i = 0; $i < count($parts); $i++) {
-                $parts[$i] = trim($parts[$i]);
-                if (is_numeric($parts[$i])) {
-                    $parts[$i] .= "CNTT";
-                }
-            }
-            $result = $parts;
-        }
-        return $result;
     }
 }

@@ -16,6 +16,7 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\DisplayConfigController;
 use App\Http\Controllers\Api\SubjectController;
 use App\Http\Controllers\Api\InternshipGraduationController;
+use App\Http\Controllers\Api\SubjectScheduleController;
 use App\Http\Resources\LoginResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -109,8 +110,11 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('subjects/{id}', [SubjectController::class, 'show'])->middleware('check_user_role_permission:subject.view');
     Route::put('subjects/{id}', [SubjectController::class, 'update'])->middleware('check_user_role_permission:subject.update');
     Route::delete('subjects/{id}', [SubjectController::class, 'destroy'])->middleware('check_user_role_permission:subject.delete');
-    
-    Route::post('subjects/schedule', [SubjectController::class, 'storeSchedule'])->middleware('check_user_role_permission:subject.create');
+
+    Route::get('subjects-schedule', [SubjectScheduleController::class, 'index'])->middleware('check_user_role_permission:subject_schedule.view');
+    Route::post('subjects-schedule', [SubjectScheduleController::class, 'store'])->middleware('check_user_role_permission:subject_schedule.create');
+    Route::get('subjects-schedule/{id}', [SubjectScheduleController::class, 'show'])->middleware('check_user_role_permission:subject_schedule.view');
+    Route::delete('subjects-schedule/{id}', [SubjectScheduleController::class, 'destroy'])->middleware('check_user_role_permission:subject_schedule.delete');
 
 
     //Internship Graduation
