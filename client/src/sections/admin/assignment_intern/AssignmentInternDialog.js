@@ -48,7 +48,7 @@ const AssignmentInternDialog = ({ rowSelection, setRowSelection }) => {
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
           console.log(values);
           try {
-            const result = await await dispatch(changeJobholder(values));
+            const result = await dispatch(changeJobholder(values));
             if (result) {
               setRowSelection({});
               toast.success('Phân công thành công!');
