@@ -122,7 +122,7 @@ class SubjectScheduleController extends Controller
         $openClassTime = OpenclassTime::findOrFail($id);
         $subjectSchedule = OpenClassSubject::where('openclass_time_id', $openClassTime->openclass_time_id)
             ->leftJoin('subjects', 'subjects.subject_id', '=', 'openclass_subject.subject_id')
-            ->select("openclass_subject_id", "subjects.subject_id", "openclass_totalgroup", "openclass_totalstudent", "subject_name", "subject_credit")
+            ->select("openclass_subject_id", "subjects.subject_id", "subject_LT", "academic_field_id", "subject_TH", "subject_BT", "openclass_totalgroup", "openclass_totalstudent", "subject_name", "subject_credit")
             ->get();
 
         $subjects = $subjectSchedule->map(function ($subject) {

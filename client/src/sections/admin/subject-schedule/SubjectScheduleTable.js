@@ -1,7 +1,7 @@
 import React, { memo, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useTheme } from '@mui/material/styles';
-import { Edit, Eye, SearchNormal, Trash } from 'iconsax-react';
+import { Edit, Eye, Trash } from 'iconsax-react';
 import Stack from '@mui/material/Stack';
 import { MaterialReactTable } from 'material-react-table';
 import {
@@ -17,7 +17,6 @@ import {
 } from 'store/reducers/subjectScheduleSlice';
 import { dispatch } from 'store/index';
 import IconAction from 'components/IconAction';
-import { IconButton, InputAdornment } from '@mui/material';
 
 const SubjectScheduleTable = () => {
   const theme = useTheme();
@@ -111,16 +110,7 @@ const SubjectScheduleTable = () => {
           placeholder: 'Tìm kiếm học kỳ, năm học ...',
           sx: { minWidth: '300px' },
           variant: 'outlined',
-          size: 'small',
-          InputProps: {
-            startAdornment: (
-              <InputAdornment>
-                <IconButton variant="contained" shape="rounded" size="small">
-                  <SearchNormal />
-                </IconButton>
-              </InputAdornment>
-            )
-          }
+          size: 'small'
         }}
       />
     </>

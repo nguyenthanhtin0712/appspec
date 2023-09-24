@@ -87,7 +87,7 @@ const initialState = {
   idDelete: '',
   openCofirmDialog: false,
   idSelect: 0,
-  dataSubject: []
+  dataDetail: null
 };
 
 const subject_schedule = createSlice({
@@ -147,7 +147,7 @@ const subject_schedule = createSlice({
         state.subjectScheduleDialog.open = false;
       })
       .addCase(showSubjectSchedule.fulfilled, (state, action) => {
-        state.dataSubject = action.payload.data.subjects;
+        state.dataDetail = action.payload.data;
       });
   }
 });
