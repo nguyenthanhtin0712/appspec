@@ -9,7 +9,7 @@ export const fetchData = createAsyncThunk('subject_schedule/fetchData', async (p
     sorting,
     pagination: { pageIndex, pageSize }
   } = params;
-  const url = new URL('/api/subjects', API_BASE_URL);
+  const url = new URL('/api/subjects-schedule', API_BASE_URL);
   url.searchParams.set('page', `${pageIndex + 1}`);
   url.searchParams.set('perPage', `${pageSize}`);
   url.searchParams.set('filters', JSON.stringify(columnFilters ?? []));
@@ -51,6 +51,16 @@ export const createSubjectSchedule = createAsyncThunk(
   }
 );
 
+export const showSubjectSchedule = createAsyncThunk('subject_schedule/showSubjectSchedule', async (id) => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/subjects-schedule/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+});
+
 const initValue = {
   openclass_time_semester: '',
   openclass_time_year: '',
@@ -75,7 +85,9 @@ const initialState = {
     initValue
   },
   idDelete: '',
-  openCofirmDialog: false
+  openCofirmDialog: false,
+  idSelect: 0,
+  dataSubject: []
 };
 
 const subject_schedule = createSlice({
@@ -108,6 +120,9 @@ const subject_schedule = createSlice({
         open: false,
         initValue
       };
+    },
+    setIdSelect: (state, action) => {
+      state.idSelect = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -130,6 +145,9 @@ const subject_schedule = createSlice({
       .addCase(createSubjectSchedule.fulfilled, (state, action) => {
         state.data.push(action.payload.data);
         state.subjectScheduleDialog.open = false;
+      })
+      .addCase(showSubjectSchedule.fulfilled, (state, action) => {
+        state.dataSubject = action.payload.data.subjects;
       });
   }
 });
@@ -142,7 +160,8 @@ export const {
   setSubjectScheduleDialog,
   setIdDeleteSubject,
   setOpenCofirmDialog,
-  closeSubjectScheduleDialog
+  closeSubjectScheduleDialog,
+  setIdSelect
 } = subject_schedule.actions;
 
 export default subject_schedule.reducer;
