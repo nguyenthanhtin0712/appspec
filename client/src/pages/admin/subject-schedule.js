@@ -6,6 +6,8 @@ import { Add } from 'iconsax-react';
 import { dispatch } from 'store';
 import { setSubjectScheduleDialog } from 'store/reducers/subjectScheduleSlice';
 import SubjectScheduleDialog from 'sections/admin/subject-schedule/SubjectScheduleDialog';
+import SubjectScheduleTable from 'sections/admin/subject-schedule/SubjectScheduleTable';
+import SubjectScheduleDetailDialog from 'sections/admin/subject-schedule/SubjectScheduleDetailDialog';
 
 const SubjectSchedule = () => {
   return (
@@ -16,7 +18,9 @@ const SubjectSchedule = () => {
           Thêm kế hoạch
         </Button>
       </Stack>
+      <SubjectScheduleTable />
       <SubjectScheduleDialog />
+      <SubjectScheduleDetailDialog />
     </>
   );
 };

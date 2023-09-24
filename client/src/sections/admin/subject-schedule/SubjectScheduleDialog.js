@@ -2,7 +2,6 @@ import React, { memo } from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
 import Grid from '@mui/material/Grid';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
@@ -15,6 +14,7 @@ import InputField from 'components/input/InputField';
 import { closeSubjectScheduleDialog, createSubjectSchedule } from 'store/reducers/subjectScheduleSlice';
 import * as XLSX from 'xlsx';
 import { Typography } from '@mui/material';
+import DialogTitleCustom from 'components/DialogTitleCustom';
 
 const SubjectScheduleDialog = () => {
   const { open, initValue } = useSelector((state) => state.subject_schedule.subjectScheduleDialog);
@@ -24,7 +24,7 @@ const SubjectScheduleDialog = () => {
 
   return (
     <Dialog open={open} onClose={handleClose} fullWidth maxWidth="xs">
-      <DialogTitle>Thêm kế hoạch mở nhóm</DialogTitle>
+      <DialogTitleCustom onClose={handleClose}>Thêm kế hoạch mở nhóm</DialogTitleCustom>
       <Formik
         initialValues={initValue}
         validationSchema={Yup.object().shape({
