@@ -98,19 +98,19 @@ const ContactForm = () => {
       <MainCard>
         <Formik
           initialValues={{
-            fullname: '',
-            email: '',
-            phone: '',
-            content: '',
-            submit: null
+            contact_fullname: '',
+            contact_email: '',
+            contact_phone: '',
+            contact_content: ''
           }}
           validationSchema={Yup.object().shape({
-            fullname: Yup.string().max(255).required('Họ tên là bắt buộc !'),
-            email: Yup.string().email('Must be a valid email').max(255).required('Email là bắt buộc !'),
-            phone: Yup.number().required('Số điện thoại là bắt buộc'),
-            content: Yup.string().required('Nội dung là bắt buộc')
+            contact_fullname: Yup.string().max(255).required('Họ tên là bắt buộc !'),
+            contact_email: Yup.string().email('Must be a valid email').max(255).required('Email là bắt buộc !'),
+            contact_phone: Yup.number().required('Số điện thoại là bắt buộc'),
+            contact_content: Yup.string().required('Nội dung là bắt buộc')
           })}
           onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
+            console.log(values);
             try {
               setStatus({ success: true });
               setSubmitting(false);
@@ -128,87 +128,87 @@ const ContactForm = () => {
               <Grid container spacing={3}>
                 <Grid item xs={12} md={6}>
                   <Stack spacing={1}>
-                    <InputLabel htmlFor="fullname-contact">Họ và tên</InputLabel>
+                    <InputLabel htmlFor="contact_fullname">Họ và tên</InputLabel>
                     <OutlinedInput
-                      id="fullname-contact"
+                      id="contact_fullname"
                       type="text"
-                      value={values.fullname}
-                      name="fullname"
+                      value={values.contact_fullname}
+                      name="contact_fullname"
                       onBlur={handleBlur}
                       onChange={handleChange}
                       placeholder="Nhập họ và tên"
                       fullWidth
-                      error={Boolean(touched.fullname && errors.fullname)}
+                      error={Boolean(touched.contact_fullname && errors.contact_fullname)}
                     />
-                    {touched.fullname && errors.fullname && (
-                      <FormHelperText error id="standard-weight-helper-text-fullname-login">
-                        {errors.fullname}
+                    {touched.contact_fullname && errors.contact_fullname && (
+                      <FormHelperText error id="standard-weight-helper-text-contact_fullname-login">
+                        {errors.contact_fullname}
                       </FormHelperText>
                     )}
                   </Stack>
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <Stack spacing={1}>
-                    <InputLabel htmlFor="email-contact">Địa chỉ email</InputLabel>
+                    <InputLabel htmlFor="contact_email">Địa chỉ email</InputLabel>
                     <OutlinedInput
-                      id="email-contact"
+                      id="contact_email"
                       type="email"
-                      value={values.email}
-                      name="email"
+                      value={values.contact_email}
+                      name="contact_email"
                       onBlur={handleBlur}
                       onChange={handleChange}
-                      placeholder="Nhập địa chỉ email"
+                      placeholder="Nhập địa chỉ contact_email"
                       fullWidth
-                      error={Boolean(touched.email && errors.email)}
+                      error={Boolean(touched.contact_email && errors.contact_email)}
                     />
-                    {touched.email && errors.email && (
-                      <FormHelperText error id="standard-weight-helper-text-email-login">
-                        {errors.email}
+                    {touched.contact_email && errors.contact_email && (
+                      <FormHelperText error id="standard-weight-helper-text-contact_email-login">
+                        {errors.contact_email}
                       </FormHelperText>
                     )}
                   </Stack>
                 </Grid>
                 <Grid item xs={12}>
                   <Stack spacing={1}>
-                    <InputLabel htmlFor="phone-contact">Số điện thoại</InputLabel>
+                    <InputLabel htmlFor="contact_phone">Số điện thoại</InputLabel>
                     <OutlinedInput
-                      id="phone-contact"
+                      id="contact_phone"
                       type="text"
-                      value={values.phone}
-                      name="phone"
+                      value={values.contact_phone}
+                      name="contact_phone"
                       onBlur={handleBlur}
                       onChange={handleChange}
                       placeholder="Nhập số điện thoại"
                       fullWidth
-                      error={Boolean(touched.phone && errors.phone)}
+                      error={Boolean(touched.contact_phone && errors.contact_phone)}
                     />
-                    {touched.phone && errors.phone && (
-                      <FormHelperText error id="standard-weight-helper-text-phone-login">
-                        {errors.phone}
+                    {touched.contact_phone && errors.contact_phone && (
+                      <FormHelperText error id="standard-weight-helper-text-contact_phone-login">
+                        {errors.contact_phone}
                       </FormHelperText>
                     )}
                   </Stack>
                 </Grid>
                 <Grid item xs={12}>
                   <Stack spacing={1}>
-                    <InputLabel htmlFor="content-contact">Nội dung</InputLabel>
+                    <InputLabel htmlFor="contact_content">Nội dung</InputLabel>
                     <OutlinedInput
-                      id="content-contact"
+                      id="contact_content"
                       type="text"
-                      value={values.content}
-                      name="content"
+                      value={values.contact_content}
+                      name="contact_content"
                       onBlur={handleBlur}
                       onChange={handleChange}
                       placeholder="Nhập nội dung liên hệ"
                       fullWidth
-                      error={Boolean(touched.content && errors.content)}
+                      error={Boolean(touched.contact_content && errors.contact_content)}
                       multiline
                       maxRows={4}
                       variant="standard"
                     />
-                    {touched.content && errors.content && (
-                      <FormHelperText error id="standard-weight-helper-text-content-login">
-                        {errors.content}
+                    {touched.contact_content && errors.contact_content && (
+                      <FormHelperText error id="standard-weight-helper-text-contact_content-login">
+                        {errors.contact_content}
                       </FormHelperText>
                     )}
                   </Stack>

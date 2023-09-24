@@ -631,7 +631,7 @@ class InternshipGraduationController extends Controller
             'content' => 'has been created!',
         ];
         SendEmail::dispatch($message, [
-            'transinh085@gmail.com'
+            'musicanime2501@gmail.com'
         ])->delay(now()->addMinute(1));
     }
 }

@@ -17,12 +17,19 @@ class DisplayConfigSeeder extends Seeder
         DisplayConfig::insert([
             'display_config_id' => 'register_specialty',
             'display_config_name' => 'Đăng ký chuyên ngành',
-            'display_config_value' => 1
+            'display_config_value' => '1'
         ]);
+
         DisplayConfig::insert([
             'display_config_id' => 'register_intern',
             'display_config_name' => 'Đăng ký thực tập',
             'display_config_value' => '1'
+        ]);
+
+        DisplayConfig::insert([
+            'display_config_id' => 'register_email',
+            'display_config_name' => 'Email',
+            'display_config_value' => 'musicanime2501@gmail.com'
         ]);
     }
 }
