@@ -6,7 +6,7 @@ import MainCard from 'components/MainCard';
 import RegisterInternsipForm from 'sections/user/register_internship/RegisterInternshipForm';
 import CompanyList from 'sections/user/register_internship/CompanyList';
 import { useSelector } from 'react-redux';
-import { getRegisterInternship, fetchData, getInternship } from 'store/reducers/registerInternUserSlice';
+import { getInternship } from 'store/reducers/registerInternUserSlice';
 import { dispatch } from 'store/index';
 import CountdownTimer from 'components/CountdownTimer';
 import Button from '@mui/material/Button';
@@ -18,7 +18,7 @@ import { CircularProgress } from '@mui/material';
 
 const RegisterInternshipGraduation = () => {
   const theme = useTheme();
-  const { register_internship, internship } = useSelector((state) => state.regsiter_intern_user);
+  const { list_company, internship } = useSelector((state) => state.regsiter_intern_user);
   const { register_internship_start_date, register_internship_end_date } = internship;
   const currentTime = useMemo(() => new Date(), []);
 
@@ -32,14 +32,12 @@ const RegisterInternshipGraduation = () => {
 
   useEffect(() => {
     const fetch = async () => {
-      await dispatch(getRegisterInternship());
-      await dispatch(fetchData());
       await dispatch(getInternship());
     };
     fetch();
   }, []);
 
-  if (!internship && !register_internship) {
+  if (!internship) {
     return (
       <Container maxWidth="lg" sx={{ mt: 2 }}>
         <Stack justifyContent="center" alignItems="center" spacing={4} minHeight={500}>
@@ -61,7 +59,7 @@ const RegisterInternshipGraduation = () => {
         <Container maxWidth="sm">
           <Typography mb={2}>Sinh viên có thể THAY ĐỔI nơi thực tập đã đăng ký khi thời gian đăng ký còn hiệu lực</Typography>
           <MainCard>
-            <RegisterInternsipForm companies={register_internship} />
+            <RegisterInternsipForm companies={list_company} />
           </MainCard>
         </Container>
       </>

@@ -13,8 +13,14 @@ import Box from '@mui/material/Box';
 import AnimateButton from 'components/@extended/AnimateButton';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
+import { sendMail } from 'store/reducers/contactSlice';
+import { dispatch } from 'store/index';
+import { toast } from 'react-toastify';
+import { Backdrop, CircularProgress } from '@mui/material';
+import { useSelector } from 'react-redux';
 
-const contact = () => {
+const Contact = () => {
+  const { isLoadingMail } = useSelector((state) => state.contact);
   return (
     <Container maxWidth="lg" sx={{ mt: 2 }}>
       <MainCard>
@@ -34,6 +40,11 @@ const contact = () => {
           <InfoContact />
           <ContactForm />
         </Grid>
+        {isLoadingMail && (
+          <Backdrop sx={{ color: '#fff', zIndex: 2000 }} open={isLoadingMail}>
+            <CircularProgress color="inherit" />
+          </Backdrop>
+        )}
       </MainCard>
     </Container>
   );
@@ -93,28 +104,33 @@ const InfoContact = () => {
 };
 
 const ContactForm = () => {
+  const initialFormValues = {
+    contact_fullname: '',
+    contact_email: '',
+    contact_phone: '',
+    contact_content: ''
+  };
   return (
     <Grid item xs={12} md={8}>
       <MainCard>
         <Formik
-          initialValues={{
-            contact_fullname: '',
-            contact_email: '',
-            contact_phone: '',
-            contact_content: ''
-          }}
+          initialValues={initialFormValues}
           validationSchema={Yup.object().shape({
             contact_fullname: Yup.string().max(255).required('Họ tên là bắt buộc !'),
-            contact_email: Yup.string().email('Must be a valid email').max(255).required('Email là bắt buộc !'),
+            contact_email: Yup.string().email('Email không đúng định dạng!').max(255).required('Email là bắt buộc !'),
             contact_phone: Yup.number().required('Số điện thoại là bắt buộc'),
             contact_content: Yup.string().required('Nội dung là bắt buộc')
           })}
-          onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
-            console.log(values);
+          onSubmit={async (values, { setErrors, setStatus, setSubmitting, resetForm }) => {
+            const value = { message: values };
             try {
-              setStatus({ success: true });
-              setSubmitting(false);
-              console.log(values);
+              const result = await dispatch(sendMail(value));
+              if (result) {
+                toast.success('Gửi liên hệ thành công!');
+                setStatus({ success: true });
+                setSubmitting(false);
+                resetForm();
+              }
             } catch (err) {
               console.error(err);
               setStatus({ success: false });
@@ -242,4 +258,4 @@ const ContactForm = () => {
   );
 };
 
-export default contact;
+export default Contact;

@@ -15,7 +15,7 @@ const RegisterInternsipForm = ({ companies }) => {
   const [positions, setPositions] = useState([]);
 
   const handleChangeCompany = (company_id) => {
-    setPositions(companies.find((company) => company.company_id === company_id).positions);
+    setPositions(companies.find((company) => company.company_id === company_id).list_position);
   };
 
   return (

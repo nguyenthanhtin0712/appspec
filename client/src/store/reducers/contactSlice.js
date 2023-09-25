@@ -34,6 +34,16 @@ export const fetchData = createAsyncThunk('contact/fetchData', async (params, { 
   }
 });
 
+export const sendMail = createAsyncThunk('contact/sendMail', async (message) => {
+  try {
+    const response = await axios.post(`/contacts/mail`, message);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+});
+
 const initialState = {
   data: [],
   isError: false,
@@ -46,7 +56,8 @@ const initialState = {
   pagination: {
     pageIndex: 0,
     pageSize: 10
-  }
+  },
+  isLoadingMail: false
 };
 
 const contact = createSlice({
@@ -74,7 +85,6 @@ const contact = createSlice({
       .addCase(fetchData.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isRefetching = false;
-        console.log('payload', action.payload.data);
         state.data = action.payload.data;
         state.rowCount = action.payload.rowCount;
         state.isError = false;
@@ -83,6 +93,15 @@ const contact = createSlice({
         state.isLoading = false;
         state.isRefetching = false;
         state.isError = true;
+      })
+      .addCase(sendMail.pending, (state) => {
+        state.isLoadingMail = true;
+      })
+      .addCase(sendMail.fulfilled, (state) => {
+        state.isLoadingMail = false;
+      })
+      .addCase(sendMail.rejected, (state) => {
+        state.isLoadingMail = false;
       });
   }
 });

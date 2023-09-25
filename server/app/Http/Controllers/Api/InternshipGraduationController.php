@@ -176,12 +176,14 @@ class InternshipGraduationController extends Controller
             ->where('companies.company_is_official', '1')
             ->get()->map(function ($companyInternship) {
                 return [
+                    'company_id' => $companyInternship->company_id,
                     'company_name' => Company::find($companyInternship->company_id)->company_name,
                     'company_address' => Company::find($companyInternship->company_id)->company_address,
                     'user_phone' => User::find(Company::find($companyInternship->company_id)->user_id)->user_phone,
                     'user_email' => User::find(Company::find($companyInternship->company_id)->user_id)->user_email,
                     'list_position' => CompanyPositionDetail::where('register_internship_company_id', $companyInternship->register_internship_company_id)->get()->map(function ($positon) {
                         return [
+                            'position_id' => $positon->position_id,
                             'position_name' => RecruitmentPosition::find($positon->position_id)->position_name,
                             'position_quantity' => $positon->position_quantity,
                             'position_total_register' => Student::where('company_position_detail_id', $positon->company_position_detail_id)->count()
@@ -198,7 +200,6 @@ class InternshipGraduationController extends Controller
             ->leftJoin('companies', 'register_internship_company.company_id', '=', 'companies.company_id')
             ->where('internship_graduation_id', $id)
             ->get();
-
         return $this->sentSuccessResponse(InternshipCompanyResoure::collection($companies), 'Get companies successful', Response::HTTP_OK);
     }
 
@@ -214,12 +215,10 @@ class InternshipGraduationController extends Controller
             'register_internship_end_date' => $register_internship_end_date
         ]);
 
-        // Get existing companies with positions
         $existingCompanies = RegisterIntershipCompany::with('positions')
             ->where('internship_graduation_id', $internship_graduation_id)
             ->get();
 
-        // Process companies
         foreach ($companiesUpdate as $companyUpdate) {
             $company_id = $companyUpdate['company_id'];
             $existingCompany = $existingCompanies->firstWhere('company_id', $company_id);
