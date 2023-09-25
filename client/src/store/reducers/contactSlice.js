@@ -44,6 +44,26 @@ export const sendMail = createAsyncThunk('contact/sendMail', async (message) => 
   }
 });
 
+export const updateContactConfig = createAsyncThunk('contact/sendMail', async (value) => {
+  try {
+    const response = await axios.post(`/contact-config`, value);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+});
+
+export const getContactConfig = createAsyncThunk('contact/getContactConfig', async () => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/contact-config`);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+});
+
 const initialState = {
   data: [],
   isError: false,
@@ -57,7 +77,11 @@ const initialState = {
     pageIndex: 0,
     pageSize: 10
   },
-  isLoadingMail: false
+  isLoadingMail: false,
+  contactDialog: {
+    open: false,
+    init: {}
+  }
 };
 
 const contact = createSlice({
@@ -75,6 +99,9 @@ const contact = createSlice({
     },
     setPagination: (state, action) => {
       state.pagination = action.payload;
+    },
+    setContactDialog: (state, action) => {
+      state.contactDialog = { ...state.contactDialog, ...action.payload };
     }
   },
   extraReducers: (builder) => {
@@ -102,10 +129,13 @@ const contact = createSlice({
       })
       .addCase(sendMail.rejected, (state) => {
         state.isLoadingMail = false;
+      })
+      .addCase(getContactConfig.fulfilled, (state, action) => {
+        state.contactDialog.init = action.payload.data;
       });
   }
 });
 
-export const { setColumnFilters, setGlobalFilter, setSorting, setPagination } = contact.actions;
+export const { setColumnFilters, setGlobalFilter, setSorting, setPagination, setContactDialog } = contact.actions;
 
 export default contact.reducer;

@@ -1,22 +1,34 @@
-import React, { memo, useMemo } from 'react';
+import React, { memo, useEffect } from 'react';
 import Dialog from '@mui/material/Dialog';
-import { setCloseMajorDialog } from 'store/reducers/majorSlice';
 import { useSelector } from 'react-redux';
 import DialogTitleCustom from 'components/DialogTitleCustom';
+import { setContactDialog } from 'store/reducers/contactSlice';
 import { dispatch } from 'store/index';
 import { ContactForm } from 'sections/admin/contact/ContactForm';
 
+import { getContactConfig } from 'store/reducers/contactSlice';
+
 const ContactDialog = () => {
-  const { majorDialog } = useSelector((state) => state.major);
-  const initialValues = useMemo(() => majorDialog.initValue, [majorDialog.initValue]);
-  const action = useMemo(() => majorDialog.action, [majorDialog.action]);
+  const { contactDialog } = useSelector((state) => state.contact);
+
+  useEffect(() => {
+    const fetch = async () => {
+      dispatch(getContactConfig());
+    };
+    fetch();
+  }, []);
 
   return (
-    <Dialog open={majorDialog.open} onClose={() => dispatch(setCloseMajorDialog())} maxWidth="xs">
-      <DialogTitleCustom onClose={() => dispatch(setCloseMajorDialog())}>
-        {action === 'add' ? 'Thêm ngành' : 'Chỉnh sửa ngành'}
-      </DialogTitleCustom>
-      <ContactForm initialValues={initialValues} action={action} />
+    <Dialog
+      open={contactDialog.open}
+      onClose={() => {
+        dispatch(setContactDialog({ open: false }));
+      }}
+      maxWidth="sm"
+      fullWidth
+    >
+      <DialogTitleCustom>Thông tin liên hệ</DialogTitleCustom>
+      <ContactForm initialValues={contactDialog?.init} />
     </Dialog>
   );
 };

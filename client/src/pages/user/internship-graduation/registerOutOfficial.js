@@ -34,6 +34,8 @@ const RegisterOutOfficial = () => {
     fetch();
   }, []);
 
+  if (!internship) return null;
+
   if (!internship) {
     return (
       <Container maxWidth="lg" sx={{ mt: 2 }}>

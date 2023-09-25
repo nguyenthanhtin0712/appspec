@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import MainCard from 'components/MainCard';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
@@ -13,7 +13,7 @@ import Box from '@mui/material/Box';
 import AnimateButton from 'components/@extended/AnimateButton';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
-import { sendMail } from 'store/reducers/contactSlice';
+import { getContactConfig, sendMail } from 'store/reducers/contactSlice';
 import { dispatch } from 'store/index';
 import { toast } from 'react-toastify';
 import { Backdrop, CircularProgress } from '@mui/material';
@@ -51,54 +51,69 @@ const Contact = () => {
 };
 
 const InfoContact = () => {
+  const { contactDialog } = useSelector((state) => state.contact);
+  useEffect(() => {
+    const fetch = async () => {
+      dispatch(getContactConfig());
+    };
+    fetch();
+  }, []);
+  const { init } = contactDialog;
   return (
     <Grid item xs={12} md={4}>
-      <Stack>
-        <Box>
-          <Typography variant="h4" gutterBottom>
-            Khoa công nghệ thông tin
-          </Typography>
-          <Box>
-            <p>
-              <strong>Địa chỉ: </strong>Phòng D301, Số 273 An Dương Vương, Phường 3, Quận 5, TP. HCM
-            </p>
-            <p>
-              <strong>Điện thoại: </strong>
-              <Link href="tel:02838382664" underline="none">
-                (028) 38382 664
-              </Link>
-            </p>
-            <p>
-              <strong>Email: </strong>
-              <Link href="mailto:vpkcntt@sgu.edu.vn" underline="none">
-                vpkcntt@sgu.edu.vn
-              </Link>
-            </p>
-          </Box>
+      {Object.keys(init).length === 0 ? (
+        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100px' }}>
+          <CircularProgress />
         </Box>
-        <Box>
-          <Typography variant="h4" gutterBottom>
-            Quản trị viên website
-          </Typography>
+      ) : (
+        <Stack>
           <Box>
-            <p>
-              <strong>Họ tên: </strong>Nguyễn Thanh Sang
-            </p>
-            <p>
-              <strong>Điện thoại: </strong>
-              <Link href="tel:0366686557" underline="none">
-                0366 686 557
-              </Link>
-            </p>
-            <p>
-              <strong>Email: </strong>
-              <Link href="mailto:thanhsang@sgu.edu.vn" underline="none">
-                thanhsang@sgu.edu.vn
-              </Link>
-            </p>
+            <Typography variant="h4" gutterBottom>
+              {init.department_name}
+            </Typography>
+            <Box>
+              <p>
+                <strong>Địa chỉ: </strong> {init.department_address}
+              </p>
+              <p>
+                <strong>Điện thoại: </strong>
+                <Link href="tel:02838382664" underline="none">
+                  {init.department_phone}
+                </Link>
+              </p>
+              <p>
+                <strong>Email: </strong>
+                <Link href="mailto:vpkcntt@sgu.edu.vn" underline="none">
+                  {init.department_email}
+                </Link>
+              </p>
+            </Box>
           </Box>
-        </Box>
-      </Stack>
+          <Box>
+            <Typography variant="h4" gutterBottom>
+              Quản trị viên website
+            </Typography>
+            <Box>
+              <p>
+                <strong>Họ tên: </strong>
+                {init.admin_name}
+              </p>
+              <p>
+                <strong>Điện thoại: </strong>
+                <Link href="tel:0366686557" underline="none">
+                  {init.admin_phone}
+                </Link>
+              </p>
+              <p>
+                <strong>Email: </strong>
+                <Link href="mailto:thanhsang@sgu.edu.vn" underline="none">
+                  {init.admin_email}
+                </Link>
+              </p>
+            </Box>
+          </Box>
+        </Stack>
+      )}
     </Grid>
   );
 };

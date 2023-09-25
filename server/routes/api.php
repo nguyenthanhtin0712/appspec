@@ -158,3 +158,4 @@ Route::post('register-internships/addJobholderIternship', [InternshipGraduationC
 Route::get('contacts', [ContactController::class, 'index']);
 Route::post('contacts/mail', [ContactController::class, 'sendMail']);
 Route::get('contact-config', [ContactConfigController::class, 'getInfo']);
+Route::post('contact-config', [ContactConfigController::class, 'updateContactConfig']);
