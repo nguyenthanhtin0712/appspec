@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AcademicFieldController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CompanyController;
+use App\Http\Controllers\Api\ContactConfigController;
 use App\Http\Controllers\Api\ContactController;
 use App\Http\Controllers\Api\JobHolderController;
 use App\Http\Controllers\Api\MajorController;
@@ -156,3 +157,4 @@ Route::get('register-internships/queryJobholder', [InternshipGraduationControlle
 Route::post('register-internships/addJobholderIternship', [InternshipGraduationController::class, 'addJobholderIternship']);
 Route::get('contacts', [ContactController::class, 'index']);
 Route::post('contacts/mail', [ContactController::class, 'sendMail']);
+Route::get('contact-config', [ContactConfigController::class, 'getInfo']);
