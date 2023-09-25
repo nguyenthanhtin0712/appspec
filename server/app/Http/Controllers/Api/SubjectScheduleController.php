@@ -108,7 +108,7 @@ class SubjectScheduleController extends Controller
                 ]);
             }
         }
-        return response()->json(['message' => 'Create subject schedule successfully',], 200);
+        return $this->sentSuccessResponse($openClassTime, 'Create subject schedule successfully', Response::HTTP_OK);
     }
 
     /**

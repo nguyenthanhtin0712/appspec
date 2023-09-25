@@ -44,17 +44,17 @@ const SubjectScheduleDetailDialog = () => {
             {!dataDetail ? (
               <Skeleton variant="text" sx={{ fontSize: '1rem', width: '300px' }} />
             ) : (
-              `Kế hoạch mở nhóm học phần học kì ${dataDetail.infomation.openclass_time_semester} năm học ${dataDetail.infomation.openclass_time_year}`
+              `Kế hoạch mở nhóm học phần học kỳ ${dataDetail.infomation.openclass_time_semester} năm học ${dataDetail.infomation.openclass_time_year}`
             )}
           </Typography>
           <Stack direction="row" spacing={2}>
             <AnimateButton scale={{ hover: 1.1, tap: 0.9 }}>
-              <Button variant="dashed" color="success" startIcon={<Printer />}>
+              <Button variant="shadow" color="success" startIcon={<Printer />}>
                 Xuất Excel
               </Button>
             </AnimateButton>
             <AnimateButton scale={{ hover: 1.1, tap: 0.9 }}>
-              <Button variant="dashed" color="error" onClick={handleClose} aria-label="close" startIcon={<CloseCircle />}>
+              <Button variant="shadow" color="error" onClick={handleClose} aria-label="close" startIcon={<CloseCircle />}>
                 Đóng
               </Button>
             </AnimateButton>
