@@ -188,7 +188,7 @@ const ContactForm = () => {
                       name="contact_email"
                       onBlur={handleBlur}
                       onChange={handleChange}
-                      placeholder="Nhập địa chỉ contact_email"
+                      placeholder="Nhập địa chỉ email"
                       fullWidth
                       error={Boolean(touched.contact_email && errors.contact_email)}
                     />
