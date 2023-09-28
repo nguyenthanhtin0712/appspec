@@ -18,7 +18,10 @@ const JobholderSearchItem = ({ jobholder_code, id, name, join }) => {
       sx={{
         flexWrap: 'wrap',
         rowGap: 1,
-        bgcolor: state == 1 ? 'primary.lighter' : null
+        bgcolor: state == 1 ? 'primary.lighter' : null,
+        '&:hover': {
+          bgcolor: state == 1 ? 'primary.200' : null
+        }
       }}
       onClick={handleClick}
     >

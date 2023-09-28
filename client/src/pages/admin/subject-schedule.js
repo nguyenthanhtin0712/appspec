@@ -8,6 +8,7 @@ import { setSubjectScheduleDialog } from 'store/reducers/subjectScheduleSlice';
 import SubjectScheduleDialog from 'sections/admin/subject-schedule/SubjectScheduleDialog';
 import SubjectScheduleTable from 'sections/admin/subject-schedule/SubjectScheduleTable';
 import SubjectScheduleDetailDialog from 'sections/admin/subject-schedule/SubjectScheduleDetailDialog';
+import SubjectScheduleDeleteDialog from 'sections/admin/subject-schedule/SubjectScheduleDeleteDialog';
 
 const SubjectSchedule = () => {
   return (
@@ -21,6 +22,7 @@ const SubjectSchedule = () => {
       <SubjectScheduleTable />
       <SubjectScheduleDialog />
       <SubjectScheduleDetailDialog />
+      <SubjectScheduleDeleteDialog />
     </>
   );
 };

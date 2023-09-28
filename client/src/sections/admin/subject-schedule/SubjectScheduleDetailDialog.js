@@ -49,7 +49,7 @@ const SubjectScheduleDetailDialog = () => {
           </Typography>
           <Stack direction="row" spacing={2}>
             <AnimateButton scale={{ hover: 1.1, tap: 0.9 }}>
-              <Button variant="shadow" color="success" startIcon={<Printer />}>
+              <Button variant="shadow" onClick={() => alert('Tính năng đang phát triển')} color="success" startIcon={<Printer />}>
                 Xuất Excel
               </Button>
             </AnimateButton>

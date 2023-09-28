@@ -1,7 +1,7 @@
 import React, { memo, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useTheme } from '@mui/material/styles';
-import { Edit, Eye, Trash } from 'iconsax-react';
+import { Eye, Trash } from 'iconsax-react';
 import Stack from '@mui/material/Stack';
 import { MaterialReactTable } from 'material-react-table';
 import {
@@ -10,7 +10,6 @@ import {
   setGlobalFilter,
   setSorting,
   setPagination,
-  setSubjectScheduleDialog,
   setOpenCofirmDialog,
   setIdDeleteSubject,
   setIdSelect
@@ -48,11 +47,6 @@ const SubjectScheduleTable = () => {
     dispatch(setIdDeleteSubject(id));
   };
 
-  const handleUpdate = (data) => {
-    const major = { major_id: data.major_id, major_name: data.major_name };
-    dispatch(setSubjectScheduleDialog({ open: true, action: 'update', initValue: major }));
-  };
-
   return (
     <>
       <MaterialReactTable
@@ -83,7 +77,6 @@ const SubjectScheduleTable = () => {
         renderRowActions={({ row }) => (
           <Stack direction="row">
             <IconAction title="Xem chi tiết" icon={<Eye />} onClick={() => dispatch(setIdSelect(row.id))} />
-            <IconAction title="Chỉnh sửa" icon={<Edit />} onClick={() => handleUpdate(row.original)} />
             <IconAction title="Xoá" icon={<Trash />} onClick={() => handleDelete(row.id)} color="error" />
           </Stack>
         )}

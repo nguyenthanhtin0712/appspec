@@ -51,6 +51,20 @@ export const createSubjectSchedule = createAsyncThunk(
   }
 );
 
+export const deleteSubjectSchedule = createAsyncThunk('subject_schedule/deleteSubjectSchedule', async (id, { rejectWithValue }) => {
+  try {
+    const response = await axios.delete(`${API_BASE_URL}/subjects-schedule/${id}`);
+    return response.data;
+  } catch (error) {
+    if (error.response && error.response.data && error.response.data.errors) {
+      return rejectWithValue(error.response.data);
+    } else {
+      console.error(error);
+      throw error;
+    }
+  }
+});
+
 export const showSubjectSchedule = createAsyncThunk('subject_schedule/showSubjectSchedule', async (id) => {
   try {
     const response = await axios.get(`${API_BASE_URL}/subjects-schedule/${id}`);
@@ -145,6 +159,10 @@ const subject_schedule = createSlice({
       .addCase(createSubjectSchedule.fulfilled, (state, action) => {
         state.data.push(action.payload.data);
         state.subjectScheduleDialog.open = false;
+      })
+      .addCase(deleteSubjectSchedule.fulfilled, (state, action) => {
+        const deletedSubjectId = action.payload.data.openclass_time_id;
+        state.data = state.data.filter((subject) => subject.openclass_time_id !== deletedSubjectId);
       })
       .addCase(showSubjectSchedule.fulfilled, (state, action) => {
         state.dataDetail = action.payload.data;
