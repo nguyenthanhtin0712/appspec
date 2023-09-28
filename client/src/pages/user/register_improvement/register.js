@@ -14,7 +14,7 @@ import Stack from '@mui/material/Stack';
 import { LockCircle } from 'iconsax-react';
 import { Link } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
-import { CircularProgress } from '@mui/material';
+import LoadingBox from 'components/LoadingBox';
 
 const RegisterImprovement = () => {
   const theme = useTheme();
@@ -97,19 +97,7 @@ const RegisterImprovement = () => {
         <CompanyList />
       </MainCard>
       <MainCard title="Đăng ký thực tập trong danh sách">
-        {internship ? (
-          isAfterRegistrationTime ? (
-            <OutOfTime />
-          ) : isBeforeRegistrationTime ? (
-            <CountDown />
-          ) : (
-            renderForm()
-          )
-        ) : (
-          <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100px' }}>
-            <CircularProgress />
-          </Box>
-        )}
+        {internship ? isAfterRegistrationTime ? <OutOfTime /> : isBeforeRegistrationTime ? <CountDown /> : renderForm() : <LoadingBox />}
       </MainCard>
     </Container>
   );

@@ -18,6 +18,7 @@ import { dispatch } from 'store/index';
 import { toast } from 'react-toastify';
 import { Backdrop, CircularProgress } from '@mui/material';
 import { useSelector } from 'react-redux';
+import LoadingBox from 'components/LoadingBox';
 
 const Contact = () => {
   const { isLoadingMail } = useSelector((state) => state.contact);
@@ -62,9 +63,7 @@ const InfoContact = () => {
   return (
     <Grid item xs={12} md={4}>
       {Object.keys(init).length === 0 ? (
-        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100px' }}>
-          <CircularProgress />
-        </Box>
+        <LoadingBox />
       ) : (
         <Stack>
           <Box>

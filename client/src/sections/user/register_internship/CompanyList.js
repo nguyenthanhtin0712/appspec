@@ -1,4 +1,5 @@
-import { Box, CircularProgress, Grid } from '@mui/material';
+import Grid from '@mui/material/Grid';
+import LoadingBox from 'components/LoadingBox';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import CompanyItem from 'sections/user/register_internship/CompanyItem';
@@ -14,12 +15,7 @@ const CompanyList = () => {
     getData();
   }, []);
 
-  if (list_company.length === 0)
-    return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100px' }}>
-        <CircularProgress />
-      </Box>
-    );
+  if (list_company.length === 0) return <LoadingBox />;
 
   return (
     <Grid container spacing={2}>

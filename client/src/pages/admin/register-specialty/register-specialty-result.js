@@ -7,7 +7,7 @@ import SpecialityContainer from 'sections/user/register_speciality/register/Spec
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import ResultTableAdmin from 'sections/admin/register_specialty/register_specialty_result/ResultTableAdmin';
-import { ArrowRight, TableDocument } from 'iconsax-react';
+import { ArrowRight, Printer } from 'iconsax-react';
 import { setColumnFilters } from 'store/reducers/registerSpecialtyUserSlice';
 import { useTheme } from '@mui/material/styles';
 import { formatDateTimeDisplay } from 'utils/formatDateTime';
@@ -66,7 +66,7 @@ const RegisterSpecialtyResult = () => {
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}
             onClick={handleClick}
-            startIcon={<TableDocument />}
+            startIcon={<Printer />}
           >
             Xuất dữ liệu
           </Button>

@@ -3,26 +3,20 @@ import { Add, Building3 } from 'iconsax-react';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
-import Box from '@mui/material/Box';
-import CircularProgress from '@mui/material/CircularProgress';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material';
 import Avatar from 'components/@extended/Avatar';
 import CompanySearchForm from 'sections/admin/internship-graduation/register_intern_create/CompanySearchForm';
 import CompanyItem from 'sections/admin/internship-graduation/register_intern_create/CompanyItem';
 import { useSelector } from 'react-redux';
+import LoadingBox from 'components/LoadingBox';
 
 const CompanyList = () => {
   const theme = useTheme();
   const matches = useMediaQuery((theme) => theme.breakpoints.down('sm'));
   const { isLoadingCompanySelected, companySelected } = useSelector((state) => state.create_register_intern);
 
-  if (isLoadingCompanySelected)
-    return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '150px' }}>
-        <CircularProgress />
-      </Box>
-    );
+  if (isLoadingCompanySelected) return <LoadingBox height={150} />;
 
   return (
     <>

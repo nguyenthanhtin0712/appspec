@@ -13,6 +13,7 @@ import Drawer from './Drawer';
 import DatePicker from './DatePicker';
 import FormHelperText from './FormHelperText';
 import IconButton from './IconButton';
+// import InputBase from './InputBase';
 import InputLabel from './InputLabel';
 import LinearProgress from './LinearProgress';
 import Link from './Link';
@@ -35,7 +36,6 @@ import Popover from './Popover';
 import Paper from './Paper';
 import Autocomplete from './Autocomplete';
 import { cssBaseline } from 'themes/overrides/cssBaseline';
-// import TextField from './TextField';
 
 // ==============================|| OVERRIDES - MAIN ||============================== //
 
@@ -56,6 +56,7 @@ export default function ComponentsOverrides(theme) {
     Dialog(theme),
     FormHelperText(),
     IconButton(theme),
+    // InputBase(),
     InputLabel(theme),
     LinearProgress(),
     Link(),
@@ -71,7 +72,6 @@ export default function ComponentsOverrides(theme) {
     Tooltip(theme),
     Typography(),
     Table(theme),
-    // TextField(theme),
     Slider(theme),
     Switch(theme),
     Radio(theme)

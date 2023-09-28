@@ -116,7 +116,7 @@ class SubjectSeeder extends Seeder
         ]);
         Subject::create([
             'subject_id' => '841309',
-            'subject_name' => 'Cơ sở lập trình',
+            'subject_name' => 'Toán rời rạc',
             'subject_credit' => '3',
             'subject_coeffcient' => '1',
             'subject_LT' => '45',

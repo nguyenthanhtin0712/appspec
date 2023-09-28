@@ -2,12 +2,23 @@ import React from 'react';
 import Container from '@mui/material/Container';
 import MainCard from 'components/MainCard';
 import Typography from '@mui/material/Typography';
+import Breadcrumbs from '@mui/material/Breadcrumbs';
+import Link from '@mui/material/Link';
 
 const rules = () => {
   return (
     <Container maxWidth="md" sx={{ mt: 2 }}>
       <MainCard>
-        <Typography variant="h2" component="h1" gutterBottom>
+        <Breadcrumbs aria-label="breadcrumb" sx={{ mb: 2 }}>
+          <Link underline="hover" color="inherit" href="/">
+            MUI
+          </Link>
+          <Link underline="hover" color="inherit" href="/material-ui/getting-started/installation/">
+            Core
+          </Link>
+          <Typography color="text.primary">Breadcrumbs</Typography>
+        </Breadcrumbs>
+        <Typography variant="h2" component="h1" gutterBottom fontWeight={600}>
           Điều lệ đăng ký chuyên ngành
         </Typography>
         <Typography variant="subtitle1" display="block" gutterBottom>

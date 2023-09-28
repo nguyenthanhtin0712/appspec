@@ -1,4 +1,4 @@
-import { CircularProgress, Container, Stack, Typography } from '@mui/material';
+import { Container, Stack, Typography } from '@mui/material';
 import MainCard from 'components/MainCard';
 import CompanyList from 'sections/user/register_internship/CompanyList';
 import RegisterOutInternshipForm from 'sections/user/register_internship/RegisterOutInternshipForm';
@@ -12,6 +12,7 @@ import CountdownTimer from 'components/CountdownTimer';
 import Button from '@mui/material/Button';
 import { LockCircle } from 'iconsax-react';
 import { Link } from 'react-router-dom';
+import LoadingBox from 'components/LoadingBox';
 
 const RegisterOutOfficial = () => {
   const theme = useTheme();
@@ -95,19 +96,7 @@ const RegisterOutOfficial = () => {
           <CompanyList />
         </MainCard>
         <MainCard title="Đăng ký thực tập ngoài danh sách">
-          {internship ? (
-            isAfterRegistrationTime ? (
-              <OutOfTime />
-            ) : isBeforeRegistrationTime ? (
-              <CountDown />
-            ) : (
-              renderForm()
-            )
-          ) : (
-            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100px' }}>
-              <CircularProgress />
-            </Box>
-          )}
+          {internship ? isAfterRegistrationTime ? <OutOfTime /> : isBeforeRegistrationTime ? <CountDown /> : renderForm() : <LoadingBox />}
         </MainCard>
       </Stack>
     </Container>

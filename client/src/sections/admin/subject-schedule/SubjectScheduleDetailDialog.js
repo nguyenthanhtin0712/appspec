@@ -8,8 +8,7 @@ import { CloseCircle, Printer } from 'iconsax-react';
 import AnimateButton from 'components/@extended/AnimateButton';
 import SujectScheduleDetailTable from 'sections/admin/subject-schedule/SujectScheduleDetailTable';
 import Skeleton from '@mui/material/Skeleton';
-import CircularProgress from '@mui/material/CircularProgress';
-import Box from '@mui/material/Box';
+import LoadingBox from 'components/LoadingBox';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -61,13 +60,7 @@ const SubjectScheduleDetailDialog = () => {
           </Stack>
         </Toolbar>
       </AppBar>
-      {!dataDetail ? (
-        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100px' }}>
-          <CircularProgress />
-        </Box>
-      ) : (
-        <SujectScheduleDetailTable rows={dataDetail.subjects} />
-      )}
+      {!dataDetail ? <LoadingBox /> : <SujectScheduleDetailTable rows={dataDetail.subjects} />}
     </Dialog>
   );
 };
