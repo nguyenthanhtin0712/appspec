@@ -45,7 +45,7 @@ const FilterSubject = () => {
             displayEmpty
             inputProps={{ 'aria-label': 'Without label' }}
           >
-            <MenuItem value="" sx={{ color: 'text.secondary' }}>
+            <MenuItem value="" sx={{ color: 'text.secondary' }} disabled>
               Chọn thời gian
             </MenuItem>
             {data.length > 0 &&
