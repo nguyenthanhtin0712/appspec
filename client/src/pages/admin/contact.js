@@ -20,9 +20,7 @@ const contact = () => {
           Sửa TTLH
         </Button>
       </Stack>
-      <Stack spacing={3}>
-        <ContactTable />
-      </Stack>
+      <ContactTable />
       <ContactDialog />
     </>
   );
