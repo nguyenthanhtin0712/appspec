@@ -163,7 +163,7 @@ class InternshipGraduationController extends Controller
     public function getInfoInternship()
     {
         $displayConfig = DisplayConfig::find('register_intern')->display_config_value ?? InternshipGraduation::latest()->first()->internship_graduation_id;
-        $registerInternship = InternshipGraduation::find($displayConfig);
+        $registerInternship = InternshipGraduation::with(['openclasstime'])->where('internship_graduation_id', $displayConfig)->first();
         return $this->sentSuccessResponse($registerInternship, 'Get infoInternship success', 200);
     }
 

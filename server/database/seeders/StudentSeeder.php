@@ -32,8 +32,8 @@ class StudentSeeder extends Seeder
                 'major_id' => $randomMajor,
                 'register_specialty_id' => 1,
                 'company_position_detail_id' => random_int(1, 6),
-                'jobholder_internship_id' => $jobholderOptions[array_rand($jobholderOptions)]
-                // 'specialty_id' => $randomSpecialty
+                'jobholder_internship_id' => $jobholderOptions[array_rand($jobholderOptions)],
+                'internship_graduation_id' => 1
             ]);
             $student->save();
             $index++;

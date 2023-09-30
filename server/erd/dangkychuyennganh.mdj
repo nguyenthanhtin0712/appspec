@@ -12998,6 +12998,7 @@
 								"$ref": "AAAAAAGKAVTWM0KALOo="
 							},
 							"name": "internship_graduation_status",
+							"type": "INTEGER",
 							"length": 0
 						}
 					]

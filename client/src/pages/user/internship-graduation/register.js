@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
@@ -9,15 +9,12 @@ import { useSelector } from 'react-redux';
 import { getInternship } from 'store/reducers/registerInternUserSlice';
 import { dispatch } from 'store/index';
 import CountdownTimer from 'components/CountdownTimer';
-import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
-import { LockCircle } from 'iconsax-react';
-import { Link } from 'react-router-dom';
-import { useTheme } from '@mui/material/styles';
 import LoadingBox from 'components/LoadingBox';
+import { TabContext, TabList, TabPanel } from '@mui/lab';
+import { Tab } from '@mui/material';
+import RegisterOutInternshipForm from 'sections/user/register_internship/RegisterOutInternshipForm';
 
 const RegisterInternshipGraduation = () => {
-  const theme = useTheme();
   const { list_company, internship } = useSelector((state) => state.regsiter_intern_user);
   const { register_internship_start_date, register_internship_end_date } = internship;
   const currentTime = useMemo(() => new Date(), []);
@@ -39,31 +36,38 @@ const RegisterInternshipGraduation = () => {
 
   if (!internship) return null;
 
-  if (!internship) {
-    return (
-      <Container maxWidth="lg" sx={{ mt: 2 }}>
-        <Stack justifyContent="center" alignItems="center" spacing={4} minHeight={500}>
-          <LockCircle size="150" color={theme.palette.warning.main} variant="Bulk" />
-          <Typography variant="h4" textAlign="center">
-            Bạn không được phép đăng ký thực tập
-          </Typography>
-          <Button variant="contained" component={Link} to="/">
-            Trở về trang chủ
-          </Button>
-        </Stack>
-      </Container>
-    );
-  }
+  const RenderForm = () => {
+    const [value, setValue] = useState('1');
 
-  const renderForm = () => {
+    const handleChange = (event, newValue) => {
+      setValue(newValue);
+    };
     return (
       <>
-        <Container maxWidth="sm">
-          <Typography mb={2}>Sinh viên có thể THAY ĐỔI nơi thực tập đã đăng ký khi thời gian đăng ký còn hiệu lực</Typography>
-          <MainCard>
-            <RegisterInternsipForm companies={list_company} />
-          </MainCard>
-        </Container>
+        <TabContext value={value}>
+          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+            <TabList onChange={handleChange} aria-label="lab API tabs example">
+              <Tab label="Trong danh sách" value="1" />
+              <Tab label="Ngoài danh sách" value="2" />
+            </TabList>
+          </Box>
+          <TabPanel value="1">
+            <Container maxWidth="sm">
+              <Typography mb={2}>Sinh viên có thể THAY ĐỔI nơi thực tập đã đăng ký khi thời gian đăng ký còn hiệu lực</Typography>
+              <MainCard>
+                <RegisterInternsipForm companies={list_company} />
+              </MainCard>
+            </Container>
+          </TabPanel>
+          <TabPanel value="2">
+            <Container maxWidth="sm">
+              <Typography mb={2}>Sinh viên có thể THAY ĐỔI nơi thực tập đã đăng ký khi thời gian đăng ký còn hiệu lực</Typography>
+              <MainCard>
+                <RegisterOutInternshipForm />
+              </MainCard>
+            </Container>
+          </TabPanel>
+        </TabContext>
       </>
     );
   };
@@ -91,13 +95,15 @@ const RegisterInternshipGraduation = () => {
     );
   };
 
+  const title = `Đăng ký thực tập năm ${internship.openclasstime.openclass_time_year} kì ${internship.openclasstime.openclass_time_semester}`;
+
   return (
     <Container maxWidth="md" sx={{ mt: 2 }}>
       <MainCard title="Hiện trạng đăng ký" sx={{ mb: 2 }}>
         <CompanyList />
       </MainCard>
-      <MainCard title="Đăng ký thực tập trong danh sách">
-        {internship ? isAfterRegistrationTime ? <OutOfTime /> : isBeforeRegistrationTime ? <CountDown /> : renderForm() : <LoadingBox />}
+      <MainCard title={title}>
+        {internship ? isAfterRegistrationTime ? <OutOfTime /> : isBeforeRegistrationTime ? <CountDown /> : <RenderForm /> : <LoadingBox />}
       </MainCard>
     </Container>
   );

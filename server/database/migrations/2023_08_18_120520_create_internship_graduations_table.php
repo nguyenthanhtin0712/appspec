@@ -19,6 +19,7 @@ class CreateInternshipGraduationsTable extends Migration
             $table->date('internship_graduation_end_date');
             $table->dateTime('register_internship_start_date')->nullable();
             $table->dateTime('register_internship_end_date')->nullable();
+            $table->boolean('internship_graduation_status')->default(false);
             $table->boolean('internship_graduation_isDelete')->default(0);
         });
     }

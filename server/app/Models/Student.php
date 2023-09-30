@@ -25,6 +25,7 @@ class Student extends Model
         'company_position_detail_id',
         'mentor_code',
         'jobholder_internship_id',
+        'internship_graduation_id',
         'student_isDelete',
     ];
 

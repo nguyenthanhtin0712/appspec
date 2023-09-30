@@ -137,8 +137,6 @@ const StudentFileDialog = () => {
 function handleImportData(file, pass) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
-
-    // Xử lý sự kiện khi đọc file hoàn tất
     reader.onload = (e) => {
       try {
         const data = e.target.result;

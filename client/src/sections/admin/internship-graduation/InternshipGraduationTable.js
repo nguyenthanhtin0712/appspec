@@ -18,8 +18,11 @@ import {
 import { dispatch } from 'store/index';
 import { formatDDMMYYYY } from 'utils/formatDateTime';
 import IconAction from 'components/IconAction';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router';
 
 const InternshipGraduationTable = () => {
+  const navigate = useNavigate();
   const theme = useTheme();
   const { data, isError, isLoading, isRefetching, rowCount, columnFilters, globalFilter, sorting, pagination } = useSelector(
     (state) => state.internship_graduation
@@ -72,6 +75,16 @@ const InternshipGraduationTable = () => {
     dispatch(setInternshipGraduationDialog({ open: true, action: 'update', initValue: data }));
   };
 
+  const handleAssignment = (data) => {
+    let registerItenshipEndTime = new Date(data.register_internship_end_date);
+    let currentTime = new Date();
+    if (registerItenshipEndTime > currentTime) {
+      toast.warning('Còn thời gian đăng ký thực tập');
+    } else {
+      navigate(`/admin/assignment_intern/${data.internship_graduation_id}`);
+    }
+  };
+
   return (
     <>
       <MaterialReactTable
@@ -100,7 +113,7 @@ const InternshipGraduationTable = () => {
         positionActionsColumn="last"
         renderRowActions={({ row }) => (
           <Box sx={{ display: 'flex' }}>
-            <IconAction title="Phân công" icon={<ArrowDown3 />} href={`/admin/assignment_intern/${row.id}`} />
+            <IconAction title="Phân công" icon={<ArrowDown3 />} onClick={() => handleAssignment(row.original)} />
             <IconAction title="Đợt đăng ký  & Danh sách công ty" icon={<Calendar />} href={`/admin/register-intern/${row.id}`} />
             <IconAction title="Xem chi tiết" icon={<Eye />} href={`/admin/register_specialty/${row.id}`} />
             <IconAction title="Chỉnh sửa" icon={<Edit />} onClick={() => handleUpdate(row.original)} />

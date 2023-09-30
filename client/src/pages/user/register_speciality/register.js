@@ -20,7 +20,6 @@ const RegisterSpeciality = () => {
     const fetchData = async () => {
       const result = await dispatch(getSpecialtiesForRegister());
       if (result.error) setError(true);
-      console.log(result);
     };
     fetchData();
   }, []);

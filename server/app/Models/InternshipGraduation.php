@@ -21,6 +21,7 @@ class InternshipGraduation extends Model
         'internship_graduation_end_date',
         'register_internship_start_date',
         'register_internship_end_date',
+        'internship_graduation_status'
     ];
 
     public function openclasstime()
