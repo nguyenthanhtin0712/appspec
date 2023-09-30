@@ -4342,6 +4342,7 @@
 											"model": {
 												"$ref": "AAAAAAGITxVAKPHKIME="
 											},
+											"visible": false,
 											"font": "Arial;13;0",
 											"left": 2597,
 											"top": 598,
@@ -4359,7 +4360,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 2597,
-											"top": 613,
+											"top": 598,
 											"width": 276.9150390625,
 											"height": 13
 										},
@@ -4374,7 +4375,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 2597,
-											"top": 628,
+											"top": 613,
 											"width": 276.9150390625,
 											"height": 13
 										},
@@ -4389,7 +4390,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 2597,
-											"top": 643,
+											"top": 628,
 											"width": 276.9150390625,
 											"height": 13
 										}
@@ -4398,7 +4399,7 @@
 									"left": 2592,
 									"top": 503,
 									"width": 286.9150390625,
-									"height": 158
+									"height": 143
 								}
 							],
 							"font": "Arial;13;0",
@@ -8604,6 +8605,57 @@
 							},
 							"headNameLabel": {
 								"$ref": "AAAAAAGKrkVBK5Cv9R8="
+							}
+						},
+						{
+							"_type": "ERDEntityView",
+							"_id": "AAAAAAGK5WPRqz/iGnY=",
+							"_parent": {
+								"$ref": "AAAAAAGITK4l26584jk="
+							},
+							"model": {
+								"$ref": "AAAAAAGK5WPRqz/g9d8="
+							},
+							"subViews": [
+								{
+									"_type": "LabelView",
+									"_id": "AAAAAAGK5WPRqz/jA+4=",
+									"_parent": {
+										"$ref": "AAAAAAGK5WPRqz/iGnY="
+									},
+									"font": "Arial;13;1",
+									"left": 2984,
+									"top": 501,
+									"width": 53.341796875,
+									"height": 13,
+									"text": "Entity4"
+								},
+								{
+									"_type": "ERDColumnCompartmentView",
+									"_id": "AAAAAAGK5WPRqz/kK0U=",
+									"_parent": {
+										"$ref": "AAAAAAGK5WPRqz/iGnY="
+									},
+									"model": {
+										"$ref": "AAAAAAGK5WPRqz/g9d8="
+									},
+									"font": "Arial;13;0",
+									"left": 2984,
+									"top": 519,
+									"width": 53.341796875,
+									"height": 10
+								}
+							],
+							"font": "Arial;13;0",
+							"left": 2984,
+							"top": 496,
+							"width": 53.341796875,
+							"height": 33,
+							"nameLabel": {
+								"$ref": "AAAAAAGK5WPRqz/jA+4="
+							},
+							"columnCompartment": {
+								"$ref": "AAAAAAGK5WPRqz/kK0U="
 							}
 						}
 					]
@@ -13062,6 +13114,14 @@
 							"length": 0
 						}
 					]
+				},
+				{
+					"_type": "ERDEntity",
+					"_id": "AAAAAAGK5WPRqz/g9d8=",
+					"_parent": {
+						"$ref": "AAAAAAGITK4l2657GSk="
+					},
+					"name": "Entity4"
 				}
 			]
 		}

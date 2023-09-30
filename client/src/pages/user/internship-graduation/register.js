@@ -95,7 +95,7 @@ const RegisterInternshipGraduation = () => {
     );
   };
 
-  const title = `Đăng ký thực tập năm ${internship.openclasstime.openclass_time_year} kì ${internship.openclasstime.openclass_time_semester}`;
+  const title = `Đăng ký thực tập học kỳ ${internship.openclasstime.openclass_time_semester} năm học ${internship.openclasstime.openclass_time_year} `;
 
   return (
     <Container maxWidth="md" sx={{ mt: 2 }}>
