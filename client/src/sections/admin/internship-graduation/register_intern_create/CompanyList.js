@@ -10,6 +10,9 @@ import CompanySearchForm from 'sections/admin/internship-graduation/register_int
 import CompanyItem from 'sections/admin/internship-graduation/register_intern_create/CompanyItem';
 import { useSelector } from 'react-redux';
 import LoadingBox from 'components/LoadingBox';
+import { dispatch } from 'store';
+import { setcompanyDialog } from 'store/reducers/companySlice';
+import CompanyDialog from 'sections/admin/company/CompanyDialog';
 
 const CompanyList = () => {
   const theme = useTheme();
@@ -30,9 +33,7 @@ const CompanyList = () => {
             variant="rounded"
             color="success"
             style={{ cursor: 'pointer' }}
-            onClick={() => {
-              alert('Tính năng chưa khả dụng');
-            }}
+            onClick={() => dispatch(setcompanyDialog({ open: true, action: 'add' }))}
           >
             <Add color={theme.palette.success.darker} />
           </Avatar>
@@ -49,6 +50,7 @@ const CompanyList = () => {
       ) : (
         <CompanyEmpty />
       )}
+      <CompanyDialog />
     </>
   );
 };

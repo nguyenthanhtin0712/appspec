@@ -1,57 +1,31 @@
-import React, { useState } from 'react';
-import ExcelJS from 'exceljs';
+import React from 'react';
+import Excel from 'exceljs';
 
-function ExcelReader() {
-  const [data, setData] = useState([]);
-
-  const handleFileUpload = async (e) => {
+const ReadFileExcelJS = () => {
+  const handleChange = (e) => {
     const file = e.target.files[0];
-    if (!file) {
-      return;
-    }
-
-    const workbook = new ExcelJS.Workbook();
+    const wb = new Excel.Workbook();
     const reader = new FileReader();
 
-    reader.onload = async (event) => {
-      const data = event.target.result;
-
-      await workbook.xlsx.load(data);
-
-      const sheet = workbook.getWorksheet(1); // Lấy trang tính toán đầu tiên
-
-      if (!sheet) {
-        console.error('Sheet not found or is undefined.');
-        return;
-      }
-
-      const rows = [];
-      sheet.eachRow((row) => {
-        rows.push(row.values);
-      });
-
-      setData(rows);
-    };
-
     reader.readAsArrayBuffer(file);
+    reader.onload = () => {
+      const buffer = reader.result;
+      wb.xlsx.load(buffer).then((workbook) => {
+        workbook.eachSheet((sheet) => {
+          sheet.eachRow((row, rowIndex) => {
+            console.log(row.values, rowIndex);
+          });
+        });
+      });
+    };
   };
 
   return (
     <div>
-      <input type="file" onChange={handleFileUpload} />
-      <table>
-        <tbody>
-          {data.map((row, rowIndex) => (
-            <tr key={rowIndex}>
-              {row.map((cell, cellIndex) => (
-                <td key={cellIndex}>{cell}</td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div>Upload Excel File</div>
+      <input type="file" onChange={(e) => handleChange(e)} />
     </div>
   );
-}
+};
 
-export default ExcelReader;
+export default ReadFileExcelJS;

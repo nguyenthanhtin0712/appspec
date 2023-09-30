@@ -15,9 +15,11 @@ import LoadingBox from 'components/LoadingBox';
 export default function BasicTable() {
   const { idSelect, dataDetail, isLoading, query } = useSelector((state) => state.subject_schedule_user);
 
-  const dataDisplay = dataDetail.filter(
-    (item) => item.subject_id.includes(query) || item.subject_name.includes(query) || item.openclass_subject_for_course.includes(query)
-  );
+  const dataDisplay = React.useMemo(() => {
+    return dataDetail.filter(
+      (item) => item.subject_id.includes(query) || item.subject_name.includes(query) || item.openclass_subject_for_course.includes(query)
+    );
+  }, [dataDetail, query]);
 
   useEffect(() => {
     if (idSelect !== '') dispatch(showSubjectSchedule(idSelect));

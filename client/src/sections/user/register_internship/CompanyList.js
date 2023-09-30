@@ -15,7 +15,7 @@ const CompanyList = () => {
     getData();
   }, []);
 
-  if (list_company.length === 0) return <LoadingBox />;
+  if (list_company.length === 0) return <LoadingBox height={200} />;
 
   return (
     <Grid container spacing={2}>
