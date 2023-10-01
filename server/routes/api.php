@@ -17,6 +17,7 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\DisplayConfigController;
 use App\Http\Controllers\Api\SubjectController;
 use App\Http\Controllers\Api\InternshipGraduationController;
+use App\Http\Controllers\Api\MentorController;
 use App\Http\Controllers\Api\SubjectScheduleController;
 use App\Http\Resources\LoginResource;
 use Illuminate\Http\Request;
@@ -124,7 +125,10 @@ Route::middleware(['auth:api'])->group(function () {
     Route::delete('internship-graduations/{id}', [InternshipGraduationController::class, 'destroy']);
     Route::put('internship-graduations/{id}', [InternshipGraduationController::class, 'update']);
     Route::post('internship-graduations/register-out-offcial', [InternshipGraduationController::class, 'submitRegisterInternshipOutOffcail']);
-
+    Route::get('internship-graduations/check-user-internship', [InternshipGraduationController::class, 'checkUserInternship']);
+    Route::post('internship-graduations/additional-mentor', [InternshipGraduationController::class, 'additionalMentor']);
+    Route::post('internship-graduations/additional-company', [InternshipGraduationController::class, 'additionalCompnay']);
+    
     // Academic_field api
     Route::get('academic-fields', [AcademicFieldController::class, 'index'])->middleware('check_user_role_permission:academic_field.view');;
 
@@ -159,3 +163,4 @@ Route::get('contacts', [ContactController::class, 'index']);
 Route::post('contacts/mail', [ContactController::class, 'sendMail']);
 Route::get('contact-config', [ContactConfigController::class, 'getInfo']);
 Route::post('contact-config', [ContactConfigController::class, 'updateContactConfig']);
+Route::post('internship-graduations/list-students', [InternshipGraduationController::class, 'submitListStudentInternship']);

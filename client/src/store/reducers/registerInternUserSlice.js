@@ -85,6 +85,36 @@ export const regsiterInternshipOutOffcial = createAsyncThunk('register_intern_us
   }
 });
 
+export const getUserInternship = createAsyncThunk('register_intern_user/getUserInternship', async () => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/internship-graduations/check-user-internship`);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+});
+
+export const addMentorStudent = createAsyncThunk('register_intern_user/addMentorStudent', async (mentor) => {
+  try {
+    const response = await axios.post(`/internship-graduations/additional-mentor`, mentor);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+});
+
+export const additionalCompany = createAsyncThunk('register_intern_user/additionalCompany', async (company) => {
+  try {
+    const response = await axios.post(`/internship-graduations/additional-company`, company);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+});
+
 const initialState = {
   data: [],
   isError: false,
@@ -100,7 +130,8 @@ const initialState = {
   },
   internship: '',
   list_company: [],
-  register_internship: []
+  register_internship: [],
+  student: ''
 };
 
 const register_intern_user = createSlice({
@@ -147,6 +178,9 @@ const register_intern_user = createSlice({
       })
       .addCase(getRegisterInternship.fulfilled, (state, action) => {
         state.register_internship = action.payload.data;
+      })
+      .addCase(getUserInternship.fulfilled, (state, action) => {
+        state.student = action.payload.data;
       });
   }
 });

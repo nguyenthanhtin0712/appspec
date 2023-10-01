@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AdditionalCompanyRequest;
+use App\Http\Requests\StoreMentorRequest;
+use App\Http\Requests\SubmitListStudentInternshipRequest;
 use App\Http\Requests\SubmitRegisterInternshipRequest;
 use App\Http\Requests\SubmitRegsiterInternshipOutOfficial;
 use App\Http\Resources\Collection;
@@ -10,10 +13,12 @@ use App\Http\Resources\InternshipCompanyResoure;
 use App\Jobs\SendEmail;
 use App\Models\Company;
 use App\Models\CompanyPositionDetail;
+use App\Models\Contact;
 use App\Models\DisplayConfig;
 use App\Models\InternshipGraduation;
 use App\Models\JobHolder;
 use App\Models\JobholderInternship;
+use App\Models\Mentor;
 use App\Models\OpenclassTime;
 use App\Models\RecruitmentPosition;
 use App\Models\RegisterIntershipCompany;
@@ -322,6 +327,7 @@ class InternshipGraduationController extends Controller
         $register_internship_company_id = (RegisterIntershipCompany::where('internship_graduation_id', $internship_graduation_id)->where('company_id', $company_id)->firstOrFail())->register_internship_company_id;
         $company_position_detail_id = (CompanyPositionDetail::where('position_id', $position_id)->where('register_internship_company_id', $register_internship_company_id)->firstOrFail())->company_position_detail_id;
         $student = Student::where('user_id', $user->user_id)->firstOrFail();
+        $student->internship_graduation_id = $internship_graduation_id;
         $student->company_position_detail_id = $company_position_detail_id;
         $student->save();
         return $this->sentSuccessResponse($student, 'getUserSuccess', 200);
@@ -336,12 +342,12 @@ class InternshipGraduationController extends Controller
             $registerInternshipCompany = RegisterIntershipCompany::find($companyPositionDetail->register_internship_company_id);
             $company = Company::find($registerInternshipCompany->company_id);
             $position = RecruitmentPosition::find($companyPositionDetail->position_id);
-            // if($company->company_is_official == 0){
-            //     $companyPositionDetail->delete();
-            //     $registerInternshipCompany->delete();
-            //     $position->delete();
-            //     $company->delete();
-            // }
+            if ($company->company_is_official == 0) {
+                CompanyPositionDetail::find($student->company_position_detail_id)->delete();
+                RegisterIntershipCompany::find($companyPositionDetail->register_internship_company_id)->delete();
+                RecruitmentPosition::find($companyPositionDetail->position_id)->delete();
+                Company::find($registerInternshipCompany->company_id)->delete();
+            }
         }
         $company_name = $request->input('company_name');
         $company_address = $request->input('company_address');
@@ -367,6 +373,7 @@ class InternshipGraduationController extends Controller
             'position_quantity' => '1'
         ]);
         $student->company_position_detail_id = $companyPositionDetail->company_position_detail_id;
+        $student->internship_graduation_id = $internship_graduation_id;
         $student->save();
         return $this->sentSuccessResponse($student, "Reigster interhsip success", 200);
     }
@@ -401,7 +408,7 @@ class InternshipGraduationController extends Controller
 
         if ($query) {
             $studentsQuery->where('student_code', 'LIKE', "%$query%")
-            ->orWhereRaw("CONCAT(user_firstname, ' ', user_lastname) LIKE '%$query%'");
+                ->orWhereRaw("CONCAT(user_firstname, ' ', user_lastname) LIKE '%$query%'");
         }
         if ($id) {
             $studentsQuery->where('user_id', $id);
@@ -461,11 +468,12 @@ class InternshipGraduationController extends Controller
         return $this->sentSuccessResponse($formattedStudents, 'Get data success', 200);
     }
 
-    public function getResult() {
-        
+    public function getResult()
+    {
     }
 
-    public function assignmentInternshipStudent(Request $request){
+    public function assignmentInternshipStudent(Request $request)
+    {
         $displayConfig = $request->input('id');
         $studentsQuery = Student::select(
             'students.student_code',
@@ -491,7 +499,7 @@ class InternshipGraduationController extends Controller
         $status = $request->input('status');
         if ($query) {
             $studentsQuery->where('student_code', 'LIKE', "%$query%")
-            ->orWhereRaw("CONCAT(user_firstname, ' ', user_lastname) LIKE '%$query%'");
+                ->orWhereRaw("CONCAT(user_firstname, ' ', user_lastname) LIKE '%$query%'");
         }
         if ($sortBy) {
             $studentsQuery->orderBy($sortBy, $sortOrder);
@@ -554,28 +562,30 @@ class InternshipGraduationController extends Controller
         return $this->sentSuccessResponse($formattedStudents, 'Get data success', 200);
     }
 
-    public function getJobholderAssinmentInteship($id){
-        $jobholderInternship = JobholderInternship::leftJoin('job_holders', 'job_holders.jobholder_code', '=','jobholder_internships.jobholder_code')
-        ->leftJoin('users', 'users.user_id', 'job_holders.user_id')
-        ->where('internship_graduation_id', $id)->get()->map(function($jobholder){
-            return [
-                'jobholder_code' => $jobholder->jobholder_code,
-                'jobholder_name' => $jobholder->user_firstname . ' ' . $jobholder->user_lastname,
-                'total' => Student::leftJoin('company_position_detail', 'company_position_detail.company_position_detail_id', '=', 'students.company_position_detail_id')
-                    ->leftJoin('register_internship_company', 'register_internship_company.register_internship_company_id', '=', 'company_position_detail.register_internship_company_id')
-                    ->leftJoin('companies', 'companies.company_id', '=', 'register_internship_company.company_id')
-                    ->leftJoin('recruitment_positions', 'recruitment_positions.position_id', '=', 'company_position_detail.position_id')
-                    ->leftjoin('jobholder_internships', 'jobholder_internships.jobholder_internship_id', 'students.jobholder_internship_id')
-                    ->where('student_isDelete', '0')
-                    ->where('register_internship_company.internship_graduation_id', $jobholder->internship_graduation_id)
-                    ->where('jobholder_internships.jobholder_code', $jobholder->jobholder_code)
-                    ->count()
-            ];
-        });
+    public function getJobholderAssinmentInteship($id)
+    {
+        $jobholderInternship = JobholderInternship::leftJoin('job_holders', 'job_holders.jobholder_code', '=', 'jobholder_internships.jobholder_code')
+            ->leftJoin('users', 'users.user_id', 'job_holders.user_id')
+            ->where('internship_graduation_id', $id)->get()->map(function ($jobholder) {
+                return [
+                    'jobholder_code' => $jobholder->jobholder_code,
+                    'jobholder_name' => $jobholder->user_firstname . ' ' . $jobholder->user_lastname,
+                    'total' => Student::leftJoin('company_position_detail', 'company_position_detail.company_position_detail_id', '=', 'students.company_position_detail_id')
+                        ->leftJoin('register_internship_company', 'register_internship_company.register_internship_company_id', '=', 'company_position_detail.register_internship_company_id')
+                        ->leftJoin('companies', 'companies.company_id', '=', 'register_internship_company.company_id')
+                        ->leftJoin('recruitment_positions', 'recruitment_positions.position_id', '=', 'company_position_detail.position_id')
+                        ->leftjoin('jobholder_internships', 'jobholder_internships.jobholder_internship_id', 'students.jobholder_internship_id')
+                        ->where('student_isDelete', '0')
+                        ->where('register_internship_company.internship_graduation_id', $jobholder->internship_graduation_id)
+                        ->where('jobholder_internships.jobholder_code', $jobholder->jobholder_code)
+                        ->count()
+                ];
+            });
         return $this->sentSuccessResponse($jobholderInternship, 'Get data success', 200);
     }
 
-    public function changeJobholder(Request $request){
+    public function changeJobholder(Request $request)
+    {
         $id = $request->input('id');
         $jobholder_code = $request->input('jobholder_code');
         $jobholder_internship_id = JobholderInternship::where('jobholder_code', $jobholder_code)->where('internship_graduation_id', $id)->first()->jobholder_internship_id;
@@ -588,30 +598,32 @@ class InternshipGraduationController extends Controller
         return response()->json(['message' => 'Change specialty successful'], 200);
     }
 
-    public function queryJobholder(Request $request){
+    public function queryJobholder(Request $request)
+    {
         $query = $request->input('query');
         $id = $request->input('id');
         $jobholders = JobHolder::leftJoin('users', 'users.user_id', 'job_holders.user_id')
-        ->select('job_holders.jobholder_code', 'users.user_firstname', 'users.user_lastname');
-        if($query){
+            ->select('job_holders.jobholder_code', 'users.user_firstname', 'users.user_lastname');
+        if ($query) {
             $jobholders = $jobholders->whereRaw("CONCAT(user_firstname, ' ', user_lastname) LIKE '%$query%'");
         }
-        $jobholders= $jobholders->get()->map(function($jobholder) use ($id) {
+        $jobholders = $jobholders->get()->map(function ($jobholder) use ($id) {
             return [
                 'jobholder_code' => $jobholder->jobholder_code,
-                'jobholder_name' => $jobholder->user_firstname.' '.$jobholder->user_lastname,
+                'jobholder_name' => $jobholder->user_firstname . ' ' . $jobholder->user_lastname,
                 'jobholderJoinInternship' => JobholderInternship::where('jobholder_code', $jobholder->jobholder_code)
-                ->where('internship_graduation_id', $id)->first() ? 1 : 0,
+                    ->where('internship_graduation_id', $id)->first() ? 1 : 0,
             ];
         });
         return $this->sentSuccessResponse($jobholders, 'get Jobholders', 200);
     }
 
-    public function addJobholderIternship(Request $request){
+    public function addJobholderIternship(Request $request)
+    {
         $id = $request->input('id');
         $jobholder_code = $request->input('jobholder_code');
         $jobholder_internship = JobholderInternship::where('jobholder_code', $jobholder_code)->where('internship_graduation_id', $id)->first();
-        if($jobholder_internship){
+        if ($jobholder_internship) {
             $jobholder_internship->delete();
         } else {
             $jobholder_internship = JobholderInternship::create([
@@ -632,5 +644,125 @@ class InternshipGraduationController extends Controller
         SendEmail::dispatch($message, [
             'musicanime2501@gmail.com'
         ])->delay(now()->addMinute(1));
+    }
+
+    public function submitListStudentInternship(SubmitListStudentInternshipRequest $request)
+    {
+        $students = $request->input('students');
+        $internship_graduation_id = $request->input('internship_graduation_id');
+
+        // Get all students with their associated users
+        $studentsWithUsers = Student::with('user')
+            ->where('internship_graduation_id', $internship_graduation_id)
+            ->get();
+
+        $listStudentSuccess = [];
+        $listStudentRemove = [];
+
+        foreach ($studentsWithUsers as $student) {
+            if (in_array($student->student_code, $students)) {
+                $listStudentSuccess[] = $student->user->user_email;
+            } else {
+                // Update the student's attributes and save
+                $student->update([
+                    'company_position_detail_id' => null,
+                    'internship_graduation_id' => null,
+                    'jobholder_internship_id' => null,
+                ]);
+                $listStudentRemove[] = $student->user->user_email;
+            }
+        }
+        // Send emails
+        InternshipGraduation::where('internship_graduation_id', $internship_graduation_id)
+            ->update(['internship_graduation_status' => 1]);
+        $this->sendMail($listStudentSuccess, 1);
+        $this->sendMail($listStudentRemove, 0);
+        // Update internship graduation status
+        return $this->sentSuccessResponse(
+            InternshipGraduation::find($internship_graduation_id),
+            "Import success",
+            200
+        );
+    }
+
+    public function sendMail($emails, $status)
+    {
+        $subject = "Thông báo từ Trường đại học Sài Gòn";
+        $content = $status == 1
+            ? "Bạn vui lòng cập nhật thông tin người hướng dẫn trong trang đăng ký thực tập!"
+            : "Đăng ký thực tập của bạn bị huỷ do chưa đăng ký thông tin ở phòng đào tạo!";
+
+        SendEmail::dispatch([
+            'view' => 'mails.mail-notify',
+            'subject' => $subject,
+            'contact_content' => $content,
+        ], $emails)->delay(now()->addMinute(0));
+    }
+
+    public function checkUserInternship(Request $request){
+        $user = $request->user();
+        $internship_graduation_id = DisplayConfig::find('register_intern')->display_config_value ?? InternshipGraduation::latest()->value('internship_graduation_id');
+        $student = Student::where('user_id', $user->user_id)->where('internship_graduation_id', $internship_graduation_id)->first();
+        return $this->sentSuccessResponse($student, "Check success", 200);
+    }
+
+    public function additionalCompnay(AdditionalCompanyRequest $request)
+    {
+        $user = $request->user();
+        $student = Student::where('user_id', $user->user_id)->firstOrFail();
+        $company_name = $request->input('company_name');
+        $company_address = $request->input('company_address');
+        $position_name = $request->input('position_name');
+        $company = Company::create([
+            'company_name' => $company_name,
+            'company_address' => $company_address,
+            'company_is_official' => '0'
+        ]);
+        $position = RecruitmentPosition::create([
+            'position_name' => $position_name,
+            'company_id' => $company->company_id
+        ]);
+        $internship_graduation_id = DisplayConfig::find('register_intern')->display_config_value ?? InternshipGraduation::latest()->first()->internship_graduation_id;
+        $registerInternshipCopmany = RegisterIntershipCompany::create([
+            'internship_graduation_id' => $internship_graduation_id,
+            'company_id' => $company->company_id,
+            'company_isInterview' => '0'
+        ]);
+        $companyPositionDetail = CompanyPositionDetail::create([
+            'register_internship_company_id' => $registerInternshipCopmany->register_internship_company_id,
+            'position_id' => $position->position_id,
+            'position_quantity' => '1'
+        ]);
+        $mentor_name = $request->input('mentor_name');
+        $mentor_email = $request->input('mentor_email');
+        $mentor_phone = $request->input('mentor_phone');
+        $mentor = Mentor::firstOrCreate([
+            'mentor_name' => $mentor_name,
+            'mentor_email' => $mentor_email,
+            'mentor_phone' => $mentor_phone,
+        ]);
+        $student->company_position_detail_id = $companyPositionDetail->company_position_detail_id;
+        $student->internship_graduation_id = $internship_graduation_id;
+        $student->mentor_code = $mentor->mentor_code;
+        $student->save();
+        return $this->sentSuccessResponse($student, "Reigster interhsip success", 200);
+    }
+
+    public function additionalMentor(StoreMentorRequest $request)
+    {
+        $user = $request->user();
+        $mentor_name = $request->input('mentor_name');
+        $mentor_email = $request->input('mentor_email');
+        $mentor_phone = $request->input('mentor_phone');
+        $mentor = Mentor::firstOrCreate([
+            'mentor_name' => $mentor_name,
+            'mentor_email' => $mentor_email,
+            'mentor_phone' => $mentor_phone,
+        ]);
+        $student = Student::where('user_id', $user->user_id)->update([
+            'mentor_code' => $mentor->mentor_code
+        ]);
+        $student = Student::where('user_id', $user->user_id)->first();
+        return $this->sentSuccessResponse($student, "Add mentor success", 200);
     }
 }

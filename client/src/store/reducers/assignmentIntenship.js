@@ -99,6 +99,16 @@ export const joinInternship = createAsyncThunk('assignment_internship/joinIntern
   }
 });
 
+export const submitListStudents = createAsyncThunk('assignment_internship/submitListStudents', async (values) => {
+  try {
+    const response = await axios.post(`${API_BASE_URL}/internship-graduations/list-students`, values);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+});
+
 const initialState = {
   assignment_intern_id: '',
   assignment_intern: '',

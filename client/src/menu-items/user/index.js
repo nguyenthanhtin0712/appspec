@@ -86,6 +86,10 @@ export const navItems = [
         url: '/register_intern/register'
       },
       {
+        name: 'Bổ sung thông tin',
+        url: '/register_intern/additional'
+      },
+      {
         name: 'Kết quả đăng ký',
         url: '/register_intern/result'
       }

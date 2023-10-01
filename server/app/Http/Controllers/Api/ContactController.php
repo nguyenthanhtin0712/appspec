@@ -118,4 +118,5 @@ class ContactController extends Controller
         $message = Contact::create($message);
         return $this->sentSuccessResponse($message, 'SendEmail success', 200);
     }
+
 }

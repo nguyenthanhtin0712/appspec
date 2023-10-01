@@ -25,7 +25,7 @@ class CreateStudentsTable extends Migration
             $table->integer('register_specialty_id')->nullable();
             $table->unsignedBigInteger('company_position_detail_id')->nullable();
             $table->integer('student_status')->default(1);
-            $table->string('mentor_code')->nullable();
+            $table->integer('mentor_code')->nullable();
             $table->unsignedBigInteger('jobholder_internship_id')->nullable();
             $table->integer('internship_graduation_id')->nullable();
             $table->integer('student_isDelete')->default(0);
