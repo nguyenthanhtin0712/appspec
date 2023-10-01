@@ -55,11 +55,7 @@ class RegisterSpecialtyController extends Controller
         if ($all && $all == true) {
             $registerSpecialties = $registerSpecialties->get();
         } else {
-            if ($perPage) {
-                $registerSpecialties = $registerSpecialties->paginate($perPage);
-            } else {
-                $registerSpecialties = $registerSpecialties->paginate(10);
-            }
+            $registerSpecialties = $registerSpecialties->paginate($perPage ?? 10);
         }
         $registerSpecialtiesCollection = new Collection($registerSpecialties);
         return $this->sentSuccessResponse($registerSpecialtiesCollection, "Get data success", Response::HTTP_OK);

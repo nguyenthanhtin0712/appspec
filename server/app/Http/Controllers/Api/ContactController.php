@@ -51,11 +51,7 @@ class ContactController extends Controller
         if ($all && $all == true) {
             $contact = $contact->get();
         } else {
-            if ($perPage) {
-                $contact = $contact->paginate($perPage);
-            } else {
-                $contact = $contact->paginate(10);
-            }
+            $contact = $contact->paginate($perPage ?? 10);
         }
         $contactCollection = new Collection($contact);
         return $this->sentSuccessResponse($contactCollection, "Get data success", Response::HTTP_OK);

@@ -59,16 +59,12 @@ class SpecialtyController extends Controller
                 }
             }
         }
-        if($all && $all==true){
+        if ($all && $all == true) {
             $specialtys = $specialtys->get();
         } else {
-            if ($perPage) {
-                $specialtys = $specialtys->paginate($perPage);
-            } else {
-                $specialtys = $specialtys->paginate(10);
-            }
+            $specialtys = $specialtys->paginate($perPage ?? 10);
         }
-        
+
         $specialtyCollection = new Collection($specialtys);
         return $this->sentSuccessResponse($specialtyCollection, "Get data success", Response::HTTP_OK);
     }
