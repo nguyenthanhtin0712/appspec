@@ -16,7 +16,7 @@ class WarnedDismissedStudent extends Model
     public $timestamps = false;
     protected $fillable = [
         'warned_dismissed_student_id',
-        'student_id',
+        'student_code',
         'student_year',
         'student_semester',
         'total_warning_count',
@@ -28,6 +28,6 @@ class WarnedDismissedStudent extends Model
 
     public function student()
     {
-        return $this->hasOne(Student::class, 'student_code', 'student_id');
+        return $this->hasOne(Student::class, 'student_code', 'student_code');
     }
 }

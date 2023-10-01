@@ -132,6 +132,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::put('/configs/{id}', [DisplayConfigController::class, 'update']);
 
     // Warned dimissed student
+    Route::get('warned-student', [WarnedDissmissedStudentController::class, 'index']);
     Route::post('warned-student', [WarnedDissmissedStudentController::class, 'store']);
     Route::get('warned-student/{id}', [WarnedDissmissedStudentController::class, 'show']);
     Route::delete('warned-student/{id}', [WarnedDissmissedStudentController::class, 'destroy']);

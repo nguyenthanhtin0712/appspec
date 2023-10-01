@@ -15,7 +15,7 @@ class CreateWarnedDismissedStudentTable extends Migration
     {
         Schema::create('warned_dismissed_student', function (Blueprint $table) {
             $table->id('warned_dismissed_student_id');
-            $table->string('student_id');
+            $table->string('student_code');
             $table->tinyInteger('student_year')->unsigned();
             $table->tinyInteger('student_semester')->unsigned();
             $table->tinyInteger('total_warning_count')->unsigned();

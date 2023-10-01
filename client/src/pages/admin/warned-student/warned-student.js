@@ -6,6 +6,8 @@ import { Add } from 'iconsax-react';
 import { dispatch } from 'store';
 import { setWarnedStudentDialog } from 'store/reducers/warnedStudentSlice';
 import WarnedStudentDialog from 'sections/admin/warned-student/WarnedStudentDialog';
+import WarnedStudentTable from 'sections/admin/warned-student/WarnedStudentTable';
+import WarnedStudentDeleteDialog from 'sections/admin/warned-student/WarnedStudentDeleteDialog';
 
 const WarnedStudent = () => {
   return (
@@ -16,6 +18,9 @@ const WarnedStudent = () => {
           Thêm đợt xét
         </Button>
       </Stack>
+
+      <WarnedStudentTable />
+      <WarnedStudentDeleteDialog />
       <WarnedStudentDialog />
     </>
   );

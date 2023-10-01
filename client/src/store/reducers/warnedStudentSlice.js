@@ -85,8 +85,7 @@ const initialState = {
     open: false,
     initValue
   },
-  idDelete: '',
-  openCofirmDialog: false,
+  idDelete: 0,
   idSelect: 0
 };
 
@@ -109,11 +108,8 @@ const warned_student = createSlice({
     setWarnedStudentDialog: (state, action) => {
       state.warnedStudentDialog = { ...state.warnedStudentDialog, ...action.payload };
     },
-    setIdDeleteSubject: (state, action) => {
+    setIdDelete: (state, action) => {
       state.idDelete = action.payload;
-    },
-    setOpenCofirmDialog: (state, action) => {
-      state.openCofirmDialog = action.payload;
     },
     closeWarnedStudentDialog: (state) => {
       state.warnedStudentDialog = {
@@ -159,8 +155,7 @@ export const {
   setSorting,
   setPagination,
   setWarnedStudentDialog,
-  setIdDeleteSubject,
-  setOpenCofirmDialog,
+  setIdDelete,
   closeWarnedStudentDialog,
   setIdSelect
 } = warned_student.actions;

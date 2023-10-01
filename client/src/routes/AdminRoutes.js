@@ -26,9 +26,8 @@ const TitlePage = Loadable(lazy(() => import('pages/admin/title')));
 const CompanyPage = Loadable(lazy(() => import('pages/admin/company')));
 const SubjectPage = Loadable(lazy(() => import('pages/admin/subject-page')));
 const SubjectSchedule = Loadable(lazy(() => import('pages/admin/subject-schedule')));
-
-const WarnedStudent = Loadable(lazy(() => import('pages/admin/warned-student')));
-
+const WarnedStudent = Loadable(lazy(() => import('pages/admin/warned-student/warned-student')));
+const WarnedStudentDetailPage = Loadable(lazy(() => import('pages/admin/warned-student/warned-student-detail')));
 const Page = Loadable(lazy(() => import('pages/admin/page/page_index')));
 const PageCreate = Loadable(lazy(() => import('pages/admin/page/page_create')));
 const Page404 = Loadable(lazy(() => import('pages/error/page404')));
@@ -121,6 +120,10 @@ const AdminRoutes = {
     {
       path: 'warned-student',
       element: <PrivateRoute component={WarnedStudent} requiredPermissions={['subject.view']} />
+    },
+    {
+      path: 'warned-student/:id',
+      element: <PrivateRoute component={WarnedStudentDetailPage} requiredPermissions={['subject.view']} />
     },
     {
       path: 'page/create',

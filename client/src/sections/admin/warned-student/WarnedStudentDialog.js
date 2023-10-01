@@ -155,7 +155,7 @@ async function handleImportData(files) {
                   if (arVl.length === 11) arVl.splice(2, 2);
 
                   const obj = {
-                    student_id: arVl[1],
+                    student_code: arVl[1],
                     student_year: arVl[3],
                     student_semester: arVl[4],
                     total_warning_count: arVl[5],
