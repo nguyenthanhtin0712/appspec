@@ -66,11 +66,7 @@ class InternshipGraduationController extends Controller
         if ($all && $all == true) {
             $internshipGraduation = $internshipGraduation->get();
         } else {
-            if ($perPage) {
-                $internshipGraduation = $internshipGraduation->paginate($perPage);
-            } else {
-                $internshipGraduation = $internshipGraduation->paginate(10);
-            }
+            $internshipGraduation = $internshipGraduation->paginate($perPage ?? 10);
         }
         $internshipGraduationCollection = new Collection($internshipGraduation);
         return $this->sentSuccessResponse($internshipGraduationCollection, "Get data success", Response::HTTP_OK);

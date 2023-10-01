@@ -1,69 +1,52 @@
 import React, { memo, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useTheme } from '@mui/material/styles';
+import { Eye, Trash } from 'iconsax-react';
+import Stack from '@mui/material/Stack';
 import { MaterialReactTable } from 'material-react-table';
-import { fetchData, setColumnFilters, setGlobalFilter, setSorting, setPagination } from 'store/reducers/registerSpecialtyUserSlice';
+import { fetchData, setColumnFilters, setGlobalFilter, setSorting, setPagination, setIdDelete } from 'store/reducers/warnedStudentSlice';
 import { dispatch } from 'store/index';
-import { formatDateTimeDisplay } from 'utils/formatDateTime';
+import IconAction from 'components/IconAction';
 
-const ResultTable = () => {
+const WarnedStudentTable = () => {
   const theme = useTheme();
-  const { data, isError, isLoading, isRefetching, rowCount, columnFilters, globalFilter, sorting, pagination, majorId } = useSelector(
-    (state) => state.register_specialty_user
+
+  const { data, isError, isLoading, isRefetching, rowCount, columnFilters, globalFilter, sorting, pagination } = useSelector(
+    (state) => state.warned_student
   );
 
   useEffect(() => {
-    const fetch = async () => {
-      await dispatch(fetchData({ columnFilters, globalFilter, sorting, pagination, majorId }));
-    };
-    if (majorId) fetch();
-  }, [columnFilters, globalFilter, sorting, pagination, majorId]);
+    dispatch(fetchData({ columnFilters, globalFilter, sorting, pagination }));
+  }, [columnFilters, globalFilter, sorting, pagination]);
 
   const columns = React.useMemo(
     () => [
       {
-        accessorKey: 'student_code',
-        header: 'Mã sinh viên'
+        accessorKey: 'openclass_time_semester',
+        header: 'Đợt'
       },
       {
-        accessorKey: 'user_firstname',
-        header: 'Họ lót'
-      },
-      {
-        accessorKey: 'user_lastname',
-        header: 'Tên'
-      },
-      {
-        accessorKey: 'student_score',
-        header: 'Điểm',
-        Cell: ({ cell }) => cell.getValue().toFixed(2)
-      },
-      {
-        accessorKey: 'specialty_name',
-        header: 'Chuyên ngành',
-        Cell: ({ cell }) => (cell.getValue() ? cell.getValue() : 'Chưa đăng ký')
-      },
-      {
-        accessorKey: 'specialty_date',
-        header: 'Thời gian đăng ký',
-        Cell: ({ cell }) => (cell.getValue() ? formatDateTimeDisplay(cell.getValue()) : 'Chưa đăng ký')
+        accessorKey: 'openclass_time_year',
+        header: 'Năm'
       }
     ],
     []
   );
+
+  const handleDelete = (id) => {
+    dispatch(setIdDelete(id));
+  };
 
   return (
     <>
       <MaterialReactTable
         columns={columns}
         data={data}
-        getRowId={(row) => row.student_code}
+        getRowId={(row) => row.openclass_time_id}
         enableRowNumbers
+        manualFiltering
         manualPagination
         manualSorting
-        enableFilters={false}
-        enableHiding={false}
-        enableFullScreenToggle={false}
         muiToolbarAlertBannerProps={isError ? { color: 'error', children: 'Error loading data' } : undefined}
         onColumnFiltersChange={(updater) => dispatch(setColumnFilters(updater(columnFilters)))}
         onGlobalFilterChange={(filter) => dispatch(setGlobalFilter(filter))}
@@ -79,6 +62,14 @@ const ResultTable = () => {
           showProgressBars: isRefetching,
           sorting
         }}
+        enableRowActions
+        positionActionsColumn="last"
+        renderRowActions={({ row }) => (
+          <Stack direction="row">
+            <IconAction title="Xem chi tiết" icon={<Eye />} href={`/admin/warned-student/${row.id}`} />
+            <IconAction title="Xoá" icon={<Trash />} onClick={() => handleDelete(row.id)} color="error" />
+          </Stack>
+        )}
         muiTablePaperProps={{
           elevation: 0,
           variant: 'outlined',
@@ -99,8 +90,8 @@ const ResultTable = () => {
           showGlobalFilter: true
         }}
         muiSearchTextFieldProps={{
-          placeholder: 'Mã sinh viên, họ tên, ...',
-          sx: { minWidth: '250px' },
+          placeholder: 'Tìm kiếm học kỳ, năm học ...',
+          sx: { minWidth: '300px' },
           variant: 'outlined',
           size: 'small'
         }}
@@ -109,4 +100,4 @@ const ResultTable = () => {
   );
 };
 
-export default memo(ResultTable);
+export default memo(WarnedStudentTable);

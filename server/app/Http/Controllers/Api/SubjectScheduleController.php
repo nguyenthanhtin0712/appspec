@@ -55,13 +55,8 @@ class SubjectScheduleController extends Controller
         if ($all && $all == true) {
             $subjects = $subjects->get();
         } else {
-            if ($perPage) {
-                $subjects = $subjects->paginate($perPage);
-            } else {
-                $subjects = $subjects->paginate(10);
-            }
+            $subjects = $subjects->paginate($perPage ?? 10);
         }
-
 
         $subjectCollection = new Collection($subjects);
         return $this->sentSuccessResponse($subjectCollection, "Get data success", Response::HTTP_OK);
@@ -79,18 +74,14 @@ class SubjectScheduleController extends Controller
         $openclass_time_year = $request->input('openclass_time_year');
         $subjects = $request->input('subjects');
 
-        $openClassTime = OpenclassTime::where('openclass_time_semester', $openclass_time_semester)
-            ->where('openclass_time_year', $openclass_time_year)->first();
-
-        if (!$openClassTime) {
-            $openClassTime = OpenclassTime::create([
+        $openClassTime = OpenclassTime::firstOrCreate(
+            [
                 'openclass_time_semester' => $openclass_time_semester,
                 'openclass_time_year' => $openclass_time_year
-            ]);
-        } else {
-            OpenClassSubject::where('openclass_time_id', $openClassTime->openclass_time_id)
-                ->delete();
-        }
+            ]
+        );
+
+        OpenClassSubject::where('openclass_time_id', $openClassTime->openclass_time_id)->delete();
 
         foreach ($subjects as $subject) {
             $openClassSubjectCreated = OpenClassSubject::create([

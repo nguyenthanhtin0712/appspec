@@ -27,7 +27,7 @@ class JobHolderController extends Controller
         $sortOrder = $request->input('sortOrder', 'asc');
         $filters = $request->input('filters');
         $jobholder = JobHolder::with('user', 'title', 'academic_field')
-        ->where("jobholder_isDelete", "0");
+            ->where("jobholder_isDelete", "0");
         if ($query) {
             $jobholder->where("jobholder_code", "LIKE", "%$query%");
         }
@@ -50,11 +50,7 @@ class JobHolderController extends Controller
         if ($all && $all == true) {
             $jobholder = $jobholder->get();
         } else {
-            if ($perPage) {
-                $jobholder = $jobholder->paginate($perPage);
-            } else {
-                $jobholder = $jobholder->paginate(10);
-            }
+            $jobholder = $jobholder->paginate($perPage ?? 10);
         }
         $jobholderCollection = new Collection($jobholder);
         return $this->sentSuccessResponse($jobholderCollection, "Get data success", Response::HTTP_OK);
@@ -92,7 +88,7 @@ class JobHolderController extends Controller
         $jobholder_degree = $request->input('jobholder_degree');
         $academic_field_id = $request->input('academic_field_id');
         $jobholder_isLeader = $request->input('jobholder_isLeader');
-        
+
         $title_id = $request->input('title_id');
         JobHolder::create([
             'user_id' => "$user->user_id",
@@ -107,7 +103,7 @@ class JobHolderController extends Controller
             'jobholder_isLeader' => "$jobholder_isLeader"
         ]);
         $jobholder = JobHolder::with('user', 'title', 'academic_field')
-        ->where("jobholder_code", "$jobholder_code")->firstOrFail();
+            ->where("jobholder_code", "$jobholder_code")->firstOrFail();
         return $this->sentSuccessResponse($jobholder, "Get data success", Response::HTTP_OK);
     }
 
@@ -120,7 +116,7 @@ class JobHolderController extends Controller
     public function show($id)
     {
         $jobholder = JobHolder::with('user', 'title', 'academic_field')
-        ->where("jobholder_code", "$id")->firstOrFail();
+            ->where("jobholder_code", "$id")->firstOrFail();
         if ($jobholder->jobholder_isDelete == 1) {
             return response()->json([
                 'message' => 'Jobholder is deleted',
@@ -153,7 +149,7 @@ class JobHolderController extends Controller
         $user->user_email = $user_email;
         $user->user_phone = $user_phone;
         $user->save();
-        $jobholder = JobHolder::where('user_id',"$id")->first();
+        $jobholder = JobHolder::where('user_id', "$id")->first();
         $jobholder_code = $request->input('jobholder_code');
         $jobholder_position = $request->input('jobholder_position');
         $jobholder_specialty = $request->input('jobholder_specialty');
@@ -172,7 +168,7 @@ class JobHolderController extends Controller
         $jobholder->jobholder_isLeader = $jobholder_isLeader;
         $jobholder->save();
         $jobholder = JobHolder::with('user', 'title', 'academic_field')
-        ->where("jobholder_code", "$jobholder_code")->firstOrFail();
+            ->where("jobholder_code", "$jobholder_code")->firstOrFail();
         return $this->sentSuccessResponse($jobholder, "Update jobholder success", Response::HTTP_OK);
     }
 
@@ -185,7 +181,7 @@ class JobHolderController extends Controller
     public function destroy($id)
     {
         $jobholder = JobHolder::with('user', 'title', 'academic_field')
-        ->where("jobholder_code", "$id")->firstOrFail();
+            ->where("jobholder_code", "$id")->firstOrFail();
         $jobholder->jobholder_isDelete = 1;
         $jobholder->save();
         return $this->sentSuccessResponse($jobholder, "Delete jobholder success", Response::HTTP_OK);

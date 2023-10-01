@@ -37,7 +37,7 @@ class SpecialtyController extends Controller
         $sortBy = $request->input('sortBy');
         $sortOrder = $request->input('sortOrder', 'asc');
         $filters = $request->input('filters');
-        $specialtys = $this->specialty->query();
+
         $specialtys = $this->specialty->query()->leftJoin('majors', 'specialties.major_id', '=', 'majors.major_id')->select('specialties.*', 'majors.major_name');
         $specialtys->where("specialty_isDelete", "0");
         if ($query) {
@@ -59,16 +59,12 @@ class SpecialtyController extends Controller
                 }
             }
         }
-        if($all && $all==true){
+        if ($all && $all == true) {
             $specialtys = $specialtys->get();
         } else {
-            if ($perPage) {
-                $specialtys = $specialtys->paginate($perPage);
-            } else {
-                $specialtys = $specialtys->paginate(10);
-            }
+            $specialtys = $specialtys->paginate($perPage ?? 10);
         }
-        
+
         $specialtyCollection = new Collection($specialtys);
         return $this->sentSuccessResponse($specialtyCollection, "Get data success", Response::HTTP_OK);
     }

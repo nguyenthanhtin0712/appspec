@@ -28,6 +28,7 @@ class MajorController extends Controller
         $sortBy = $request->input('sortBy');
         $sortOrder = $request->input('sortOrder', 'asc');
         $filters = $request->input('filters');
+
         $majors = Major::query();
         $majors->where("major_isDelete", "0");
         if ($query) {
@@ -52,11 +53,7 @@ class MajorController extends Controller
         if ($all && $all == true) {
             $majors = $majors->get();
         } else {
-            if ($perPage) {
-                $majors = $majors->paginate($perPage);
-            } else {
-                $majors = $majors->paginate(10);
-            }
+            $majors = $majors->paginate($perPage ?? 10);
         }
         $majorCollection = new Collection($majors);
         return $this->sentSuccessResponse($majorCollection, "Get data success", Response::HTTP_OK);

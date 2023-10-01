@@ -53,13 +53,8 @@ class SubjectController extends Controller
         if ($all && $all == true) {
             $subjects = $subjects->get();
         } else {
-            if ($perPage) {
-                $subjects = $subjects->paginate($perPage);
-            } else {
-                $subjects = $subjects->paginate(10);
-            }
+            $subjects = $subjects->paginate($perPage ?? 10);
         }
-
 
         $subjectCollection = new Collection($subjects);
         return $this->sentSuccessResponse($subjectCollection, "Get data success", Response::HTTP_OK);

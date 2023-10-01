@@ -19,6 +19,7 @@ use App\Http\Controllers\Api\SubjectController;
 use App\Http\Controllers\Api\InternshipGraduationController;
 use App\Http\Controllers\Api\MentorController;
 use App\Http\Controllers\Api\SubjectScheduleController;
+use App\Http\Controllers\Api\WarnedDissmissedStudentController;
 use App\Http\Resources\LoginResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -113,9 +114,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::put('subjects/{id}', [SubjectController::class, 'update'])->middleware('check_user_role_permission:subject.update');
     Route::delete('subjects/{id}', [SubjectController::class, 'destroy'])->middleware('check_user_role_permission:subject.delete');
 
-    Route::get('subjects-schedule', [SubjectScheduleController::class, 'index'])->middleware('check_user_role_permission:subject_schedule.view');
     Route::post('subjects-schedule', [SubjectScheduleController::class, 'store'])->middleware('check_user_role_permission:subject_schedule.create');
-    Route::get('subjects-schedule/{id}', [SubjectScheduleController::class, 'show'])->middleware('check_user_role_permission:subject_schedule.view');
     Route::delete('subjects-schedule/{id}', [SubjectScheduleController::class, 'destroy'])->middleware('check_user_role_permission:subject_schedule.delete');
 
 
@@ -135,6 +134,12 @@ Route::middleware(['auth:api'])->group(function () {
     // Config page
     Route::get('configs', [DisplayConfigController::class, 'index']);
     Route::put('/configs/{id}', [DisplayConfigController::class, 'update']);
+
+    // Warned dimissed student
+    Route::get('warned-student', [WarnedDissmissedStudentController::class, 'index']);
+    Route::post('warned-student', [WarnedDissmissedStudentController::class, 'store']);
+    Route::get('warned-student/{id}', [WarnedDissmissedStudentController::class, 'show']);
+    Route::delete('warned-student/{id}', [WarnedDissmissedStudentController::class, 'destroy']);
 });
 
 Route::get('test-email', [InternshipGraduationController::class, 'testEmail']);
@@ -152,6 +157,8 @@ Route::get('register-internship/infoInternship', [InternshipGraduationController
 Route::get('internship-graduations/{id}', [InternshipGraduationController::class, 'show']);
 Route::get('internship-graduations/company/{id}', [InternshipGraduationController::class, 'getCompany']);
 Route::post('internship-graduations/register-info', [InternshipGraduationController::class, 'storeRegisterInfo']);
+
+
 Route::get('register-internships', [InternshipGraduationController::class, 'getRegisterInternshipByUser']);
 Route::get('register-internships/result', [InternshipGraduationController::class, 'registerResultStudent']);
 Route::get('register-internships/assignmentInternship', [InternshipGraduationController::class, 'assignmentInternshipStudent']);
@@ -159,8 +166,12 @@ Route::get('register-internships/jobholder/{id}', [InternshipGraduationControlle
 Route::post('register-internships/jobholder', [InternshipGraduationController::class, 'changeJobholder']);
 Route::get('register-internships/queryJobholder', [InternshipGraduationController::class, 'queryJobholder']);
 Route::post('register-internships/addJobholderIternship', [InternshipGraduationController::class, 'addJobholderIternship']);
+
+// Contact
 Route::get('contacts', [ContactController::class, 'index']);
 Route::post('contacts/mail', [ContactController::class, 'sendMail']);
 Route::get('contact-config', [ContactConfigController::class, 'getInfo']);
 Route::post('contact-config', [ContactConfigController::class, 'updateContactConfig']);
 Route::post('internship-graduations/list-students', [InternshipGraduationController::class, 'submitListStudentInternship']);
+Route::get('subjects-schedule', [SubjectScheduleController::class, 'index']);
+Route::get('subjects-schedule/{id}', [SubjectScheduleController::class, 'show']);

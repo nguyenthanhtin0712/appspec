@@ -28,7 +28,7 @@ class CompanyController extends Controller
         $sortOrder = $request->input('sortOrder', 'asc');
         $filters = $request->input('filters');
         $company = Company::with("user")
-        ->where("company_isDelete", "0");
+            ->where("company_isDelete", "0");
         if ($query) {
             $company->where("company_name", "LIKE", "%$query%");
         }
@@ -51,11 +51,7 @@ class CompanyController extends Controller
         if ($all && $all == true) {
             $company = $company->get();
         } else {
-            if ($perPage) {
-                $company = $company->paginate($perPage);
-            } else {
-                $company = $company->paginate(10);
-            }
+            $company = $company->paginate($perPage ?? 10);
         }
         $companyCollection = new Collection($company);
         return $this->sentSuccessResponse($companyCollection, "Get data success", Response::HTTP_OK);
@@ -69,10 +65,10 @@ class CompanyController extends Controller
      */
     public function store(StoreCompanyRequest $request)
     {
-        $user_firstname = $request->input('user_firstname');   
-        $user_lastname = $request->input('user_lastname');   
-        $user_email = $request->input('user_email');   
-        $user_phone = $request->input('user_phone');   
+        $user_firstname = $request->input('user_firstname');
+        $user_lastname = $request->input('user_lastname');
+        $user_email = $request->input('user_email');
+        $user_phone = $request->input('user_phone');
         $user_password = $request->input('user_password');
         $user = User::create([
             'user_firstname' => "$user_firstname",
@@ -93,7 +89,7 @@ class CompanyController extends Controller
             'company_is_official' => "$company_is_official",
         ]);
         $result = Company::with('user')
-        ->where('company_id', $company->company_id)->firstOrFail();
+            ->where('company_id', $company->company_id)->firstOrFail();
         return $this->sentSuccessResponse($result, "Add company success", Response::HTTP_OK);
     }
 
@@ -135,9 +131,9 @@ class CompanyController extends Controller
         $comapny->company_is_official = $company_is_official;
         $comapny->save();
         $user = User::find($comapny->user_id);
-        $user_firstname = $request->input('user_firstname');   
-        $user_lastname = $request->input('user_lastname');   
-        $user_email = $request->input('user_email');   
+        $user_firstname = $request->input('user_firstname');
+        $user_lastname = $request->input('user_lastname');
+        $user_email = $request->input('user_email');
         $user_phone = $request->input('user_phone');
         $user->user_firstname = $user_firstname;
         $user->user_lastname = $user_lastname;

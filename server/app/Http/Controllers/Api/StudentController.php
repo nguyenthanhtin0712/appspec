@@ -66,11 +66,7 @@ class StudentController extends Controller
         if ($all && $all == true) {
             $students = $students->get();
         } else {
-            if ($perPage) {
-                $students = $students->paginate($perPage);
-            } else {
-                $students = $students->paginate(10);
-            }
+            $students = $students->paginate($perPage ?? 10);
         }
         $studentCollection = new Collection($students);
         return $this->sentSuccessResponse($studentCollection, "Get data success", Response::HTTP_OK);

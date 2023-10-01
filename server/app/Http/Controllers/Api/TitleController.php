@@ -50,11 +50,7 @@ class TitleController extends Controller
         if ($all && $all == true) {
             $titles = $titles->get();
         } else {
-            if ($perPage) {
-                $titles = $titles->paginate($perPage);
-            } else {
-                $titles = $titles->paginate(10);
-            }
+            $titles = $titles->paginate($perPage ?? 10);
         }
         $titlesCollection = new Collection($titles);
         return $this->sentSuccessResponse($titlesCollection, "Get data success", Response::HTTP_OK);
