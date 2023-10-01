@@ -1,19 +1,22 @@
-import ExcelReader from 'components/ExcelReader';
-// import ReadFileExcelJS from 'components/ExcelReader1';
 import React from 'react';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import { Add } from 'iconsax-react';
+import { dispatch } from 'store';
+import { setWarnedStudentDialog } from 'store/reducers/warnedStudentSlice';
+import WarnedStudentDialog from 'sections/admin/warned-student/WarnedStudentDialog';
 
 const WarnedStudent = () => {
   return (
     <>
-      <ExcelReader />
-      <div>
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Neque officiis consectetur mollitia deleniti. Iusto doloremque dolores
-        nisi itaque, beatae temporibus quae, debitis iste tempore inventore repellendus dicta sapiente illum molestiae odio fugiat non
-        doloribus! Nihil expedita aspernatur, nobis excepturi sequi commodi vero laboriosam et deserunt aliquam ad quis amet asperiores
-        incidunt officiis molestiae alias ipsum. A dicta libero nemo ut labore culpa praesentium optio, unde possimus. Temporibus nulla
-        blanditiis quisquam sed enim eveniet commodi adipisci facilis maxime odio similique fuga neque sequi animi, omnis cumque repudiandae
-        hic excepturi dolorem minima reiciendis debitis architecto! Autem, ratione odio? Vitae inventore repellendus modi.
-      </div>
+      <Stack direction="row" justifyContent="space-between" alignItems="center" mb={1.5} flexWrap="wrap">
+        <Typography variant="h4">Quản lý sinh viên bị cảnh cáo & buộc thôi học</Typography>
+        <Button variant="contained" startIcon={<Add />} onClick={() => dispatch(setWarnedStudentDialog({ open: true }))}>
+          Thêm đợt xét
+        </Button>
+      </Stack>
+      <WarnedStudentDialog />
     </>
   );
 };

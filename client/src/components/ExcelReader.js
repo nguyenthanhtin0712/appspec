@@ -19,7 +19,6 @@ function ExcelReader() {
           const data = new Uint8Array(e.target.result);
           const workbook = XLSX.read(data, { type: 'array' });
           let dataFormated = [];
-
           workbook.SheetNames.forEach((sheetName) => {
             const sheetData = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
             sheetData?.forEach((item) => {

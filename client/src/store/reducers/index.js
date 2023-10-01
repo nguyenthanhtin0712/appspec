@@ -12,6 +12,7 @@ import teacher from './teacherSlice';
 import title from './titleSlice';
 import subject from './subjectSlice';
 import subject_schedule from './subjectScheduleSlice';
+import warned_student from './warnedStudentSlice';
 import subject_schedule_user from './subjectScheduleUserSlice';
 import jobholder from './jobholderSlice';
 import company from './companySlice';
@@ -46,7 +47,8 @@ const reducers = combineReducers({
   config_page,
   internship_graduation,
   assignment_internship,
-  contact
+  contact,
+  warned_student
 });
 
 export default reducers;

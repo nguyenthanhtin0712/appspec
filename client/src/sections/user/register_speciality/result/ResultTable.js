@@ -59,9 +59,9 @@ const ResultTable = () => {
         data={data}
         getRowId={(row) => row.student_code}
         enableRowNumbers
-        manualFiltering
         manualPagination
         manualSorting
+        enableFilters={false}
         enableHiding={false}
         enableFullScreenToggle={false}
         muiToolbarAlertBannerProps={isError ? { color: 'error', children: 'Error loading data' } : undefined}

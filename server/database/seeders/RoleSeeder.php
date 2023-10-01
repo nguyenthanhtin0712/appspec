@@ -82,6 +82,10 @@ class RoleSeeder extends Seeder
         $subject_schedule_create = Permission::create(['name' => 'subject_schedule.create']);
         $subject_schedule_delete = Permission::create(['name' => 'subject_schedule.delete']);
 
+        // Warned Dismissed Student
+        
+
+
         $admin_role = Role::create(['name' => 'admin']);
         $admin_role->givePermissionTo([
             $user_view,
