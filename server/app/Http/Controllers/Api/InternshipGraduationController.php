@@ -692,7 +692,7 @@ class InternshipGraduationController extends Controller
             'view' => 'mails.mail-notify',
             'subject' => $subject,
             'contact_content' => $content,
-        ], $emails)->delay(now()->addMinute(0));
+        ], $emails)->delay(now()->addMinute(1));
     }
 
     public function checkUserInternship(Request $request){
