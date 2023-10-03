@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import MainCard from 'components/MainCard';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import FormControl from '@mui/material/FormControl';
@@ -7,11 +6,19 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputAdornment from '@mui/material/InputAdornment';
+import Card from '@mui/material/Card';
+import CardHeader from '@mui/material/CardHeader';
+import TabContext from '@mui/lab/TabContext';
+import TabList from '@mui/lab/TabList';
+import TabPanel from '@mui/lab/TabPanel';
+import Tab from '@mui/material/Tab';
+import Divider from '@mui/material/Divider';
 import { SearchNormal } from 'iconsax-react';
 import { useSelector } from 'react-redux';
 import { getMajors, setMajorId, setStudentCourse, setStudentQuery } from 'store/reducers/warnedStudentDetailSlice';
 import { dispatch } from 'store';
 import WarnedStudentDetailTable from 'sections/admin/warned-student/WarnedStudentDetailTable';
+import RepeatCustomerChart from 'sections/dashboard/RepeatCustomerChart';
 
 const getListCourse = () => {
   let year = new Date().getFullYear();
@@ -23,15 +30,37 @@ const getListCourse = () => {
 };
 
 const WarnedStudentPage = () => {
+  const [value, setValue] = React.useState('1');
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
   return (
     <>
       <Typography variant="h4" component="h1" mb={2}>
         Kết quả xét cảnh báo, buộc thôi học đợt 2 năm 2023
       </Typography>
-      <MainCard>
-        <FilterStudent />
-        <WarnedStudentDetailTable />
-      </MainCard>
+      <Card>
+        <TabContext value={value}>
+          <CardHeader
+            subheader={
+              <TabList onChange={handleChange} aria-label="lab API tabs example">
+                <Tab label="Tra cứu" value="1" />
+                <Tab label="Thống kê" value="2" />
+              </TabList>
+            }
+            sx={{ p: 0 }}
+          />
+          <Divider />
+          <TabPanel value="1">
+            <FilterStudent />
+            <WarnedStudentDetailTable />
+          </TabPanel>
+          <TabPanel value="2">
+            <RepeatCustomerChart />
+          </TabPanel>
+        </TabContext>
+      </Card>
     </>
   );
 };
