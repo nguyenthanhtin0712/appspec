@@ -60,6 +60,10 @@ const InfoContact = () => {
     fetch();
   }, []);
   const { init } = contactDialog;
+  const department_phone = `tel:${init?.department_phone}`;
+  const department_email = `tel:${init?.department_email}`;
+  const admin_phone = `tel:${init?.admin_phone}`;
+  const admin_email = `tel:${init?.admin_email}`;
   return (
     <Grid item xs={12} md={4}>
       {Object.keys(init).length === 0 ? (
@@ -76,13 +80,13 @@ const InfoContact = () => {
               </p>
               <p>
                 <strong>Điện thoại: </strong>
-                <Link href="tel:02838382664" underline="none">
+                <Link href={department_phone} underline="none">
                   {init.department_phone}
                 </Link>
               </p>
               <p>
                 <strong>Email: </strong>
-                <Link href="mailto:vpkcntt@sgu.edu.vn" underline="none">
+                <Link href={department_email} underline="none">
                   {init.department_email}
                 </Link>
               </p>
@@ -99,13 +103,13 @@ const InfoContact = () => {
               </p>
               <p>
                 <strong>Điện thoại: </strong>
-                <Link href="tel:0366686557" underline="none">
+                <Link href={admin_phone} underline="none">
                   {init.admin_phone}
                 </Link>
               </p>
               <p>
                 <strong>Email: </strong>
-                <Link href="mailto:thanhsang@sgu.edu.vn" underline="none">
+                <Link href={admin_email} underline="none">
                   {init.admin_email}
                 </Link>
               </p>

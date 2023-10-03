@@ -25,7 +25,7 @@ const intern = {
     },
     {
       id: 'internship-graduation',
-      title: 'Thực tập',
+      title: 'Đăng ký thực tập',
       type: 'item',
       url: '/admin/internship-graduation',
       icon: icons.assignment

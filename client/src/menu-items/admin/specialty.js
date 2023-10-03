@@ -32,7 +32,7 @@ const specialty = {
     },
     {
       id: 'register_specialty',
-      title: 'Đăng ký Chuyên ngành',
+      title: 'Đăng ký chuyên ngành',
       type: 'item',
       url: '/admin/register_specialty',
       icon: icons.register_specialty

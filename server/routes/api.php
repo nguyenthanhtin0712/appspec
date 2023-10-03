@@ -167,6 +167,7 @@ Route::get('register-internships/jobholder/{id}', [InternshipGraduationControlle
 Route::post('register-internships/jobholder', [InternshipGraduationController::class, 'changeJobholder']);
 Route::get('register-internships/queryJobholder', [InternshipGraduationController::class, 'queryJobholder']);
 Route::post('register-internships/addJobholderIternship', [InternshipGraduationController::class, 'addJobholderIternship']);
+Route::get('register-internships/getAssignmentDetail', [InternshipGraduationController::class, 'getAssignmentDetail']);
 
 // Contact
 Route::get('contacts', [ContactController::class, 'index']);

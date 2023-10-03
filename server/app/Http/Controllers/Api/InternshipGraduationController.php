@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AdditionalCompanyRequest;
+use App\Http\Requests\GetAssignmentDetailRequest;
 use App\Http\Requests\StoreMentorRequest;
 use App\Http\Requests\SubmitListStudentInternshipRequest;
 use App\Http\Requests\SubmitRegisterInternshipRequest;
@@ -760,5 +761,99 @@ class InternshipGraduationController extends Controller
         ]);
         $student = Student::where('user_id', $user->user_id)->first();
         return $this->sentSuccessResponse($student, "Add mentor success", 200);
+    }
+
+    public function getAssignmentDetail(GetAssignmentDetailRequest $request){
+        $displayConfig = $request->input('id');
+        $studentsQuery = Student::select(
+            'students.student_code',
+            'students.mentor_code',
+            'users.user_firstname',
+            'users.user_lastname',
+            'recruitment_positions.position_name',
+            'companies.company_name',
+            'jobholder_internships.jobholder_code'
+        )
+            ->leftJoin('users', 'users.user_id', '=', 'students.user_id')
+            ->leftJoin('company_position_detail', 'company_position_detail.company_position_detail_id', '=', 'students.company_position_detail_id')
+            ->leftJoin('register_internship_company', 'register_internship_company.register_internship_company_id', '=', 'company_position_detail.register_internship_company_id')
+            ->leftJoin('companies', 'companies.company_id', '=', 'register_internship_company.company_id')
+            ->leftJoin('recruitment_positions', 'recruitment_positions.position_id', '=', 'company_position_detail.position_id')
+            ->leftjoin('jobholder_internships', 'jobholder_internships.jobholder_internship_id', 'students.jobholder_internship_id')
+            ->where('student_isDelete', '0')
+            ->where('register_internship_company.internship_graduation_id', $displayConfig);
+
+        $query = $request->input('query');
+        $sortBy = $request->input('sortBy');
+        $sortOrder = $request->input('sortOrder', 'asc');
+        $filters = $request->input('filters');
+        $status = $request->input('status');
+        if ($query) {
+            $studentsQuery->where('student_code', 'LIKE', "%$query%")
+                ->orWhereRaw("CONCAT(user_firstname, ' ', user_lastname) LIKE '%$query%'");
+        }
+        if ($sortBy) {
+            $studentsQuery->orderBy($sortBy, $sortOrder);
+        }
+        if ($status == 1) {
+            $studentsQuery->whereNotNull('students.jobholder_internship_id');
+        }
+        if ($status == 2) {
+            $studentsQuery->whereNull('students.jobholder_internship_id');
+        }
+        if ($filters) {
+            $filters = json_decode($filters, true);
+            if (is_array($filters)) {
+                foreach ($filters as $filter) {
+                    $field = $filter['id'];
+                    $value = $filter['value'];
+                    $studentsQuery->where($field, 'LIKE', "%$value%");
+                }
+            }
+        }
+
+        $perPage = $request->input('perPage', 10);
+        $all = $request->input('all', false);
+
+        $students = $studentsQuery->get();
+
+        $formatStudent = function ($student) {
+            $jobholder = JobHolder::find($student->jobholder_code);
+            $mentor = Mentor::find($student->mentor_code);
+            $jobholderUser = $jobholder ? User::find($jobholder->user_id) : null;
+            return [
+                'student_code' => $student->student_code,
+                'user_firstname' => $student->user_firstname,
+                'user_lastname' => $student->user_lastname,
+                'position_name' => $student->position_name,
+                'company_name' => $student->company_name,
+                'jobholder_code' => $student->jobholder_code,
+                'jobholder_name' => $jobholderUser ? "{$jobholderUser->user_firstname} {$jobholderUser->user_lastname}" : null,
+                'mentor_code' => $student->mentor_code,
+                'mentor_name' => $mentor ? $mentor->mentor_name : null
+            ];
+        };
+
+        $formattedStudents = $students->map($formatStudent);
+
+        if (!$all) {
+            $paginatedStudents = $formattedStudents->paginate($perPage);
+            $data = [
+                "data" => [
+                    "result" => $paginatedStudents->items(),
+                    "meta" => [
+                        "total" => $paginatedStudents->total(),
+                        "current_page" => $paginatedStudents->currentPage(),
+                        "last_page" => $paginatedStudents->lastPage(),
+                        "per_page" => $paginatedStudents->perPage(),
+                    ],
+                ],
+                "message" => "Get data success",
+                'status' => 200
+            ];
+            return response()->json($data);
+        }
+
+        return $this->sentSuccessResponse($formattedStudents, 'Get data success', 200);
     }
 }
