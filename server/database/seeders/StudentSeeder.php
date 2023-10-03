@@ -19,13 +19,13 @@ class StudentSeeder extends Seeder
         $jobholderOptions = ['1', '2', '3', null];
         $major = ['DCT', 'DKP'];
         $users = User::take(103)->get();
-        $index = 0;
+        $index = 3121410000;
         foreach ($users as $user) {
             // $randomSpecialty = $specialtyOptions[array_rand($specialtyOptions)];
             $randomMajor = $major[array_rand($major)];
             $student = new Student([
                 'user_id' => $user->user_id,
-                'student_code' => '312141006' . $index,
+                'student_code' => $index++,
                 'student_class' => 'DCT121' . $index,
                 'student_score' => round(randomDecimal(10, 40, 1) / 10, 2),
                 'student_course' => 2021,
@@ -33,10 +33,10 @@ class StudentSeeder extends Seeder
                 'register_specialty_id' => 1,
                 'company_position_detail_id' => random_int(1, 6),
                 'jobholder_internship_id' => $jobholderOptions[array_rand($jobholderOptions)],
-                'internship_graduation_id' => 1
+                'internship_graduation_id' => 1,
+                'mentor_code' => 1
             ]);
             $student->save();
-            $index++;
         }
     }
 }

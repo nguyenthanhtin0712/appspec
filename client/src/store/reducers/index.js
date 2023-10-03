@@ -25,6 +25,7 @@ import internship_graduation from './internshipGraduationSlice';
 import regsiter_intern_user from './registerInternUserSlice';
 import assignment_internship from './assignmentIntenship';
 import contact from './contactSlice';
+import assignment_internship_detail from 'store/reducers/assignmentInternshipDetail';
 // ==============================|| COMBINE REDUCERS ||============================== //
 
 const reducers = combineReducers({
@@ -48,6 +49,7 @@ const reducers = combineReducers({
   config_page,
   internship_graduation,
   assignment_internship,
+  assignment_internship_detail,
   contact,
   warned_student,
   warned_student_detail
