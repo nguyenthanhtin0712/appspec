@@ -19,6 +19,7 @@ use App\Http\Controllers\Api\SubjectController;
 use App\Http\Controllers\Api\InternshipGraduationController;
 use App\Http\Controllers\Api\MentorController;
 use App\Http\Controllers\Api\SubjectScheduleController;
+use App\Http\Controllers\Api\TimeInfoController;
 use App\Http\Controllers\Api\WarnedDissmissedStudentController;
 use App\Http\Resources\LoginResource;
 use Illuminate\Http\Request;
@@ -175,5 +176,10 @@ Route::post('contacts/mail', [ContactController::class, 'sendMail']);
 Route::get('contact-config', [ContactConfigController::class, 'getInfo']);
 Route::post('contact-config', [ContactConfigController::class, 'updateContactConfig']);
 Route::post('internship-graduations/list-students', [InternshipGraduationController::class, 'submitListStudentInternship']);
+
+//
 Route::get('subjects-schedule', [SubjectScheduleController::class, 'index']);
 Route::get('subjects-schedule/{id}', [SubjectScheduleController::class, 'show']);
+
+//
+Route::get('warned-student/info/{id}', [WarnedDissmissedStudentController::class, 'getWarningInfo']);

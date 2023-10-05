@@ -15,13 +15,14 @@ import Tab from '@mui/material/Tab';
 import Divider from '@mui/material/Divider';
 import { SearchNormal } from 'iconsax-react';
 import { useSelector } from 'react-redux';
-import { getMajors, setMajorId, setStudentCourse, setStudentQuery } from 'store/reducers/warnedStudentDetailSlice';
+import { getMajors, getWarningInfo, setMajorId, setStudentCourse, setStudentQuery } from 'store/reducers/warnedStudentDetailSlice';
 import { dispatch } from 'store';
 import WarnedStudentDetailTable from 'sections/admin/warned-student/WarnedStudentDetailTable';
-import RepeatCustomerChart from 'sections/dashboard/RepeatCustomerChart';
+import WarnedStudentStatistical from 'sections/admin/warned-student/WarnedStudentStatistical';
+import { useState } from 'react';
+import { useParams } from 'react-router';
 
-const getListCourse = () => {
-  let year = new Date().getFullYear();
+export const getListCourse = (year) => {
   let result = [];
   for (let i = year - 1; i >= year - 4; i--) {
     result.push(i);
@@ -30,15 +31,24 @@ const getListCourse = () => {
 };
 
 const WarnedStudentPage = () => {
-  const [value, setValue] = React.useState('1');
-
+  const [value, setValue] = useState('1');
+  const { id } = useParams();
+  const timeInfo = useSelector((state) => state.warned_student_detail.timeInfo);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  useEffect(() => {
+    const fetchInfo = async () => {
+      await dispatch(getWarningInfo(id));
+    };
+    fetchInfo();
+  }, [id]);
+
   return (
     <>
       <Typography variant="h4" component="h1" mb={2}>
-        Kết quả xét cảnh báo, buộc thôi học đợt 2 năm 2023
+        {`Kết quả xét cảnh báo, buộc thôi học đợt ${timeInfo?.openclass_time_semester ?? ''} năm ${timeInfo?.openclass_time_year ?? ''}`}
       </Typography>
       <Card>
         <TabContext value={value}>
@@ -57,7 +67,7 @@ const WarnedStudentPage = () => {
             <WarnedStudentDetailTable />
           </TabPanel>
           <TabPanel value="2">
-            <RepeatCustomerChart />
+            <WarnedStudentStatistical />
           </TabPanel>
         </TabContext>
       </Card>
@@ -66,9 +76,10 @@ const WarnedStudentPage = () => {
 };
 
 const FilterStudent = () => {
-  const { majors, majorId, studentCourse, studentQuery } = useSelector((state) => state.warned_student_detail);
-  const listCourse = getListCourse();
+  const { majors, filterTable, timeInfo } = useSelector((state) => state.warned_student_detail);
+  const { majorId, studentCourse, studentQuery } = filterTable;
 
+  const listCourse = getListCourse(timeInfo?.openclass_time_year);
   useEffect(() => {
     const fetchMajors = async () => {
       await dispatch(getMajors());

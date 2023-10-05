@@ -40,6 +40,32 @@ export const getMajors = createAsyncThunk('warned_student_detail/getMajors', asy
   }
 });
 
+export const getStatistical = createAsyncThunk('warned_student_detail/getStatistical', async (params) => {
+  const { id, type, major_id, course_id } = params;
+  const url = new URL(`/api/warned-student/statistical/${id}`, API_BASE_URL);
+  url.searchParams.set('type', type ?? '');
+  url.searchParams.set('major_id', major_id ?? '');
+  url.searchParams.set('course_id', course_id ?? '');
+
+  try {
+    const response = await axios.get(url.href);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+});
+
+export const getWarningInfo = createAsyncThunk('warned_student_detail/getWarningInfo', async (id) => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/warned-student/info/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+});
+
 const initialState = {
   data: [],
   isError: false,
@@ -50,10 +76,19 @@ const initialState = {
     pageIndex: 0,
     pageSize: 10
   },
-  majorId: '',
-  studentCourse: '',
-  studentQuery: '',
-  majors: []
+  filterTable: {
+    majorId: '',
+    studentCourse: '',
+    studentQuery: ''
+  },
+  majors: [],
+  timeInfo: null,
+  statistical: [],
+  filterChart: {
+    type: 'major',
+    majorId: 0,
+    courseId: 0
+  }
 };
 
 const warned_student_detail = createSlice({
@@ -64,13 +99,16 @@ const warned_student_detail = createSlice({
       state.pagination = action.payload;
     },
     setStudentQuery: (state, action) => {
-      state.studentQuery = action.payload;
+      state.filterTable.studentQuery = action.payload;
     },
     setStudentCourse: (state, action) => {
-      state.studentCourse = action.payload;
+      state.filterTable.studentCourse = action.payload;
     },
     setMajorId: (state, action) => {
-      state.majorId = action.payload;
+      state.filterTable.majorId = action.payload;
+    },
+    setFilterChart: (state, action) => {
+      state.filterChart = { ...state.filterChart, ...action.payload };
     }
   },
   extraReducers: (builder) => {
@@ -92,11 +130,25 @@ const warned_student_detail = createSlice({
       })
       .addCase(getMajors.fulfilled, (state, action) => {
         state.majors = action.payload.data.result;
+      })
+      .addCase(getStatistical.fulfilled, (state, action) => {
+        state.statistical = action.payload;
+      })
+      .addCase(getWarningInfo.fulfilled, (state, action) => {
+        state.timeInfo = action.payload;
       });
   }
 });
 
-export const { setColumnFilters, setGlobalFilter, setSorting, setPagination, setStudentQuery, setStudentCourse, setMajorId } =
-  warned_student_detail.actions;
+export const {
+  setColumnFilters,
+  setGlobalFilter,
+  setSorting,
+  setPagination,
+  setStudentQuery,
+  setStudentCourse,
+  setMajorId,
+  setFilterChart
+} = warned_student_detail.actions;
 
 export default warned_student_detail.reducer;

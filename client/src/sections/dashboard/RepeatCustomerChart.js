@@ -1,9 +1,43 @@
 import { useTheme } from '@mui/material';
 import React, { useState } from 'react';
+import { useEffect } from 'react';
 import ReactApexChart from 'react-apexcharts';
+import { useSelector } from 'react-redux';
+import { dispatch } from 'store';
+import { getStatistical } from 'store/reducers/warnedStudentDetailSlice';
+
+const handleData = (statistical) => {
+  let result = {
+    categories: [],
+    chartData: [
+      {
+        name: 'Cảnh báo',
+        data: []
+      },
+      {
+        name: 'Buộc thôi học',
+        data: []
+      }
+    ]
+  };
+  statistical.forEach((item) => {
+    result.categories.push(item.statistical_key);
+    result.chartData[0].data.push(item.result_CC);
+    result.chartData[1].data.push(item.result_BTH);
+  });
+  return result;
+};
 
 const ApexChart = () => {
   const theme = useTheme();
+  const statistical = useSelector((state) => state.warned_student_detail.statistical);
+
+  useEffect(() => {
+    dispatch(getStatistical({ id: 2, type: 'major', major_id: '', course_id: '' }));
+  }, []);
+
+  console.log(handleData(statistical));
+
   const [chartData] = useState([
     {
       name: 'Cảnh báo',

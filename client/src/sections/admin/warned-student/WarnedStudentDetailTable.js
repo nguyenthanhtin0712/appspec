@@ -5,18 +5,20 @@ import { MaterialReactTable } from 'material-react-table';
 import { fetchData, setPagination } from 'store/reducers/warnedStudentDetailSlice';
 import { dispatch } from 'store/index';
 import { useParams } from 'react-router';
+import { formatDDMMYYYY } from 'utils/formatDateTime';
+import useDebounce from 'hooks/useDebounce';
 
 const WarnedStudentDetailTable = () => {
   const theme = useTheme();
   const { id } = useParams();
 
-  const { data, isError, isLoading, isRefetching, rowCount, pagination, majorId, studentCourse, studentQuery } = useSelector(
-    (state) => state.warned_student_detail
-  );
+  const { data, isError, isLoading, isRefetching, rowCount, pagination, filterTable } = useSelector((state) => state.warned_student_detail);
+  const { majorId, studentCourse, studentQuery } = filterTable;
+  const queryDebounce = useDebounce(studentQuery, 500);
 
   useEffect(() => {
-    dispatch(fetchData({ id, majorId, studentCourse, studentQuery, pagination }));
-  }, [id, majorId, pagination, studentCourse, studentQuery]);
+    dispatch(fetchData({ id, majorId, studentCourse, queryDebounce, pagination }));
+  }, [id, majorId, pagination, queryDebounce, studentCourse]);
 
   const columns = React.useMemo(
     () => [
@@ -37,6 +39,7 @@ const WarnedStudentDetailTable = () => {
       {
         accessorKey: 'user_birthday',
         header: 'Ngày sinh',
+        Cell: ({ cell }) => formatDDMMYYYY(cell.getValue()),
         size: 5
       },
       {
