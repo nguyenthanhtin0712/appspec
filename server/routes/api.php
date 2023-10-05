@@ -18,6 +18,7 @@ use App\Http\Controllers\DisplayConfigController;
 use App\Http\Controllers\Api\SubjectController;
 use App\Http\Controllers\Api\InternshipGraduationController;
 use App\Http\Controllers\Api\MentorController;
+use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\SubjectScheduleController;
 use App\Http\Controllers\Api\TimeInfoController;
 use App\Http\Controllers\Api\WarnedDissmissedStudentController;
@@ -183,3 +184,5 @@ Route::get('subjects-schedule/{id}', [SubjectScheduleController::class, 'show'])
 
 //
 Route::get('warned-student/info/{id}', [WarnedDissmissedStudentController::class, 'getWarningInfo']);
+Route::get('roles', [RoleController::class, 'index']);
+Route::get('functional', [RoleController::class, 'getPermissions']);

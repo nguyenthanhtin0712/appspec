@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Functional;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -16,77 +17,87 @@ class RoleSeeder extends Seeder
     public function run()
     {
         //Role user
-        $user_view = Permission::create(['name' => 'user.view']);
-        $user_create = Permission::create(['name' => 'user.create']);
-        $user_update = Permission::create(['name' => 'user.update']);
-        $user_delete = Permission::create(['name' => 'user.delete']);
+        Functional::create(['functional_code' => 'user', 'functional_name' => 'Quản lý người dùng']);
+        $user_view = Permission::create(['name' => 'user.view', 'desc' => 'Thêm người dùng']);
+        $user_create = Permission::create(['name' => 'user.create', 'desc' => 'Tạo người dùng']);
+        $user_update = Permission::create(['name' => 'user.update', 'desc' => 'Cập nhật người dùng']);
+        $user_delete = Permission::create(['name' => 'user.delete', 'desc' => 'Xoá người dùng']);
         //Role major
-        $major_view = Permission::create(['name' => 'major.view']);
-        $major_create = Permission::create(['name' => 'major.create']);
-        $major_update = Permission::create(['name' => 'major.update']);
-        $major_delete = Permission::create(['name' => 'major.delete']);
+        Functional::create(['functional_code' => 'major', 'functional_name' => 'Quản lý ngành']);
+        $major_view = Permission::create(['name' => 'major.view', 'desc' => 'Xem ngành']);
+        $major_create = Permission::create(['name' => 'major.create', 'desc' => 'Tạo ngành']);
+        $major_update = Permission::create(['name' => 'major.update', 'desc' => 'Cập nhật ngành']);
+        $major_delete = Permission::create(['name' => 'major.delete', 'desc' => 'Xoá ngành']);
         //Role specialty
-        $specialty_view = Permission::create(['name' => 'specialty.view']);
-        $specialty_create = Permission::create(['name' => 'specialty.create']);
-        $specialty_update = Permission::create(['name' => 'specialty.update']);
-        $specialty_delete = Permission::create(['name' => 'specialty.delete']);
+        Functional::create(['functional_code' => 'specialty', 'functional_name' => 'Quản lý chuyên ngành']);
+        $specialty_view = Permission::create(['name' => 'specialty.view', 'desc' => 'Xem chuyên ngành']);
+        $specialty_create = Permission::create(['name' => 'specialty.create', 'desc' => 'Tạo chuyên ngành']);
+        $specialty_update = Permission::create(['name' => 'specialty.update', 'desc' => 'Cập nhật chuyên ngành']);
+        $specialty_delete = Permission::create(['name' => 'specialty.delete', 'desc' => 'Xoá chuyên ngành']);
         //Role student
-        $student_view = Permission::create(['name' => 'student.view']);
-        $student_create = Permission::create(['name' => 'student.create']);
-        $student_update = Permission::create(['name' => 'student.update']);
-        $student_delete = Permission::create(['name' => 'student.delete']);
-        //Role teacher
-        $teacher_view = Permission::create(['name' => 'teacher.view']);
-        $teacher_create = Permission::create(['name' => 'teacher.create']);
-        $teacher_update = Permission::create(['name' => 'teacher.update']);
-        $teacher_delete = Permission::create(['name' => 'teacher.delete']);
+        Functional::create(['functional_code' => 'student', 'functional_name' => 'Quản lý sinh viên']);
+        $student_view = Permission::create(['name' => 'student.view', 'desc' => 'Xem sinh viên']);
+        $student_create = Permission::create(['name' => 'student.create', 'desc' => 'Tạo sinh viên']);
+        $student_update = Permission::create(['name' => 'student.update', 'desc' => 'Cập nhật sinh viên']);
+        $student_delete = Permission::create(['name' => 'student.delete', 'desc' => 'Xoá sinh viên']);
         // Role register specialty
-        $register_specialty_view = Permission::create(['name' => 'register_specialty.view']);
-        $register_specialty_create = Permission::create(['name' => 'register_specialty.create']);
-        $register_specialty_update = Permission::create(['name' => 'register_specialty.update']);
-        $register_specialty_delete = Permission::create(['name' => 'register_specialty.delete']);
-        // Role register specialty
-        $register_intern_view = Permission::create(['name' => 'register_intern.view']);
-        $register_intern_create = Permission::create(['name' => 'register_intern.create']);
-        $register_intern_update = Permission::create(['name' => 'register_intern.update']);
-        $register_intern_delete = Permission::create(['name' => 'register_intern.delete']);
+        Functional::create(['functional_code' => 'register_specialty', 'functional_name' => 'Quản lý đăng ký chuyên ngành']);
+        $register_specialty_view = Permission::create(['name' => 'register_specialty.view', 'desc' => 'Xem đợt đăng ký chuyên ngành']);
+        $register_specialty_create = Permission::create(['name' => 'register_specialty.create', 'desc' => 'Tạo đợt đăng chuyên ngành']);
+        $register_specialty_update = Permission::create(['name' => 'register_specialty.update', 'desc' => 'Cập nhật đợt đăng ký chuyên ngành']);
+        $register_specialty_delete = Permission::create(['name' => 'register_specialty.delete', 'desc' => 'Xoá đợt đăng ký chuyên ngành']);
+        $register_specialty = Permission::create(['name' => 'register_specialty.register', 'desc' => 'Đăng ký chuyên ngành']);
+        
+        // Role register interns
+        Functional::create(['functional_code' => 'register_intern', 'functional_name' => 'Quản lý đăng ký thực tập']);
+        $register_intern_view = Permission::create(['name' => 'register_intern.view', 'desc' => 'Xem đợt đăng ký thực tập']);
+        $register_intern_create = Permission::create(['name' => 'register_intern.create', 'desc' => 'Tạo đợt đăng ký thực tập']);
+        $register_intern_update = Permission::create(['name' => 'register_intern.update', 'desc' => 'Cập nhật đợt đăng ký thực tập']);
+        $register_intern_delete = Permission::create(['name' => 'register_intern.delete', 'desc' => 'Xoá đợt đăng ký thực tập']);
+        $register_internship = Permission::create(['name' => 'register_intern.register', 'desc' => 'Đăng ký thưc tập']);
         // Role academic field 
-        $academic_field_view = Permission::create(['name' => 'academic_field.view']);
-        $academic_field_create = Permission::create(['name' => 'academic_field.create']);
-        $academic_field_update = Permission::create(['name' => 'academic_field.update']);
-        $academic_field_delete = Permission::create(['name' => 'academic_field.delete']);
+        Functional::create(['functional_code' => 'academic_field', 'functional_name' => 'Quản lý bộ môn']);
+        $academic_field_view = Permission::create(['name' => 'academic_field.view', 'desc' => 'Xem bộ môn']);
+        $academic_field_create = Permission::create(['name' => 'academic_field.create', 'desc' => 'Tạo bộ môn']);
+        $academic_field_update = Permission::create(['name' => 'academic_field.update', 'desc' => 'Cập nhật bộ môn']);
+        $academic_field_delete = Permission::create(['name' => 'academic_field.delete', 'desc' => 'Xoá bộ môn']);
         // Role title
-        $title_view = Permission::create(['name' => 'title.view']);
-        $title_create = Permission::create(['name' => 'title.create']);
-        $title_update = Permission::create(['name' => 'title.update']);
-        $title_delete = Permission::create(['name' => 'title.delete']);
+        Functional::create(['functional_code' => 'title', 'functional_name' => 'Quản lý chức vụ']);
+        $title_view = Permission::create(['name' => 'title.view', 'desc' => 'Xem chức vụ']);
+        $title_create = Permission::create(['name' => 'title.create', 'desc' => 'Tạo chức vụ']);
+        $title_update = Permission::create(['name' => 'title.update', 'desc' => 'Cập nhật chức vụ']);
+        $title_delete = Permission::create(['name' => 'title.delete', 'desc' => 'Xoá chức vụ']);
         // Role jobholder
-        $jobholder_view = Permission::create(['name' => 'jobholder.view']);
-        $jobholder_create = Permission::create(['name' => 'jobholder.create']);
-        $jobholder_update = Permission::create(['name' => 'jobholder.update']);
-        $jobholder_delete = Permission::create(['name' => 'jobholder.delete']);
+        Functional::create(['functional_code' => 'jobholder', 'functional_name' => 'Quản lý viên chức']);
+        $jobholder_view = Permission::create(['name' => 'jobholder.view', 'desc' => 'Xem viên chức']);
+        $jobholder_create = Permission::create(['name' => 'jobholder.create', 'desc' => 'Tạo viên chức']);
+        $jobholder_update = Permission::create(['name' => 'jobholder.update', 'desc' => 'Cập nhật viên chức']);
+        $jobholder_delete = Permission::create(['name' => 'jobholder.delete', 'desc' => 'Xoá viên chức']);
         // Role subject
-        $subject_view = Permission::create(['name' => 'subject.view']);
-        $subject_create = Permission::create(['name' => 'subject.create']);
-        $subject_update = Permission::create(['name' => 'subject.update']);
-        $subject_delete = Permission::create(['name' => 'subject.delete']);
+        Functional::create(['functional_code' => 'subject', 'functional_name' => 'Quản lý bộ môn']);
+        $subject_view = Permission::create(['name' => 'subject.view', 'desc' => 'Xem bộ môn']);
+        $subject_create = Permission::create(['name' => 'subject.create', 'desc' => 'Tạo bộ môn']);
+        $subject_update = Permission::create(['name' => 'subject.update', 'desc' => 'Cập nhật bộ môn']);
+        $subject_delete = Permission::create(['name' => 'subject.delete', 'desc' => 'Xoá bộ môn']);
 
         // Role company
-        $company_view = Permission::create(['name' => 'company.view']);
-        $company_create = Permission::create(['name' => 'company.create']);
-        $company_update = Permission::create(['name' => 'company.update']);
-        $company_delete = Permission::create(['name' => 'company.delete']);
+        Functional::create(['functional_code' => 'company', 'functional_name' => 'Quản lý công ty']);
+        $company_view = Permission::create(['name' => 'company.view', 'desc' => 'Xem công ty']);
+        $company_create = Permission::create(['name' => 'company.create', 'desc' => 'Tạo công ty']);
+        $company_update = Permission::create(['name' => 'company.update', 'desc' => 'Cập nhật công ty']);
+        $company_delete = Permission::create(['name' => 'company.delete', 'desc' => 'Xoá công ty']);
 
         // Subject Schedule
-        $subject_schedule_view = Permission::create(['name' => 'subject_schedule.view']);
-        $subject_schedule_create = Permission::create(['name' => 'subject_schedule.create']);
-        $subject_schedule_delete = Permission::create(['name' => 'subject_schedule.delete']);
+        Functional::create(['functional_code' => 'subject_schedule', 'functional_name' => 'Quản lý lịch học']);
+        $subject_schedule_view = Permission::create(['name' => 'subject_schedule.view', 'desc' => 'Xem lịch học']);
+        $subject_schedule_create = Permission::create(['name' => 'subject_schedule.create', 'desc' => 'Tạo lịch học']);
+        $subject_schedule_delete = Permission::create(['name' => 'subject_schedule.delete', 'desc' => 'Xoá lịch học']);
+        $subject_schedule_delete = Permission::create(['name' => 'subject_schedule.update', 'desc' => 'Cập nhật lịch học']);
 
         // Warned Dismissed Student
-        
-
 
         $admin_role = Role::create(['name' => 'admin']);
+        $student_role = Role::create(['name' => 'student']);
         $admin_role->givePermissionTo([
             $user_view,
             $user_create,
@@ -104,10 +115,6 @@ class RoleSeeder extends Seeder
             $student_create,
             $student_update,
             $student_delete,
-            $teacher_view,
-            $teacher_create,
-            $teacher_update,
-            $teacher_delete,
             $register_specialty_view,
             $register_specialty_create,
             $register_specialty_update,
@@ -139,6 +146,11 @@ class RoleSeeder extends Seeder
             $subject_schedule_view,
             $subject_schedule_create,
             $subject_schedule_delete
+        ]);
+
+        $student_role->givePermissionTo([
+            $register_specialty,
+            $register_internship
         ]);
     }
 }

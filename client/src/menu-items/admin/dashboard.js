@@ -1,19 +1,20 @@
 // type
-import { DirectboxNotif, DocumentCopy, Home3, HomeTrendUp, Setting2 } from 'iconsax-react';
+import { DirectboxNotif, DocumentCopy, Home3, HomeTrendUp, Setting2, ShieldSecurity } from 'iconsax-react';
 // icons
 const icons = {
   navigation: Home3,
   dashboard: HomeTrendUp,
   page: DocumentCopy,
   config: Setting2,
-  contact: DirectboxNotif
+  contact: DirectboxNotif,
+  role: ShieldSecurity
 };
 
 // ==============================|| MENU ITEMS - DASHBOARD ||============================== //
 
 const dashboard = {
   id: 'group-dashboard',
-  title: 'Navigation',
+  title: 'Hệ thống',
   icon: icons.navigation,
   type: 'group',
   children: [
@@ -44,6 +45,13 @@ const dashboard = {
       type: 'item',
       url: '/admin/page',
       icon: icons.page
+    },
+    {
+      id: 'role',
+      title: 'Phân quyền',
+      type: 'item',
+      url: '/admin/role',
+      icon: icons.role
     }
   ]
 };

@@ -20,13 +20,14 @@ class StudentSeeder extends Seeder
         $major = ['DCT', 'DKP'];
         $users = User::take(103)->get();
         $index = 3121410000;
+        $lop = 1200;
         foreach ($users as $user) {
             // $randomSpecialty = $specialtyOptions[array_rand($specialtyOptions)];
             $randomMajor = $major[array_rand($major)];
             $student = new Student([
                 'user_id' => $user->user_id,
                 'student_code' => $index++,
-                'student_class' => 'DCT121' . $index,
+                'student_class' => 'DCT' . $lop++,
                 'student_score' => round(randomDecimal(10, 40, 1) / 10, 2),
                 'student_course' => 2021,
                 'major_id' => $randomMajor,
