@@ -122,7 +122,8 @@ const initialState = {
       file_student: null,
       password_student: ''
     }
-  }
+  },
+  isLoadingFile: false
 };
 
 const student = createSlice({
@@ -176,17 +177,17 @@ const student = createSlice({
         state.studentDialog.open = false;
       })
       .addCase(addFileStudent.pending, (state) => {
-        state.isLoading = true;
+        state.isLoadingFile = true;
       })
       .addCase(addFileStudent.fulfilled, (state, action) => {
         state.studentFileDialog.open = false;
-        state.isLoading = false;
+        state.isLoadingFile = false;
         state.isRefetching = false;
         state.rowCount = action.payload.rowCount;
         state.isError = false;
       })
       .addCase(addFileStudent.rejected, (state) => {
-        state.isLoading = false;
+        state.isLoadingFile = false;
         state.isRefetching = false;
         state.isError = true;
       })

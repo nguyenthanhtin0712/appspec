@@ -15,12 +15,10 @@ import { InputLabel } from '@mui/material';
 import Stack from '@mui/material/Stack';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import { useSelector } from 'react-redux';
-import Backdrop from '@mui/material/Backdrop';
-import CircularProgress from '@mui/material/CircularProgress';
+
 import * as XLSX from 'xlsx';
 
 const StudentFileDialog = () => {
-  const { isLoading } = useSelector((state) => state.student);
   const { studentFileDialog, columnFilters, globalFilter, sorting, pagination } = useSelector((state) => state.student);
 
   const handleClose = () => {
@@ -46,6 +44,7 @@ const StudentFileDialog = () => {
         })}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
           try {
+            handleClose();
             const data = await handleImportData(values.file_student, values.password_student);
             const result = await dispatch(addFileStudent(data));
             if (result && !result.error) {
@@ -125,11 +124,6 @@ const StudentFileDialog = () => {
           </form>
         )}
       </Formik>
-      {isLoading && (
-        <Backdrop sx={{ color: '#fff', zIndex: 2000 }} open={isLoading}>
-          <CircularProgress color="inherit" />
-        </Backdrop>
-      )}
     </Dialog>
   );
 };
