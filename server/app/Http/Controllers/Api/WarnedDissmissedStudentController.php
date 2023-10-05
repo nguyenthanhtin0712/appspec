@@ -8,6 +8,7 @@ use App\Models\OpenclassTime;
 use App\Models\WarnedDismissedStudent;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 
 class WarnedDissmissedStudentController extends Controller
 {
@@ -168,5 +169,76 @@ class WarnedDissmissedStudentController extends Controller
         $openClassTime = OpenclassTime::findOrFail($id);
         WarnedDismissedStudent::where('openclass_time_id', $id)->delete();
         return $this->sentSuccessResponse($openClassTime, 'Deleted successfully', Response::HTTP_OK);
+    }
+
+    public function statistical(Request $request, $id)
+    {
+        $type = $request->input('type');
+
+        $query = WarnedDismissedStudent::where('openclass_time_id', $id)
+            ->join('students', 'warned_dismissed_student.student_code', '=', 'students.student_code')
+            ->join('users', 'students.user_id', '=', 'users.user_id');
+
+        $result = [];
+
+        if ($type === 'major') {
+            $result = $query->selectRaw('students.major_id, warned_dismissed_student.result, COUNT(*) as student_count')
+                ->groupBy('students.major_id')
+                ->groupBy('warned_dismissed_student.result')
+                ->get()
+                ->groupBy('major_id')->map(function ($item) {
+                    $majorId = $item->first()->major_id;
+                    $resultCounts = $item->pluck('student_count', 'result')->toArray();
+                    return [
+                        'major_id' => $majorId,
+                        'result_CC' => isset($resultCounts['CC']) ? $resultCounts['CC'] : 0,
+                        'result_BTH' => isset($resultCounts['BTH']) ? $resultCounts['BTH'] : 0,
+                    ];
+                });
+        }
+
+        if ($type === 'course') {
+            $major_id = $request->input('major_id');
+            if ($major_id) $query->where('major_id', $major_id);
+            $result = $query->selectRaw('students.student_course, warned_dismissed_student.result, COUNT(*) as student_count')
+                ->groupBy('students.student_course')
+                ->groupBy('warned_dismissed_student.result')
+                ->get()
+                ->groupBy('student_course')->map(function ($item) {
+                    $studentCourse = $item->first()->student_course;
+                    $resultCounts = $item->pluck('student_count', 'result')->toArray();
+
+                    return [
+                        'student_course' => $studentCourse,
+                        'result_CC' => isset($resultCounts['CC']) ? $resultCounts['CC'] : 0,
+                        'result_BTH' => isset($resultCounts['BTH']) ? $resultCounts['BTH'] : 0,
+                    ];
+                });
+        }
+
+        if ($type === 'class') {
+            $major_id = $request->input('major_id');
+            $course_id = $request->input('course_id');
+
+            if ($major_id) $query->where('major_id', $major_id);
+            if ($course_id) $query->where('student_course', $course_id);
+
+            $result = $query->selectRaw('students.student_class, warned_dismissed_student.result, COUNT(*) as student_count')
+                ->groupBy('students.student_class')
+                ->groupBy('warned_dismissed_student.result')
+                ->get()
+                ->groupBy('student_class')->map(function ($item) {
+                    $studentClass = $item->first()->student_class;
+                    $resultCounts = $item->pluck('student_count', 'result')->toArray();
+
+                    return [
+                        'student_class' => $studentClass,
+                        'result_CC' => isset($resultCounts['CC']) ? $resultCounts['CC'] : 0,
+                        'result_BTH' => isset($resultCounts['BTH']) ? $resultCounts['BTH'] : 0,
+                    ];
+                })->values();
+        }
+
+        return response()->json($result);
     }
 }

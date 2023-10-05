@@ -1,110 +1,78 @@
-import { useState, useEffect } from 'react';
-
-// material-ui
-import { useTheme } from '@mui/material/styles';
-
-// third-party
+import { useTheme } from '@mui/material';
+import React, { useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 
-// chart options
-const areaChartOptions = {
-  chart: {
-    type: 'area',
-    toolbar: {
-      show: false
-    }
-  },
-  dataLabels: {
-    enabled: false
-  },
-  stroke: {
-    width: 1
-  },
-  fill: {
-    type: 'gradient',
-    gradient: {
-      shadeIntensity: 1,
-      type: 'vertical',
-      inverseColors: false,
-      opacityFrom: 0.5,
-      opacityTo: 0
-    }
-  },
-  plotOptions: {
-    bar: {
-      columnWidth: '45%',
-      borderRadius: 4
-    }
-  },
-  grid: {
-    strokeDashArray: 4
-  }
-};
-
-// ==============================|| CHART - REPEAT CUSTOMER CHART ||============================== //
-
-const RepeatCustomerChart = () => {
+const ApexChart = () => {
   const theme = useTheme();
-
-  const { primary, secondary } = theme.palette.text;
-  const line = theme.palette.divider;
-
-  const [options, setOptions] = useState(areaChartOptions);
-
-  useEffect(() => {
-    setOptions((prevState) => ({
-      ...prevState,
-      colors: [theme.palette.primary.main, theme.palette.primary[700]],
-      xaxis: {
-        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-        labels: {
-          style: {
-            colors: [
-              secondary,
-              secondary,
-              secondary,
-              secondary,
-              secondary,
-              secondary,
-              secondary,
-              secondary,
-              secondary,
-              secondary,
-              secondary,
-              secondary
-            ]
-          }
-        },
-        axisBorder: {
-          show: false,
-          color: line
-        },
-        axisTicks: {
-          show: false
-        },
-        tickAmount: 11
-      },
-      yaxis: {
-        labels: {
-          style: {
-            colors: [secondary]
-          }
-        }
-      },
-      grid: {
-        borderColor: line
-      }
-    }));
-  }, [primary, secondary, line, theme]);
-
-  const [series] = useState([
+  const [chartData] = useState([
     {
-      name: 'Page Views',
-      data: [30, 60, 40, 70, 50, 90, 50, 55, 45, 60, 50, 65]
+      name: 'Cảnh báo',
+      data: [44, 55, 41, 37, 22, 43, 21]
+    },
+    {
+      name: 'Buộc thôi học',
+      data: [53, 32, 33, 52, 13, 43, 32]
     }
   ]);
 
-  return <ReactApexChart options={options} series={series} type="area" height={260} />;
+  const [chartOptions] = useState({
+    chart: {
+      type: 'bar',
+      height: 350,
+      stacked: true
+    },
+    plotOptions: {
+      bar: {
+        horizontal: false,
+        dataLabels: {
+          total: {
+            enabled: true,
+            offsetX: 0,
+            style: {
+              fontSize: '13px',
+              fontWeight: 900
+            }
+          }
+        }
+      }
+    },
+    stroke: {
+      width: 1,
+      colors: ['#fff']
+    },
+    colors: [theme.palette.warning.main, theme.palette.error.main],
+
+    xaxis: {
+      categories: [2008, 2009, 2010, 2011, 2012, 2013, 2014],
+      title: {
+        text: 'Khoá'
+      }
+    },
+    yaxis: {
+      title: {
+        text: 'Sinh viên'
+      }
+    },
+    tooltip: {
+      y: {
+        formatter: (val) => val + ' sinh viên'
+      }
+    },
+    fill: {
+      opacity: 1
+    },
+    legend: {
+      position: 'top',
+      horizontalAlign: 'left',
+      offsetX: 40
+    }
+  });
+
+  return (
+    <div id="chart">
+      <ReactApexChart options={chartOptions} series={chartData} type="bar" height={450} />
+    </div>
+  );
 };
 
-export default RepeatCustomerChart;
+export default ApexChart;

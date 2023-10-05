@@ -128,7 +128,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('internship-graduations/check-user-internship', [InternshipGraduationController::class, 'checkUserInternship']);
     Route::post('internship-graduations/additional-mentor', [InternshipGraduationController::class, 'additionalMentor']);
     Route::post('internship-graduations/additional-company', [InternshipGraduationController::class, 'additionalCompnay']);
-    
+
     // Academic_field api
     Route::get('academic-fields', [AcademicFieldController::class, 'index'])->middleware('check_user_role_permission:academic_field.view');;
 
@@ -139,6 +139,7 @@ Route::middleware(['auth:api'])->group(function () {
     // Warned dimissed student
     Route::get('warned-student', [WarnedDissmissedStudentController::class, 'index']);
     Route::post('warned-student', [WarnedDissmissedStudentController::class, 'store']);
+    Route::get('warned-student/statistical/{id}', [WarnedDissmissedStudentController::class, 'statistical']);
     Route::get('warned-student/{id}', [WarnedDissmissedStudentController::class, 'show']);
     Route::delete('warned-student/{id}', [WarnedDissmissedStudentController::class, 'destroy']);
 });
