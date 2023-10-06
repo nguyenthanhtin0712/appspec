@@ -1,7 +1,4 @@
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
 import Checkbox from '@mui/material/Checkbox';
-import Divider from '@mui/material/Divider';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormGroup from '@mui/material/FormGroup';
 import Grid from '@mui/material/Grid';
@@ -25,53 +22,45 @@ const RoleCreate = () => {
             <Grid item xs={12}>
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6} md={4}>
-                  <MainCard>
-                    <Card sx={{ minWidth: 225 }} mb={2}>
-                      <CardContent>
-                        <Typography variant="h5" component="div" mb={1}>
-                          Quản lý người dùng
-                        </Typography>
-                        <Divider />
-                        <FormGroup>
-                          <FormControlLabel
-                            control={<Checkbox />}
-                            label={
-                              <Typography
-                                style={{
-                                  formControlLabel: { fontSize: '1rem', '& label': { fontSize: '1rem' } }
-                                }}
-                              >
-                                Thêm người dùng
-                              </Typography>
-                            }
-                          />
-                          <FormControlLabel
-                            control={<Checkbox />}
-                            label={
-                              <Typography
-                                style={{
-                                  formControlLabel: { fontSize: '1rem', '& label': { fontSize: '1rem' } }
-                                }}
-                              >
-                                Cập nhật người dùng
-                              </Typography>
-                            }
-                          />
-                          <FormControlLabel
-                            control={<Checkbox />}
-                            label={
-                              <Typography
-                                style={{
-                                  formControlLabel: { fontSize: '1rem', '& label': { fontSize: '1rem' } }
-                                }}
-                              >
-                                Xoá người dùng
-                              </Typography>
-                            }
-                          />
-                        </FormGroup>
-                      </CardContent>
-                    </Card>
+                  <MainCard title="Quản lý người dùng">
+                    <FormGroup>
+                      <FormControlLabel
+                        control={<Checkbox />}
+                        label={
+                          <Typography
+                            style={{
+                              formControlLabel: { fontSize: '1rem', '& label': { fontSize: '1rem' } }
+                            }}
+                          >
+                            Thêm người dùng
+                          </Typography>
+                        }
+                      />
+                      <FormControlLabel
+                        control={<Checkbox />}
+                        label={
+                          <Typography
+                            style={{
+                              formControlLabel: { fontSize: '1rem', '& label': { fontSize: '1rem' } }
+                            }}
+                          >
+                            Cập nhật người dùng
+                          </Typography>
+                        }
+                      />
+                      <FormControlLabel
+                        control={<Checkbox />}
+                        label={
+                          <Typography
+                            style={{
+                              formControlLabel: { fontSize: '1rem', '& label': { fontSize: '1rem' } }
+                            }}
+                          >
+                            Xoá người dùng
+                          </Typography>
+                        }
+                      />
+                    </FormGroup>
                   </MainCard>
                 </Grid>
               </Grid>
