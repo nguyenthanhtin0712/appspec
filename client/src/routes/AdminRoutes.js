@@ -33,6 +33,7 @@ const Page = Loadable(lazy(() => import('pages/admin/page/page_index')));
 const PageCreate = Loadable(lazy(() => import('pages/admin/page/page_create')));
 const Role = Loadable(lazy(() => import('pages/admin/role/role_index')));
 const RoleCreate = Loadable(lazy(() => import('pages/admin/role/role_create')));
+const RoleUpdate = Loadable(lazy(() => import('pages/admin/role/role_update')));
 const Page404 = Loadable(lazy(() => import('pages/error/page404')));
 
 const AdminRoutes = {
@@ -143,6 +144,10 @@ const AdminRoutes = {
     {
       path: 'role/create',
       element: <PrivateRoute component={RoleCreate} requiredPermissions={[]} />
+    },
+    {
+      path: 'role/:id',
+      element: <PrivateRoute component={RoleUpdate} requiredPermissions={[]} />
     }
   ]
 };

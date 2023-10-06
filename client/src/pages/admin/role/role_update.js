@@ -4,27 +4,31 @@ import Typography from '@mui/material/Typography';
 import MainCard from 'components/MainCard';
 import InputField from 'components/input/InputField';
 import { Formik } from 'formik';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import { dispatch } from 'store/index';
-import { getFunctional, setSelectedCheckboxes, createRole } from 'store/reducers/roleSlice';
+import { getFunctional, setSelectedCheckboxes, updateRole, getRole } from 'store/reducers/roleSlice';
 import RoleCard from 'sections/admin/role/RoleCard';
 import LoadingBox from 'components/LoadingBox';
 import { Backdrop, CircularProgress, Stack } from '@mui/material';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 
-const RoleCreate = () => {
+const RoleUpdate = () => {
+  const { id } = useParams();
   const navigate = new useNavigate();
-  const { functional, isLoadingFunc, selectedCheckboxes, isLoadingCreate } = useSelector((state) => state.role);
+  const [isLoadingData, setIsLoadingData] = useState(true);
+  const { functional, isLoadingFunc, selectedCheckboxes, isLoadingCreate, infoRole } = useSelector((state) => state.role);
 
   useEffect(() => {
     const getFunc = async () => {
       await dispatch(getFunctional());
+      await dispatch(getRole(id));
+      setIsLoadingData(false);
     };
     getFunc();
-  }, []);
+  }, [id]);
 
   const handleCheckboxChange = (event) => {
     const { name, checked } = event.target;
@@ -39,18 +43,20 @@ const RoleCreate = () => {
   const getSelectedCheckboxesArray = () => {
     return Object.keys(selectedCheckboxes).filter((key) => selectedCheckboxes[key]);
   };
-
+  if (isLoadingData) {
+    return null;
+  }
   return (
     <>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Typography variant="h4">Thêm nhóm quyền</Typography>
+          <Typography variant="h4">Cập nhật nhóm quyền</Typography>
         </Grid>
         <Grid item xs={12}>
           <MainCard>
             <Formik
               initialValues={{
-                name: ''
+                name: `${infoRole?.name}`
               }}
               validationSchema={Yup.object().shape({
                 name: Yup.string().max(255).required('Tên nhóm quyền là bắt buộc !')
@@ -66,7 +72,7 @@ const RoleCreate = () => {
                   permissions: permissions
                 };
                 try {
-                  const result = await dispatch(createRole(value));
+                  const result = await dispatch(updateRole({ id, value }));
                   if (result.payload.status == 400) {
                     toast.error('Tên nhóm quyền đã tồn tại');
                     return;
@@ -74,7 +80,7 @@ const RoleCreate = () => {
                   if (result) {
                     setStatus({ success: true });
                     setSubmitting(false);
-                    toast.success('Tạo nhóm quyền thành công!');
+                    toast.success('Cập nhât nhóm quyền thành công!');
                     navigate('/admin/role');
                   } else {
                     setStatus({ success: false });
@@ -133,7 +139,7 @@ const RoleCreate = () => {
                         color="primary"
                         style={{ float: 'right' }}
                       >
-                        Tạo nhóm quyền
+                        Cập nhật nhóm quyền
                       </Button>
                     </Grid>
                   </Grid>
@@ -152,4 +158,4 @@ const RoleCreate = () => {
   );
 };
 
-export default RoleCreate;
+export default RoleUpdate;

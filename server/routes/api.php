@@ -17,10 +17,8 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\DisplayConfigController;
 use App\Http\Controllers\Api\SubjectController;
 use App\Http\Controllers\Api\InternshipGraduationController;
-use App\Http\Controllers\Api\MentorController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\SubjectScheduleController;
-use App\Http\Controllers\Api\TimeInfoController;
 use App\Http\Controllers\Api\WarnedDissmissedStudentController;
 use App\Http\Resources\LoginResource;
 use Illuminate\Http\Request;
@@ -182,7 +180,10 @@ Route::post('internship-graduations/list-students', [InternshipGraduationControl
 Route::get('subjects-schedule', [SubjectScheduleController::class, 'index']);
 Route::get('subjects-schedule/{id}', [SubjectScheduleController::class, 'show']);
 
-//
 Route::get('warned-student/info/{id}', [WarnedDissmissedStudentController::class, 'getWarningInfo']);
 Route::get('roles', [RoleController::class, 'index']);
+Route::post('roles', [RoleController::class, 'store']);
+Route::get('roles/{id}', [RoleController::class, 'show']);
+Route::put('roles/{id}', [RoleController::class, 'update']);
+Route::delete('roles/{id}', [RoleController::class, 'destroy']);
 Route::get('functional', [RoleController::class, 'getPermissions']);

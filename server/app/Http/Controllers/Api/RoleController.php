@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreRoleRequest;
+use App\Http\Requests\UpdateRoleRequest;
 use App\Http\Resources\Collection;
 use App\Models\Functional;
 use Illuminate\Http\Request;
@@ -27,7 +29,8 @@ class RoleController extends Controller
         $sortOrder = $request->input('sortOrder', 'asc');
         $filters = $request->input('filters');
         $roles = Role::query();
-        $roles->select('id','name');
+        $roles->where('isDelete', 0);
+        $roles->select('id', 'name');
         if ($query) {
             $roles->where("name", "LIKE", "%$query%");
         }
@@ -56,15 +59,14 @@ class RoleController extends Controller
         return $this->sentSuccessResponse($roleCollection, "Get data success", Response::HTTP_OK);
     }
 
-    public function getPermissions(){
-        $functionals = Functional::all()->map(function($functional){
+    public function getPermissions()
+    {
+        $functionals = Functional::all()->map(function ($functional) {
             return [
-                'functional_code' => $functional->functional_code,
                 'functional_name' => $functional->functional_name,
-                'permissions' => Permission::where('name', 'LIKE', "%{$functional->functional_code}%")->get()
+                'permissions' => Permission::where('name', 'LIKE', "%{$functional->functional_code}.%")->select('permissions.name', 'permissions.desc')->get()
             ];
         });
-
         return $this->sentSuccessResponse($functionals, 'Get permission success!', 200);
     }
 
@@ -74,9 +76,20 @@ class RoleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRoleRequest $request)
     {
-        //
+        $name = $request->input('name');
+        $permissions = $request->input('permissions');
+        if (empty($permission)) {
+            return $this->sentErrorResponse(null, "Permission array is empty", 399);
+        }
+        $role = Role::where('name', $name)->first();
+        if ($role) {
+            return $this->sentErrorResponse($role, "Error update role", 400);
+        }
+        $role = Role::create(['name' => $name]);
+        $result = $role->givePermissionTo($permissions);
+        return $this->sentSuccessResponse($result, "Create role success", 200);
     }
 
     /**
@@ -87,7 +100,16 @@ class RoleController extends Controller
      */
     public function show($id)
     {
-        //
+        $permissions = Role::findById($id)->permissions->map(function ($per) {
+            return [
+                'name' => $per->name
+            ];
+        });
+        $roles = [
+            'name' => Role::findById($id)->name,
+            'permissions' => $permissions
+        ];
+        return $this->sentSuccessResponse($roles, "Get role sucess", 200);
     }
 
     /**
@@ -97,10 +119,25 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateRoleRequest $request, $id)
     {
-        //
+        $name = $request->input('name');
+        $permission = $request->input('permissions');
+        if (empty($permission)) {
+            return $this->sentErrorResponse(null, "Permission array is empty", 400);
+        }
+        $existingRole = Role::where('id', '!=', $id)->where('name', $name)->first();
+        if ($existingRole) {
+            return $this->sentErrorResponse(null, "Role with the same name already exists", 400);
+        }
+        $role = Role::findOrFail($id);
+        $role->syncPermissions($permission);
+        $role->name = $name;
+        $role->save();
+
+        return $this->sentSuccessResponse($role, "Update role success", 200);
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -110,6 +147,9 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $role = Role::where('id', $id)->firstOrFail();
+        $role->isDelete = 1;
+        $role->save();
+        return $this->sentSuccessResponse($role, "Delete role success", Response::HTTP_OK);
     }
 }

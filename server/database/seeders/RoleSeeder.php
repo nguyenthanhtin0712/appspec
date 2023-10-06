@@ -41,12 +41,12 @@ class RoleSeeder extends Seeder
         $student_update = Permission::create(['name' => 'student.update', 'desc' => 'Cập nhật sinh viên']);
         $student_delete = Permission::create(['name' => 'student.delete', 'desc' => 'Xoá sinh viên']);
         // Role register specialty
-        Functional::create(['functional_code' => 'register_specialty', 'functional_name' => 'Quản lý đăng ký chuyên ngành']);
-        $register_specialty_view = Permission::create(['name' => 'register_specialty.view', 'desc' => 'Xem đợt đăng ký chuyên ngành']);
-        $register_specialty_create = Permission::create(['name' => 'register_specialty.create', 'desc' => 'Tạo đợt đăng chuyên ngành']);
-        $register_specialty_update = Permission::create(['name' => 'register_specialty.update', 'desc' => 'Cập nhật đợt đăng ký chuyên ngành']);
-        $register_specialty_delete = Permission::create(['name' => 'register_specialty.delete', 'desc' => 'Xoá đợt đăng ký chuyên ngành']);
-        $register_specialty = Permission::create(['name' => 'register_specialty.register', 'desc' => 'Đăng ký chuyên ngành']);
+        Functional::create(['functional_code' => 'register_spec', 'functional_name' => 'Quản lý đăng ký chuyên ngành']);
+        $register_spec_view = Permission::create(['name' => 'register_spec.view', 'desc' => 'Xem đợt đăng ký chuyên ngành']);
+        $register_spec_create = Permission::create(['name' => 'register_spec.create', 'desc' => 'Tạo đợt đăng chuyên ngành']);
+        $register_spec_update = Permission::create(['name' => 'register_spec.update', 'desc' => 'Cập nhật đợt đăng ký chuyên ngành']);
+        $register_spec_delete = Permission::create(['name' => 'register_spec.delete', 'desc' => 'Xoá đợt đăng ký chuyên ngành']);
+        $register_spec = Permission::create(['name' => 'register_spec.register', 'desc' => 'Đăng ký chuyên ngành']);
         
         // Role register interns
         Functional::create(['functional_code' => 'register_intern', 'functional_name' => 'Quản lý đăng ký thực tập']);
@@ -115,10 +115,10 @@ class RoleSeeder extends Seeder
             $student_create,
             $student_update,
             $student_delete,
-            $register_specialty_view,
-            $register_specialty_create,
-            $register_specialty_update,
-            $register_specialty_delete,
+            $register_spec_view,
+            $register_spec_create,
+            $register_spec_update,
+            $register_spec_delete,
             $register_intern_view,
             $register_intern_create,
             $register_intern_update,
@@ -149,7 +149,7 @@ class RoleSeeder extends Seeder
         ]);
 
         $student_role->givePermissionTo([
-            $register_specialty,
+            $register_spec,
             $register_internship
         ]);
     }

@@ -9,7 +9,7 @@ export const fetchData = createAsyncThunk('role/fetchData', async (params, { rej
     sorting,
     pagination: { pageIndex, pageSize }
   } = params;
-  const url = new URL('/api/role', API_BASE_URL);
+  const url = new URL('/api/roles', API_BASE_URL);
   url.searchParams.set('page', `${pageIndex + 1}`);
   url.searchParams.set('perPage', `${pageSize}`);
   url.searchParams.set('filters', JSON.stringify(columnFilters ?? []));
@@ -34,6 +34,56 @@ export const fetchData = createAsyncThunk('role/fetchData', async (params, { rej
   }
 });
 
+export const getFunctional = createAsyncThunk('role/getFunctional', async () => {
+  try {
+    const response = await axios.get(`/functional`);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+});
+
+export const getRole = createAsyncThunk('role/getRole', async (id) => {
+  try {
+    const response = await axios.get(`/roles/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+});
+
+export const createRole = createAsyncThunk('role/createRole', async (value) => {
+  try {
+    const response = await axios.post(`/roles`, value);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+});
+
+export const updateRole = createAsyncThunk('role/updateRole', async ({ id, value }) => {
+  try {
+    const response = await axios.put(`/roles/${id}`, value);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+});
+
+export const deleteRole = createAsyncThunk('role/deleteRole', async (id) => {
+  try {
+    const response = await axios.delete(`/roles/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+});
+
 const initialState = {
   data: [],
   isError: false,
@@ -46,7 +96,14 @@ const initialState = {
   pagination: {
     pageIndex: 0,
     pageSize: 10
-  }
+  },
+  functional: '',
+  isLoadingFunc: false,
+  selectedCheckboxes: {},
+  isLoadingCreate: false,
+  infoRole: '',
+  idDelete: '',
+  openCofirmDialog: false
 };
 
 const role = createSlice({
@@ -64,6 +121,15 @@ const role = createSlice({
     },
     setPagination: (state, action) => {
       state.pagination = action.payload;
+    },
+    setSelectedCheckboxes: (state, action) => {
+      state.selectedCheckboxes = action.payload;
+    },
+    setOpenCofirmDialog: (state, action) => {
+      state.openCofirmDialog = action.payload;
+    },
+    setIdDelete: (state, action) => {
+      state.idDelete = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -82,10 +148,69 @@ const role = createSlice({
         state.isLoading = false;
         state.isRefetching = false;
         state.isError = true;
+      })
+      .addCase(getFunctional.pending, (state) => {
+        state.isLoadingFunc = true;
+      })
+      .addCase(getFunctional.fulfilled, (state, action) => {
+        state.isLoadingFunc = false;
+        state.isRefetching = false;
+        state.functional = action.payload.data;
+        state.functional.forEach((func) => {
+          func.permissions.forEach((permission) => {
+            state.selectedCheckboxes = {
+              ...state.selectedCheckboxes,
+              [permission.name]: false
+            };
+          });
+        });
+        state.rowCount = action.payload.rowCount;
+        state.isError = false;
+      })
+      .addCase(getFunctional.rejected, (state) => {
+        state.isLoadingFunc = false;
+        state.isRefetching = false;
+        state.isError = true;
+      })
+      .addCase(createRole.pending, (state) => {
+        state.isLoadingCreate = true;
+      })
+      .addCase(createRole.fulfilled, (state) => {
+        state.isLoadingCreate = false;
+      })
+      .addCase(createRole.rejected, (state) => {
+        state.isLoadingCreate = false;
+      })
+      .addCase(updateRole.pending, (state) => {
+        state.isLoadingCreate = true;
+      })
+      .addCase(updateRole.fulfilled, (state) => {
+        state.isLoadingCreate = false;
+      })
+      .addCase(updateRole.rejected, (state) => {
+        state.isLoadingCreate = false;
+      })
+      .addCase(getRole.pending, (state) => {
+        state.isLoadingFunc = true;
+      })
+      .addCase(getRole.fulfilled, (state, action) => {
+        state.infoRole = action.payload.data;
+        action.payload.data.permissions.forEach((per) => {
+          state.selectedCheckboxes = {
+            ...state.selectedCheckboxes,
+            [per.name]: true
+          };
+        });
+        state.isLoadingFunc = false;
+      })
+      .addCase(deleteRole.fulfilled, (state, action) => {
+        const id = action.payload.data.id;
+        state.data = state.data.filter((role) => role.id !== id);
       });
   }
 });
 
-export const { setColumnFilters, setGlobalFilter, setSorting, setPagination } = role.actions;
+export const { setColumnFilters, setGlobalFilter, setSorting, setPagination, setSelectedCheckboxes, setOpenCofirmDialog, setIdDelete } =
+  role.actions;
 
 export default role.reducer;

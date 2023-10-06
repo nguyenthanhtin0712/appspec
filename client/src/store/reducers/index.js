@@ -26,6 +26,7 @@ import regsiter_intern_user from './registerInternUserSlice';
 import assignment_internship from './assignmentIntenship';
 import contact from './contactSlice';
 import assignment_internship_detail from 'store/reducers/assignmentInternshipDetail';
+import role from 'store/reducers/roleSlice';
 // ==============================|| COMBINE REDUCERS ||============================== //
 
 const reducers = combineReducers({
@@ -52,7 +53,8 @@ const reducers = combineReducers({
   assignment_internship_detail,
   contact,
   warned_student,
-  warned_student_detail
+  warned_student_detail,
+  role
 });
 
 export default reducers;

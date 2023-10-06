@@ -27,8 +27,6 @@ const ConfigPage = () => {
 
   if (dataConfig.length === 0) return null;
 
-  console.log(dataConfig);
-
   return (
     <>
       <MainCard>

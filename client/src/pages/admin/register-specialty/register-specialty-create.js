@@ -208,7 +208,7 @@ const RegisterSpecialty = () => {
                       color="primary"
                       style={{ float: 'right' }}
                     >
-                      Tạo đợt đăng ký chuyên ngành
+                      Tạo nhóm quyền
                     </Button>
                   </Grid>
                 </Grid>

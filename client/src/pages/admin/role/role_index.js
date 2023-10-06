@@ -1,6 +1,7 @@
 import { Button, Stack, Typography } from '@mui/material';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import RoleTable from 'sections/admin/role/RoleTable';
 
 const RoleIndex = () => {
   return (
@@ -11,6 +12,7 @@ const RoleIndex = () => {
           Thêm nhóm quyền
         </Button>
       </Stack>
+      <RoleTable />
     </>
   );
 };
