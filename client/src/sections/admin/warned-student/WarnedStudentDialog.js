@@ -38,8 +38,7 @@ const WarningStudentDialog = () => {
             openclass_time_year: values.openclass_time_year,
             students: await handleImportData(values.warned_student)
           };
-          console.log(formatedData);
-          const result = dispatch(createWarnedStudent(formatedData));
+          const result = await dispatch(createWarnedStudent(formatedData));
           try {
             if (result && !result.error) {
               setStatus({ success: true });
