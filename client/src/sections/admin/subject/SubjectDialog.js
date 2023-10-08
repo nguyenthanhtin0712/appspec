@@ -185,8 +185,8 @@ const SubjectForm = ({ initialValues, action }) => {
                   onBlur={handleBlur}
                   onChange={handleChange}
                   list={academicFields}
-                  itemValue="academic_field_id"
-                  itemText="academic_field_name"
+                  getOptionLabel={(option) => option.academic_field_name}
+                  getOptionValue={(option) => option.academic_field_id}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -201,6 +201,7 @@ const SubjectForm = ({ initialValues, action }) => {
                   isOptionEqualToValue={(option, value) => option.subject_id === value.subject_id}
                   getOptionLabel={(option) => `${option.subject_id} - ${option.subject_name}`}
                   onChange={(event, newValue) => setFieldValue('subject_previous', newValue)}
+                  disableCloseOnSelect
                   multiple
                 />
               </Grid>

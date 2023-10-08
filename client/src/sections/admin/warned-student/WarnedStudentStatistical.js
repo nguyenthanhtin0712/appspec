@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 import { setFilterChart } from 'store/reducers/warnedStudentDetailSlice';
 import { dispatch } from 'store';
 import { getListCourse } from 'pages/admin/warned-student/warned-student-detail';
+import { useParams } from 'react-router';
 
 const arr = [
   {
@@ -25,6 +26,7 @@ const arr = [
 ];
 
 const WarnedStudentStatistical = () => {
+  const { id } = useParams();
   const { majors, filterChart, timeInfo } = useSelector((state) => state.warned_student_detail);
   const { type, majorId, courseId } = filterChart;
   const majorArr = [{ major_id: 0, major_name: 'Tất cả' }, ...majors];
@@ -91,7 +93,7 @@ const WarnedStudentStatistical = () => {
           </FormControl>
         </Grid>
       </Grid>
-      <WarnedStudentChart id={2} xTitle={arr.find((item) => item.id === type).text} />
+      <WarnedStudentChart id={id} xTitle={arr.find((item) => item.id === type).text} />
     </>
   );
 };

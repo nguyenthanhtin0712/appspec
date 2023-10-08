@@ -109,8 +109,8 @@ const SpecialtyDialog = () => {
                     error={Boolean(touched.major_id && errors.major_id)}
                     helperText={errors.major_id}
                     list={data}
-                    itemValue="major_id"
-                    itemText="major_name"
+                    getOptionLabel={(option) => option.major_name}
+                    getOptionValue={(option) => option.major_id}
                     fullWidth
                   />
                 </Grid>

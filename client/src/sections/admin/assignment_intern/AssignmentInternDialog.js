@@ -83,8 +83,8 @@ const AssignmentInternDialog = ({ rowSelection, setRowSelection }) => {
                     error={Boolean(touched.jobholder_code && errors.jobholder_code)}
                     helperText={errors.jobholder_code}
                     list={jobholders}
-                    itemValue="jobholder_code"
-                    itemText="jobholder_name"
+                    getOptionLabel={(option) => option.jobholder_name}
+                    getOptionValue={(option) => option.jobholder_code}
                     fullWidth
                   />
                 </Grid>

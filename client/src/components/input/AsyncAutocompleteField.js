@@ -5,12 +5,15 @@ import InputLabel from '@mui/material/InputLabel';
 import Stack from '@mui/material/Stack';
 import CircularProgress from '@mui/material/CircularProgress';
 
-export default function AsyncAutocompleteField({ id, label, placeholder, options, loading, multiple, fetchOptions, ...props }) {
+export default function AsyncAutocompleteField({ id, label, placeholder, options, loading, multiple, fetchOptions, error, ...props }) {
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
-    setOpen(true);
-    if (options.length === 0) fetchOptions();
+    const fetchOps = async () => {
+      setOpen(true);
+      if (options.length === 0) await fetchOptions();
+    };
+    fetchOps();
   };
 
   return (
@@ -26,6 +29,7 @@ export default function AsyncAutocompleteField({ id, label, placeholder, options
         renderInput={(params) => (
           <TextField
             {...params}
+            error={error}
             placeholder={placeholder}
             InputProps={{
               'aria-label': 'Without label',

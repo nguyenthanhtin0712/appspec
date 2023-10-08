@@ -38,7 +38,7 @@ const SubjectScheduleDialog = () => {
             openclass_time_year: values.openclass_time_year,
             subjects: await handleImportData(values.file_schedule[0])
           };
-          const result = dispatch(createSubjectSchedule(formatedData));
+          const result = await dispatch(createSubjectSchedule(formatedData));
           try {
             if (result && !result.error) {
               setStatus({ success: true });

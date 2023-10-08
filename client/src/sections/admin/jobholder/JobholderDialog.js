@@ -199,8 +199,8 @@ const JobholderForm = ({ initialValues, action }) => {
                     onBlur={handleBlur}
                     onChange={handleChange}
                     list={gender}
-                    itemValue="id"
-                    itemText="name"
+                    getOptionLabel={(option) => option.name}
+                    getOptionValue={(option) => option.id}
                   />
 
                   <DatePickerField
@@ -289,8 +289,8 @@ const JobholderForm = ({ initialValues, action }) => {
                     onChange={handleChange}
                     onBlur={handleBlur}
                     list={dataAcademicField}
-                    itemValue="academic_field_id"
-                    itemText="academic_field_name"
+                    getOptionLabel={(option) => option.academic_field_name}
+                    getOptionValue={(option) => option.academic_field_id}
                   />
                   <SelectField
                     id="title_id"
@@ -303,8 +303,8 @@ const JobholderForm = ({ initialValues, action }) => {
                     onChange={handleChange}
                     onBlur={handleBlur}
                     list={dataTitle}
-                    itemValue="title_id"
-                    itemText="title_name"
+                    getOptionLabel={(option) => option.title_name}
+                    getOptionValue={(option) => option.title_id}
                   />
                   {action == 'add' && (
                     <Stack spacing={1} mb="10px">

@@ -61,8 +61,8 @@ const ChangeSpecialtyDialog = ({ open, handleClose, rowSelection, setRowSelectio
                     error={Boolean(touched.specialty_id && errors.specialty_id)}
                     helperText={errors.specialty_id}
                     list={statistic}
-                    itemValue="specialty_id"
-                    itemText="specialty_name"
+                    getOptionLabel={(option) => option.specialty_name}
+                    getOptionValue={(option) => option.specialty_id}
                     fullWidth
                   />
                 </Grid>

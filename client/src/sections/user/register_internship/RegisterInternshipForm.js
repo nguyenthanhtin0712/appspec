@@ -68,8 +68,8 @@ const RegisterInternsipForm = ({ companies }) => {
                 error={Boolean(touched.company_id && errors.company_id)}
                 helperText={errors.company_id}
                 list={companies}
-                itemValue="company_id"
-                itemText="company_name"
+                getOptionLabel={(option) => option.company_name}
+                getOptionValue={(option) => option.company_id}
                 fullWidth
               />
             </Grid>
@@ -92,8 +92,8 @@ const RegisterInternsipForm = ({ companies }) => {
                 error={Boolean(touched.position_id && errors.position_id)}
                 helperText={errors.position_id}
                 list={positions}
-                itemValue="position_id"
-                itemText="position_name"
+                getOptionLabel={(option) => option.position_name}
+                getOptionValue={(option) => option.position_id}
                 fullWidth
               />
             </Grid>

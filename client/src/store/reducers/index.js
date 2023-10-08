@@ -23,6 +23,7 @@ import config_page from './configPageSlice';
 import create_register_intern from './createRegisterInternSlice';
 import internship_graduation from './internshipGraduationSlice';
 import regsiter_intern_user from './registerInternUserSlice';
+import register_open_class from './registerOpenClassSlice';
 import assignment_internship from './assignmentIntenship';
 import contact from './contactSlice';
 import assignment_internship_detail from 'store/reducers/assignmentInternshipDetail';
@@ -45,6 +46,7 @@ const reducers = combineReducers({
   company,
   register_specialty,
   register_specialty_user,
+  register_open_class,
   create_register_intern,
   regsiter_intern_user,
   config_page,
