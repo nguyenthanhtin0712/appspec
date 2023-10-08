@@ -65,19 +65,6 @@ export const navItems = [
     ]
   },
   {
-    name: 'Đăng ký học cải thiện',
-    children: [
-      {
-        name: 'Đăng ký',
-        url: '/register-open-class/register'
-      },
-      {
-        name: 'Kết quả đăng ký',
-        url: '/register-open-class/result'
-      }
-    ]
-  },
-  {
     name: 'Đăng ký thực tập',
     url: '/register_intern',
     children: [
@@ -94,6 +81,10 @@ export const navItems = [
         url: '/register_intern/result'
       }
     ]
+  },
+  {
+    name: 'Đăng ký học cải thiện',
+    url: '/register-open-class'
   },
   {
     name: 'Liên hệ',

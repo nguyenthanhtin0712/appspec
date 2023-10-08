@@ -17,6 +17,7 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\DisplayConfigController;
 use App\Http\Controllers\Api\SubjectController;
 use App\Http\Controllers\Api\InternshipGraduationController;
+use App\Http\Controllers\Api\RegisterOpenClassController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\SubjectScheduleController;
 use App\Http\Controllers\Api\WarnedDissmissedStudentController;
@@ -108,7 +109,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::delete('companies/{id}', [CompanyController::class, 'destroy'])->middleware('check_user_role_permission:company.view');
 
     // Subject api
-    Route::get('subjects', [SubjectController::class, 'index'])->middleware('check_user_role_permission:title.view');
+    Route::get('subjects', [SubjectController::class, 'index']);
     Route::post('subjects', [SubjectController::class, 'store'])->middleware('check_user_role_permission:subject.create');
     Route::get('subjects/{id}', [SubjectController::class, 'show'])->middleware('check_user_role_permission:subject.view');
     Route::put('subjects/{id}', [SubjectController::class, 'update'])->middleware('check_user_role_permission:subject.update');
@@ -141,6 +142,9 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('warned-student/statistical/{id}', [WarnedDissmissedStudentController::class, 'statistical']);
     Route::get('warned-student/{id}', [WarnedDissmissedStudentController::class, 'show']);
     Route::delete('warned-student/{id}', [WarnedDissmissedStudentController::class, 'destroy']);
+
+    // Register Open Class
+    Route::post('register-open-class', [RegisterOpenClassController::class, 'register']);
 });
 
 Route::get('test-email', [InternshipGraduationController::class, 'testEmail']);

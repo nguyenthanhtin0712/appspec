@@ -11,6 +11,7 @@ class RegisterSpecialtyDetail extends Model
     use HasFactory, HasRoles;
     protected $table = 'register_specialty_detail';
     protected $primaryKey = 'register_specialty_detail_id';
+    public $timestamps = false;
     protected $fillable = [
         'register_specialty_detail_id',
         'register_specialty_id',

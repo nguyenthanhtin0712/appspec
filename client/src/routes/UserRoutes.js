@@ -95,10 +95,6 @@ const UserRoutes = {
         {
           path: '/register-open-class',
           element: <RegisterImprovement />
-        },
-        {
-          path: 'register',
-          element: <RegisterImprovement />
         }
       ]
     }

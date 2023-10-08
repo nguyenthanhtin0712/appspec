@@ -1791,10 +1791,10 @@
 									},
 									"font": "Arial;13;1",
 									"left": 2680,
-									"top": 973,
-									"width": 219.72509765625,
+									"top": 981,
+									"width": 240.666015625,
 									"height": 13,
-									"text": "register _improvement"
+									"text": "register_open_class"
 								},
 								{
 									"_type": "ERDColumnCompartmentView",
@@ -1808,6 +1808,21 @@
 									"subViews": [
 										{
 											"_type": "ERDColumnView",
+											"_id": "AAAAAAGLD+vW5ZmuGVw=",
+											"_parent": {
+												"$ref": "AAAAAAGITR7QjLF5fyc="
+											},
+											"model": {
+												"$ref": "AAAAAAGLD+vWzZmrbGQ="
+											},
+											"font": "Arial;13;0",
+											"left": 2685,
+											"top": 1004,
+											"width": 230.666015625,
+											"height": 13
+										},
+										{
+											"_type": "ERDColumnView",
 											"_id": "AAAAAAGITR7y/rGGW2Y=",
 											"_parent": {
 												"$ref": "AAAAAAGITR7QjLF5fyc="
@@ -1817,8 +1832,8 @@
 											},
 											"font": "Arial;13;0",
 											"left": 2685,
-											"top": 996,
-											"width": 209.72509765625,
+											"top": 1019,
+											"width": 230.666015625,
 											"height": 13
 										},
 										{
@@ -1832,8 +1847,8 @@
 											},
 											"font": "Arial;13;0",
 											"left": 2685,
-											"top": 1011,
-											"width": 209.72509765625,
+											"top": 1034,
+											"width": 230.666015625,
 											"height": 13
 										},
 										{
@@ -1847,8 +1862,8 @@
 											},
 											"font": "Arial;13;0",
 											"left": 2685,
-											"top": 1026,
-											"width": 209.72509765625,
+											"top": 1049,
+											"width": 230.666015625,
 											"height": 13
 										},
 										{
@@ -1862,8 +1877,8 @@
 											},
 											"font": "Arial;13;0",
 											"left": 2685,
-											"top": 1041,
-											"width": 209.72509765625,
+											"top": 1064,
+											"width": 230.666015625,
 											"height": 13
 										},
 										{
@@ -1875,24 +1890,25 @@
 											"model": {
 												"$ref": "AAAAAAGIatOda9I4FCA="
 											},
+											"visible": false,
 											"font": "Arial;13;0",
 											"left": 2685,
-											"top": 1056,
-											"width": 209.72509765625,
+											"top": 1072,
+											"width": 230.666015625,
 											"height": 13
 										}
 									],
 									"font": "Arial;13;0",
 									"left": 2680,
-									"top": 991,
-									"width": 219.72509765625,
+									"top": 999,
+									"width": 240.666015625,
 									"height": 83
 								}
 							],
 							"font": "Arial;13;0",
 							"left": 2680,
-							"top": 968,
-							"width": 219.72509765625,
+							"top": 976,
+							"width": 240.666015625,
 							"height": 106,
 							"nameLabel": {
 								"$ref": "AAAAAAGITR7QjLF4WqM="
@@ -2001,7 +2017,7 @@
 									"visible": false,
 									"font": "Arial;13;0",
 									"left": 2737,
-									"top": 1105,
+									"top": 1109,
 									"height": 13,
 									"alpha": 1.5707963267948966,
 									"distance": 15,
@@ -2035,7 +2051,7 @@
 									},
 									"font": "Arial;13;0",
 									"left": 2737,
-									"top": 1092,
+									"top": 1100,
 									"height": 13,
 									"alpha": -0.5235987755982988,
 									"distance": 30,
@@ -2052,7 +2068,7 @@
 								"$ref": "AAAAAAGITRHYzLC475Q="
 							},
 							"lineStyle": 2,
-							"points": "2752:1152;2752:1073",
+							"points": "2752:1152;2752:1081",
 							"nameLabel": {
 								"$ref": "AAAAAAGITSHdm7G9+yU="
 							},
@@ -5772,9 +5788,9 @@
 								"$ref": "AAAAAAGITK4l26584jk="
 							},
 							"font": "Arial;13;0",
-							"left": 2784,
+							"left": 2792,
 							"top": 1120,
-							"width": 81,
+							"width": 65,
 							"height": 25,
 							"text": "Môn học "
 						},
@@ -5786,7 +5802,7 @@
 							},
 							"font": "Arial;13;0",
 							"left": 2688,
-							"top": 936,
+							"top": 944,
 							"width": 209,
 							"height": 25,
 							"text": "Sinh viên đăng ký môn học học lại "
@@ -9292,8 +9308,8 @@
 										"$ref": "AAAAAAGK/ZC8cMXgIr0="
 									},
 									"font": "Arial;13;1",
-									"left": 2144,
-									"top": 485,
+									"left": 2008,
+									"top": 413,
 									"width": 215.3896484375,
 									"height": 13,
 									"text": "functional"
@@ -9318,8 +9334,8 @@
 												"$ref": "AAAAAAGK/ZDgzsXr8Qc="
 											},
 											"font": "Arial;13;0",
-											"left": 2149,
-											"top": 508,
+											"left": 2013,
+											"top": 436,
 											"width": 205.3896484375,
 											"height": 13
 										},
@@ -9333,22 +9349,22 @@
 												"$ref": "AAAAAAGK/ZErcMXz4pI="
 											},
 											"font": "Arial;13;0",
-											"left": 2149,
-											"top": 523,
+											"left": 2013,
+											"top": 451,
 											"width": 205.3896484375,
 											"height": 13
 										}
 									],
 									"font": "Arial;13;0",
-									"left": 2144,
-									"top": 503,
+									"left": 2008,
+									"top": 431,
 									"width": 215.3896484375,
 									"height": 38
 								}
 							],
 							"font": "Arial;13;0",
-							"left": 2144,
-							"top": 480,
+							"left": 2008,
+							"top": 408,
 							"width": 215.3896484375,
 							"height": 61,
 							"nameLabel": {
@@ -10727,8 +10743,19 @@
 					"_parent": {
 						"$ref": "AAAAAAGITK4l2657GSk="
 					},
-					"name": "register _improvement",
+					"name": "register_open_class",
 					"columns": [
+						{
+							"_type": "ERDColumn",
+							"_id": "AAAAAAGLD+vWzZmrbGQ=",
+							"_parent": {
+								"$ref": "AAAAAAGITR7Qi7F1Ncg="
+							},
+							"name": "id",
+							"type": "INTEGER",
+							"length": 0,
+							"primaryKey": true
+						},
 						{
 							"_type": "ERDColumn",
 							"_id": "AAAAAAGITR7y6rGDmNU=",
@@ -10738,7 +10765,7 @@
 							"name": "student_code",
 							"type": "VARCHAR",
 							"length": "20",
-							"primaryKey": true
+							"foreignKey": true
 						},
 						{
 							"_type": "ERDColumn",

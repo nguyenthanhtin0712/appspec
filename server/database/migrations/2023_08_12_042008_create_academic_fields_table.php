@@ -14,7 +14,7 @@ class CreateAcademicFieldsTable extends Migration
     public function up()
     {
         Schema::create('academic_fields', function (Blueprint $table) {
-            $table->string('academic_field_id');
+            $table->string('academic_field_id')->id();
             $table->string('academic_field_name');
             $table->string('academic_field_isDelete')->default(0);
         });

@@ -70,7 +70,7 @@ const RegisterOpenClassForm = () => {
                   placeholder="Chọn học phần"
                   loading={subjects.isLoading}
                   options={subjects?.data}
-                  value={values.subject_id}
+                  value={values.subject_id || null}
                   fetchOptions={() => dispatch(getAllSubject())}
                   isOptionEqualToValue={(option, value) => option.subject_id === value}
                   getOptionLabel={(option) => {
@@ -82,7 +82,7 @@ const RegisterOpenClassForm = () => {
                       {option.subject_id + ' - ' + option.subject_name}
                     </li>
                   )}
-                  onChange={(event, newValue) => setFieldValue('subject_id', newValue.subject_id)}
+                  onChange={(event, newValue) => setFieldValue('subject_id', newValue?.subject_id)}
                   error={!!(touched.subject_id && errors.subject_id)}
                 />
                 {touched.subject_id && errors.subject_id && <FormHelperText error>{errors.subject_id}</FormHelperText>}
