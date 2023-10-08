@@ -16,7 +16,7 @@ import CompanyList from 'sections/user/register_internship/CompanyList';
 
 const Register_speciality = () => {
   const theme = useTheme();
-  const { internship } = useSelector((state) => state.regsiter_intern_user);
+  const { internship } = useSelector((state) => state.register_intern_user);
   useEffect(() => {
     const getData = async () => {
       await dispatch(getInternship({}));

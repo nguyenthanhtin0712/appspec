@@ -16,7 +16,7 @@ import AdditionalCompany from 'sections/user/register_internship/AdditionalCompa
 
 const Additional = () => {
   const theme = useTheme();
-  const { internship, student } = useSelector((state) => state.regsiter_intern_user);
+  const { internship, student } = useSelector((state) => state.register_intern_user);
   console.log(student);
   const { register_internship_end_date, internship_graduation_end_date } = internship;
   const currentTime = useMemo(() => new Date(), []);

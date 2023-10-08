@@ -7,7 +7,7 @@ import { dispatch } from 'store/index';
 import { getCompanies } from 'store/reducers/registerInternUserSlice';
 
 const CompanyList = () => {
-  const { list_company } = useSelector((state) => state.regsiter_intern_user);
+  const { list_company } = useSelector((state) => state.register_intern_user);
   useEffect(() => {
     const getData = async () => {
       await dispatch(getCompanies());

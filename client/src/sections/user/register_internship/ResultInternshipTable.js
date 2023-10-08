@@ -8,7 +8,7 @@ import { dispatch } from 'store/index';
 const ResultInternshipTable = () => {
   const theme = useTheme();
   const { data, isError, isLoading, isRefetching, rowCount, columnFilters, globalFilter, sorting, pagination } = useSelector(
-    (state) => state.regsiter_intern_user
+    (state) => state.register_intern_user
   );
 
   useEffect(() => {

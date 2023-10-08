@@ -8,7 +8,7 @@ use App\Http\Requests\GetAssignmentDetailRequest;
 use App\Http\Requests\StoreMentorRequest;
 use App\Http\Requests\SubmitListStudentInternshipRequest;
 use App\Http\Requests\SubmitRegisterInternshipRequest;
-use App\Http\Requests\SubmitRegsiterInternshipOutOfficial;
+use App\Http\Requests\SubmitRegisterInternshipOutOfficial;
 use App\Http\Resources\Collection;
 use App\Http\Resources\InternshipCompanyResoure;
 use App\Jobs\SendEmail;
@@ -330,7 +330,7 @@ class InternshipGraduationController extends Controller
         return $this->sentSuccessResponse($student, 'getUserSuccess', 200);
     }
 
-    public function submitRegisterInternshipOutOffcail(SubmitRegsiterInternshipOutOfficial $request)
+    public function submitRegisterInternshipOutOffcail(SubmitRegisterInternshipOutOfficial $request)
     {
         $user = $request->user();
         $student = Student::where('user_id', $user->user_id)->firstOrFail();

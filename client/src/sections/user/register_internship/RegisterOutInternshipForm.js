@@ -8,7 +8,7 @@ import InputField from 'components/input/InputField';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { dispatch } from 'store/index';
-import { regsiterInternshipOutOffcial } from 'store/reducers/registerInternUserSlice';
+import { registerInternshipOutOffcial } from 'store/reducers/registerInternUserSlice';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router';
 
@@ -28,7 +28,7 @@ const RegisterOutInternshipForm = () => {
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
         try {
-          const result = await dispatch(regsiterInternshipOutOffcial(values));
+          const result = await dispatch(registerInternshipOutOffcial(values));
           if (result && !result.error) {
             setStatus({ success: true });
             setSubmitting(false);

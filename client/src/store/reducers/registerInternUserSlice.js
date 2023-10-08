@@ -65,7 +65,7 @@ export const getRegisterInternship = createAsyncThunk('register_intern_user/getR
   }
 });
 
-export const regsiterInternshipUser = createAsyncThunk('register_intern_user/registerInternshipUser', async (position) => {
+export const registerInternshipUser = createAsyncThunk('register_intern_user/registerInternshipUser', async (position) => {
   try {
     const response = await axios.post(`/internship-graduations/register`, position);
     return response.data;
@@ -75,7 +75,7 @@ export const regsiterInternshipUser = createAsyncThunk('register_intern_user/reg
   }
 });
 
-export const regsiterInternshipOutOffcial = createAsyncThunk('register_intern_user/regsiterInternshipOutOffcial', async (position) => {
+export const registerInternshipOutOffcial = createAsyncThunk('register_intern_user/registerInternshipOutOffcial', async (position) => {
   try {
     const response = await axios.post(`/internship-graduations/register-out-offcial`, position);
     return response.data;

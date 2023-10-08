@@ -15,7 +15,7 @@ import { Tab } from '@mui/material';
 import RegisterOutInternshipForm from 'sections/user/register_internship/RegisterOutInternshipForm';
 
 const RegisterInternshipGraduation = () => {
-  const { list_company, internship } = useSelector((state) => state.regsiter_intern_user);
+  const { list_company, internship } = useSelector((state) => state.register_intern_user);
   const { register_internship_start_date, register_internship_end_date } = internship;
   const currentTime = useMemo(() => new Date(), []);
 
