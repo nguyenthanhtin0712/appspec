@@ -181,8 +181,8 @@ class InternshipGraduationController extends Controller
                     'company_id' => $companyInternship->company_id,
                     'company_name' => Company::find($companyInternship->company_id)->company_name,
                     'company_address' => Company::find($companyInternship->company_id)->company_address,
-                    'user_phone' => User::find(Company::find($companyInternship->company_id)->user_id)->user_phone,
-                    'user_email' => User::find(Company::find($companyInternship->company_id)->user_id)->user_email,
+                    'user_phone' => optional(User::find(optional(Company::find($companyInternship->company_id))->user_id))->user_phone,
+                    'user_email' => optional(User::find(optional(Company::find($companyInternship->company_id))->user_id))->user_email,
                     'list_position' => CompanyPositionDetail::where('register_internship_company_id', $companyInternship->register_internship_company_id)->get()->map(function ($positon) {
                         return [
                             'position_id' => $positon->position_id,

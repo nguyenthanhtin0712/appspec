@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from '../../api/axios';
+import { API_BASE_URL } from 'config';
 // Async Thunk Actions
 export const fetchData = createAsyncThunk('user/fetchData', async (params) => {
   const {
@@ -9,7 +10,7 @@ export const fetchData = createAsyncThunk('user/fetchData', async (params) => {
     pagination: { pageIndex, pageSize }
   } = params;
 
-  const url = new URL('/api/users', 'http://localhost:8000');
+  const url = new URL('/api/users', API_BASE_URL );
   url.searchParams.set('page', `${pageIndex + 1}`);
   url.searchParams.set('perPage', `${pageSize}`);
   url.searchParams.set('filters', JSON.stringify(columnFilters ?? []));
