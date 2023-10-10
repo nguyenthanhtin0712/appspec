@@ -17,7 +17,6 @@ import AdditionalCompany from 'sections/user/register_internship/AdditionalCompa
 const Additional = () => {
   const theme = useTheme();
   const { internship, student } = useSelector((state) => state.register_intern_user);
-  console.log(student);
   const { register_internship_end_date, internship_graduation_end_date } = internship;
   const currentTime = useMemo(() => new Date(), []);
 
@@ -96,7 +95,20 @@ const Additional = () => {
       </>
     );
   };
-  if (!internship || !student) return null;
+  if (!internship || !student) return (
+    <Container maxWidth="lg" sx={{ mt: 2 }}>
+      <Stack justifyContent="center" alignItems="center" spacing={4} minHeight={500}>
+        <LockCircle size="150" color={theme.palette.warning.main} variant="Bulk" />
+        <Typography variant="h4" textAlign="center">
+          Bạn không có quyền thay thôi đổi thông tin
+        </Typography>
+        <Button variant="contained" component={Link} to="/">
+          Trở về trang chủ
+        </Button>
+      </Stack>
+    </Container>
+  );
+  
   const title = `Thực tập năm ${internship?.openclasstime.openclass_time_year} kì ${internship?.openclasstime.openclass_time_semester}`;
   return (
     <Container maxWidth="md" sx={{ mt: 2 }}>
