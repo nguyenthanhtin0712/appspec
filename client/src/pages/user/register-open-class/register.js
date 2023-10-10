@@ -2,6 +2,7 @@ import React from 'react';
 import Container from '@mui/material/Container';
 import MainCard from 'components/MainCard';
 import Grid from '@mui/material/Grid';
+import Stack from '@mui/material/Stack';
 import FormHelperText from '@mui/material/FormHelperText';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
@@ -11,14 +12,23 @@ import AsyncAutocompleteField from 'components/input/AsyncAutocompleteField';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { dispatch } from 'store';
-import { getAllSubject } from 'store/reducers/registerOpenClassSlice';
+import { getAllSubject, registerOpenClass } from 'store/reducers/registerOpenClassSlice';
 import InputField from 'components/input/InputField';
 import SelectField from 'components/input/SelectField';
+import Typography from '@mui/material/Typography';
+import Link from '@mui/material/Link';
+import { NavLink } from 'react-router-dom';
 
 const RegisterOpenClass = () => {
   return (
     <Container maxWidth="sm" sx={{ mt: 2 }}>
       <MainCard title="Đăng ký mở thêm lớp học cải thiện">
+        <Typography mb={3}>
+          Xem danh sách bạn đã môn học bạn đã yêu cầu mở nhóm{' '}
+          <Link to={'/register-open-class/history'} component={NavLink}>
+            tại đây
+          </Link>
+        </Typography>
         <RegisterOpenClassForm />
       </MainCard>
     </Container>
@@ -39,18 +49,22 @@ const RegisterOpenClassForm = () => {
         validationSchema={Yup.object().shape({
           semester: Yup.string().required('Học kỳ là bắt buộc !'),
           year: Yup.string().required('Năm học là bắt buộc !'),
-          subject_id: Yup.string().required('Môn học là bắt buộc !')
+          subject_id: Yup.object().nullable().required('Môn học là bắt buộc !')
         })}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting, resetForm }) => {
-          console.log(values);
-          const value = { message: values };
+          const data = { ...values, subject_id: values.subject_id.subject_id };
           try {
-            const result = await dispatch(sendMail(value));
-            if (result) {
+            const result = await dispatch(registerOpenClass(data));
+            if (result && result.payload.status == 200) {
+              console.log(result.payload.status);
               toast.success('Đăng ký thành công!');
               setStatus({ success: true });
               setSubmitting(false);
               resetForm();
+            } else {
+              toast.error(result.payload.message);
+              setStatus({ success: false });
+              setSubmitting(false);
             }
           } catch (err) {
             console.error(err);
@@ -64,28 +78,22 @@ const RegisterOpenClassForm = () => {
           <form noValidate onSubmit={handleSubmit}>
             <Grid container spacing={3}>
               <Grid item xs={12}>
-                <AsyncAutocompleteField
-                  id="subject_id"
-                  label="Học phần"
-                  placeholder="Chọn học phần"
-                  loading={subjects.isLoading}
-                  options={subjects?.data}
-                  value={values.subject_id || null}
-                  fetchOptions={() => dispatch(getAllSubject())}
-                  isOptionEqualToValue={(option, value) => option.subject_id === value}
-                  getOptionLabel={(option) => {
-                    const subject = subjects?.data.find((item) => item?.subject_id === option);
-                    return `${subject?.subject_id} - ${subject?.subject_name}`;
-                  }}
-                  renderOption={(props, option) => (
-                    <li {...props} key={option.subject_id}>
-                      {option.subject_id + ' - ' + option.subject_name}
-                    </li>
-                  )}
-                  onChange={(event, newValue) => setFieldValue('subject_id', newValue?.subject_id)}
-                  error={!!(touched.subject_id && errors.subject_id)}
-                />
-                {touched.subject_id && errors.subject_id && <FormHelperText error>{errors.subject_id}</FormHelperText>}
+                <Stack spacing={1}>
+                  <AsyncAutocompleteField
+                    id="subject_id"
+                    label="Học phần"
+                    placeholder="Chọn học phần"
+                    loading={subjects.isLoading}
+                    options={subjects?.data}
+                    value={values.subject_id || null}
+                    fetchOptions={() => dispatch(getAllSubject())}
+                    isOptionEqualToValue={(option, value) => option.subject_id === value.subject_id}
+                    getOptionLabel={(option) => `${option.subject_id} - ${option.subject_name}`}
+                    onChange={(event, newValue) => setFieldValue('subject_id', newValue)}
+                    error={!!(touched.subject_id && errors.subject_id)}
+                  />
+                  {touched.subject_id && errors.subject_id && <FormHelperText error>{errors.subject_id}</FormHelperText>}
+                </Stack>
               </Grid>
               <Grid item xs={12}>
                 <SelectField

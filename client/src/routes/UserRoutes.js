@@ -19,6 +19,7 @@ const RegisterIntern_Register = Loadable(lazy(() => import('pages/user/internshi
 const RegisterIntern_Result = Loadable(lazy(() => import('pages/user/internship-graduation/result')));
 const RegisterIntern_Add = Loadable(lazy(() => import('pages/user/internship-graduation/additional')));
 const RegisterImprovement = Loadable(lazy(() => import('pages/user/register-open-class/register')));
+const RegisterOpenClassHistory = Loadable(lazy(() => import('pages/user/register-open-class/history')));
 const SubjectSchedule = Loadable(lazy(() => import('pages/user/subject-schedule')));
 
 // ==============================|| COMPONENTS ROUTES ||============================== //
@@ -95,6 +96,10 @@ const UserRoutes = {
         {
           path: '/register-open-class',
           element: <RegisterImprovement />
+        },
+        {
+          path: '/register-open-class/history',
+          element: <RegisterOpenClassHistory />
         }
       ]
     }

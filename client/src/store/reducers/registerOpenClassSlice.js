@@ -40,6 +40,26 @@ export const getAllSubject = createAsyncThunk('register_open_class/getAllSubject
   }
 });
 
+export const registerOpenClass = createAsyncThunk('register_open_class/registerOpenClass', async (info) => {
+  try {
+    const response = await axios.post(`${API_BASE_URL}/register-open-class`, info);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+});
+
+export const getHistory = createAsyncThunk('register_open_class/getHistory', async () => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/register-open-class/history`);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+});
+
 const initialState = {
   data: [],
   isError: false,
@@ -56,6 +76,10 @@ const initialState = {
   subjects: {
     isLoading: false,
     data: []
+  },
+  history: {
+    data: [],
+    isLoading: true
   }
 };
 
@@ -102,6 +126,16 @@ const register_open_class = createSlice({
       })
       .addCase(getAllSubject.rejected, (state) => {
         state.subjects.isLoading = false;
+      })
+      .addCase(getHistory.pending, (state) => {
+        state.history.isLoading = true;
+      })
+      .addCase(getHistory.fulfilled, (state, action) => {
+        state.history.isLoading = false;
+        state.history.data = action.payload;
+      })
+      .addCase(getHistory.rejected, (state) => {
+        state.history.isLoading = false;
       });
   }
 });

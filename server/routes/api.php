@@ -145,6 +145,8 @@ Route::middleware(['auth:api'])->group(function () {
 
     // Register Open Class
     Route::post('register-open-class', [RegisterOpenClassController::class, 'register']);
+    Route::get('register-open-class/history', [RegisterOpenClassController::class, 'history']);
+    Route::get('register-open-class/statistical', [RegisterOpenClassController::class, 'statistical']);
 });
 
 Route::get('test-email', [InternshipGraduationController::class, 'testEmail']);
