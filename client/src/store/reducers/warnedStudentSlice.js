@@ -86,7 +86,8 @@ const initialState = {
     initValue
   },
   idDelete: 0,
-  idSelect: 0
+  idSelect: 0,
+  lookUpDialog: false
 };
 
 const warned_student = createSlice({
@@ -119,6 +120,9 @@ const warned_student = createSlice({
     },
     setIdSelect: (state, action) => {
       state.idSelect = action.payload;
+    },
+    setLookUpDialog: (state, action) => {
+      state.lookUpDialog = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -157,7 +161,8 @@ export const {
   setWarnedStudentDialog,
   setIdDelete,
   closeWarnedStudentDialog,
-  setIdSelect
+  setIdSelect,
+  setLookUpDialog
 } = warned_student.actions;
 
 export default warned_student.reducer;

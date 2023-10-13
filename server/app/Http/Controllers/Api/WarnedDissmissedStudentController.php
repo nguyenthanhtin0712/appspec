@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Collection;
 use App\Models\OpenclassTime;
+use App\Models\Student;
 use App\Models\WarnedDismissedStudent;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -229,5 +230,38 @@ class WarnedDissmissedStudentController extends Controller
             return response()->json($openClassTime);
         }
         return response()->json(['error' => 'Not found.'], 404);
+    }
+
+    public function lookUpStudent(Request $request)
+    {
+        // Non Validate 
+        $query = $request->input('query');
+        $students = Student::join('users', 'students.user_id', '=', 'users.user_id')
+            ->select(
+                'students.student_code',
+                'students.student_class',
+                'students.major_id',
+                'students.student_course',
+                'users.user_firstname',
+                'users.user_lastname',
+                'users.user_birthday'
+            )->where(function ($queryBuilder) use ($query) {
+                $queryBuilder->where("students.student_code", "LIKE", "%$query%")
+                    ->orWhereRaw("CONCAT(users.user_firstname, ' ', users.user_lastname) LIKE ?", ["%$query%"]);
+            })->get()->map(function ($student) {
+                $studentArr = $student->toArray();
+                $data = WarnedDismissedStudent::where('student_code', $studentArr['student_code'])
+                    ->leftJoin('openclass_times', 'openclass_times.openclass_time_id', 'warned_dismissed_student.openclass_time_id')
+                    ->get();
+                if ($data->isEmpty()) {
+                    return null;
+                }
+                $studentArr['detail'] = $data->makeHidden(['student_code', 'openclass_time_id', 'student_year', 'student_semester']);
+                return $studentArr;
+            })->filter()->values();
+        return response()->json($students);
+        // if ($students) {
+        // }
+        // return response()->json(['message' => 'Không tìm thấy sinh viên'], 404);
     }
 }

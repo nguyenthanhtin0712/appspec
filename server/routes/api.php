@@ -139,10 +139,10 @@ Route::middleware(['auth:api'])->group(function () {
     // Warned dimissed student
     Route::get('warned-student', [WarnedDissmissedStudentController::class, 'index']);
     Route::post('warned-student', [WarnedDissmissedStudentController::class, 'store']);
+    Route::get('warned-student/lookup', [WarnedDissmissedStudentController::class, 'lookUpStudent']);
     Route::get('warned-student/statistical/{id}', [WarnedDissmissedStudentController::class, 'statistical']);
     Route::get('warned-student/{id}', [WarnedDissmissedStudentController::class, 'show']);
     Route::delete('warned-student/{id}', [WarnedDissmissedStudentController::class, 'destroy']);
-
     // Register Open Class
     Route::post('register-open-class', [RegisterOpenClassController::class, 'register']);
     Route::get('register-open-class/history', [RegisterOpenClassController::class, 'history']);

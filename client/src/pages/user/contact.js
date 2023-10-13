@@ -61,9 +61,9 @@ const InfoContact = () => {
   }, []);
   const { init } = contactDialog;
   const department_phone = `tel:${init?.department_phone}`;
-  const department_email = `tel:${init?.department_email}`;
+  const department_email = `mailto:${init?.department_email}`;
   const admin_phone = `tel:${init?.admin_phone}`;
-  const admin_email = `tel:${init?.admin_email}`;
+  const admin_email = `mailto:${init?.admin_email}`;
   return (
     <Grid item xs={12} md={4}>
       {Object.keys(init).length === 0 ? (
