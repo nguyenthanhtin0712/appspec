@@ -62,6 +62,16 @@ export const deleteWarnedStudent = createAsyncThunk('warned_student/deleteWarned
   }
 });
 
+export const lookUpStudent = createAsyncThunk('warned_student/lookUpStudent', async (query) => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/warned-student/lookup?query=${query}`);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+});
+
 const initValue = {
   openclass_time_semester: '',
   openclass_time_year: '',
@@ -87,7 +97,11 @@ const initialState = {
   },
   idDelete: 0,
   idSelect: 0,
-  lookUpDialog: false
+  lookUpDialog: {
+    open: false,
+    isLoading: false,
+    data: []
+  }
 };
 
 const warned_student = createSlice({
@@ -122,7 +136,7 @@ const warned_student = createSlice({
       state.idSelect = action.payload;
     },
     setLookUpDialog: (state, action) => {
-      state.lookUpDialog = action.payload;
+      state.lookUpDialog = { ...state.lookUpDialog, ...action.payload };
     }
   },
   extraReducers: (builder) => {
@@ -149,6 +163,16 @@ const warned_student = createSlice({
       .addCase(deleteWarnedStudent.fulfilled, (state, action) => {
         const deletedSubjectId = action.payload.data.openclass_time_id;
         state.data = state.data.filter((subject) => subject.openclass_time_id !== deletedSubjectId);
+      })
+      .addCase(lookUpStudent.pending, (state) => {
+        state.lookUpDialog.isLoading = true;
+      })
+      .addCase(lookUpStudent.fulfilled, (state, action) => {
+        state.lookUpDialog.isLoading = false;
+        state.lookUpDialog.data = action.payload;
+      })
+      .addCase(lookUpStudent.rejected, (state) => {
+        state.lookUpDialog.isLoading = false;
       });
   }
 });

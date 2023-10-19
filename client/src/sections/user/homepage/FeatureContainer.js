@@ -1,5 +1,5 @@
 import React from 'react';
-import { Code, FolderOpen, Warning2, Refresh2, Profile2User, PathTool } from 'iconsax-react';
+import { Code, FolderOpen, Refresh2, Profile2User, PathTool, MessageText } from 'iconsax-react';
 import FeatureItem from './FeatureItem';
 import { Container, Grid } from '@mui/material';
 
@@ -9,7 +9,7 @@ const arrFeature = [
   { id: 3, name: 'Đăng ký học cải thiện', href: '/register-open-class', icon: <Refresh2 variant="Bulk" /> },
   { id: 4, name: 'Xem môn sắp mở', href: '/subject-schedule', icon: <FolderOpen variant="Bulk" /> },
   { id: 5, name: 'Tuyển thực tập sinh', href: '/', icon: <PathTool variant="Bulk" /> },
-  { id: 6, name: 'Xem danh sách thôi học', href: '/', icon: <Warning2 variant="Bulk" /> }
+  { id: 6, name: 'Thông tin liên hệ', href: '/contact', icon: <MessageText variant="Bulk" /> }
 ];
 
 const FeatureContainer = () => {

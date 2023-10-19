@@ -28,4 +28,9 @@ class OpenclassTime extends Model
     {
         return $this->hasMany(WarnedDismissedStudent::class, 'openclass_time_id', 'openclass_time_id');
     }
+
+    public function register_open_class()
+    {
+        return $this->hasMany(RegisterOpenClass::class, 'openclass_time_id', 'openclass_time_id');
+    }
 }

@@ -4,21 +4,31 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputAdornment from '@mui/material/InputAdornment';
+import Button from '@mui/material/Button';
 import { useSelector } from 'react-redux';
 import { dispatch } from 'store';
-import { setLookUpDialog } from 'store/reducers/warnedStudentSlice';
+import { lookUpStudent, setLookUpDialog } from 'store/reducers/warnedStudentSlice';
 import { SearchNormal } from 'iconsax-react';
 import DialogTitleCustom from 'components/DialogTitleCustom';
-import EmptyBox from 'components/EmptyBox';
+import AnimateButton from 'components/@extended/AnimateButton';
+import LookUpTable from 'sections/admin/warned-student/LookUpTable';
 
 const LookUpStudent = () => {
   const [query, setQuery] = useState('');
-  const lookUpDialog = useSelector((state) => state.warned_student.lookUpDialog);
-  const handleClose = () => dispatch(setLookUpDialog(false));
+  const { open } = useSelector((state) => state.warned_student.lookUpDialog);
+  const handleClose = () => dispatch(setLookUpDialog({ open: false }));
+
+  const handleClick = async () => {
+    if (query) {
+      await dispatch(lookUpStudent(query));
+    }
+  };
+
   return (
     <Dialog
-      open={lookUpDialog}
+      open={open}
       onClose={handleClose}
+      maxWidth="md"
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
       fullWidth
@@ -36,11 +46,20 @@ const LookUpStudent = () => {
               <SearchNormal />
             </InputAdornment>
           }
+          endAdornment={
+            <InputAdornment position="end">
+              <AnimateButton>
+                <Button variant="contained" onClick={handleClick} fullWidth>
+                  Tìm kiếm
+                </Button>
+              </AnimateButton>
+            </InputAdornment>
+          }
           onChange={(event) => setQuery(event.target.value)}
-          sx={{ mt: 0.5 }}
+          sx={{ mt: 0.5, pr: 1, mb: 2 }}
           fullWidth
         />
-        <EmptyBox />
+        <LookUpTable />
       </DialogContent>
       <DialogActions />
     </Dialog>

@@ -16,7 +16,12 @@ const WarnedStudent = () => {
       <Stack direction="row" justifyContent="space-between" alignItems="center" mb={1.5} flexWrap="wrap">
         <Typography variant="h4">Quản lý sinh viên bị cảnh cáo & buộc thôi học</Typography>
         <Stack direction="row" gap={2}>
-          <Button variant="contained" color="success" startIcon={<SearchNormal />} onClick={() => dispatch(setLookUpDialog(true))}>
+          <Button
+            variant="contained"
+            color="success"
+            startIcon={<SearchNormal />}
+            onClick={() => dispatch(setLookUpDialog({ open: true }))}
+          >
             Tra cứu
           </Button>
           <Button variant="contained" startIcon={<Add />} onClick={() => dispatch(setWarnedStudentDialog({ open: true }))}>

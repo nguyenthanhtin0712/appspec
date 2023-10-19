@@ -246,8 +246,8 @@ class WarnedDissmissedStudentController extends Controller
                 'users.user_lastname',
                 'users.user_birthday'
             )->where(function ($queryBuilder) use ($query) {
-                $queryBuilder->where("students.student_code", "LIKE", "%$query%")
-                    ->orWhereRaw("CONCAT(users.user_firstname, ' ', users.user_lastname) LIKE ?", ["%$query%"]);
+                $queryBuilder->where("students.student_code", $query)
+                    ->orWhereRaw("CONCAT(users.user_firstname, ' ', users.user_lastname) = ?", ["$query"]);
             })->get()->map(function ($student) {
                 $studentArr = $student->toArray();
                 $data = WarnedDismissedStudent::where('student_code', $studentArr['student_code'])

@@ -15,20 +15,27 @@ import { dispatch } from 'store';
 import { getAllSubject, registerOpenClass } from 'store/reducers/registerOpenClassSlice';
 import InputField from 'components/input/InputField';
 import SelectField from 'components/input/SelectField';
-import Typography from '@mui/material/Typography';
-import Link from '@mui/material/Link';
-import { NavLink } from 'react-router-dom';
+import InfoItem from 'sections/user/register_speciality/index/InfoItem';
+import { Chart2, Task } from 'iconsax-react';
+import { useTheme } from '@mui/material';
 
 const RegisterOpenClass = () => {
+  const theme = useTheme();
   return (
     <Container maxWidth="sm" sx={{ mt: 2 }}>
       <MainCard title="Đăng ký mở thêm lớp học cải thiện">
-        <Typography mb={3}>
-          Xem danh sách bạn đã môn học bạn đã yêu cầu mở nhóm{' '}
-          <Link to={'/register-open-class/history'} component={NavLink}>
-            tại đây
-          </Link>
-        </Typography>
+        <Grid container spacing={2} mb={3}>
+          <InfoItem
+            href="/register-open-class/history"
+            title="Danh sách môn đã đăng ký"
+            icon={<Task variant="Bulk" size="32" color={theme.palette.primary.main} />}
+          />
+          <InfoItem
+            href="/register-open-class/statistic"
+            title="Thống kê số lượng đăng ký"
+            icon={<Chart2 variant="Bulk" size="32" color={theme.palette.primary.main} />}
+          />
+        </Grid>
         <RegisterOpenClassForm />
       </MainCard>
     </Container>
