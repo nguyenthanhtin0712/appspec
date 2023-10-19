@@ -73,6 +73,7 @@ class RoleSeeder extends Seeder
         $jobholder_create = Permission::create(['name' => 'jobholder.create', 'desc' => 'Tạo viên chức']);
         $jobholder_update = Permission::create(['name' => 'jobholder.update', 'desc' => 'Cập nhật viên chức']);
         $jobholder_delete = Permission::create(['name' => 'jobholder.delete', 'desc' => 'Xoá viên chức']);
+        $jobholder_delete = Permission::create(['name' => 'jobholder.grading', 'desc' => 'Chấm điểm']);
         // Role subject
         Functional::create(['functional_code' => 'subject', 'functional_name' => 'Quản lý bộ môn']);
         $subject_view = Permission::create(['name' => 'subject.view', 'desc' => 'Xem bộ môn']);
@@ -95,6 +96,10 @@ class RoleSeeder extends Seeder
         $subject_schedule_delete = Permission::create(['name' => 'subject_schedule.update', 'desc' => 'Cập nhật lịch học']);
 
         // Warned Dismissed Student
+
+        // System
+        Functional::create(['functional_code' => 'system', 'functional_name' => 'Quản lý lịch học']);
+
 
         $admin_role = Role::create(['name' => 'admin']);
         $student_role = Role::create(['name' => 'student']);
