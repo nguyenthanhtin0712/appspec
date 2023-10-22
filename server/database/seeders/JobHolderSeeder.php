@@ -15,7 +15,7 @@ class JobHolderSeeder extends Seeder
     public function run()
     {
         JobHolder::create([
-            'user_id' => '104',
+            'user_id' => '4',
             'jobholder_code' => '111111',
             'title_id' => '1',
             'academic_field_id' => 'KTPM',
@@ -29,7 +29,7 @@ class JobHolderSeeder extends Seeder
         ]);
 
         JobHolder::create([
-            'user_id' => '105',
+            'user_id' => '5',
             'jobholder_code' => '222222',
             'title_id' => '1',
             'academic_field_id' => 'KTPM',
@@ -43,7 +43,7 @@ class JobHolderSeeder extends Seeder
         ]);
 
         JobHolder::create([
-            'user_id' => '106',
+            'user_id' => '6',
             'jobholder_code' => '333333',
             'title_id' => '1',
             'academic_field_id' => 'KTPM',
@@ -57,7 +57,7 @@ class JobHolderSeeder extends Seeder
         ]);
 
         JobHolder::create([
-            'user_id' => '107',
+            'user_id' => '7',
             'jobholder_code' => '444444',
             'title_id' => '1',
             'academic_field_id' => 'KTPM',
@@ -71,7 +71,7 @@ class JobHolderSeeder extends Seeder
         ]);
 
         JobHolder::create([
-            'user_id' => '108',
+            'user_id' => '8',
             'jobholder_code' => '555555',
             'title_id' => '1',
             'academic_field_id' => 'KTPM',
@@ -85,7 +85,7 @@ class JobHolderSeeder extends Seeder
         ]);
 
         JobHolder::create([
-            'user_id' => '109',
+            'user_id' => '9',
             'jobholder_code' => '666666',
             'title_id' => '1',
             'academic_field_id' => 'KTPM',

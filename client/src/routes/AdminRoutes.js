@@ -152,7 +152,7 @@ const AdminRoutes = {
     },
     {
       path: 'grading',
-      element: <PrivateRoute component={Grading} requiredPermissions={[]} />
+      element: <PrivateRoute component={Grading} requiredPermissions={['jobholder.grading']} />
     }
   ]
 };

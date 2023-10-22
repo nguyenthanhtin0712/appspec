@@ -14,7 +14,6 @@ use App\Http\Resources\InternshipCompanyResoure;
 use App\Jobs\SendEmail;
 use App\Models\Company;
 use App\Models\CompanyPositionDetail;
-use App\Models\Contact;
 use App\Models\DisplayConfig;
 use App\Models\InternshipGraduation;
 use App\Models\JobHolder;
