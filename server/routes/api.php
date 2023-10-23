@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CompanyController;
 use App\Http\Controllers\Api\ContactConfigController;
 use App\Http\Controllers\Api\ContactController;
+use App\Http\Controllers\Api\GradingController;
 use App\Http\Controllers\Api\JobHolderController;
 use App\Http\Controllers\Api\MajorController;
 use App\Http\Controllers\Api\RecruitmentPositionController;
@@ -128,6 +129,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('internship-graduations/check-user-internship', [InternshipGraduationController::class, 'checkUserInternship']);
     Route::post('internship-graduations/additional-mentor', [InternshipGraduationController::class, 'additionalMentor']);
     Route::post('internship-graduations/additional-company', [InternshipGraduationController::class, 'additionalCompnay']);
+    Route::get('grading', [GradingController::class, 'index'])->middleware('check_user_role_permission:jobholder.grading');
 
     // Academic_field api
     Route::get('academic-fields', [AcademicFieldController::class, 'index'])->middleware('check_user_role_permission:academic_field.view');;

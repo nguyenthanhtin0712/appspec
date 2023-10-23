@@ -35,6 +35,8 @@ const Role = Loadable(lazy(() => import('pages/admin/role/role_index')));
 const RoleCreate = Loadable(lazy(() => import('pages/admin/role/role_create')));
 const RoleUpdate = Loadable(lazy(() => import('pages/admin/role/role_update')));
 const Grading = Loadable(lazy(() => import('pages/admin/grading/index')));
+const GradingUpdate = Loadable(lazy(() => import('pages/admin/grading/grading-update')));
+const GradingDetail = Loadable(lazy(() => import('pages/admin/grading/grading-detail')));
 const Page404 = Loadable(lazy(() => import('pages/error/page404')));
 
 const AdminRoutes = {
@@ -159,7 +161,15 @@ const AdminRoutes = {
     },
     {
       path: 'grading',
-      element: <PrivateRoute component={Grading} requiredPermissions={[]} />
+      element: <PrivateRoute component={Grading} requiredPermissions={['jobholder.grading']} />
+    },
+    {
+      path: 'grading/update/:id',
+      element: <PrivateRoute component={GradingUpdate} requiredPermissions={['jobholder.grading']} />
+    },
+    {
+      path: 'grading/detail/:id',
+      element: <PrivateRoute component={GradingDetail} requiredPermissions={['jobholder.grading']} />
     }
   ]
 };

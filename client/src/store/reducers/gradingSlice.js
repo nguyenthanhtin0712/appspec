@@ -10,7 +10,7 @@ export const fetchData = createAsyncThunk('grading/fetchData', async (params, { 
     sorting,
     pagination: { pageIndex, pageSize }
   } = params;
-  const url = new URL('/api/register-internships/assignmentInternship', API_BASE_URL);
+  const url = new URL('/api/grading', API_BASE_URL);
   url.searchParams.set('page', `${pageIndex + 1}`);
   url.searchParams.set('perPage', `${pageSize}`);
   url.searchParams.set('filters', JSON.stringify(columnFilters ?? []));

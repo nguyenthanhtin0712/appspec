@@ -18,6 +18,7 @@ class UserSeeder extends Seeder
     public function run()
     {
         $admin_role = Role::findByName('admin');
+        $jobholder_role = Role::findByName('jobhodler');
 
         $admin = User::create([
             'user_email' => 'musicanime2501@gmail.com',
@@ -129,11 +130,11 @@ class UserSeeder extends Seeder
         $admin->assignRole($admin_role);
         $user1->assignRole($admin_role);
         $user2->assignRole($admin_role);
-        $user3->assignRole($admin_role);
-        $user4->assignRole($admin_role);
-        $user5->assignRole($admin_role);
-        $user6->assignRole($admin_role);
-        $user7->assignRole($admin_role);
-        $user8->assignRole($admin_role);
+        $user3->assignRole($jobholder_role);
+        $user4->assignRole($jobholder_role);
+        $user5->assignRole($jobholder_role);
+        $user6->assignRole($jobholder_role);
+        $user7->assignRole($jobholder_role);
+        $user8->assignRole($jobholder_role);
     }
 }
