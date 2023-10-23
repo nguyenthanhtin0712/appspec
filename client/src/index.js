@@ -1,5 +1,4 @@
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
 import { Provider as ReduxProvider } from 'react-redux';
 import 'assets/fonts/inter/inter.css';
 import 'simplebar/src/simplebar.css';
@@ -9,17 +8,14 @@ import 'react-toastify/dist/ReactToastify.css';
 import App from './App';
 import { store } from 'store';
 import reportWebVitals from './reportWebVitals';
-import { APP_BASE_NAME } from './config';
 
 const container = document.getElementById('root');
 const root = createRoot(container);
 
 root.render(
   <ReduxProvider store={store}>
-    <BrowserRouter basename={APP_BASE_NAME}>
-      <App />
-      <ToastContainer />
-    </BrowserRouter>
+    <App />
+    <ToastContainer />
   </ReduxProvider>
 );
 

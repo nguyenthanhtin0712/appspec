@@ -57,13 +57,8 @@ export const getStatistical = createAsyncThunk('warned_student_detail/getStatist
 });
 
 export const getWarningInfo = createAsyncThunk('warned_student_detail/getWarningInfo', async (id) => {
-  try {
-    const response = await axios.get(`${API_BASE_URL}/warned-student/info/${id}`);
-    return response.data;
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
+  const response = await axios.get(`${API_BASE_URL}/warned-student/info/${id}`);
+  return response.data;
 });
 
 const initialState = {
