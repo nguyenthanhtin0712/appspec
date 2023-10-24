@@ -104,12 +104,12 @@ class WarnedDissmissedStudentController extends Controller
      */
     public function show(Request $request, $id)
     {
+        $valid = WarnedDismissedStudent::where('openclass_time_id', $id)->firstOrFail();
         $all = $request->input('all');
         $perPage = $request->input('perPage');
         $majorId = $request->input('majorId');
         $studentCourse = $request->input('studentCourse');
         $studentQuery = $request->input('studentQuery');
-
 
         $students = WarnedDismissedStudent::where('openclass_time_id', $id)
             ->join('students', 'warned_dismissed_student.student_code', '=', 'students.student_code')

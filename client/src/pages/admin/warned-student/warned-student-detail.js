@@ -15,12 +15,11 @@ import Tab from '@mui/material/Tab';
 import Divider from '@mui/material/Divider';
 import { SearchNormal } from 'iconsax-react';
 import { useSelector } from 'react-redux';
-import { getMajors, getWarningInfo, setMajorId, setStudentCourse, setStudentQuery } from 'store/reducers/warnedStudentDetailSlice';
+import { getMajors, setMajorId, setStudentCourse, setStudentQuery } from 'store/reducers/warnedStudentDetailSlice';
 import { dispatch } from 'store';
 import WarnedStudentDetailTable from 'sections/admin/warned-student/WarnedStudentDetailTable';
 import WarnedStudentStatistical from 'sections/admin/warned-student/WarnedStudentStatistical';
 import { useState } from 'react';
-import { useParams } from 'react-router';
 
 export const getListCourse = (year) => {
   let result = [];
@@ -32,18 +31,10 @@ export const getListCourse = (year) => {
 
 const WarnedStudentPage = () => {
   const [value, setValue] = useState('1');
-  const { id } = useParams();
   const timeInfo = useSelector((state) => state.warned_student_detail.timeInfo);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
-  useEffect(() => {
-    const fetchInfo = async () => {
-      await dispatch(getWarningInfo(id));
-    };
-    fetchInfo();
-  }, [id]);
 
   return (
     <>

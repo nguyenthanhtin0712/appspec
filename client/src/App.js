@@ -1,10 +1,11 @@
-import Routes from 'routes';
 import ThemeCustomization from 'themes';
-import ScrollTop from 'components/ScrollTop';
 import { useLayoutEffect } from 'react';
 import { getUserDataFromToken } from 'store/reducers/authSlice';
 import Cookies from 'js-cookie';
 import { dispatch } from 'store/index';
+import { RouterProvider } from 'react-router';
+import { createBrowserRouter } from 'react-router-dom';
+import { ThemeRoutes } from 'routes';
 
 const App = () => {
   useLayoutEffect(() => {
@@ -16,11 +17,11 @@ const App = () => {
     fetchUser();
   }, []);
 
+  const routes = createBrowserRouter(ThemeRoutes);
+
   return (
     <ThemeCustomization>
-      <ScrollTop>
-        <Routes />
-      </ScrollTop>
+      <RouterProvider router={routes} />
     </ThemeCustomization>
   );
 };

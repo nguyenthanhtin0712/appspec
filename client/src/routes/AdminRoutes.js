@@ -1,9 +1,9 @@
 import { lazy } from 'react';
-
-// project-imports
 import MainLayout from 'layout/MainLayout';
 import Loadable from 'components/Loadable';
 import PrivateRoute from './route/PrivateRoute';
+import { dispatch } from 'store';
+import { getWarningInfo } from 'store/reducers/warnedStudentDetailSlice';
 
 // render - dashboard
 const DashboardDefault = Loadable(lazy(() => import('pages/admin/dashboard')));
@@ -134,6 +134,13 @@ const AdminRoutes = {
     },
     {
       path: 'warned-student/:id',
+      loader: async ({ params }) => {
+        const res = await dispatch(getWarningInfo(params.id));
+        if (res && res.error) {
+          throw new Response('Not Found', { status: 404 });
+        }
+        return res;
+      },
       element: <PrivateRoute component={WarnedStudentDetailPage} requiredPermissions={['subject.view']} />
     },
     {

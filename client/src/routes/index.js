@@ -1,10 +1,6 @@
-import { useRoutes } from 'react-router-dom';
-
+import UserRoutes from 'routes/UserRoutes';
 import AdminRoutes from './AdminRoutes';
-import UserRoutes from './UserRoutes';
-import AuthRoutes from './AuthRoutes';
-import ErrorRoutes from './ErrorRoutes';
+import AuthRoutes from 'routes/AuthRoutes';
+import ErrorRoutes from 'routes/ErrorRoutes';
 
-export default function ThemeRoutes() {
-  return useRoutes([AdminRoutes, UserRoutes, AuthRoutes, ErrorRoutes]);
-}
+export const ThemeRoutes = [UserRoutes, AdminRoutes, AuthRoutes, ErrorRoutes];
