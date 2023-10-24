@@ -73,8 +73,8 @@ const GradingTable = () => {
         positionActionsColumn="last"
         renderRowActions={({ row }) => (
           <Box sx={{ display: 'flex' }}>
-            <IconAction title="Xem chi tiết" icon={<Eye />} href={`/admin/grading/update/${row.id}`} />
-            <IconAction title="Chấm điểm" icon={<Edit />} href={`/admin/grading/detail/${row.id}`} />
+            <IconAction title="Xem chi tiết" icon={<Eye />} href={`/admin/grading/detail/${row.id}`} />
+            <IconAction title="Chấm điểm" icon={<Edit />} href={`/admin/grading/update/${row.id}`} />
           </Box>
         )}
         displayColumnDefOptions={{
