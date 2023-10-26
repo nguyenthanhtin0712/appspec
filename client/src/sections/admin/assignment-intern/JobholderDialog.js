@@ -1,6 +1,6 @@
 import { Box, Drawer } from '@mui/material';
 import React from 'react';
-import JobholderSearch from 'sections/admin/assignment_intern/JobholderSearch';
+import JobholderSearch from 'sections/admin/assignment-intern/JobholderSearch';
 import { setOpen, getJobholderIntenship, fetchData } from 'store/reducers/assignmentIntenship';
 import { dispatch } from 'store/index';
 import { useSelector } from 'react-redux';

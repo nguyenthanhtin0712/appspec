@@ -1,36 +1,20 @@
-import React, { memo, useEffect, useState } from 'react';
+import React, { memo, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useTheme } from '@mui/material/styles';
-import { Edit, Trash } from 'iconsax-react';
+import { Edit, Eye, Trash } from 'iconsax-react';
 import Box from '@mui/material/Box';
-import IconButton from '@mui/material/IconButton';
 import { MaterialReactTable } from 'material-react-table';
-import {
-  fetchData,
-  setColumnFilters,
-  setGlobalFilter,
-  setSorting,
-  setPagination,
-  deleteRegisterSpecalty
-} from 'store/reducers/registerSpecialtyAdminSlice';
-import ConfirmDialog from 'components/ConfirmDialog';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import { toast } from 'react-toastify';
+import { fetchData, setColumnFilters, setGlobalFilter, setSorting, setPagination, setIdDeletePage } from 'store/reducers/pageSlice';
+
 import { dispatch } from 'store/index';
 import dayjs from 'dayjs';
+import IconAction from 'components/IconAction';
 
 const PageTable = () => {
   const theme = useTheme();
-  const [openCofirm, setOpenCofirm] = useState(false);
-  const [idDelete, setIdDelete] = useState('');
   const { data, isError, isLoading, isRefetching, rowCount, columnFilters, globalFilter, sorting, pagination } = useSelector(
-    (state) => state.register_specialty
+    (state) => state.page
   );
-
-  const handleCloseCofirm = () => {
-    setOpenCofirm(false);
-  };
 
   useEffect(() => {
     dispatch(fetchData({ columnFilters, globalFilter, sorting, pagination }));
@@ -39,50 +23,35 @@ const PageTable = () => {
   const columns = React.useMemo(
     () => [
       {
-        accessorKey: 'register_specialty_id',
+        accessorKey: 'page_id',
         header: 'ID',
         size: 30
       },
       {
-        accessorKey: 'register_specialty_name',
-        header: 'Tên đợt',
+        accessorKey: 'page_title',
+        header: 'Tên trang',
         size: 240
       },
       {
-        accessorKey: 'register_specialty_course',
-        header: 'Khóa',
-        size: 30
-      },
-      {
-        accessorKey: 'register_specialty_start_date',
-        header: 'Thời gian bắt đầu',
+        accessorKey: 'created_at',
+        header: 'Thời gian tạo',
         Cell: ({ cell }) => dayjs(cell.getValue()).format('DD/MM/YYYY HH:mm')
       },
       {
-        accessorKey: 'register_specialty_end_date',
-        header: 'Thời gian kết thúc',
+        accessorKey: 'updated_at',
+        header: 'Thời gian cập nhật',
         Cell: ({ cell }) => dayjs(cell.getValue()).format('DD/MM/YYYY HH:mm')
       }
     ],
     []
   );
 
-  const handleDelete = (id) => {
-    setOpenCofirm(true);
-    setIdDelete(id);
-  };
-
-  const handleUpdate = (data) => {
-    const major = { major_id: data.major_id, major_name: data.major_name };
-    dispatch(setMajorDialog({ open: true, action: 'update', initValue: major }));
-  };
-
   return (
     <>
       <MaterialReactTable
         columns={columns}
         data={data}
-        getRowId={(row) => row.register_specialty_id}
+        getRowId={(row) => row.page_id}
         manualFiltering
         manualPagination
         manualSorting
@@ -105,16 +74,9 @@ const PageTable = () => {
         positionActionsColumn="last"
         renderRowActions={({ row }) => (
           <Box>
-            <IconButton
-              onClick={() => {
-                handleUpdate(row.original);
-              }}
-            >
-              <Edit />
-            </IconButton>
-            <IconButton color="error" onClick={() => handleDelete(row.id)}>
-              <Trash />
-            </IconButton>
+            <IconAction title={'Xem'} icon={<Eye />} href={`/page/${row.original.page_slug}`} />
+            <IconAction title={'Chỉnh sửa'} icon={<Edit />} href={`/page/${row.id}`} />
+            <IconAction title={'Xoá'} color="error" icon={<Trash />} onClick={() => dispatch(setIdDeletePage(row.id))} />
           </Box>
         )}
         displayColumnDefOptions={{
@@ -137,32 +99,16 @@ const PageTable = () => {
             bgcolor: theme.palette.background.neutral
           })
         }}
-      />
-
-      <ConfirmDialog
-        open={openCofirm}
-        onClose={handleCloseCofirm}
-        title="Delete"
-        content={<Typography variant="h6">Bạn có chắc chắn muốn xóa ?</Typography>}
-        action={
-          <Button
-            variant="contained"
-            color="error"
-            onClick={async () => {
-              try {
-                await dispatch(deleteRegisterSpecalty(idDelete));
-                handleCloseCofirm();
-                toast.success('Xóa đợt đăng ký thành công!');
-                setIdDelete('');
-              } catch (err) {
-                console.error(err);
-                toast.error('Có lỗi trong quá trình xóa!' + err);
-              }
-            }}
-          >
-            Chắc chắn
-          </Button>
-        }
+        positionGlobalFilter="left"
+        initialState={{
+          showGlobalFilter: true
+        }}
+        muiSearchTextFieldProps={{
+          placeholder: 'Tìm kiếm trang',
+          sx: { minWidth: '300px' },
+          variant: 'outlined',
+          size: 'small'
+        }}
       />
     </>
   );

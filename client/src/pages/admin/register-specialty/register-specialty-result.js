@@ -6,7 +6,7 @@ import { Box, Button, Divider, Fade, Menu, MenuItem, Stack, Tab, Tabs } from '@m
 import SpecialityContainer from 'sections/user/register_speciality/register/SpecialityContainer';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router';
-import ResultTableAdmin from 'sections/admin/register_specialty/register_specialty_result/ResultTableAdmin';
+import ResultTableAdmin from 'sections/admin/register_specialty/register-specialty-result/ResultTableAdmin';
 import { ArrowRight, Printer } from 'iconsax-react';
 import { setColumnFilters } from 'store/reducers/registerSpecialtyUserSlice';
 import { useTheme } from '@mui/material/styles';

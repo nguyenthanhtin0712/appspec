@@ -4,15 +4,17 @@ import { lazy } from 'react';
 import Loadable from 'components/Loadable';
 import HomeLayout from 'layout/HomeLayout';
 import PrivateRoute from './route/PrivateRoute';
+import { dispatch } from 'store';
+import { viewPage } from 'store/reducers/pageSlice';
 
 // render - data display components
 const HomePage = Loadable(lazy(() => import('pages/user/homepage')));
 const Contact = Loadable(lazy(() => import('pages/user/contact')));
 //speciality
-const RegisterSpeciality_Index = Loadable(lazy(() => import('pages/user/register_speciality')));
-const RegisterSpeciality_Register = Loadable(lazy(() => import('pages/user/register_speciality/register')));
-const RegisterSpeciality_Rules = Loadable(lazy(() => import('pages/user/register_speciality/rules')));
-const RegisterSpeciality_Result = Loadable(lazy(() => import('pages/user/register_speciality/result')));
+const RegisterSpeciality_Index = Loadable(lazy(() => import('pages/user/register-speciality')));
+const RegisterSpeciality_Register = Loadable(lazy(() => import('pages/user/register-speciality/register')));
+const RegisterSpeciality_Rules = Loadable(lazy(() => import('pages/user/register-speciality/rules')));
+const RegisterSpeciality_Result = Loadable(lazy(() => import('pages/user/register-speciality/result')));
 //intern
 const RegisterIntern_Index = Loadable(lazy(() => import('pages/user/internship-graduation')));
 const RegisterIntern_Register = Loadable(lazy(() => import('pages/user/internship-graduation/register')));
@@ -22,11 +24,12 @@ const RegisterImprovement = Loadable(lazy(() => import('pages/user/register-open
 const RegisterOpenClassHistory = Loadable(lazy(() => import('pages/user/register-open-class/history')));
 const RegisterOpenClassStatistic = Loadable(lazy(() => import('pages/user/register-open-class/statistic')));
 const SubjectSchedule = Loadable(lazy(() => import('pages/user/subject-schedule')));
-
-// ==============================|| COMPONENTS ROUTES ||============================== //
+const Page = Loadable(lazy(() => import('pages/user/page')));
+const Page404 = Loadable(lazy(() => import('pages/error/page404')));
 
 const UserRoutes = {
   path: '/',
+  errorElement: <Page404 />,
   children: [
     {
       path: '/',
@@ -43,6 +46,17 @@ const UserRoutes = {
         {
           path: 'subject-schedule',
           element: <SubjectSchedule />
+        },
+        {
+          path: 'page/:slug',
+          loader: async ({ params }) => {
+            const res = await dispatch(viewPage(params.slug));
+            if (res && res.error) {
+              throw new Response('Not Found', { status: 404 });
+            }
+            return res;
+          },
+          element: <Page />
         }
       ]
     },

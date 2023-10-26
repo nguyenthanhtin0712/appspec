@@ -11,6 +11,7 @@ class Page extends Model
     use HasFactory, HasRoles;
     protected $table = 'pages';
     protected $primaryKey = 'page_id';
+    protected $attributes = ['page_isDelete' => 0];
     protected $fillable = [
         'page_id',
         'page_slug',

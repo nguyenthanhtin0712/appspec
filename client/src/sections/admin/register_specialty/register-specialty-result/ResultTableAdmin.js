@@ -12,7 +12,7 @@ import {
 } from 'store/reducers/registerSpecialtyUserSlice';
 import { dispatch } from 'store/index';
 import { Box, Button, MenuItem, Select } from '@mui/material';
-import ChangeSpecialtyDialog from 'sections/admin/register_specialty/register_specialty_result/ChangeSpecialtyDialog';
+import ChangeSpecialtyDialog from 'sections/admin/register_specialty/register-specialty-result/ChangeSpecialtyDialog';
 
 const ResultTable = () => {
   const theme = useTheme();

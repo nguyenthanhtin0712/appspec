@@ -8,7 +8,7 @@ import { Formik } from 'formik';
 import DateTimePickerField from 'components/input/DateTimePickerField';
 import { dispatch } from 'store/index';
 import { toast } from 'react-toastify';
-import CompanyList from 'sections/admin/internship-graduation/register_intern_create/CompanyList';
+import CompanyList from 'sections/admin/internship-graduation/register-intern-create/CompanyList';
 import { updateRegisterInternShip } from 'store/reducers/createRegisterInternSlice';
 import { useSelector } from 'react-redux';
 import { formatDateTimeSubmit } from 'utils/formatDateTime';

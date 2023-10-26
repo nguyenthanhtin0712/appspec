@@ -16,8 +16,8 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
-import JobholderDialog from 'sections/admin/assignment_intern/JobholderDialog';
-import AssignmentInternDialog from 'sections/admin/assignment_intern/AssignmentInternDialog';
+import JobholderDialog from 'sections/admin/assignment-intern/JobholderDialog';
+import AssignmentInternDialog from 'sections/admin/assignment-intern/AssignmentInternDialog';
 
 const ResultTable = () => {
   const theme = useTheme();

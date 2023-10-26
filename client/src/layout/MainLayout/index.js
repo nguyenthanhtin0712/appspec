@@ -14,6 +14,7 @@ import Footer from './Footer';
 import { dispatch, useSelector } from 'store';
 import { openAdminDrawer } from 'store/reducers/menu';
 import { DRAWER_WIDTH } from 'config';
+import ScrollTop from 'components/ScrollTop';
 
 // ==============================|| MAIN LAYOUT ||============================== //
 
@@ -57,6 +58,7 @@ const MainLayout = () => {
             paddingX: 0
           }}
         >
+          <ScrollTop />
           <Outlet />
           <Footer />
         </Container>

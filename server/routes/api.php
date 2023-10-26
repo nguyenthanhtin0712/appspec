@@ -18,6 +18,7 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\DisplayConfigController;
 use App\Http\Controllers\Api\SubjectController;
 use App\Http\Controllers\Api\InternshipGraduationController;
+use App\Http\Controllers\Api\PageController;
 use App\Http\Controllers\Api\RegisterOpenClassController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\SubjectScheduleController;
@@ -149,6 +150,13 @@ Route::middleware(['auth:api'])->group(function () {
     Route::post('register-open-class', [RegisterOpenClassController::class, 'register']);
     Route::get('register-open-class/history', [RegisterOpenClassController::class, 'history']);
     Route::get('register-open-class/statistical', [RegisterOpenClassController::class, 'statistical']);
+
+    // Pages
+    Route::get('pages', [PageController::class, 'index']);
+    Route::post('pages', [PageController::class, 'store']);
+    Route::get('pages/{slug}', [PageController::class, 'show']);
+    Route::put('pages/{id}', [PageController::class, 'update']);
+    Route::delete('pages/{id}', [PageController::class, 'destroy']);
 });
 
 Route::get('test-email', [InternshipGraduationController::class, 'testEmail']);

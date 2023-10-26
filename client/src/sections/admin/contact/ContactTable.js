@@ -100,6 +100,16 @@ const ContactTable = () => {
             bgcolor: theme.palette.background.neutral
           })
         }}
+        positionGlobalFilter="left"
+        initialState={{
+          showGlobalFilter: true
+        }}
+        muiSearchTextFieldProps={{
+          placeholder: 'Tìm kiếm...',
+          sx: { minWidth: '300px' },
+          variant: 'outlined',
+          size: 'small'
+        }}
       />
     </>
   );

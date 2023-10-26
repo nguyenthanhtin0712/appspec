@@ -8,7 +8,7 @@ import { useParams } from 'react-router';
 import { ArrowRight, Printer } from 'iconsax-react';
 import { useTheme } from '@mui/material/styles';
 import { formatDDMMYYYY } from 'utils/formatDateTime';
-import ResultTableAdmin from 'sections/admin/assignment_intern_detail/ResultTableAdmin';
+import ResultTableAdmin from 'sections/admin/assignment-intern-detail/ResultTableAdmin';
 import { setId } from 'store/reducers/assignmentInternshipDetail';
 
 const AssignmentInternDetail = () => {

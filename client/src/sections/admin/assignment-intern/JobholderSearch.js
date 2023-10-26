@@ -8,7 +8,7 @@ import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 import ClearIcon from '@mui/icons-material/Clear';
 import { useEffect, useState } from 'react';
-import JobholderSearchItem from 'sections/admin/assignment_intern/JobholderSearchItem';
+import JobholderSearchItem from 'sections/admin/assignment-intern/JobholderSearchItem';
 import useDebounce from 'hooks/useDebounce';
 import { dispatch } from 'store/index';
 import { fetchJobholder } from 'store/reducers/assignmentIntenship';

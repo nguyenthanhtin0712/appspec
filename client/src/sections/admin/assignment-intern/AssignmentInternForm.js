@@ -2,7 +2,7 @@ import { Box, Button, CircularProgress, Stack } from '@mui/material';
 import MainCard from 'components/MainCard';
 import { Add } from 'iconsax-react';
 import React, { useEffect } from 'react';
-import JobholderItem from 'sections/admin/assignment_intern/JobholderItem';
+import JobholderItem from 'sections/admin/assignment-intern/JobholderItem';
 import { setOpen, getJobholderIntenship } from 'store/reducers/assignmentIntenship';
 import { dispatch } from 'store/index';
 import { useSelector } from 'react-redux';

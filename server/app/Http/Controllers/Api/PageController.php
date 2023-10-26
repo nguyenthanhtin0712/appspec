@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Collection;
+use App\Http\Resources\PageResource;
 use App\Models\Page;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -24,7 +25,7 @@ class PageController extends Controller
         $sortBy = $request->input('sortBy');
         $sortOrder = $request->input('sortOrder', 'asc');
         $filters = $request->input('filters');
-        $pages = Page::query();
+        $pages = Page::select('page_id', 'page_slug', 'page_title', 'created_at', 'updated_at');
         $pages->where("page_isDelete", "0");
         if ($query) {
             $pages->where("page_name", "LIKE", "%$query%");
@@ -65,7 +66,6 @@ class PageController extends Controller
     public function store(Request $request)
     {
         $dataCreate = $request->all();
-        $dataCreate['page_isDelete'] = 0;
         $page = Page::create($dataCreate);
         return $this->sentSuccessResponse($page, "Create page successfully", Response::HTTP_OK);
     }
@@ -76,10 +76,10 @@ class PageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-        $page = Page::where('page_id', $id)->where('page_isDelete', 0)->firstOrFail();
-        return $this->sentSuccessResponse($page, 'Displayed page successfully', Response::HTTP_OK);
+        $page = Page::where('page_slug', $slug)->where('page_isDelete', 0)->firstOrFail();
+        return $this->sentSuccessResponse($page, 'Get page content successfully', Response::HTTP_OK);
     }
 
     /**
@@ -94,7 +94,8 @@ class PageController extends Controller
         $page = Page::where('page_id', $id)->firstOrFail();
         $dataUpdate = $request->all();
         $page->update($dataUpdate);
-        return $this->sentSuccessResponse($page, "Update page success", Response::HTTP_OK);
+        $pageResource = new PageResource($page);
+        return $this->sentSuccessResponse($pageResource, "Update page success", Response::HTTP_OK);
     }
 
     /**
@@ -105,9 +106,10 @@ class PageController extends Controller
      */
     public function destroy($id)
     {
-        $page = Page::where('page_id', $id)->firstOrFail();
+        $page = Page::where('page_id', $id)->where('page_isDelete', 0)->firstOrFail();
         $page->page_isDelete = 1;
         $page->save();
-        return $this->sentSuccessResponse($page, 'Deleted page successfully', Response::HTTP_OK);
+        $pageResource = new PageResource($page);
+        return $this->sentSuccessResponse($pageResource, 'Deleted page successfully', Response::HTTP_OK);
     }
 }

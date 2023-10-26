@@ -10,7 +10,7 @@ import { removeCompanySelected, setIsInterview } from 'store/reducers/createRegi
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import { Buildings } from 'iconsax-react';
 import { useTheme } from '@mui/material';
-import SelectPositions from 'sections/admin/internship-graduation/register_intern_create/SelectPositions';
+import SelectPositions from 'sections/admin/internship-graduation/register-intern-create/SelectPositions';
 
 const CompanyItem = ({ company }) => {
   const theme = useTheme();

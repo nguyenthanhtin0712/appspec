@@ -11,7 +11,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { Add, ArrowLeft, CloseCircle } from 'iconsax-react';
-import PositionIntership from 'sections/admin/internship-graduation/register_intern_create/PositionIntership';
+import PositionIntership from 'sections/admin/internship-graduation/register-intern-create/PositionIntership';
 import { dispatch } from 'store';
 import {
   createRecruitmentPosition,

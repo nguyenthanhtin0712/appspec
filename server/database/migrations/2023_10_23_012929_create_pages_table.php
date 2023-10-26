@@ -18,6 +18,7 @@ class CreatePagesTable extends Migration
             $table->string('page_slug');
             $table->string('page_title');
             $table->text('page_content');
+            $table->boolean('page_isDelete');
             $table->timestamps();
         });
     }

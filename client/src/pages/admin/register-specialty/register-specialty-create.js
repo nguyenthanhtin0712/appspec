@@ -12,7 +12,7 @@ import InputField from 'components/input/InputField';
 import DateTimePickerField from 'components/input/DateTimePickerField';
 import { dispatch } from 'store/index';
 import { getAll } from 'store/reducers/majorSlice';
-import MajorContainerForm from 'sections/admin/register_specialty/register_specialty_create/MajorContainerForm';
+import MajorContainerForm from 'sections/admin/register_specialty/register-specialty-create/MajorContainerForm';
 import { createRegisterSpecalty } from 'store/reducers/registerSpecialtyAdminSlice';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';

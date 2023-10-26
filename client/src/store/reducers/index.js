@@ -29,6 +29,7 @@ import contact from './contactSlice';
 import assignment_internship_detail from 'store/reducers/assignmentInternshipDetail';
 import role from 'store/reducers/roleSlice';
 import grading from 'store/reducers/gradingSlice';
+import page from 'store/reducers/pageSlice';
 // ==============================|| COMBINE REDUCERS ||============================== //
 
 const reducers = combineReducers({
@@ -58,7 +59,8 @@ const reducers = combineReducers({
   warned_student,
   warned_student_detail,
   role,
-  grading
+  grading,
+  page
 });
 
 export default reducers;

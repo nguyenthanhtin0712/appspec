@@ -5,6 +5,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
 import PageTable from 'sections/admin/page/PageTable';
+import PageDeleteDialog from 'sections/admin/page/PageDeleteDialog';
 
 const PageIndex = () => {
   return (
@@ -16,6 +17,7 @@ const PageIndex = () => {
         </Button>
       </Stack>
       <PageTable />
+      <PageDeleteDialog />
     </>
   );
 };
