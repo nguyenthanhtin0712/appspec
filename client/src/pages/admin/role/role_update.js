@@ -8,7 +8,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import { dispatch } from 'store/index';
-import { getFunctional, setSelectedCheckboxes, updateRole, getRole } from 'store/reducers/roleSlice';
+import { getFunctional, setSelectedCheckboxes, updateRole, getRole } from 'store/slices/roleSlice';
 import RoleCard from 'sections/admin/role/RoleCard';
 import LoadingBox from 'components/LoadingBox';
 import { Backdrop, CircularProgress, Stack } from '@mui/material';

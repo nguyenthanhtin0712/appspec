@@ -6,7 +6,7 @@ import { SearchNormal1, Building4, SearchStatus1, EmojiSad } from 'iconsax-react
 import { Box, CircularProgress, Fade, List, ListItemButton, ListItemIcon, ListItemText, Typography, useTheme } from '@mui/material';
 import SimpleBar from 'components/third-party/SimpleBar';
 import { dispatch } from 'store';
-import { fetchDataCompany, setCompanyQuery, setCompanySelected } from 'store/reducers/createRegisterInternSlice';
+import { fetchDataCompany, setCompanyQuery, setCompanySelected } from 'store/slices/createRegisterInternSlice';
 import { useSelector } from 'react-redux';
 import useDebounce from 'hooks/useDebounce';
 

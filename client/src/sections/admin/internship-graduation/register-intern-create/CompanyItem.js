@@ -6,7 +6,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import IconButton from 'components/@extended/IconButton';
 import { dispatch } from 'store';
-import { removeCompanySelected, setIsInterview } from 'store/reducers/createRegisterInternSlice';
+import { removeCompanySelected, setIsInterview } from 'store/slices/createRegisterInternSlice';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import { Buildings } from 'iconsax-react';
 import { useTheme } from '@mui/material';

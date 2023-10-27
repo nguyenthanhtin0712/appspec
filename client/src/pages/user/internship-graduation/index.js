@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 import { Calendar, InfoCircle, Stickynote, Call, Check, MedalStar, Chart } from 'iconsax-react';
 import { useTheme } from '@mui/material/styles';
 import InfoItem from 'sections/user/register_speciality/index/InfoItem';
-import { getInternship } from 'store/reducers/registerInternUserSlice';
+import { getInternship } from 'store/slices/registerInternUserSlice';
 import { dispatch } from 'store/index';
 import { useSelector } from 'react-redux';
 import { formatDateTimeDisplay } from 'utils/formatDateTime';

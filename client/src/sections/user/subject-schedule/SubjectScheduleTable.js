@@ -8,7 +8,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { showSubjectSchedule } from 'store/reducers/subjectScheduleUserSlice';
+import { showSubjectSchedule } from 'store/slices/subjectScheduleUserSlice';
 import { dispatch } from 'store';
 import LoadingBox from 'components/LoadingBox';
 

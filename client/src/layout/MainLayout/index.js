@@ -8,11 +8,9 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import Drawer from './Drawer';
 import Header from './Header';
 import Footer from './Footer';
-// import Breadcrumbs from 'components/@extended/Breadcrumbs';
-
 // import navigation from 'menu-items/admin';
 import { dispatch, useSelector } from 'store';
-import { openAdminDrawer } from 'store/reducers/menu';
+import { openAdminDrawer } from 'store/slices/menu';
 import { DRAWER_WIDTH } from 'config';
 import ScrollTop from 'components/ScrollTop';
 

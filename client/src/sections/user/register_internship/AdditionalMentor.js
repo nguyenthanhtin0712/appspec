@@ -8,7 +8,7 @@ import InputField from 'components/input/InputField';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { dispatch } from 'store/index';
-import { addMentorStudent } from 'store/reducers/registerInternUserSlice';
+import { addMentorStudent } from 'store/slices/registerInternUserSlice';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router';
 

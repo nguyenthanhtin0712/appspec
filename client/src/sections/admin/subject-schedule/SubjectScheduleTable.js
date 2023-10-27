@@ -13,7 +13,7 @@ import {
   setOpenCofirmDialog,
   setIdDeleteSubject,
   setIdSelect
-} from 'store/reducers/subjectScheduleSlice';
+} from 'store/slices/subjectScheduleSlice';
 import { dispatch } from 'store/index';
 import IconAction from 'components/IconAction';
 

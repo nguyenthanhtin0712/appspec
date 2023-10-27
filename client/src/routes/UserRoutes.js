@@ -5,7 +5,7 @@ import Loadable from 'components/Loadable';
 import HomeLayout from 'layout/HomeLayout';
 import PrivateRoute from './route/PrivateRoute';
 import { dispatch } from 'store';
-import { viewPage } from 'store/reducers/pageSlice';
+import { viewPage } from 'store/slices/pageSlice';
 
 // render - data display components
 const HomePage = Loadable(lazy(() => import('pages/user/homepage')));

@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import RegisterInternTable from 'sections/admin/internship-graduation/InternshipGraduationTable';
 import RegisterInternDeleteDialog from 'sections/admin/internship-graduation/InternshipGraduationDeleteDialog';
 import { dispatch } from 'store';
-import { setInternshipGraduationDialog } from 'store/reducers/internshipGraduationSlice';
+import { setInternshipGraduationDialog } from 'store/slices/internshipGraduationSlice';
 import InternshipGraduationDialog from 'sections/admin/internship-graduation/InternshipGraduationDialog';
 
 const InternShipGraduationIndex = () => {

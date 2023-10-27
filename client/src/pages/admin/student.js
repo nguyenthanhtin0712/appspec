@@ -1,5 +1,5 @@
 import React from 'react';
-import { setStudentDialog } from 'store/reducers/studentSlice';
+import { setStudentDialog } from 'store/slices/studentSlice';
 import { Add } from 'iconsax-react';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';

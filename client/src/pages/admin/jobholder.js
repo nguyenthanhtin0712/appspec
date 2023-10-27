@@ -1,5 +1,5 @@
 import React from 'react';
-import { setJobholderDialog } from 'store/reducers/jobholderSlice';
+import { setJobholderDialog } from 'store/slices/jobholderSlice';
 import { Add } from 'iconsax-react';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';

@@ -6,7 +6,7 @@ import MainCard from 'components/MainCard';
 import RegisterInternsipForm from 'sections/user/register_internship/RegisterInternshipForm';
 import CompanyList from 'sections/user/register_internship/CompanyList';
 import { useSelector } from 'react-redux';
-import { getInternship } from 'store/reducers/registerInternUserSlice';
+import { getInternship } from 'store/slices/registerInternUserSlice';
 import { dispatch } from 'store/index';
 import CountdownTimer from 'components/CountdownTimer';
 import LoadingBox from 'components/LoadingBox';

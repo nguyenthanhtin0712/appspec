@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ListItemButton, ListItemText } from '@mui/material';
 import { dispatch } from 'store/index';
-import { joinInternship } from 'store/reducers/assignmentIntenship';
+import { joinInternship } from 'store/slices/assignmentIntenship';
 
 const JobholderSearchItem = ({ jobholder_code, id, name, join }) => {
   const [state, setState] = useState(join);

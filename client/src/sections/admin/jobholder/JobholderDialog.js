@@ -13,7 +13,7 @@ import Button from '@mui/material/Button';
 import { useDispatch } from 'react-redux';
 import DialogTitleCustom from 'components/DialogTitleCustom';
 import { dispatch } from 'store/index';
-import { createJobholder, updateJobholder, getAllTitle, getAllAcademicField, setCloseDialog } from 'store/reducers/jobholderSlice';
+import { createJobholder, updateJobholder, getAllTitle, getAllAcademicField, setCloseDialog } from 'store/slices/jobholderSlice';
 import Stack from '@mui/material/Stack';
 import Switch from '@mui/material/Switch';
 import Box from '@mui/material/Box';

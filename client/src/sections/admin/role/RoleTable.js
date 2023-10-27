@@ -13,7 +13,7 @@ import {
   setPagination,
   setOpenCofirmDialog,
   setIdDelete
-} from 'store/reducers/roleSlice';
+} from 'store/slices/roleSlice';
 import Button from '@mui/material/Button';
 import { dispatch } from 'store/index';
 import { Export } from 'iconsax-react';

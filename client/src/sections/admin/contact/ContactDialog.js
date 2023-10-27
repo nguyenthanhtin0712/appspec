@@ -2,11 +2,11 @@ import React, { memo, useEffect } from 'react';
 import Dialog from '@mui/material/Dialog';
 import { useSelector } from 'react-redux';
 import DialogTitleCustom from 'components/DialogTitleCustom';
-import { setContactDialog } from 'store/reducers/contactSlice';
+import { setContactDialog } from 'store/slices/contactSlice';
 import { dispatch } from 'store/index';
 import { ContactForm } from 'sections/admin/contact/ContactForm';
 
-import { getContactConfig } from 'store/reducers/contactSlice';
+import { getContactConfig } from 'store/slices/contactSlice';
 
 const ContactDialog = () => {
   const { contactDialog } = useSelector((state) => state.contact);

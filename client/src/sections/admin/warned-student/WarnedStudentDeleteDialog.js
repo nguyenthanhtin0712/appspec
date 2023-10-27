@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import { toast } from 'react-toastify';
 import { dispatch } from 'store';
 import { useSelector } from 'react-redux';
-import { deleteWarnedStudent, setIdDelete } from 'store/reducers/warnedStudentSlice';
+import { deleteWarnedStudent, setIdDelete } from 'store/slices/warnedStudentSlice';
 
 const WarnedStudentDeleteDialog = () => {
   const { idDelete } = useSelector((state) => state.warned_student);

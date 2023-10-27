@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { dispatch } from 'store';
-import { deleteInternshipGraduation, setOpenCofirmDialog } from 'store/reducers/internshipGraduationSlice';
+import { deleteInternshipGraduation, setOpenCofirmDialog } from 'store/slices/internshipGraduationSlice';
 
 const InternshipGraduationDeleteDialog = () => {
   const { idDelete, openCofirmDialog } = useSelector((state) => state.internship_graduation);

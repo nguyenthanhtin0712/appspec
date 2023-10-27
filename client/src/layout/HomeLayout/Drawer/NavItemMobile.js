@@ -7,7 +7,7 @@ import ListItemText from '@mui/material/ListItemText';
 import { ArrowDown2, ArrowUp2 } from 'iconsax-react';
 import { Link } from 'react-router-dom';
 import { dispatch } from 'store';
-import { openUserDrawer } from 'store/reducers/menu';
+import { openUserDrawer } from 'store/slices/menu';
 
 const NavItemMobile = ({ item }) => {
   const [open, setOpen] = useState(false);

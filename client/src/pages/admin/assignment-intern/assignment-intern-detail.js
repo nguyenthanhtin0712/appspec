@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Typography from '@mui/material/Typography';
 import { dispatch } from 'store/index';
-import { getRegisterInternship } from 'store/reducers/assignmentInternshipDetail';
+import { getRegisterInternship } from 'store/slices/assignmentInternshipDetail';
 import { Box, Button, Stack } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router';
@@ -9,7 +9,7 @@ import { ArrowRight, Printer } from 'iconsax-react';
 import { useTheme } from '@mui/material/styles';
 import { formatDDMMYYYY } from 'utils/formatDateTime';
 import ResultTableAdmin from 'sections/admin/assignment-intern-detail/ResultTableAdmin';
-import { setId } from 'store/reducers/assignmentInternshipDetail';
+import { setId } from 'store/slices/assignmentInternshipDetail';
 
 const AssignmentInternDetail = () => {
   const { Id } = useParams();

@@ -18,7 +18,7 @@ import {
   getAllRecruitmentPosition,
   setPositionOptions,
   setRecruitmentPosition
-} from 'store/reducers/createRegisterInternSlice';
+} from 'store/slices/createRegisterInternSlice';
 import { useSelector } from 'react-redux';
 import { useCallback } from 'react';
 import { useState } from 'react';

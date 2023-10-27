@@ -18,7 +18,6 @@ import Box from '@mui/material/Box';
 const LookUpTable = () => {
   const theme = useTheme();
   const { data, isLoading } = useSelector((state) => state.warned_student.lookUpDialog);
-  console.log(isLoading, data);
   if (isLoading) return <LoadingBox height={235} />;
   if (data.length === 0) return <EmptyBox message="Không tìm thấy dữ liệu" />;
   return (

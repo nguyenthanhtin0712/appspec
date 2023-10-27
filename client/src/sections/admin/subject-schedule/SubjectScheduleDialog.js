@@ -11,7 +11,7 @@ import Button from '@mui/material/Button';
 import { dispatch } from 'store/index';
 import FileField from 'components/input/FileField';
 import InputField from 'components/input/InputField';
-import { closeSubjectScheduleDialog, createSubjectSchedule } from 'store/reducers/subjectScheduleSlice';
+import { closeSubjectScheduleDialog, createSubjectSchedule } from 'store/slices/subjectScheduleSlice';
 import * as XLSX from 'xlsx';
 import { Typography } from '@mui/material';
 import DialogTitleCustom from 'components/DialogTitleCustom';

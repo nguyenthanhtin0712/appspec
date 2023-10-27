@@ -7,7 +7,7 @@ import FormHelperText from '@mui/material/FormHelperText';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import { toast } from 'react-toastify';
-import { closeSubjectDialog, createSubject, getAllAcademicFields, getAllSubject, updateSubject } from 'store/reducers/subjectSlice';
+import { closeSubjectDialog, createSubject, getAllAcademicFields, getAllSubject, updateSubject } from 'store/slices/subjectSlice';
 import { useSelector } from 'react-redux';
 import Button from '@mui/material/Button';
 import InputField from 'components/input/InputField';

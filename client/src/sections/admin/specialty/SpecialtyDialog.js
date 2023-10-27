@@ -8,13 +8,13 @@ import FormHelperText from '@mui/material/FormHelperText';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import { toast } from 'react-toastify';
-import { createSpecialty, setSpecialtyDialog, updateSpecialty } from 'store/reducers/specialtySlice';
+import { createSpecialty, setSpecialtyDialog, updateSpecialty } from 'store/slices/specialtySlice';
 import { useSelector } from 'react-redux';
 import Button from '@mui/material/Button';
 import { dispatch } from 'store/index';
 import InputField from 'components/input/InputField';
 import SelectField from 'components/input/SelectField';
-import { fetchData } from 'store/reducers/majorSlice';
+import { fetchData } from 'store/slices/majorSlice';
 
 const SpecialtyDialog = () => {
   const { specialtyDialog } = useSelector((state) => state.specialty);

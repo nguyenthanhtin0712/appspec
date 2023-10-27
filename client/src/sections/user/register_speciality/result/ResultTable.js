@@ -2,7 +2,7 @@ import React, { memo, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useTheme } from '@mui/material/styles';
 import { MaterialReactTable } from 'material-react-table';
-import { fetchData, setColumnFilters, setGlobalFilter, setSorting, setPagination } from 'store/reducers/registerSpecialtyUserSlice';
+import { fetchData, setColumnFilters, setGlobalFilter, setSorting, setPagination } from 'store/slices/registerSpecialtyUserSlice';
 import { dispatch } from 'store/index';
 import { formatDateTimeDisplay } from 'utils/formatDateTime';
 

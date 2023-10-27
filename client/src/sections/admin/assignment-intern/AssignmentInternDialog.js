@@ -12,7 +12,7 @@ import * as Yup from 'yup';
 import { Formik } from 'formik';
 import { useSelector } from 'react-redux';
 import { dispatch } from 'store';
-import { getJobholderIntenship, setDialog, changeJobholder, fetchData } from 'store/reducers/assignmentIntenship';
+import { getJobholderIntenship, setDialog, changeJobholder, fetchData } from 'store/slices/assignmentIntenship';
 import { toast } from 'react-toastify';
 
 const AssignmentInternDialog = ({ rowSelection, setRowSelection }) => {

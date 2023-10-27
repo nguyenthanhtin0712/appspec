@@ -1,7 +1,7 @@
 import { Button, Stack, Typography } from '@mui/material';
 import { Edit } from 'iconsax-react';
 import ContactTable from 'sections/admin/contact/ContactTable';
-import { setContactDialog } from 'store/reducers/contactSlice';
+import { setContactDialog } from 'store/slices/contactSlice';
 import { dispatch } from 'store/index';
 import ContactDialog from 'sections/admin/contact/ContactDialog';
 

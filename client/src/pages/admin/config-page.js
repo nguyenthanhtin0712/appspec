@@ -13,7 +13,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { dispatch } from 'store';
-import { getAllInternshipGraduation, getAllRegisterSpecialty, getPageConfigInfo, updateConfig } from 'store/reducers/configPageSlice';
+import { getAllInternshipGraduation, getAllRegisterSpecialty, getPageConfigInfo, updateConfig } from 'store/slices/configPageSlice';
 
 const ConfigPage = () => {
   const [open, setOpen] = useState(false);

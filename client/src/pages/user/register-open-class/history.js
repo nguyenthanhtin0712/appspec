@@ -9,7 +9,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { dispatch } from 'store';
-import { getHistory } from 'store/reducers/registerOpenClassSlice';
+import { getHistory } from 'store/slices/registerOpenClassSlice';
 import { useSelector } from 'react-redux';
 import { useTheme } from '@mui/material';
 import LoadingBox from 'components/LoadingBox';

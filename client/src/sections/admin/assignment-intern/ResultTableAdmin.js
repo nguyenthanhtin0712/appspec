@@ -10,7 +10,7 @@ import {
   setPagination,
   setStatus,
   setDialog
-} from 'store/reducers/assignmentIntenship';
+} from 'store/slices/assignmentIntenship';
 import { dispatch } from 'store/index';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';

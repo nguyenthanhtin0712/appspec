@@ -3,7 +3,7 @@ import { Add } from 'iconsax-react';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import { setSubjectDialog } from 'store/reducers/subjectSlice';
+import { setSubjectDialog } from 'store/slices/subjectSlice';
 import { dispatch } from 'store/index';
 import SubjectTable from 'sections/admin/subject/SubjectTable';
 import SubjectDialog from 'sections/admin/subject/SubjectDialog';

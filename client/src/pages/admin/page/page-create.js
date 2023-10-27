@@ -9,7 +9,7 @@ import { dispatch } from 'store/index';
 import { toast } from 'react-toastify';
 import MarkDownEditor from 'sections/admin/page/MarkDownEditor';
 import { Typography } from '@mui/material';
-import { createPage } from 'store/reducers/pageSlice';
+import { createPage } from 'store/slices/pageSlice';
 import { useNavigate } from 'react-router';
 import slugify from 'slugify';
 import { ArrowRight } from 'iconsax-react';

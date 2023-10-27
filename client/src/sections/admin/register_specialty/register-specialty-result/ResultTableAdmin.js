@@ -9,7 +9,7 @@ import {
   setSorting,
   setPagination,
   setStatus
-} from 'store/reducers/registerSpecialtyUserSlice';
+} from 'store/slices/registerSpecialtyUserSlice';
 import { dispatch } from 'store/index';
 import { Box, Button, MenuItem, Select } from '@mui/material';
 import ChangeSpecialtyDialog from 'sections/admin/register_specialty/register-specialty-result/ChangeSpecialtyDialog';

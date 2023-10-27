@@ -2,54 +2,56 @@ import React from 'react';
 import MainCard from 'components/MainCard';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
+import InputLabel from '@mui/material/InputLabel';
+import FormHelperText from '@mui/material/FormHelperText';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import InputField from 'components/input/InputField';
 import { dispatch } from 'store/index';
 import { toast } from 'react-toastify';
-import MarkDownEditor from 'sections/admin/page/MarkDownEditor';
 import { Typography } from '@mui/material';
-import { updatePage } from 'store/slices/pageSlice';
+import { createPage } from 'store/slices/pageSlice';
 import { useNavigate } from 'react-router';
-import slugify from 'slugify';
 import { ArrowRight } from 'iconsax-react';
-import { useSelector } from 'react-redux';
+import QuillEditor from 'sections/admin/job-post/QuillEditor';
 
-const EditPage = () => {
+const CreateJobPost = () => {
   const navigate = useNavigate();
-  const { page_id, page_title, page_slug, page_content } = useSelector((state) => state.page.dataUpdate);
 
   return (
     <>
       <Typography mb={2} variant="h4">
-        Chỉnh sửa trang
+        Đăng tin tuyển dụng
       </Typography>
       <MainCard sx={{ mb: 2 }}>
         <Formik
           initialValues={{
-            page_id: page_id,
-            page_title: page_title,
-            page_slug: page_slug,
-            page_content: page_content
+            page_title: '',
+            page_content: ''
           }}
           validationSchema={Yup.object().shape({
             page_title: Yup.string().max(255).required('Tên trang là bắt buộc !'),
-            page_slug: Yup.string().max(255).required('Đường đẫn là bắt buộc !')
+            page_content: Yup.string().test('has-content', 'Vui lòng nhập nội dung bài viết.', (value) => {
+              // Kiểm tra xem giá trị có chỉ chứa thẻ <p></p> không
+              // Sử dụng regex hoặc các phương pháp xử lý chuỗi để kiểm tra
+              return !/^<p><\/p>$/.test(value);
+            })
           })}
           onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
             console.log(values);
             try {
-              const result = await dispatch(updatePage(values));
+              const result = await dispatch(createPage(values));
               if (result && !result.error) {
                 setStatus({ success: true });
                 setSubmitting(false);
                 navigate('/admin/page');
-                toast.success('Chỉnh sửa trang thành công!');
+                toast.success('Tạo trang thành công!');
               } else {
                 setStatus({ success: false });
                 setErrors(result.payload.errors);
                 setSubmitting(false);
-                toast.error('Chỉnh sửa trang không thành công');
+                toast.error('Tạo trang không thành công');
               }
             } catch (err) {
               console.error(err);
@@ -59,49 +61,33 @@ const EditPage = () => {
             }
           }}
         >
-          {({ errors, handleBlur, handleChange, handleSubmit, touched, values, isSubmitting, setFieldValue, setFieldTouched }) => (
+          {({ errors, handleBlur, handleChange, handleSubmit, touched, values, isSubmitting, setFieldValue }) => (
             <form noValidate onSubmit={handleSubmit}>
               <Grid container spacing={3}>
-                <Grid item xs={6}>
+                <Grid item xs={12}>
                   <InputField
                     id="page_title"
                     type="text"
                     value={values.page_title}
-                    onBlur={(event) => {
-                      setFieldTouched('page_title', true);
-                      setFieldValue(
-                        'page_slug',
-                        slugify(event.target.value, {
-                          lower: true,
-                          locale: 'vi',
-                          trim: true
-                        })
-                      );
-                    }}
+                    onBlur={handleBlur}
                     onChange={handleChange}
-                    placeholder="Nhập tên trang"
-                    label="Tên trang"
+                    placeholder="Nhập tiêu đề"
+                    label="Tiêu đề"
                     fullWidth
                     error={Boolean(touched.page_title && errors.page_title)}
                     helperText={errors.page_title}
                   />
                 </Grid>
-                <Grid item xs={6}>
-                  <InputField
-                    id="page_slug"
-                    type="text"
-                    value={values.page_slug}
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    placeholder="Nhập đường dẫn"
-                    label="Đường dẫn"
-                    fullWidth
-                    error={Boolean(touched.page_slug && errors.page_slug)}
-                    helperText={errors.page_slug}
-                  />
-                </Grid>
                 <Grid item xs={12}>
-                  <MarkDownEditor value={values.page_content} onChange={({ text }) => setFieldValue('page_content', text)} />
+                  <Stack spacing={2}>
+                    <InputLabel>Mô tả công việc</InputLabel>
+                    <QuillEditor
+                      value={values.page_content}
+                      onChange={(value) => setFieldValue('page_content', value)}
+                      error={!!(touched.page_content && errors.page_content)}
+                    />
+                    {!!(touched.page_content && errors.page_content) && <FormHelperText error>{errors.page_content}</FormHelperText>}
+                  </Stack>
                 </Grid>
                 <Grid item xs={12}>
                   <Button
@@ -114,7 +100,7 @@ const EditPage = () => {
                     style={{ float: 'right' }}
                     endIcon={<ArrowRight />}
                   >
-                    Cập nhật
+                    Đăng tin
                   </Button>
                 </Grid>
               </Grid>
@@ -126,4 +112,4 @@ const EditPage = () => {
   );
 };
 
-export default EditPage;
+export default CreateJobPost;

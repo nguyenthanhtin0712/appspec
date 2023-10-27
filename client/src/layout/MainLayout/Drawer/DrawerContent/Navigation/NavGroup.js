@@ -10,7 +10,7 @@ import { Box, List, Typography, useMediaQuery } from '@mui/material';
 import NavItem from './NavItem';
 
 import { dispatch, useSelector } from 'store';
-import { activeID } from 'store/reducers/menu';
+import { activeID } from 'store/slices/menu';
 
 // ==============================|| NAVIGATION - GROUP ||============================== //
 

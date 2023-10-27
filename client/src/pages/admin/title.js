@@ -5,7 +5,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import TitleTable from 'sections/admin/title/TitleTable';
 import TitleDialog from 'sections/admin/title/TitleDialog';
-import { setTitleDialog } from 'store/reducers/titleSlice';
+import { setTitleDialog } from 'store/slices/titleSlice';
 import { dispatch } from 'store/index';
 
 const TitlePage = () => {

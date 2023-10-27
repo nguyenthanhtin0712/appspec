@@ -5,7 +5,7 @@ import { Trash } from 'iconsax-react';
 import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
 import { MaterialReactTable } from 'material-react-table';
-import { fetchData, setColumnFilters, setGlobalFilter, setSorting, setPagination } from 'store/reducers/contactSlice';
+import { fetchData, setColumnFilters, setGlobalFilter, setSorting, setPagination } from 'store/slices/contactSlice';
 import { dispatch } from 'store/index';
 import { formatDateTimeDisplay } from 'utils/formatDateTime';
 

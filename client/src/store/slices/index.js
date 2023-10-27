@@ -26,10 +26,10 @@ import register_intern_user from './registerInternUserSlice';
 import register_open_class from './registerOpenClassSlice';
 import assignment_internship from './assignmentIntenship';
 import contact from './contactSlice';
-import assignment_internship_detail from 'store/reducers/assignmentInternshipDetail';
-import role from 'store/reducers/roleSlice';
-import grading from 'store/reducers/gradingSlice';
-import page from 'store/reducers/pageSlice';
+import assignment_internship_detail from 'store/slices/assignmentInternshipDetail';
+import role from 'store/slices/roleSlice';
+import grading from 'store/slices/gradingSlice';
+import page from 'store/slices/pageSlice';
 // ==============================|| COMBINE REDUCERS ||============================== //
 
 const reducers = combineReducers({

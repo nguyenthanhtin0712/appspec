@@ -2,7 +2,7 @@ import React, { memo, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useTheme } from '@mui/material/styles';
 import { MaterialReactTable } from 'material-react-table';
-import { fetchData, setColumnFilters, setGlobalFilter, setSorting, setPagination } from 'store/reducers/assignmentInternshipDetail';
+import { fetchData, setColumnFilters, setGlobalFilter, setSorting, setPagination } from 'store/slices/assignmentInternshipDetail';
 import { dispatch } from 'store/index';
 
 const ResultTable = () => {

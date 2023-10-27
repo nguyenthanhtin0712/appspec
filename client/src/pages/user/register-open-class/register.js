@@ -12,7 +12,7 @@ import AsyncAutocompleteField from 'components/input/AsyncAutocompleteField';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { dispatch } from 'store';
-import { getAllSubject, registerOpenClass } from 'store/reducers/registerOpenClassSlice';
+import { getAllSubject, registerOpenClass } from 'store/slices/registerOpenClassSlice';
 import InputField from 'components/input/InputField';
 import SelectField from 'components/input/SelectField';
 import InfoItem from 'sections/user/register_speciality/index/InfoItem';

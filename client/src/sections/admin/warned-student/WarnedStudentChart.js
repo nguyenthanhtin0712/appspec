@@ -3,7 +3,7 @@ import React, { memo, useEffect, useMemo, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { useSelector } from 'react-redux';
 import { dispatch } from 'store';
-import { getStatistical } from 'store/reducers/warnedStudentDetailSlice';
+import { getStatistical } from 'store/slices/warnedStudentDetailSlice';
 
 const handleData = (statistical) => {
   let result = {

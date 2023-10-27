@@ -11,7 +11,7 @@ import { SearchNormal } from 'iconsax-react';
 import BasicTable from 'sections/user/subject-schedule/SubjectScheduleTable';
 import { useSelector } from 'react-redux';
 import { dispatch } from 'store';
-import { fetchData, setIdSelect, setQuery } from 'store/reducers/subjectScheduleUserSlice';
+import { fetchData, setIdSelect, setQuery } from 'store/slices/subjectScheduleUserSlice';
 
 const SubjectSchedulePage = () => {
   useEffect(() => {

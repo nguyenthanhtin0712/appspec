@@ -8,7 +8,7 @@ import DialogContent from '@mui/material/DialogContent';
 import Grid from '@mui/material/Grid';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
-import { createCompany, updateCompany, setCloseDialog } from 'store/reducers/companySlice';
+import { createCompany, updateCompany, setCloseDialog } from 'store/slices/companySlice';
 import React, { useCallback } from 'react';
 
 const CompanyForm = ({ initialValues, action }) => {

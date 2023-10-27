@@ -1,6 +1,6 @@
 import ThemeCustomization from 'themes';
 import { useLayoutEffect } from 'react';
-import { getUserDataFromToken } from 'store/reducers/authSlice';
+import { getUserDataFromToken } from 'store/slices/authSlice';
 import Cookies from 'js-cookie';
 import { dispatch } from 'store/index';
 import { RouterProvider } from 'react-router';

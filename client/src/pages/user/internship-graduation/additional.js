@@ -9,7 +9,7 @@ import { LockCircle } from 'iconsax-react';
 import { useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { dispatch } from 'store/index';
-import { getInternship, getUserInternship } from 'store/reducers/registerInternUserSlice';
+import { getInternship, getUserInternship } from 'store/slices/registerInternUserSlice';
 import { Link } from 'react-router-dom';
 import AdditionalMentor from 'sections/user/register_internship/AdditionalMentor';
 import AdditionalCompany from 'sections/user/register_internship/AdditionalCompany';

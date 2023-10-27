@@ -1,5 +1,5 @@
 import React from 'react';
-import { setSpecialtyDialog } from 'store/reducers/specialtySlice';
+import { setSpecialtyDialog } from 'store/slices/specialtySlice';
 import { Add } from 'iconsax-react';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';

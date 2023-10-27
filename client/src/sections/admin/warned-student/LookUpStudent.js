@@ -7,7 +7,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import Button from '@mui/material/Button';
 import { useSelector } from 'react-redux';
 import { dispatch } from 'store';
-import { lookUpStudent, setLookUpDialog } from 'store/reducers/warnedStudentSlice';
+import { lookUpStudent, setLookUpDialog } from 'store/slices/warnedStudentSlice';
 import { SearchNormal } from 'iconsax-react';
 import DialogTitleCustom from 'components/DialogTitleCustom';
 import AnimateButton from 'components/@extended/AnimateButton';
