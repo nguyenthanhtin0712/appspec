@@ -80,13 +80,13 @@ const InfoContact = () => {
               </p>
               <p>
                 <strong>Điện thoại: </strong>
-                <Link href={department_phone} underline="none">
+                <Link href={department_phone.replace(/\s/g, '')} underline="none">
                   {init.department_phone}
                 </Link>
               </p>
               <p>
                 <strong>Email: </strong>
-                <Link href={department_email} underline="none">
+                <Link href={department_email.replace(/\s/g, '')} underline="none">
                   {init.department_email}
                 </Link>
               </p>
@@ -103,13 +103,13 @@ const InfoContact = () => {
               </p>
               <p>
                 <strong>Điện thoại: </strong>
-                <Link href={admin_phone} underline="none">
+                <Link href={admin_phone.replace(/\s/g, '')} underline="none">
                   {init.admin_phone}
                 </Link>
               </p>
               <p>
                 <strong>Email: </strong>
-                <Link href={admin_email} underline="none">
+                <Link href={admin_email.replace(/\s/g, '')} underline="none">
                   {init.admin_email}
                 </Link>
               </p>

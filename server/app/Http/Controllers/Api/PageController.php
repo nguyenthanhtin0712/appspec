@@ -120,4 +120,19 @@ class PageController extends Controller
         $page = Page::where('page_slug', $slug)->where('page_isDelete', 0)->firstOrFail()->makeHidden('page_isDelete');
         return $this->sentSuccessResponse($page, 'Get page content successfully', Response::HTTP_OK);
     }
+
+    public function uploadImage(Request $request)
+    {
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        if ($request->file('image')) {
+            $imagePath = $request->file('image')->store('uploads', 'public');
+
+            return response()->json(['image_path' => asset('storage/' . $imagePath)]);
+        }
+
+        return response()->json(['error' => 'Image upload failed.'], 500);
+    }
 }

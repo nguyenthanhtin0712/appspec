@@ -208,3 +208,4 @@ Route::get('functional', [RoleController::class, 'getPermissions']);
 ///
 
 Route::get('pages/view/{slug}', [PageController::class, 'viewPage']);
+Route::post('/upload-image', [PageController::class, 'uploadImage']);

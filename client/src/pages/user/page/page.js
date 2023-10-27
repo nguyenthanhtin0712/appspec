@@ -6,6 +6,7 @@ import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Link from '@mui/material/Link';
 import MarkdownIt from 'markdown-it';
 import { useSelector } from 'react-redux';
+import 'pages/user/page/markdown.css';
 
 const UserPage = () => {
   const { page_title, page_content } = useSelector((state) => state.page.viewData);
@@ -27,7 +28,7 @@ const UserPage = () => {
         <Typography variant="h2" component="h1" gutterBottom fontWeight={600}>
           {page_title}
         </Typography>
-        {<div dangerouslySetInnerHTML={{ __html: result }} />}
+        {<div className="markdown-body" dangerouslySetInnerHTML={{ __html: result }} />}
       </MainCard>
     </Container>
   );

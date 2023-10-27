@@ -24,7 +24,7 @@ const RegisterImprovement = Loadable(lazy(() => import('pages/user/register-open
 const RegisterOpenClassHistory = Loadable(lazy(() => import('pages/user/register-open-class/history')));
 const RegisterOpenClassStatistic = Loadable(lazy(() => import('pages/user/register-open-class/statistic')));
 const SubjectSchedule = Loadable(lazy(() => import('pages/user/subject-schedule')));
-const Page = Loadable(lazy(() => import('pages/user/page')));
+const Page = Loadable(lazy(() => import('pages/user/page/page')));
 const Page404 = Loadable(lazy(() => import('pages/error/page404')));
 
 const UserRoutes = {
