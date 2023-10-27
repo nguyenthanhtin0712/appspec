@@ -34,11 +34,11 @@ const NavItem = ({ item, level }) => {
 
   const { pathname } = useLocation();
 
-  // console.log(pathname, item.url);
+  console.log(pathname, item.url);
 
   // active menu item on page load
   useEffect(() => {
-    if (pathname === item.url) {
+    if (pathname.includes(item.url)) {
       dispatch(activeItem({ openItem: [item.id] }));
     }
     // eslint-disable-next-line
