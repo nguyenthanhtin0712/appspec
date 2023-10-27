@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import MainCard from 'components/MainCard';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
@@ -8,7 +8,6 @@ import InputField from 'components/input/InputField';
 import { dispatch } from 'store/index';
 import { toast } from 'react-toastify';
 import MarkDownEditor from 'sections/admin/page/MarkDownEditor';
-import { openAdminDrawer } from 'store/reducers/menu';
 import { Typography } from '@mui/material';
 import { createPage } from 'store/reducers/pageSlice';
 import { useNavigate } from 'react-router';
@@ -17,10 +16,6 @@ import { ArrowRight } from 'iconsax-react';
 
 const CreatePage = () => {
   const navigate = useNavigate();
-
-  useEffect(() => {
-    dispatch(openAdminDrawer(false));
-  }, []);
 
   return (
     <>
@@ -46,7 +41,6 @@ const CreatePage = () => {
                 setStatus({ success: true });
                 setSubmitting(false);
                 navigate('/admin/page');
-                dispatch(openAdminDrawer(true));
                 toast.success('Tạo trang thành công!');
               } else {
                 setStatus({ success: false });
@@ -75,9 +69,9 @@ const CreatePage = () => {
                       setFieldValue(
                         'page_slug',
                         slugify(event.target.value, {
-                          lower: true, // convert to lower case, defaults to `false`
-                          locale: 'vi', // language code of the locale to use
-                          trim: true // trim leading and trailing replacement chars, defaults to `true`
+                          lower: true,
+                          locale: 'vi',
+                          trim: true
                         })
                       );
                     }}

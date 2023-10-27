@@ -77,7 +77,12 @@ export const deletePage = createAsyncThunk('page/deletePage', async (id, { rejec
 });
 
 export const viewPage = createAsyncThunk('page/viewPage', async (slug) => {
-  const response = await axios.get(`${API_BASE_URL}/pages/${slug}`);
+  const response = await axios.get(`${API_BASE_URL}/pages/view/${slug}`);
+  return response.data;
+});
+
+export const getPageById = createAsyncThunk('page/getPageById', async (id) => {
+  const response = await axios.get(`${API_BASE_URL}/pages/${id}`);
   return response.data;
 });
 
@@ -95,7 +100,8 @@ const initialState = {
     pageSize: 10
   },
   idDelete: 0,
-  viewData: null
+  viewData: null,
+  dataUpdate: null
 };
 
 const page = createSlice({
@@ -151,6 +157,9 @@ const page = createSlice({
       })
       .addCase(viewPage.fulfilled, (state, action) => {
         state.viewData = action.payload.data;
+      })
+      .addCase(getPageById.fulfilled, (state, action) => {
+        state.dataUpdate = action.payload.data;
       });
   }
 });

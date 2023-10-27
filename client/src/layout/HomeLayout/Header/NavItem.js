@@ -1,7 +1,5 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
 import { Button, MenuItem } from '@mui/material/index';
-// import { ArrowDown2 } from 'iconsax-react';
 import { Link, NavLink } from 'react-router-dom';
 import styled from '@mui/system/styled';
 import PopupState, { bindHover, bindMenu } from 'material-ui-popup-state';

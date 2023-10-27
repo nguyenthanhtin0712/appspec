@@ -4,6 +4,7 @@ import Loadable from 'components/Loadable';
 import PrivateRoute from './route/PrivateRoute';
 import { dispatch } from 'store';
 import { getWarningInfo } from 'store/reducers/warnedStudentDetailSlice';
+import { getPageById } from 'store/reducers/pageSlice';
 
 // render - dashboard
 const DashboardDefault = Loadable(lazy(() => import('pages/admin/dashboard')));
@@ -31,6 +32,7 @@ const WarnedStudent = Loadable(lazy(() => import('pages/admin/warned-student/war
 const WarnedStudentDetailPage = Loadable(lazy(() => import('pages/admin/warned-student/warned-student-detail')));
 const Page = Loadable(lazy(() => import('pages/admin/page/page-index')));
 const PageCreate = Loadable(lazy(() => import('pages/admin/page/page-create')));
+const PageEdit = Loadable(lazy(() => import('pages/admin/page/page-edit')));
 const Role = Loadable(lazy(() => import('pages/admin/role/role_index')));
 const RoleCreate = Loadable(lazy(() => import('pages/admin/role/role_create')));
 const RoleUpdate = Loadable(lazy(() => import('pages/admin/role/role_update')));
@@ -145,7 +147,18 @@ const AdminRoutes = {
     },
     {
       path: 'page/create',
-      element: <PrivateRoute component={PageCreate} requiredPermissions={['student.view']} />
+      element: <PrivateRoute component={PageCreate} requiredPermissions={[]} />
+    },
+    {
+      path: 'page/edit/:pageId',
+      loader: async ({ params }) => {
+        const res = await dispatch(getPageById(params.pageId));
+        if (res && res.error) {
+          throw new Response('Not Found', { status: 404 });
+        }
+        return res;
+      },
+      element: <PrivateRoute component={PageEdit} requiredPermissions={[]} />
     },
     {
       path: 'role',

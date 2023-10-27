@@ -75,7 +75,7 @@ const PageTable = () => {
         renderRowActions={({ row }) => (
           <Box>
             <IconAction title={'Xem'} icon={<Eye />} href={`/page/${row.original.page_slug}`} />
-            <IconAction title={'Chỉnh sửa'} icon={<Edit />} href={`/page/${row.id}`} />
+            <IconAction title={'Chỉnh sửa'} icon={<Edit />} href={`/admin/page/edit/${row.id}`} />
             <IconAction title={'Xoá'} color="error" icon={<Trash />} onClick={() => dispatch(setIdDeletePage(row.id))} />
           </Box>
         )}

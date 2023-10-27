@@ -154,7 +154,8 @@ Route::middleware(['auth:api'])->group(function () {
     // Pages
     Route::get('pages', [PageController::class, 'index']);
     Route::post('pages', [PageController::class, 'store']);
-    Route::get('pages/{slug}', [PageController::class, 'show']);
+
+    Route::get('pages/{id}', [PageController::class, 'show']);
     Route::put('pages/{id}', [PageController::class, 'update']);
     Route::delete('pages/{id}', [PageController::class, 'destroy']);
 });
@@ -203,3 +204,7 @@ Route::get('roles/{id}', [RoleController::class, 'show']);
 Route::put('roles/{id}', [RoleController::class, 'update']);
 Route::delete('roles/{id}', [RoleController::class, 'destroy']);
 Route::get('functional', [RoleController::class, 'getPermissions']);
+
+///
+
+Route::get('pages/view/{slug}', [PageController::class, 'viewPage']);

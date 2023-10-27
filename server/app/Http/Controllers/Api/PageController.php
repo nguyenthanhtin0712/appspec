@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StorePageRequest;
+use App\Http\Requests\UpdatePageRequest;
 use App\Http\Resources\Collection;
 use App\Http\Resources\PageResource;
 use App\Models\Page;
@@ -25,7 +27,7 @@ class PageController extends Controller
         $sortBy = $request->input('sortBy');
         $sortOrder = $request->input('sortOrder', 'asc');
         $filters = $request->input('filters');
-        $pages = Page::select('page_id', 'page_slug', 'page_title', 'created_at', 'updated_at');
+        $pages = Page::select('page_id', 'page_slug', 'page_title', 'created_at', 'updated_at')->orderBy('updated_at', 'desc');
         $pages->where("page_isDelete", "0");
         if ($query) {
             $pages->where("page_name", "LIKE", "%$query%");
@@ -63,7 +65,7 @@ class PageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StorePageRequest $request)
     {
         $dataCreate = $request->all();
         $page = Page::create($dataCreate);
@@ -76,9 +78,9 @@ class PageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($slug)
+    public function show($id)
     {
-        $page = Page::where('page_slug', $slug)->where('page_isDelete', 0)->firstOrFail();
+        $page = Page::where('page_id', $id)->where('page_isDelete', 0)->firstOrFail()->makeHidden('page_isDelete');
         return $this->sentSuccessResponse($page, 'Get page content successfully', Response::HTTP_OK);
     }
 
@@ -89,7 +91,7 @@ class PageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdatePageRequest $request, $id)
     {
         $page = Page::where('page_id', $id)->firstOrFail();
         $dataUpdate = $request->all();
@@ -111,5 +113,11 @@ class PageController extends Controller
         $page->save();
         $pageResource = new PageResource($page);
         return $this->sentSuccessResponse($pageResource, 'Deleted page successfully', Response::HTTP_OK);
+    }
+
+    public function viewPage($slug)
+    {
+        $page = Page::where('page_slug', $slug)->where('page_isDelete', 0)->firstOrFail()->makeHidden('page_isDelete');
+        return $this->sentSuccessResponse($page, 'Get page content successfully', Response::HTTP_OK);
     }
 }
