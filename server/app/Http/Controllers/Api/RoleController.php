@@ -64,7 +64,7 @@ class RoleController extends Controller
         $functionals = Functional::all()->map(function ($functional) {
             return [
                 'functional_name' => $functional->functional_name,
-                'permissions' => Permission::where('name', 'LIKE', "%{$functional->functional_code}.%")->select('permissions.name', 'permissions.desc')->get()
+                'permissions' => Permission::where('functional_code', $functional->functional_code)->select('permissions.name', 'permissions.desc')->get()
             ];
         });
         return $this->sentSuccessResponse($functionals, 'Get permission success!', 200);
