@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -8,27 +8,11 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useSelector } from 'react-redux';
 import { TextField } from '@mui/material';
+import { setGrade } from 'store/slices/gradingSlice';
+import { dispatch } from 'store';
 
 const GradingUpdateTable = () => {
-  const { students } = useSelector((state) => state.grading);
-  // Tạo một state để lưu trạng thái điểm của từng sinh viên
-  const [studentGrades, setStudentGrades] = useState({});
-
-  // Hàm xử lý khi giá trị điểm thay đổi
-  const handleGradeChange = (studentCode, grade) => {
-    // Chuyển đổi giá trị thành số (nếu có thể)
-    const numericGrade = parseFloat(grade);
-
-    // Kiểm tra xem giá trị là null hoặc nằm trong khoảng từ 0 đến 10
-    if (!isNaN(numericGrade) && numericGrade >= 0 && numericGrade <= 10) {
-      // Thực hiện cập nhật giá trị trong state hoặc trạng thái tương tự ở đây
-      // Ở đây, ví dụ, chúng ta cập nhật giá trị trong studentGrades
-      setStudentGrades({ ...studentGrades, [studentCode]: numericGrade });
-    } else {
-      // Nếu giá trị không hợp lệ, bạn có thể cập nhật giá trị trong state thành null hoặc giá trị mà bạn muốn.
-      setStudentGrades({ ...studentGrades, [studentCode]: null });
-    }
-  };
+  const { students, grades } = useSelector((state) => state.grading);
 
   return (
     <TableContainer component={Paper}>
@@ -60,11 +44,14 @@ const GradingUpdateTable = () => {
                 <TableCell align="center">{student.company_name}</TableCell>
                 <TableCell align="center">
                   <TextField
-                    type="number"
-                    inputProps={{ min: 0, max: 10 }}
-                    // Thay đổi giá trị value của TextField để hiển thị điểm từ trạng thái
-                    value={studentGrades[student.student_code] || null}
-                    onChange={(e) => handleGradeChange(student.student_code, e.target.value)}
+                    value={grades[student.student_code]}
+                    onChange={(e) => {
+                      const newValue = e.target.value;
+                      const isNumeric = /^-?\d*\.?\d*$/.test(newValue);
+                      if (isNumeric && newValue >= 0 && newValue <= 10) {
+                        dispatch(setGrade({ [student.student_code]: newValue }));
+                      }
+                    }}
                   />
                 </TableCell>
               </TableRow>

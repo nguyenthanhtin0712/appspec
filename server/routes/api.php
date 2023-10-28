@@ -132,6 +132,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::post('internship-graduations/additional-company', [InternshipGraduationController::class, 'additionalCompnay']);
     Route::get('grading', [GradingController::class, 'index'])->middleware('check_user_role_permission:jobholder.grading');
     Route::get('grading/students/{id}', [GradingController::class, 'getSutdentGrading'])->middleware('check_user_role_permission:jobholder.grading');
+    Route::post('grading/update/', [GradingController::class, 'updateGrade'])->middleware('check_user_role_permission:jobholder.grading');
 
     // Academic_field api
     Route::get('academic-fields', [AcademicFieldController::class, 'index'])->middleware('check_user_role_permission:academic_field.view');;

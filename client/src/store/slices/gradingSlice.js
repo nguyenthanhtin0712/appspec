@@ -45,6 +45,16 @@ export const getSudentGrading = createAsyncThunk('grading/getSudentGrading', asy
   }
 });
 
+export const updateGrade = createAsyncThunk('grading/updateGrade', async (result) => {
+  try {
+    const response = await axios.post(`${API_BASE_URL}/grading/update`, { students: result });
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+});
+
 const initialState = {
   data: [],
   isError: false,
@@ -77,6 +87,9 @@ const grading = createSlice({
     },
     setPagination: (state, action) => {
       state.pagination = action.payload;
+    },
+    setGrade: (state, action) => {
+      state.grades = { ...state.grades, ...action.payload };
     }
   },
   extraReducers: (builder) => {
@@ -99,10 +112,15 @@ const grading = createSlice({
       })
       .addCase(getSudentGrading.fulfilled, (state, action) => {
         state.students = action.payload.data;
+        if (state.students.length > 0) {
+          state.students.forEach((st) => {
+            state.grades = { ...state.grades, [st.student_code]: st.internship_score ? st.internship_score : '' };
+          });
+        }
       });
   }
 });
 
-export const { setColumnFilters, setGlobalFilter, setSorting, setPagination } = grading.actions;
+export const { setColumnFilters, setGlobalFilter, setSorting, setPagination, setGrade } = grading.actions;
 
 export default grading.reducer;
