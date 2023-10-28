@@ -7870,8 +7870,8 @@
 										"$ref": "AAAAAAGK/ZC8cMXgIr0="
 									},
 									"font": "Arial;13;1",
-									"left": 2008,
-									"top": 413,
+									"left": 2056,
+									"top": 373,
 									"width": 215.3896484375,
 									"height": 13,
 									"text": "functional"
@@ -7896,8 +7896,8 @@
 												"$ref": "AAAAAAGK/ZDgzsXr8Qc="
 											},
 											"font": "Arial;13;0",
-											"left": 2013,
-											"top": 436,
+											"left": 2061,
+											"top": 396,
 											"width": 205.3896484375,
 											"height": 13
 										},
@@ -7911,22 +7911,22 @@
 												"$ref": "AAAAAAGK/ZErcMXz4pI="
 											},
 											"font": "Arial;13;0",
-											"left": 2013,
-											"top": 451,
+											"left": 2061,
+											"top": 411,
 											"width": 205.3896484375,
 											"height": 13
 										}
 									],
 									"font": "Arial;13;0",
-									"left": 2008,
-									"top": 431,
+									"left": 2056,
+									"top": 391,
 									"width": 215.3896484375,
 									"height": 38
 								}
 							],
 							"font": "Arial;13;0",
-							"left": 2008,
-							"top": 408,
+							"left": 2056,
+							"top": 368,
 							"width": 215.3896484375,
 							"height": 61,
 							"nameLabel": {
