@@ -14,7 +14,7 @@ import {
   setIdDeleteIntership,
   setInternshipGraduationDialog,
   setIdUpdate
-} from 'store/reducers/internshipGraduationSlice';
+} from 'store/slices/internshipGraduationSlice';
 import { dispatch } from 'store/index';
 import { formatDDMMYYYY } from 'utils/formatDateTime';
 import IconAction from 'components/IconAction';

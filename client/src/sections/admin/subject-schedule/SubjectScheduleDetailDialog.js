@@ -2,7 +2,7 @@ import React, { memo, useEffect } from 'react';
 import Dialog from '@mui/material/Dialog';
 import { useSelector } from 'react-redux';
 import { dispatch } from 'store/index';
-import { setIdSelect, showSubjectSchedule } from 'store/reducers/subjectScheduleSlice';
+import { setIdSelect, showSubjectSchedule } from 'store/slices/subjectScheduleSlice';
 import { AppBar, Button, Slide, Stack, Toolbar, Typography, useTheme } from '@mui/material';
 import { CloseCircle, Printer } from 'iconsax-react';
 import AnimateButton from 'components/@extended/AnimateButton';

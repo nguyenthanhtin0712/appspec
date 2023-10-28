@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { Add, SearchNormal } from 'iconsax-react';
 import { dispatch } from 'store';
-import { setLookUpDialog, setWarnedStudentDialog } from 'store/reducers/warnedStudentSlice';
+import { setLookUpDialog, setWarnedStudentDialog } from 'store/slices/warnedStudentSlice';
 import WarnedStudentDialog from 'sections/admin/warned-student/WarnedStudentDialog';
 import WarnedStudentTable from 'sections/admin/warned-student/WarnedStudentTable';
 import WarnedStudentDeleteDialog from 'sections/admin/warned-student/WarnedStudentDeleteDialog';

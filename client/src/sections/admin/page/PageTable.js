@@ -4,7 +4,7 @@ import { useTheme } from '@mui/material/styles';
 import { Edit, Eye, Trash } from 'iconsax-react';
 import Box from '@mui/material/Box';
 import { MaterialReactTable } from 'material-react-table';
-import { fetchData, setColumnFilters, setGlobalFilter, setSorting, setPagination, setIdDeletePage } from 'store/reducers/pageSlice';
+import { fetchData, setColumnFilters, setGlobalFilter, setSorting, setPagination, setIdDeletePage } from 'store/slices/pageSlice';
 
 import { dispatch } from 'store/index';
 import dayjs from 'dayjs';

@@ -8,7 +8,7 @@ import FormHelperText from '@mui/material/FormHelperText';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import { toast } from 'react-toastify';
-import { fetchData, setStudentFileDialog, addFileStudent } from 'store/reducers/studentSlice';
+import { fetchData, setStudentFileDialog, addFileStudent } from 'store/slices/studentSlice';
 import Button from '@mui/material/Button';
 import { dispatch } from 'store/index';
 import { InputLabel } from '@mui/material';

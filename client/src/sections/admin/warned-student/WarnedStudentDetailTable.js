@@ -2,7 +2,7 @@ import React, { memo, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useTheme } from '@mui/material/styles';
 import { MaterialReactTable } from 'material-react-table';
-import { fetchData, setPagination } from 'store/reducers/warnedStudentDetailSlice';
+import { fetchData, setPagination } from 'store/slices/warnedStudentDetailSlice';
 import { dispatch } from 'store/index';
 import { useParams } from 'react-router';
 import { formatDDMMYYYY } from 'utils/formatDateTime';

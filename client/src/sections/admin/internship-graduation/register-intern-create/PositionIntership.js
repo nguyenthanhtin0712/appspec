@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import { CloseCircle } from 'iconsax-react';
 import { dispatch } from 'store';
-import { deleteRecruitmentPosition, setPositionQuantity } from 'store/reducers/createRegisterInternSlice';
+import { deleteRecruitmentPosition, setPositionQuantity } from 'store/slices/createRegisterInternSlice';
 
 const PositionIntership = ({ position }) => {
   const handleChange = (e) => {

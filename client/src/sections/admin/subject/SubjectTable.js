@@ -15,7 +15,7 @@ import {
   setSubjectDialog,
   setIdDeleteSubject,
   setOpenCofirmDialog
-} from 'store/reducers/subjectSlice';
+} from 'store/slices/subjectSlice';
 import Button from '@mui/material/Button';
 import { dispatch } from 'store/index';
 

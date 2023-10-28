@@ -14,7 +14,7 @@ import {
   setMajorDialog,
   setOpenCofirmDialog,
   setIdDelete
-} from 'store/reducers/majorSlice';
+} from 'store/slices/majorSlice';
 import Button from '@mui/material/Button';
 import { dispatch } from 'store/index';
 import { Export } from 'iconsax-react';

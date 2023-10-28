@@ -13,7 +13,7 @@ import {
   setPagination,
   deleteTitle,
   setTitleDialog
-} from 'store/reducers/titleSlice';
+} from 'store/slices/titleSlice';
 import ConfirmDialog from 'components/ConfirmDialog';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';

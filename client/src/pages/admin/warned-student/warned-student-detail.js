@@ -15,7 +15,7 @@ import Tab from '@mui/material/Tab';
 import Divider from '@mui/material/Divider';
 import { SearchNormal } from 'iconsax-react';
 import { useSelector } from 'react-redux';
-import { getMajors, setMajorId, setStudentCourse, setStudentQuery } from 'store/reducers/warnedStudentDetailSlice';
+import { getMajors, setMajorId, setStudentCourse, setStudentQuery } from 'store/slices/warnedStudentDetailSlice';
 import { dispatch } from 'store';
 import WarnedStudentDetailTable from 'sections/admin/warned-student/WarnedStudentDetailTable';
 import WarnedStudentStatistical from 'sections/admin/warned-student/WarnedStudentStatistical';

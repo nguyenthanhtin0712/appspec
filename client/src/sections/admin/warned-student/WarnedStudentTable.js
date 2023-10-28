@@ -4,7 +4,7 @@ import { useTheme } from '@mui/material/styles';
 import { Eye, Trash } from 'iconsax-react';
 import Stack from '@mui/material/Stack';
 import { MaterialReactTable } from 'material-react-table';
-import { fetchData, setColumnFilters, setGlobalFilter, setSorting, setPagination, setIdDelete } from 'store/reducers/warnedStudentSlice';
+import { fetchData, setColumnFilters, setGlobalFilter, setSorting, setPagination, setIdDelete } from 'store/slices/warnedStudentSlice';
 import { dispatch } from 'store/index';
 import IconAction from 'components/IconAction';
 

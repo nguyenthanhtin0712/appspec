@@ -11,7 +11,7 @@ import Button from '@mui/material/Button';
 import { dispatch } from 'store/index';
 import FileField from 'components/input/FileField';
 import InputField from 'components/input/InputField';
-import { closeWarnedStudentDialog, createWarnedStudent } from 'store/reducers/warnedStudentSlice';
+import { closeWarnedStudentDialog, createWarnedStudent } from 'store/slices/warnedStudentSlice';
 import * as XLSX from 'xlsx';
 import { Typography } from '@mui/material';
 import DialogTitleCustom from 'components/DialogTitleCustom';

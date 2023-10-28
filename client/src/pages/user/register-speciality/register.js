@@ -5,7 +5,7 @@ import RegisterForm from 'sections/user/register_speciality/register/RegisterFor
 import SpecialityContainer from 'sections/user/register_speciality/register/SpecialityContainer';
 import { useSelector } from 'react-redux';
 import { dispatch } from 'store/index';
-import { getSpecialtiesForRegister } from 'store/reducers/registerSpecialtyUserSlice';
+import { getSpecialtiesForRegister } from 'store/slices/registerSpecialtyUserSlice';
 import MainCard from 'components/MainCard';
 import { LockCircle } from 'iconsax-react';
 import { Button, Typography } from '@mui/material';

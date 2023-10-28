@@ -9,7 +9,7 @@ import DateTimePickerField from 'components/input/DateTimePickerField';
 import { dispatch } from 'store/index';
 import { toast } from 'react-toastify';
 import CompanyList from 'sections/admin/internship-graduation/register-intern-create/CompanyList';
-import { updateRegisterInternShip } from 'store/reducers/createRegisterInternSlice';
+import { updateRegisterInternShip } from 'store/slices/createRegisterInternSlice';
 import { useSelector } from 'react-redux';
 import { formatDateTimeSubmit } from 'utils/formatDateTime';
 import dayjs from 'dayjs';

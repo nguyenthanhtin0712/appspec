@@ -7,7 +7,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
 import { useSelector } from 'react-redux';
 import { dispatch } from 'store';
-import { logoutUser } from 'store/reducers/authSlice';
+import { logoutUser } from 'store/slices/authSlice';
 import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
 import { Divider, Popover, Stack } from '@mui/material';

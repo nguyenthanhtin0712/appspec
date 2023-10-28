@@ -5,7 +5,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Grid from '@mui/material/Grid';
 import { FormControl, InputLabel } from '@mui/material';
 import { useSelector } from 'react-redux';
-import { setFilterChart } from 'store/reducers/warnedStudentDetailSlice';
+import { setFilterChart } from 'store/slices/warnedStudentDetailSlice';
 import { dispatch } from 'store';
 import { getListCourse } from 'pages/admin/warned-student/warned-student-detail';
 import { useParams } from 'react-router';

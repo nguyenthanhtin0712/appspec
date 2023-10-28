@@ -7,7 +7,7 @@ import FormHelperText from '@mui/material/FormHelperText';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import { toast } from 'react-toastify';
-import { createStudent, setStudentDialog, updateStudent } from 'store/reducers/studentSlice';
+import { createStudent, setStudentDialog, updateStudent } from 'store/slices/studentSlice';
 import { useSelector } from 'react-redux';
 import Button from '@mui/material/Button';
 import { dispatch } from 'store/index';
@@ -17,7 +17,7 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { fetchData } from 'store/reducers/majorSlice';
+import { fetchData } from 'store/slices/majorSlice';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 

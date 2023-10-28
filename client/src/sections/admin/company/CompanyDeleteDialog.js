@@ -3,7 +3,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import ConfirmDialog from 'components/ConfirmDialog';
 import { useSelector } from 'react-redux';
-import { deleteCompany, setOpenCofirmDialog } from 'store/reducers/companySlice';
+import { deleteCompany, setOpenCofirmDialog } from 'store/slices/companySlice';
 import { dispatch } from 'store';
 import { toast } from 'react-toastify';
 

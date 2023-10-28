@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import FormHelperText from '@mui/material/FormHelperText';
 import Button from '@mui/material/Button';
 import SelectField from 'components/input/SelectField';
-import { registerInternshipUser } from 'store/reducers/registerInternUserSlice';
+import { registerInternshipUser } from 'store/slices/registerInternUserSlice';
 import { dispatch } from 'store/index';
 import { useNavigate } from 'react-router';
 

@@ -5,7 +5,7 @@ import Stack from '@mui/material/Stack';
 import SpecialityContainer from 'sections/user/register_speciality/register/SpecialityContainer';
 import { useSelector } from 'react-redux';
 import { dispatch } from 'store/index';
-import { getRegistrationInformation, setMajorId } from 'store/reducers/registerSpecialtyUserSlice';
+import { getRegistrationInformation, setMajorId } from 'store/slices/registerSpecialtyUserSlice';
 import ResultTable from 'sections/user/register_speciality/result/ResultTable';
 import { Card, CardContent, CardHeader, Divider, Tab, Tabs } from '@mui/material';
 

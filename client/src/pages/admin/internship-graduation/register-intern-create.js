@@ -5,7 +5,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import CreateReigisterInternForm from 'sections/admin/internship-graduation/register-intern-create/CreateReigisterInternForm';
 import { useNavigate, useParams } from 'react-router';
-import { getCompany, getInternshipGradutionInfo } from 'store/reducers/createRegisterInternSlice';
+import { getCompany, getInternshipGradutionInfo } from 'store/slices/createRegisterInternSlice';
 import { useSelector } from 'react-redux';
 import { dispatch } from 'store';
 import Stack from '@mui/material/Stack';

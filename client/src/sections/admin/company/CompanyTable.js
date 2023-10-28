@@ -14,7 +14,7 @@ import {
   setcompanyDialog,
   setOpenCofirmDialog,
   setIdDeleteCompany
-} from 'store/reducers/companySlice';
+} from 'store/slices/companySlice';
 import Button from '@mui/material/Button';
 import { dispatch } from 'store/index';
 import { Export } from 'iconsax-react';

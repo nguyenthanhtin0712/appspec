@@ -1,5 +1,5 @@
 import { dispatch } from 'store';
-import { getExportData } from 'store/reducers/registerSpecialtyUserSlice';
+import { getExportData } from 'store/slices/registerSpecialtyUserSlice';
 import ExcelJS from 'exceljs';
 
 const chunkArray = (myArray, chunk_size) => {

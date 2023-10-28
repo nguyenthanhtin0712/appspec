@@ -4,7 +4,7 @@ import { useTheme } from '@mui/material/styles';
 import { Eye, Edit } from 'iconsax-react';
 import Box from '@mui/material/Box';
 import { MaterialReactTable } from 'material-react-table';
-import { fetchData, setColumnFilters, setGlobalFilter, setSorting, setPagination } from 'store/reducers/gradingSlice';
+import { fetchData, setColumnFilters, setGlobalFilter, setSorting, setPagination } from 'store/slices/gradingSlice';
 import { dispatch } from 'store/index';
 import { formatDDMMYYYY } from 'utils/formatDateTime';
 import IconAction from 'components/IconAction';

@@ -13,7 +13,7 @@ import Box from '@mui/material/Box';
 import AnimateButton from 'components/@extended/AnimateButton';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
-import { getContactConfig, sendMail } from 'store/reducers/contactSlice';
+import { getContactConfig, sendMail } from 'store/slices/contactSlice';
 import { dispatch } from 'store/index';
 import { toast } from 'react-toastify';
 import { Backdrop, CircularProgress } from '@mui/material';

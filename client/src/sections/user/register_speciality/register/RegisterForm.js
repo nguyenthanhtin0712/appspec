@@ -11,7 +11,7 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { dispatch } from 'store';
 import CountdownTimer from 'components/CountdownTimer';
-import { userRegisteringForSpecialty } from 'store/reducers/registerSpecialtyUserSlice';
+import { userRegisteringForSpecialty } from 'store/slices/registerSpecialtyUserSlice';
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
 

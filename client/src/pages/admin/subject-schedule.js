@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { Add } from 'iconsax-react';
 import { dispatch } from 'store';
-import { setSubjectScheduleDialog } from 'store/reducers/subjectScheduleSlice';
+import { setSubjectScheduleDialog } from 'store/slices/subjectScheduleSlice';
 import SubjectScheduleDialog from 'sections/admin/subject-schedule/SubjectScheduleDialog';
 import SubjectScheduleTable from 'sections/admin/subject-schedule/SubjectScheduleTable';
 import SubjectScheduleDetailDialog from 'sections/admin/subject-schedule/SubjectScheduleDetailDialog';

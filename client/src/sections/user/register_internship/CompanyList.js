@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import CompanyItem from 'sections/user/register_internship/CompanyItem';
 import { dispatch } from 'store/index';
-import { getCompanies } from 'store/reducers/registerInternUserSlice';
+import { getCompanies } from 'store/slices/registerInternUserSlice';
 
 const CompanyList = () => {
   const { list_company } = useSelector((state) => state.register_intern_user);

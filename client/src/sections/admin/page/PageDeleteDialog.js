@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { useSelector } from 'react-redux';
 import { dispatch } from 'store';
-import { deletePage, setIdDeletePage } from 'store/reducers/pageSlice';
+import { deletePage, setIdDeletePage } from 'store/slices/pageSlice';
 import { toast } from 'react-toastify';
 
 const PageDeleteDialog = () => {

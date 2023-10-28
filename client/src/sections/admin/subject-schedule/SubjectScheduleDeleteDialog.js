@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import { toast } from 'react-toastify';
 import { dispatch } from 'store';
 import { useSelector } from 'react-redux';
-import { deleteSubjectSchedule, setOpenCofirmDialog } from 'store/reducers/subjectScheduleSlice';
+import { deleteSubjectSchedule, setOpenCofirmDialog } from 'store/slices/subjectScheduleSlice';
 
 const SubjectScheduleDeleteDialog = () => {
   const { openCofirmDialog, idDelete } = useSelector((state) => state.subject_schedule);

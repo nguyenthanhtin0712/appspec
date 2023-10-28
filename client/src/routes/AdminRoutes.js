@@ -3,8 +3,8 @@ import MainLayout from 'layout/MainLayout';
 import Loadable from 'components/Loadable';
 import PrivateRoute from './route/PrivateRoute';
 import { dispatch } from 'store';
-import { getWarningInfo } from 'store/reducers/warnedStudentDetailSlice';
-import { getPageById } from 'store/reducers/pageSlice';
+import { getWarningInfo } from 'store/slices/warnedStudentDetailSlice';
+import { getPageById } from 'store/slices/pageSlice';
 
 // render - dashboard
 const DashboardDefault = Loadable(lazy(() => import('pages/admin/dashboard')));
@@ -39,6 +39,7 @@ const RoleUpdate = Loadable(lazy(() => import('pages/admin/role/role_update')));
 const Grading = Loadable(lazy(() => import('pages/admin/grading/index')));
 const GradingUpdate = Loadable(lazy(() => import('pages/admin/grading/grading-update')));
 const GradingDetail = Loadable(lazy(() => import('pages/admin/grading/grading-detail')));
+const CreateJobPost = Loadable(lazy(() => import('pages/admin/job-post/job-post-create')));
 const Page404 = Loadable(lazy(() => import('pages/error/page404')));
 
 const AdminRoutes = {
@@ -183,6 +184,10 @@ const AdminRoutes = {
     {
       path: 'grading/detail/:id',
       element: <PrivateRoute component={GradingDetail} requiredPermissions={['jobholder.grading']} />
+    },
+    {
+      path: 'job-post/create',
+      element: <PrivateRoute component={CreateJobPost} requiredPermissions={[]} />
     }
   ]
 };

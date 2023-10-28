@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 import { Formik } from 'formik';
 import { useSelector } from 'react-redux';
 import { dispatch } from 'store';
-import { changeSpecialty, fetchData } from 'store/reducers/registerSpecialtyUserSlice';
+import { changeSpecialty, fetchData } from 'store/slices/registerSpecialtyUserSlice';
 import { toast } from 'react-toastify';
 
 const ChangeSpecialtyDialog = ({ open, handleClose, rowSelection, setRowSelection }) => {

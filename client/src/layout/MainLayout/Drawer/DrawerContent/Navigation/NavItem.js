@@ -8,7 +8,7 @@ import { Avatar, Chip, ListItemButton, ListItemIcon, ListItemText, Typography, u
 
 // project-imports
 import { dispatch, useSelector } from 'store';
-import { activeItem, openAdminDrawer } from 'store/reducers/menu';
+import { activeItem, openAdminDrawer } from 'store/slices/menu';
 
 // ==============================|| NAVIGATION - ITEM ||============================== //
 
@@ -33,8 +33,6 @@ const NavItem = ({ item, level }) => {
   const itemIcon = item.icon ? <Icon variant="Bulk" size={drawerAdminOpen ? 20 : 22} /> : false;
 
   const { pathname } = useLocation();
-
-  console.log(pathname, item.url);
 
   // active menu item on page load
   useEffect(() => {

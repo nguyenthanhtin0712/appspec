@@ -16,7 +16,7 @@ import {
   closeInternshipGraduationDialog,
   createInternshipGraduation,
   updateInternshipGraduation
-} from 'store/reducers/internshipGraduationSlice';
+} from 'store/slices/internshipGraduationSlice';
 import DatePickerField from 'components/input/DatePickerField';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';

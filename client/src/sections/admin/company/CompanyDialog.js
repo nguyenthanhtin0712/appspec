@@ -1,7 +1,7 @@
 import React, { memo, useMemo } from 'react';
 import Dialog from '@mui/material/Dialog';
 
-import { setCloseDialog } from 'store/reducers/companySlice';
+import { setCloseDialog } from 'store/slices/companySlice';
 import { useSelector } from 'react-redux';
 import DialogTitleCustom from 'components/DialogTitleCustom';
 import { dispatch } from 'store/index';

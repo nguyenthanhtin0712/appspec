@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import Typography from '@mui/material/Typography';
 import { dispatch } from 'store/index';
-import { getRegistrationInfoById, setMajorId, setRegisterSpecialtyId } from 'store/reducers/registerSpecialtyUserSlice';
+import { getRegistrationInfoById, setMajorId, setRegisterSpecialtyId } from 'store/slices/registerSpecialtyUserSlice';
 import { Box, Button, Divider, Fade, Menu, MenuItem, Stack, Tab, Tabs } from '@mui/material';
 import SpecialityContainer from 'sections/user/register_speciality/register/SpecialityContainer';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import ResultTableAdmin from 'sections/admin/register_specialty/register-specialty-result/ResultTableAdmin';
 import { ArrowRight, Printer } from 'iconsax-react';
-import { setColumnFilters } from 'store/reducers/registerSpecialtyUserSlice';
+import { setColumnFilters } from 'store/slices/registerSpecialtyUserSlice';
 import { useTheme } from '@mui/material/styles';
 import { formatDateTimeDisplay } from 'utils/formatDateTime';
 import { ExportResultRegisterSpecialty } from 'export-excel/export-result-register-specialty';

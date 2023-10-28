@@ -6,7 +6,7 @@ import NavItemMobile from './NavItemMobile';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { dispatch } from 'store/index';
-import { openUserDrawer } from 'store/reducers/menu';
+import { openUserDrawer } from 'store/slices/menu';
 import { navItems } from 'menu-items/user';
 
 const drawerWidth = 240;

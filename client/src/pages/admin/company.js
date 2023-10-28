@@ -5,7 +5,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import CompanyTable from 'sections/admin/company/CompanyTable';
 import CompanyDialog from 'sections/admin/company/CompanyDialog';
-import { setcompanyDialog } from 'store/reducers/companySlice';
+import { setcompanyDialog } from 'store/slices/companySlice';
 import { dispatch } from 'store/index';
 import CompanyDeleteDialog from 'sections/admin/company/CompanyDeleteDialog';
 

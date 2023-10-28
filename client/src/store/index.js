@@ -3,12 +3,12 @@ import { configureStore } from '@reduxjs/toolkit';
 import { useDispatch as useAppDispatch, useSelector as useAppSelector } from 'react-redux';
 
 // project-imports
-import reducers from './reducers';
+import slices from './slices';
 
 // ==============================|| REDUX TOOLKIT - MAIN STORE ||============================== //
 
 const store = configureStore({
-  reducer: reducers
+  reducer: slices
 });
 
 const { dispatch } = store;

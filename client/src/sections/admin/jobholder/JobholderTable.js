@@ -13,7 +13,7 @@ import {
   setPagination,
   deleteJobholder,
   setJobholderDialog
-} from 'store/reducers/jobholderSlice';
+} from 'store/slices/jobholderSlice';
 import ConfirmDialog from 'components/ConfirmDialog';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';

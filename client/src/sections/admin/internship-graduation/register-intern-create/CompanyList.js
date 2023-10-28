@@ -11,7 +11,7 @@ import CompanyItem from 'sections/admin/internship-graduation/register-intern-cr
 import { useSelector } from 'react-redux';
 import LoadingBox from 'components/LoadingBox';
 import { dispatch } from 'store';
-import { setcompanyDialog } from 'store/reducers/companySlice';
+import { setcompanyDialog } from 'store/slices/companySlice';
 import CompanyDialog from 'sections/admin/company/CompanyDialog';
 
 const CompanyList = () => {

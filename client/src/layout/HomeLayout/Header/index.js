@@ -13,7 +13,7 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { openUserDrawer } from 'store/reducers/menu';
+import { openUserDrawer } from 'store/slices/menu';
 import { dispatch } from 'store/index';
 import { navItems } from 'menu-items/user';
 import { useMediaQuery } from '@mui/material';

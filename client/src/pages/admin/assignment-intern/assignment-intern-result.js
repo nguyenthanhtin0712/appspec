@@ -6,13 +6,13 @@ import { useTheme } from '@mui/material/styles';
 import { useParams } from 'react-router';
 import ResultTableAdmin from 'sections/admin/assignment-intern/ResultTableAdmin';
 import { dispatch } from 'store/index';
-import { getRegisterInternship, setAssignmentInternId } from 'store/reducers/assignmentIntenship';
+import { getRegisterInternship, setAssignmentInternId } from 'store/slices/assignmentIntenship';
 import { useSelector } from 'react-redux';
 import { formatDDMMYYYY } from 'utils/formatDateTime';
 import AssignmentInternForm from 'sections/admin/assignment-intern/AssignmentInternForm';
 import * as XLSX from 'xlsx';
 import { toast } from 'react-toastify';
-import { submitListStudents } from 'store/reducers/assignmentIntenship';
+import { submitListStudents } from 'store/slices/assignmentIntenship';
 
 const AssignmentInternResult = () => {
   const theme = useTheme();
