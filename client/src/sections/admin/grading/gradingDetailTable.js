@@ -7,12 +7,9 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useSelector } from 'react-redux';
-import { TextField } from '@mui/material';
-import { setGrade } from 'store/slices/gradingSlice';
-import { dispatch } from 'store';
 
-const GradingUpdateTable = () => {
-  const { students, grades } = useSelector((state) => state.grading);
+const GradingDetailTable = () => {
+  const { students } = useSelector((state) => state.grading);
 
   return (
     <TableContainer component={Paper}>
@@ -42,18 +39,7 @@ const GradingUpdateTable = () => {
                 <TableCell align="center">{student.user_lastname}</TableCell>
                 <TableCell align="center">{student.position_name}</TableCell>
                 <TableCell align="center">{student.company_name}</TableCell>
-                <TableCell align="center">
-                  <TextField
-                    value={grades[student.student_code]}
-                    onChange={(e) => {
-                      const newValue = e.target.value;
-                      const isNumeric = /^-?\d*\.?\d*$/.test(newValue);
-                      if (isNumeric && newValue >= 0 && newValue <= 10) {
-                        dispatch(setGrade({ [student.student_code]: newValue }));
-                      }
-                    }}
-                  />
-                </TableCell>
+                <TableCell align="center">{student.internship_score}</TableCell>
               </TableRow>
             ))}
         </TableBody>
@@ -62,4 +48,4 @@ const GradingUpdateTable = () => {
   );
 };
 
-export default GradingUpdateTable;
+export default GradingDetailTable;

@@ -28,6 +28,7 @@ class CreateStudentsTable extends Migration
             $table->integer('mentor_code')->nullable();
             $table->unsignedBigInteger('jobholder_internship_id')->nullable();
             $table->integer('internship_graduation_id')->nullable();
+            $table->double('internship_score')->nullable();
             $table->integer('student_isDelete')->default(0);
             $table->timestamps();
             $table->foreign('jobholder_internship_id')
