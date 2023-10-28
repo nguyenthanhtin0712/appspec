@@ -22,9 +22,9 @@ const dashboard = {
     },
     {
       id: 'post',
-      title: 'Đăng bài tuyển dụng',
+      title: 'Đăng tin tuyển dụng',
       type: 'item',
-      url: '/admin/post',
+      url: '/admin/job-post/create',
       icon: icons.post
     }
   ]

@@ -8604,7 +8604,7 @@
 									},
 									"font": "Arial;13;1",
 									"left": 1192,
-									"top": 1397,
+									"top": 1389,
 									"width": 225,
 									"height": 13,
 									"text": "job_posts"
@@ -8630,7 +8630,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 1197,
-											"top": 1420,
+											"top": 1412,
 											"width": 215,
 											"height": 13
 										},
@@ -8645,7 +8645,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 1197,
-											"top": 1435,
+											"top": 1427,
 											"width": 215,
 											"height": 13
 										},
@@ -8660,7 +8660,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 1197,
-											"top": 1450,
+											"top": 1442,
 											"width": 215,
 											"height": 13
 										},
@@ -8675,7 +8675,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 1197,
-											"top": 1465,
+											"top": 1457,
 											"width": 215,
 											"height": 13
 										},
@@ -8690,7 +8690,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 1197,
-											"top": 1480,
+											"top": 1472,
 											"width": 215,
 											"height": 13
 										},
@@ -8705,7 +8705,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 1197,
-											"top": 1495,
+											"top": 1487,
 											"width": 215,
 											"height": 13
 										},
@@ -8720,7 +8720,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 1197,
-											"top": 1510,
+											"top": 1502,
 											"width": 215,
 											"height": 13
 										},
@@ -8735,21 +8735,21 @@
 											},
 											"font": "Arial;13;0",
 											"left": 1197,
-											"top": 1525,
+											"top": 1517,
 											"width": 215,
 											"height": 13
 										}
 									],
 									"font": "Arial;13;0",
 									"left": 1192,
-									"top": 1415,
+									"top": 1407,
 									"width": 225,
 									"height": 128
 								}
 							],
 							"font": "Arial;13;0",
 							"left": 1192,
-							"top": 1392,
+							"top": 1384,
 							"width": 225,
 							"height": 151,
 							"nameLabel": {
@@ -13714,7 +13714,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGLWoq28ephi4o="
 							},
-							"name": "id",
+							"name": "job_post_id",
 							"type": "INTEGER",
 							"length": 0,
 							"primaryKey": true
@@ -13725,7 +13725,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGLWoq28ephi4o="
 							},
-							"name": "title",
+							"name": "job_post_title",
 							"type": "VARCHAR",
 							"length": 0
 						},
@@ -13735,7 +13735,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGLWoq28ephi4o="
 							},
-							"name": "post_desc",
+							"name": "job_post_desc",
 							"type": "VARCHAR",
 							"length": 0
 						},
@@ -13745,8 +13745,9 @@
 							"_parent": {
 								"$ref": "AAAAAAGLWoq28ephi4o="
 							},
-							"name": "post_confirm",
-							"type": "BOOLEAN"
+							"name": "job_post_confirm",
+							"type": "BOOLEAN",
+							"length": 0
 						},
 						{
 							"_type": "ERDColumn",
@@ -13784,7 +13785,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGLWoq28ephi4o="
 							},
-							"name": "post_isDelete",
+							"name": "job_post_isDelete",
 							"type": "BOOLEAN",
 							"length": 0
 						}

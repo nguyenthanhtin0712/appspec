@@ -30,7 +30,7 @@ class PageController extends Controller
         $pages = Page::select('page_id', 'page_slug', 'page_title', 'created_at', 'updated_at')->orderBy('updated_at', 'desc');
         $pages->where("page_isDelete", "0");
         if ($query) {
-            $pages->where("page_name", "LIKE", "%$query%");
+            $pages->where("page_title", "LIKE", "%$query%");
         }
         if ($id) {
             $pages->where('page_id', $id);

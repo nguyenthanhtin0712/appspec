@@ -18,6 +18,7 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\DisplayConfigController;
 use App\Http\Controllers\Api\SubjectController;
 use App\Http\Controllers\Api\InternshipGraduationController;
+use App\Http\Controllers\Api\JobPostController;
 use App\Http\Controllers\Api\PageController;
 use App\Http\Controllers\Api\RegisterOpenClassController;
 use App\Http\Controllers\Api\RoleController;
@@ -156,10 +157,16 @@ Route::middleware(['auth:api'])->group(function () {
     // Pages
     Route::get('pages', [PageController::class, 'index']);
     Route::post('pages', [PageController::class, 'store']);
-
     Route::get('pages/{id}', [PageController::class, 'show']);
     Route::put('pages/{id}', [PageController::class, 'update']);
     Route::delete('pages/{id}', [PageController::class, 'destroy']);
+
+    // Job Post
+    Route::post('job-posts', [JobPostController::class, 'store']);
+    Route::put('job-posts/{id}', [JobPostController::class, 'update']);
+    Route::delete('job-posts/{id}', [JobPostController::class, 'destroy']);
+    Route::post('job-posts/confirm/{id}', [JobPostController::class, 'confirmPost']);
+    Route::get('job-posts/user', [JobPostController::class, 'getUserPosts']);
 });
 
 Route::get('test-email', [InternshipGraduationController::class, 'testEmail']);
@@ -211,3 +218,7 @@ Route::get('functional', [RoleController::class, 'getPermissions']);
 
 Route::get('pages/view/{slug}', [PageController::class, 'viewPage']);
 Route::post('/upload-image', [PageController::class, 'uploadImage']);
+
+//
+Route::get('job-posts', [JobPostController::class, 'index']);
+Route::get('job-posts/{id}', [JobPostController::class, 'show']);
