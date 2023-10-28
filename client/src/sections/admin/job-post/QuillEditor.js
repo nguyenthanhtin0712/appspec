@@ -70,7 +70,7 @@ const EditorWrapper = styled('div')(({ error }) => ({
   }
 }));
 
-const QuillEditor = ({ value, onChange, error }) => {
+const QuillEditor = ({ value, onChange, error, onBlur }) => {
   let modules = {
     toolbar: [
       [{ header: [1, 2, 3, 4, 5, 6, false] }],
@@ -83,10 +83,9 @@ const QuillEditor = ({ value, onChange, error }) => {
   };
 
   let formats = ['header', 'bold', 'italic', 'underline', 'strike', 'blockquote', 'list', 'bullet', 'indent', 'link', 'image', 'align'];
-  console.log(value);
   return (
     <EditorWrapper error={error}>
-      <ReactQuill theme="snow" modules={modules} formats={formats} value={value} onChange={onChange} />
+      <ReactQuill theme="snow" modules={modules} formats={formats} value={value} onChange={onChange} onBlur={onBlur} />
     </EditorWrapper>
   );
 };

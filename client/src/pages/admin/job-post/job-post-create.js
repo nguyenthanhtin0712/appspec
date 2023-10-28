@@ -33,9 +33,7 @@ const CreateJobPost = () => {
           validationSchema={Yup.object().shape({
             page_title: Yup.string().max(255).required('Tên trang là bắt buộc !'),
             page_content: Yup.string().test('has-content', 'Vui lòng nhập nội dung bài viết.', (value) => {
-              // Kiểm tra xem giá trị có chỉ chứa thẻ <p></p> không
-              // Sử dụng regex hoặc các phương pháp xử lý chuỗi để kiểm tra
-              return !/^<p><\/p>$/.test(value);
+              return !!value?.replace(/<[^>]*>/g, '');
             })
           })}
           onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
@@ -61,7 +59,7 @@ const CreateJobPost = () => {
             }
           }}
         >
-          {({ errors, handleBlur, handleChange, handleSubmit, touched, values, isSubmitting, setFieldValue }) => (
+          {({ errors, handleBlur, handleChange, handleSubmit, touched, values, isSubmitting, setFieldValue, setFieldTouched }) => (
             <form noValidate onSubmit={handleSubmit}>
               <Grid container spacing={3}>
                 <Grid item xs={12}>
@@ -84,6 +82,7 @@ const CreateJobPost = () => {
                     <QuillEditor
                       value={values.page_content}
                       onChange={(value) => setFieldValue('page_content', value)}
+                      onBlur={() => setFieldTouched('page_content', true)}
                       error={!!(touched.page_content && errors.page_content)}
                     />
                     {!!(touched.page_content && errors.page_content) && <FormHelperText error>{errors.page_content}</FormHelperText>}
