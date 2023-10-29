@@ -5,6 +5,7 @@ import PrivateRoute from './route/PrivateRoute';
 import { dispatch } from 'store';
 import { getWarningInfo } from 'store/slices/warnedStudentDetailSlice';
 import { getPageById } from 'store/slices/pageSlice';
+import { getJobPostById } from 'store/slices/jobPostSlice';
 
 // render - dashboard
 const DashboardDefault = Loadable(lazy(() => import('pages/admin/dashboard')));
@@ -40,6 +41,7 @@ const Grading = Loadable(lazy(() => import('pages/admin/grading/index')));
 const GradingUpdate = Loadable(lazy(() => import('pages/admin/grading/grading-update')));
 const GradingDetail = Loadable(lazy(() => import('pages/admin/grading/grading-detail')));
 const CreateJobPost = Loadable(lazy(() => import('pages/admin/job-post/job-post-create')));
+const EditJobPost = Loadable(lazy(() => import('pages/admin/job-post/job-post-edit')));
 const ManageJobPost = Loadable(lazy(() => import('pages/admin/job-post/job-post-manage')));
 const JobPost = Loadable(lazy(() => import('pages/admin/job-post/job-post-index')));
 const Page404 = Loadable(lazy(() => import('pages/error/page404')));
@@ -198,6 +200,17 @@ const AdminRoutes = {
     {
       path: 'job-post/create',
       element: <PrivateRoute component={CreateJobPost} requiredPermissions={[]} />
+    },
+    {
+      path: 'job-post/edit/:postId',
+      loader: async ({ params }) => {
+        const res = await dispatch(getJobPostById(params.postId));
+        if (res && res.error) {
+          throw new Response('Not Found', { status: 404 });
+        }
+        return res;
+      },
+      element: <PrivateRoute component={EditJobPost} requiredPermissions={[]} />
     }
   ]
 };

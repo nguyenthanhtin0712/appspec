@@ -29,12 +29,12 @@ const EditorWrapper = styled('div')(({ error }) => ({
   '.ql-container.ql-snow': {
     boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
     borderColor: '#e2e8f0',
-    marginTop: '-44px'
+    marginTop: '-41px'
   },
   '.ql-editor': {
     paddingTop: '64px',
     minHeight: '260px',
-    maxHeight: '640px'
+    maxHeight: '440px'
   },
   '.ql-editor.ql-blank::before': {
     color: '#a0aec0',

@@ -14,9 +14,11 @@ import { Typography } from '@mui/material';
 import { useNavigate } from 'react-router';
 import { ArrowRight } from 'iconsax-react';
 import QuillEditor from 'sections/admin/job-post/QuillEditor';
-import { createJobPost } from 'store/slices/jobPostSlice';
+import { updateJobPost } from 'store/slices/jobPostSlice';
+import { useSelector } from 'react-redux';
 
-const CreateJobPost = () => {
+const EditJobPost = () => {
+  const { job_post_id, job_post_title, job_post_desc } = useSelector((state) => state.job_post.dataUpdate);
   const navigate = useNavigate();
 
   return (
@@ -27,8 +29,9 @@ const CreateJobPost = () => {
       <MainCard sx={{ mb: 2 }}>
         <Formik
           initialValues={{
-            job_post_title: '',
-            job_post_desc: ''
+            job_post_id,
+            job_post_title: job_post_title,
+            job_post_desc: job_post_desc
           }}
           validationSchema={Yup.object().shape({
             job_post_title: Yup.string().max(255).required('Vui lòng nhập tiêu đề !'),
@@ -39,7 +42,7 @@ const CreateJobPost = () => {
           onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
             console.log(values);
             try {
-              const result = await dispatch(createJobPost(values));
+              const result = await dispatch(updateJobPost(values));
               if (result && !result.error) {
                 setStatus({ success: true });
                 setSubmitting(false);
@@ -99,7 +102,7 @@ const CreateJobPost = () => {
                     style={{ float: 'right' }}
                     endIcon={<ArrowRight />}
                   >
-                    Đăng tin
+                    Cập nhật tin
                   </Button>
                 </Grid>
               </Grid>
@@ -111,4 +114,4 @@ const CreateJobPost = () => {
   );
 };
 
-export default CreateJobPost;
+export default EditJobPost;

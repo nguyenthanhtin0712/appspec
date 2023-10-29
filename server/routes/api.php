@@ -162,6 +162,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::delete('pages/{id}', [PageController::class, 'destroy']);
 
     // Job Post
+    Route::get('job-posts', [JobPostController::class, 'index']);
     Route::post('job-posts', [JobPostController::class, 'store']);
     Route::put('job-posts/{id}', [JobPostController::class, 'update']);
     Route::delete('job-posts/{id}', [JobPostController::class, 'destroy']);
@@ -220,5 +221,5 @@ Route::get('pages/view/{slug}', [PageController::class, 'viewPage']);
 Route::post('/upload-image', [PageController::class, 'uploadImage']);
 
 //
-Route::get('job-posts', [JobPostController::class, 'index']);
+Route::get('job-posts/list', [JobPostController::class, 'getListPost']);
 Route::get('job-posts/{id}', [JobPostController::class, 'show']);

@@ -8,7 +8,7 @@ const arrFeature = [
   { id: 2, name: 'Đăng ký thực tập', href: '/admin', icon: <Profile2User variant="Bulk" /> },
   { id: 3, name: 'Đăng ký học cải thiện', href: '/register-open-class', icon: <Refresh2 variant="Bulk" /> },
   { id: 4, name: 'Xem môn sắp mở', href: '/subject-schedule', icon: <FolderOpen variant="Bulk" /> },
-  { id: 5, name: 'Tuyển thực tập sinh', href: '/', icon: <PathTool variant="Bulk" /> },
+  { id: 5, name: 'Tin tuyển dụng', href: '/jobs', icon: <PathTool variant="Bulk" /> },
   { id: 6, name: 'Thông tin liên hệ', href: '/contact', icon: <MessageText variant="Bulk" /> }
 ];
 

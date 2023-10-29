@@ -25,6 +25,7 @@ const RegisterOpenClassHistory = Loadable(lazy(() => import('pages/user/register
 const RegisterOpenClassStatistic = Loadable(lazy(() => import('pages/user/register-open-class/statistic')));
 const SubjectSchedule = Loadable(lazy(() => import('pages/user/subject-schedule')));
 const Page = Loadable(lazy(() => import('pages/user/page/page')));
+const Jobs = Loadable(lazy(() => import('pages/user/jobs')));
 const Page404 = Loadable(lazy(() => import('pages/error/page404')));
 
 const UserRoutes = {
@@ -42,6 +43,10 @@ const UserRoutes = {
         {
           path: 'contact',
           element: <Contact />
+        },
+        {
+          path: 'jobs',
+          element: <Jobs />
         },
         {
           path: 'subject-schedule',

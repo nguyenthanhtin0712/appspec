@@ -8,7 +8,7 @@ use App\Http\Resources\JobPostResource;
 use App\Models\JobPost;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-
+use Illuminate\Support\Str;
 
 class JobPostController extends Controller
 {
@@ -165,6 +165,50 @@ class JobPostController extends Controller
             $posts = $posts->get();
         } else {
             $posts = $posts->paginate($perPage ?? 10);
+        }
+
+        $subjectCollection = new Collection($posts);
+        return $this->sentSuccessResponse($subjectCollection, "Get data success", Response::HTTP_OK);
+    }
+
+    public function getListPost(Request $request)
+    {
+        $query = JobPost::leftJoin('users', 'users.user_id', 'job_posts.user_id')
+            ->selectRaw('job_post_id, job_post_title, job_post_desc,job_posts.created_at')
+            ->where("job_post_isDelete", "0")
+            ->where('job_post_confirm', 1);
+
+        if ($request->has('query')) {
+            $query->where("job_post_title", "LIKE", "%{$request->input('query')}%");
+        }
+
+        if ($request->has('id')) {
+            $query->where('job_post_id', $request->input('id'));
+        }
+
+        if ($request->has('sortBy')) {
+            $sortOrder = $request->input('sortOrder', 'asc');
+            $query->orderBy($request->input('sortBy'), $sortOrder);
+        }
+
+        if ($request->has('filters')) {
+            $filters = json_decode($request->input('filters'), true);
+            if (is_array($filters)) {
+                foreach ($filters as $filter) {
+                    $id = $filter['id'];
+                    $value = $filter['value'];
+                    $query->where($id, 'LIKE', '%' . $value . '%');
+                }
+            }
+        }
+
+        $perPage = $request->input('perPage', 10);
+        $posts = $request->has('all') && $request->input('all') == true ? $query->get() : $query->paginate($perPage);
+
+        foreach ($posts as $post) {
+            $cleanDescription = strip_tags($post->job_post_desc);
+            $shortDescription = Str::limit($cleanDescription, 120);
+            $post->job_post_desc = $shortDescription;
         }
 
         $subjectCollection = new Collection($posts);

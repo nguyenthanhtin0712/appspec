@@ -1,15 +1,14 @@
 import React, { memo, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useTheme } from '@mui/material/styles';
-import { Eye, SearchNormal, Trash } from 'iconsax-react';
-import Box from '@mui/material/Box';
+import { Edit, Eye, SearchNormal, Trash } from 'iconsax-react';
 import { MaterialReactTable } from 'material-react-table';
 import { fetchData, setColumnFilters, setGlobalFilter, setSorting, setPagination, setIdDeleteJobPost } from 'store/slices/jobPostSlice';
 
 import { dispatch } from 'store/index';
 import dayjs from 'dayjs';
 import IconAction from 'components/IconAction';
-import { Chip, InputAdornment } from '@mui/material';
+import { Chip, InputAdornment, Stack } from '@mui/material';
 import getJobPostStatus from 'utils/getJobPostStatus';
 
 const JobPostTable = () => {
@@ -32,7 +31,7 @@ const JobPostTable = () => {
       {
         accessorKey: 'job_post_title',
         header: 'Tiêu đề',
-        size: 240
+        size: 250
       },
       {
         accessorKey: 'job_post_confirm',
@@ -40,17 +39,20 @@ const JobPostTable = () => {
         Cell: ({ cell }) => {
           const variant = getJobPostStatus(cell.getValue());
           return <Chip label={variant.text} color={variant.color} />;
-        }
+        },
+        size: 5
       },
       {
         accessorKey: 'created_at',
         header: 'Thời gian tạo',
-        Cell: ({ cell }) => dayjs(cell.getValue()).format('DD/MM/YYYY HH:mm')
+        Cell: ({ cell }) => dayjs(cell.getValue()).format('DD/MM/YYYY HH:mm'),
+        size: 5
       },
       {
         accessorKey: 'updated_at',
         header: 'Thời gian cập nhật',
-        Cell: ({ cell }) => dayjs(cell.getValue()).format('DD/MM/YYYY HH:mm')
+        Cell: ({ cell }) => dayjs(cell.getValue()).format('DD/MM/YYYY HH:mm'),
+        size: 5
       }
     ],
     []
@@ -83,10 +85,11 @@ const JobPostTable = () => {
         enableRowActions
         positionActionsColumn="last"
         renderRowActions={({ row }) => (
-          <Box>
+          <Stack direction="row" flexWrap="nowrap">
             <IconAction title={'Xem'} icon={<Eye />} href={`/page/${row.original.page_slug}`} />
+            <IconAction title={'Chỉnh sửa'} icon={<Edit />} href={`/admin/job-post/edit/${row.id}`} />
             <IconAction title={'Xoá'} color="error" icon={<Trash />} onClick={() => dispatch(setIdDeleteJobPost(row.id))} />
-          </Box>
+          </Stack>
         )}
         displayColumnDefOptions={{
           'mrt-row-actions': {
