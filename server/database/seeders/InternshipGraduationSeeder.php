@@ -16,7 +16,7 @@ class InternshipGraduationSeeder extends Seeder
     public function run()
     {
         $now = Carbon::now();
-        $start_date = $now->addMonths(-4);
+        $start_date = $now->addMonths(-1);
         $end_date = $start_date->copy()->addMonths(3);
         InternshipGraduation::create([
             'internship_graduation_id' => 1,
