@@ -16,7 +16,7 @@ const HoverPopperPopupState = ({ data }) => {
           {data.company_name}
         </Typography>
       </Stack>
-      <Popper {...bindPopper(popupState)} placement="top" transition>
+      <Popper {...bindPopper(popupState)} placement="top" transition style={{ zIndex: 10000 }}>
         {({ TransitionProps }) => (
           <Fade {...TransitionProps} timeout={350}>
             <Stack spacing={2} sx={{ boxShadow: theme.customShadows.z3, p: 2, bgcolor: '#fff', maxWidth: '350px', borderRadius: '8px' }}>

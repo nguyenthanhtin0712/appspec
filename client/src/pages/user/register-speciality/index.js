@@ -58,7 +58,7 @@ const Register_speciality = () => {
               icon={<Stickynote variant="Bulk" size="32" color={theme.palette.primary.main} />}
             />
             <InfoItem
-              href="/register_speciality/rules"
+              href="/page/dieu-le-dang-ky-chuyen-nganh"
               title="Điều lệ đăng ký chuyên ngành"
               icon={<Check variant="Bulk" size="32" color={theme.palette.primary.main} />}
             />

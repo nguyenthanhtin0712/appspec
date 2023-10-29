@@ -17,7 +17,7 @@ export const navItems = [
       },
       {
         name: 'Điều lệ đăng ký',
-        url: '/register_speciality/rules'
+        url: '/page/dieu-le-dang-ky-chuyen-nganh'
       },
       {
         name: 'Hướng dẫn đăng ký',
