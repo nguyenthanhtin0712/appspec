@@ -44,7 +44,7 @@ class UserSeeder extends Seeder
         ]);
         
         $user2 = User::create([
-            'user_email' => 'hungpro@gmail.com',
+            'user_email' => 'hgbao2k3@gmail.com',
             'user_firstname' => 'Hồ Minh',
             'user_lastname' => 'Hưng',
             'user_phone' => '098765432',
@@ -127,17 +127,6 @@ class UserSeeder extends Seeder
             'user_birthday' => '2003-01-01',
         ]);
 
-        $user9 = User::create([
-            'user_email' => 'nqhuy@sgu.edu.vn',
-            'user_firstname' => 'Nguyễn Thành',
-            'user_lastname' => 'Huy',
-            'user_phone' => '098222151',
-            'user_avatar' => 'http://fit.sgu.edu.vn/site/wp-content/uploads/2019/01/nguyenquochuy.jpg',
-            'user_password' => bcrypt('password'),
-            'user_gender' => '0',
-            'user_status' => '1',
-            'user_birthday' => '2003-01-01',
-        ]);
         
         $admin->assignRole($admin_role);
         $user1->assignRole($admin_role);
@@ -148,6 +137,5 @@ class UserSeeder extends Seeder
         $user6->assignRole($jobholder_role);
         $user7->assignRole($jobholder_role);
         $user8->assignRole($jobholder_role);
-        $user9->assignRole($jobholder_role);
     }
 }
