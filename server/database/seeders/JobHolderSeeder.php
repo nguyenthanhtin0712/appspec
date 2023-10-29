@@ -97,5 +97,18 @@ class JobHolderSeeder extends Seeder
             'jobholder_degree' => 'Thạc sĩ',
             'jobholder_isLeader' => '0',
         ]);
+        JobHolder::create([
+            'user_id' => '110',
+            'jobholder_code' => '777777',
+            'title_id' => '1',
+            'academic_field_id' => 'KTPM',
+            'jobholder_isLeader' => '1',
+            'jobholder_unit' => 'Phòng đào tạo',
+            'jobholder_specialty' => 'Kĩ thuật lập trình',
+            'jobholder_position' => 'Giảng viên',
+            'jobholder_type' => 'Thỉnh giảng',
+            'jobholder_degree' => 'Thạc sĩ',
+            'jobholder_isLeader' => '0',
+        ]);
     }
 }
