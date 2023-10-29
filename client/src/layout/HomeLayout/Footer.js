@@ -2,11 +2,12 @@ import React from 'react';
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import LogoSection from 'components/logo';
-import { Link, Typography, useTheme } from '@mui/material';
+import { Typography, useTheme } from '@mui/material';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import EmailIcon from '@mui/icons-material/Email';
 import TextWithIcon from 'layout/HomeLayout/TextWithIcon';
+import LinkIcon from 'layout/HomeLayout/LinkIcon';
 
 const Footer = () => {
   const theme = useTheme();
@@ -42,21 +43,12 @@ const Footer = () => {
                 Liên kết
               </Typography>
               <Stack spacing={0.5}>
-                <Link fontSize="15px" color="black" fontWeight="500" rel="referrer" href="http://sgu.edu.vn/">
-                  Trường đại học Sài Gòn
-                </Link>
-                <Link fontSize="15px" color="black" fontWeight="500" rel="referrer" href="http://fit.sgu.edu.vn/">
-                  Khoa công nghệ thông tin
-                </Link>
-                <Link fontSize="15px" color="black" fontWeight="500" rel="referrer" href="http://thongtindaotao.sgu.edu.vn/">
-                  Thông tin đào tạo
-                </Link>
-                <Link fontSize="15px" color="black" fontWeight="500" rel="referrer" href="http://daotao.sgu.edu.vn/">
-                  Phòng đào tạo
-                </Link>
-                <Link fontSize="15px" color="black" fontWeight="500" rel="referrer" href="http://ctsv.sgu.edu.vn/">
-                  Phòng công tác sinh viên
-                </Link>
+                <Stack direction="row" spacing={2} alignItems="center"></Stack>
+                <LinkIcon text="Trường đại học Sài Gòn" link="http://sgu.edu.vn/" />
+                <LinkIcon text="Khoa công nghệ thông tin" link="http://fit.sgu.edu.vn/" />
+                <LinkIcon text="Thông tin đào tạo" link="http://thongtindaotao.sgu.edu.vn/" />
+                <LinkIcon text="Phòng đào tạo" link="http://daotao.sgu.edu.vn/" />
+                <LinkIcon text="Phòng công tác sinh viên" link="http://ctsv.sgu.edu.vn/" />
               </Stack>
             </Stack>
           </Box>
