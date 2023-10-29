@@ -5,10 +5,10 @@ import Button from '@mui/material/Button';
 import { useSelector } from 'react-redux';
 import { dispatch } from 'store';
 import { toast } from 'react-toastify';
-import { deleteJobPost, setIdDeleteJobPost } from 'store/slices/jobPostSlice';
+import { deleteJobPost, setIdDeleteJobPost } from 'store/slices/manageJobPostSlice';
 
 const JobPostDeleteDialog = () => {
-  const idDelete = useSelector((state) => state.job_post.idDelete);
+  const idDelete = useSelector((state) => state.manage_job_post.idDelete);
   const handleClick = async () => {
     try {
       await dispatch(deleteJobPost(idDelete));

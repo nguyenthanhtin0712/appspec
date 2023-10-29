@@ -2,14 +2,14 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from '../../api/axios';
 import { API_BASE_URL } from 'config';
 
-export const fetchData = createAsyncThunk('job_post/fetchData', async (params) => {
+export const fetchData = createAsyncThunk('manage_job_post/fetchData', async (params) => {
   const {
     columnFilters,
     globalFilter,
     sorting,
     pagination: { pageIndex, pageSize }
   } = params;
-  const url = new URL('/api/job-posts/user', API_BASE_URL);
+  const url = new URL('/api/job-posts', API_BASE_URL);
   url.searchParams.set('page', `${pageIndex + 1}`);
   url.searchParams.set('perPage', `${pageSize}`);
   url.searchParams.set('filters', JSON.stringify(columnFilters ?? []));
@@ -30,49 +30,27 @@ export const fetchData = createAsyncThunk('job_post/fetchData', async (params) =
   }
 });
 
-export const createJobPost = createAsyncThunk('job_post/createJobPost', async (post, { rejectWithValue }) => {
-  try {
-    const response = await axios.post(`${API_BASE_URL}/job-posts`, post);
-    return response.data;
-  } catch (error) {
-    if (error.response && error.response.data && error.response.data.errors) {
-      return rejectWithValue(error.response.data);
-    } else {
-      console.error(error);
-      throw error;
-    }
-  }
-});
-
-export const updateJobPost = createAsyncThunk('job_post/updateJobPost', async (post, { rejectWithValue }) => {
-  try {
-    const response = await axios.put(`${API_BASE_URL}/job-posts/${post.job_post_id}`, post);
-    return response.data;
-  } catch (error) {
-    if (error.response && error.response.data && error.response.data.errors) {
-      return rejectWithValue(error.response.data);
-    } else {
-      console.error(error);
-      throw error;
-    }
-  }
-});
-
-export const deleteJobPost = createAsyncThunk('job_post/deleteJobPost', async (id, { rejectWithValue }) => {
+export const deleteJobPost = createAsyncThunk('manage_job_post/deleteJobPost', async (id) => {
   try {
     const response = await axios.delete(`${API_BASE_URL}/job-posts/${id}`);
     return response.data;
   } catch (error) {
-    if (error.response && error.response.data && error.response.data.errors) {
-      return rejectWithValue(error.response.data);
-    } else {
-      console.error(error);
-      throw error;
-    }
+    console.error(error);
+    throw error;
   }
 });
 
-export const getJobPostById = createAsyncThunk('job_post/getJobPostById', async (id) => {
+export const confirmJobPost = createAsyncThunk('manage_job_post/confirmJobPost', async ({ id, confirm }) => {
+  try {
+    const response = await axios.post(`${API_BASE_URL}/job-posts/confirm/${id}`, { confirm });
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+});
+
+export const getJobPostById = createAsyncThunk('manage_job_post/getJobPostById', async (id) => {
   const response = await axios.get(`${API_BASE_URL}/job-posts/${id}`);
   return response.data;
 });
@@ -91,12 +69,13 @@ const initialState = {
     pageSize: 10
   },
   idDelete: 0,
+  viewId: 0,
   viewData: null,
-  dataUpdate: null
+  isLoadingViewData: true
 };
 
-const job_post = createSlice({
-  name: 'job_post',
+const manage_job_post = createSlice({
+  name: 'manage_job_post',
   initialState,
   reducers: {
     setColumnFilters: (state, action) => {
@@ -113,6 +92,9 @@ const job_post = createSlice({
     },
     setIdDeleteJobPost: (state, action) => {
       state.idDelete = action.payload;
+    },
+    setViewId: (state, action) => {
+      state.viewId = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -132,26 +114,31 @@ const job_post = createSlice({
         state.isRefetching = false;
         state.isError = true;
       })
-      .addCase(createJobPost.fulfilled, (state, action) => {
-        state.data.push(action.payload.data);
-      })
-      .addCase(updateJobPost.fulfilled, (state, action) => {
-        const updatedJobPost = action.payload.data;
-        const index = state.data.findIndex((post) => post.job_post_id === updatedJobPost.job_post_id);
-        if (index !== -1) {
-          state.data[index] = updatedJobPost;
-        }
-      })
       .addCase(deleteJobPost.fulfilled, (state, action) => {
         const deletedJobPostId = action.payload.data.job_post_id;
         state.data = state.data.filter((post) => post.job_post_id !== deletedJobPostId);
       })
+      .addCase(getJobPostById.pending, (state) => {
+        state.isLoadingViewData = true;
+      })
       .addCase(getJobPostById.fulfilled, (state, action) => {
-        state.dataUpdate = action.payload.data;
+        state.isLoadingViewData = false;
+        state.viewData = action.payload.data;
+      })
+      .addCase(getJobPostById.rejected, (state) => {
+        state.isLoadingViewData = false;
+      })
+      .addCase(confirmJobPost.fulfilled, (state, action) => {
+        const { job_post_id, job_post_confirm } = action.payload.data;
+        const index = state.data.findIndex((post) => post.job_post_id === job_post_id);
+        if (index !== -1) {
+          state.data[index] = { ...state.data[index], job_post_confirm };
+        }
+        state.viewData = { ...state.viewData, job_post_confirm };
       });
   }
 });
 
-export const { setColumnFilters, setGlobalFilter, setSorting, setPagination, setIdDeleteJobPost } = job_post.actions;
+export const { setColumnFilters, setGlobalFilter, setSorting, setPagination, setIdDeleteJobPost, setViewId } = manage_job_post.actions;
 
-export default job_post.reducer;
+export default manage_job_post.reducer;

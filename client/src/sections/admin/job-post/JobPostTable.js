@@ -10,6 +10,7 @@ import { dispatch } from 'store/index';
 import dayjs from 'dayjs';
 import IconAction from 'components/IconAction';
 import { Chip, InputAdornment } from '@mui/material';
+import getJobPostStatus from 'utils/getJobPostStatus';
 
 const JobPostTable = () => {
   const theme = useTheme();
@@ -34,19 +35,21 @@ const JobPostTable = () => {
         size: 240
       },
       {
-        accessorKey: 'user_id',
-        header: 'Người đăng'
-      },
-      {
         accessorKey: 'job_post_confirm',
         header: 'Trạng thái',
-        Cell: ({ cell }) => (
-          <Chip label={cell.getValue() ? 'Đã phê duyệt' : 'Chưa phê duyệt'} color={cell.getValue() ? 'success' : 'warning'} />
-        )
+        Cell: ({ cell }) => {
+          const variant = getJobPostStatus(cell.getValue());
+          return <Chip label={variant.text} color={variant.color} />;
+        }
       },
       {
         accessorKey: 'created_at',
         header: 'Thời gian tạo',
+        Cell: ({ cell }) => dayjs(cell.getValue()).format('DD/MM/YYYY HH:mm')
+      },
+      {
+        accessorKey: 'updated_at',
+        header: 'Thời gian cập nhật',
         Cell: ({ cell }) => dayjs(cell.getValue()).format('DD/MM/YYYY HH:mm')
       }
     ],

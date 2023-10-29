@@ -43,7 +43,7 @@ const CreateJobPost = () => {
               if (result && !result.error) {
                 setStatus({ success: true });
                 setSubmitting(false);
-                navigate('/admin/page');
+                navigate('/admin/job-post');
                 toast.success('Đăng tin thành công!');
               } else {
                 setStatus({ success: false });
