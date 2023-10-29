@@ -43,7 +43,6 @@ const Footer = () => {
                 Liên kết
               </Typography>
               <Stack spacing={0.5}>
-                <Stack direction="row" spacing={2} alignItems="center"></Stack>
                 <LinkIcon text="Trường đại học Sài Gòn" link="http://sgu.edu.vn/" />
                 <LinkIcon text="Khoa công nghệ thông tin" link="http://fit.sgu.edu.vn/" />
                 <LinkIcon text="Thông tin đào tạo" link="http://thongtindaotao.sgu.edu.vn/" />
