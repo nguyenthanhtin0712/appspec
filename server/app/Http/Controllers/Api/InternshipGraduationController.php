@@ -8,7 +8,7 @@ use App\Http\Requests\GetAssignmentDetailRequest;
 use App\Http\Requests\StoreMentorRequest;
 use App\Http\Requests\SubmitListStudentInternshipRequest;
 use App\Http\Requests\SubmitRegisterInternshipRequest;
-use App\Http\Requests\SubmitRegisterInternshipOutOfficial;
+use App\Http\Requests\SubmitRegsiterInternshipOutOfficialRequest;
 use App\Http\Resources\Collection;
 use App\Http\Resources\InternshipCompanyResoure;
 use App\Jobs\SendEmail;
@@ -329,7 +329,7 @@ class InternshipGraduationController extends Controller
         return $this->sentSuccessResponse($student, 'getUserSuccess', 200);
     }
 
-    public function submitRegisterInternshipOutOffcail(SubmitRegisterInternshipOutOfficial $request)
+    public function submitRegisterInternshipOutOffcail(SubmitRegsiterInternshipOutOfficialRequest $request)
     {
         $user = $request->user();
         $student = Student::where('user_id', $user->user_id)->firstOrFail();
@@ -685,7 +685,7 @@ class InternshipGraduationController extends Controller
     {
         $subject = "Thông báo từ Trường đại học Sài Gòn";
         $content = $status == 1
-            ? "Bạn vui lòng cập nhật thông tin người hướng dẫn trong trang đăng ký thực tập!"
+            ? "Bạn vui lòng cập nhật thông tin người hướng dẫn trong trang đăng ký thực tập. Tại trang http://localhost:3000/register_intern/additional"
             : "Đăng ký thực tập của bạn bị huỷ do chưa đăng ký thông tin ở phòng đào tạo!";
 
         SendEmail::dispatch([
