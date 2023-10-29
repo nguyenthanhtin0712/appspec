@@ -14,6 +14,7 @@ import CountdownTimer from 'components/CountdownTimer';
 import { userRegisteringForSpecialty } from 'store/slices/registerSpecialtyUserSlice';
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
+import EmptyBox from 'components/EmptyBox';
 
 const RegisterForm = () => {
   const navigate = useNavigate();
@@ -89,11 +90,7 @@ const RegisterForm = () => {
   };
 
   const OutOfTime = () => {
-    return (
-      <>
-        <Typography gutterBottom>Đã hết thời gian đăng ký chuyên ngành....</Typography>
-      </>
-    );
+    return <EmptyBox message="Đã hết thời gian đăng ký chuyên ngành" />;
   };
 
   return (

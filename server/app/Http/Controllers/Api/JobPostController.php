@@ -26,7 +26,8 @@ class JobPostController extends Controller
         $sortBy = $request->input('sortBy');
         $sortOrder = $request->input('sortOrder', 'asc');
         $filters = $request->input('filters');
-        $posts = JobPost::select('job_post_id', 'job_post_title', 'job_post_confirm', 'user_id', 'created_at', 'updated_at')->orderBy('updated_at', 'desc');
+        $posts = JobPost::select('job_post_id', 'job_post_title', 'job_post_confirm', 'user_id', 'created_at', 'updated_at')
+            ->orderBy('created_at', 'desc');
         $posts->where("job_post_isDelete", "0");
         if ($query) {
             $posts->where("job_post_title", "LIKE", "%$query%");

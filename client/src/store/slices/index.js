@@ -30,6 +30,7 @@ import assignment_internship_detail from 'store/slices/assignmentInternshipDetai
 import role from 'store/slices/roleSlice';
 import grading from 'store/slices/gradingSlice';
 import page from 'store/slices/pageSlice';
+import job_post from 'store/slices/jobPostSlice';
 // ==============================|| COMBINE REDUCERS ||============================== //
 
 const reducers = combineReducers({
@@ -60,7 +61,8 @@ const reducers = combineReducers({
   warned_student_detail,
   role,
   grading,
-  page
+  page,
+  job_post
 });
 
 export default reducers;

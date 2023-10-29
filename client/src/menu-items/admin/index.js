@@ -5,7 +5,7 @@ import title from './title';
 import intern from './intern';
 import subject from './subject';
 import student from './student';
-import jobholder from './jobholder';
+import jobholder from './recruitment';
 
 const menuItems = {
   items: [dashboard, user, specialty, intern, title, subject, student, jobholder]
