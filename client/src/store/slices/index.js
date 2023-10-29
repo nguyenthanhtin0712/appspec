@@ -31,6 +31,7 @@ import role from 'store/slices/roleSlice';
 import grading from 'store/slices/gradingSlice';
 import page from 'store/slices/pageSlice';
 import job_post from 'store/slices/jobPostSlice';
+import job_post_home from 'store/slices/jobPostHomeSlice';
 import manage_job_post from 'store/slices/manageJobPostSlice';
 // ==============================|| COMBINE REDUCERS ||============================== //
 
@@ -64,6 +65,7 @@ const reducers = combineReducers({
   grading,
   page,
   job_post,
+  job_post_home,
   manage_job_post
 });
 

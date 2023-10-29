@@ -4,17 +4,14 @@ import MainCard from 'components/MainCard';
 import Typography from '@mui/material/Typography';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Link from '@mui/material/Link';
-import MarkdownIt from 'markdown-it';
 import { useSelector } from 'react-redux';
 import 'assets/third-party/markdown.css';
 import { useTheme } from '@mui/material';
 import { formatDDMMYYYY } from 'utils/formatDateTime';
 
-const UserPage = () => {
+const JobDetail = () => {
   const theme = useTheme();
-  const { page_title, page_content, updated_at } = useSelector((state) => state.page.viewData);
-  const mdParser = new MarkdownIt();
-  const result = mdParser.render(page_content);
+  const { job_post_title, job_post_desc, created_at } = useSelector((state) => state.job_post_home.viewData);
 
   return (
     <Container maxWidth="md" sx={{ mt: 2 }}>
@@ -23,10 +20,10 @@ const UserPage = () => {
           <Link underline="hover" color="inherit" href="/">
             Trang chủ
           </Link>
-          <Link underline="hover" color="inherit" href="/page">
-            Page
+          <Link underline="hover" color="inherit" href="/jobs">
+            Tuyển dụng
           </Link>
-          <Typography color="text.primary">{page_title}</Typography>
+          <Typography color="text.primary">{job_post_title}</Typography>
         </Breadcrumbs>
         <Typography
           variant="h2"
@@ -46,15 +43,15 @@ const UserPage = () => {
             }
           }}
         >
-          {page_title}
+          {job_post_title}
         </Typography>
         <Typography mb={2} fontStyle="italic">
-          Cập nhật lần cuối {formatDDMMYYYY(updated_at)}
+          Đăng vào {formatDDMMYYYY(created_at)}
         </Typography>
-        {<div className="markdown-body" dangerouslySetInnerHTML={{ __html: result }} />}
+        {<div className="markdown-body" dangerouslySetInnerHTML={{ __html: job_post_desc }} />}
       </MainCard>
     </Container>
   );
 };
 
-export default UserPage;
+export default JobDetail;
