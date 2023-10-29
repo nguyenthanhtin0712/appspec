@@ -6,7 +6,7 @@ function TextWithIcon({ icon, text }) {
   return (
     <Stack direction="row" spacing={2} alignItems="center">
       {icon}
-      <Typography fontSize="16px" fontWeight="600">
+      <Typography fontSize="16px" fontWeight="500">
         {text}
       </Typography>
     </Stack>
