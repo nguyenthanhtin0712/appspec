@@ -10,10 +10,11 @@ const PrivateRoute = ({ component: Component, requiredPermissions }) => {
       if (!isAuthenticated) {
         return <Navigate to="/auth/login" replace={true} />;
       }
+      if (!checkPermissions(permissions, requiredPermissions)) return <Navigate to="/error/403" replace={true} />;
       if (requiredPermissions.length === 0 || checkPermissions(permissions, requiredPermissions)) {
         return <Component />;
       }
-      return <Navigate to="/403" replace={true} />;
+      return <Navigate to="/error/404" replace={true} />;
     }
   } else {
     return <Navigate to="/auth/login" replace={true} />;
