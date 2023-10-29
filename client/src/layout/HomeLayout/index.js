@@ -12,11 +12,12 @@ function HomeLayout() {
       <Box
         sx={{
           position: 'relative',
-          minHeight: 'calc(100vh - 130px)',
+          minHeight: 'calc(100vh - 100px)',
           display: 'flex',
           flexDirection: 'column',
           paddingX: 0
         }}
+        mb={4}
       >
         <ScrollTop />
         <Outlet />

@@ -16,10 +16,10 @@ class StudentSeeder extends Seeder
     public function run()
     {
         // $specialtyOptions = ['HTTT', 'KTPM', 'MMT', 'KHMT'];
-        $jobholderOptions = ['1', '2', '3', null];
+        $jobholderOptions = ['1', '2', '3', '7', null];
         $major = ['DCT', 'DKP'];
         $users = User::take(103)->get();
-        $index = 3121410000;
+        $index = 312141000;
         $lop = 1200;
         foreach ($users as $user) {
             // $randomSpecialty = $specialtyOptions[array_rand($specialtyOptions)];
