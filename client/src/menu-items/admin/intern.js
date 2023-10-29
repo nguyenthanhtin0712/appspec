@@ -1,12 +1,13 @@
 // type
-import { BrifecaseTimer } from 'iconsax-react';
+import { Augur, BrifecaseTimer } from 'iconsax-react';
 import ApartmentIcon from '@mui/icons-material/Apartment';
 import SettingsEthernetIcon from '@mui/icons-material/SettingsEthernet';
 // icons
 const icons = {
   company: ApartmentIcon,
   intern: SettingsEthernetIcon,
-  assignment: BrifecaseTimer
+  assignment: BrifecaseTimer,
+  grading: Augur
 };
 
 // ==============================|| MENU ITEMS - DASHBOARD ||============================== //
@@ -29,6 +30,13 @@ const intern = {
       type: 'item',
       url: '/admin/internship-graduation',
       icon: icons.assignment
+    },
+    {
+      id: 'grading',
+      title: 'Chấm điểm',
+      type: 'item',
+      url: '/admin/grading',
+      icon: icons.grading
     }
   ]
 };

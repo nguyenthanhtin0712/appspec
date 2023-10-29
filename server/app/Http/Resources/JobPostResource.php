@@ -16,7 +16,8 @@ class JobPostResource extends JsonResource
     {
         return [
             'job_post_id' => $this->job_post_id,
-            'job_post_title' => $this->job_post_title
+            'job_post_title' => $this->job_post_title,
+            'job_post_confirm' => $this->job_post_confirm
         ];
     }
 }

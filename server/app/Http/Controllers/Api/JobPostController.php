@@ -26,7 +26,9 @@ class JobPostController extends Controller
         $sortBy = $request->input('sortBy');
         $sortOrder = $request->input('sortOrder', 'asc');
         $filters = $request->input('filters');
-        $posts = JobPost::select('job_post_id', 'job_post_title', 'job_post_confirm', 'user_id', 'created_at', 'updated_at')->orderBy('updated_at', 'desc');
+        $posts = JobPost::leftJoin('users', 'users.user_id', 'job_posts.user_id')
+            ->selectRaw('job_post_id, job_post_title, job_post_confirm, CONCAT(user_firstname, " ", user_lastname) as author_name, job_posts.created_at, job_posts.updated_at')
+            ->orderBy('created_at', 'desc');
         $posts->where("job_post_isDelete", "0");
         if ($query) {
             $posts->where("job_post_title", "LIKE", "%$query%");
@@ -82,7 +84,7 @@ class JobPostController extends Controller
     {
         $post = JobPost::where('job_post_id', $id)->where('job_post_isDelete', 0)
             ->firstOrFail()
-            ->makeHidden('job_post_isDelete', 'job_post_confirm', 'user_id');
+            ->makeHidden('job_post_isDelete', 'user_id');
         return $this->sentSuccessResponse($post, 'Get post successfully', Response::HTTP_OK);
     }
 
@@ -119,7 +121,7 @@ class JobPostController extends Controller
 
     public function confirmPost(Request $request, $id)
     {
-        $value = $request->input('confirm') === 'true' ? 1 : 0;
+        $value = $request->input('confirm');
         $post = JobPost::findOrFail($id);
         $post->job_post_confirm = $value;
         $post->save();

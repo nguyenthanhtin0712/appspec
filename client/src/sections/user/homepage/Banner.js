@@ -1,7 +1,7 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import Banner from '../../../assets/images/banner-2.jpg';
+import Banner from '../../../assets/images/csc.jpg';
 import { useTheme } from '@mui/material';
 
 const BannerSection = () => {

@@ -40,6 +40,8 @@ const Grading = Loadable(lazy(() => import('pages/admin/grading/index')));
 const GradingUpdate = Loadable(lazy(() => import('pages/admin/grading/grading-update')));
 const GradingDetail = Loadable(lazy(() => import('pages/admin/grading/grading-detail')));
 const CreateJobPost = Loadable(lazy(() => import('pages/admin/job-post/job-post-create')));
+const ManageJobPost = Loadable(lazy(() => import('pages/admin/job-post/job-post-manage')));
+const JobPost = Loadable(lazy(() => import('pages/admin/job-post/job-post-index')));
 const Page404 = Loadable(lazy(() => import('pages/error/page404')));
 
 const AdminRoutes = {
@@ -184,6 +186,14 @@ const AdminRoutes = {
     {
       path: 'grading/detail/:id',
       element: <PrivateRoute component={GradingDetail} requiredPermissions={['jobholder.grading']} />
+    },
+    {
+      path: 'manage-job-post',
+      element: <PrivateRoute component={ManageJobPost} requiredPermissions={[]} />
+    },
+    {
+      path: 'job-post',
+      element: <PrivateRoute component={JobPost} requiredPermissions={[]} />
     },
     {
       path: 'job-post/create',
