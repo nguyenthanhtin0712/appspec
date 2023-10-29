@@ -1,59 +1,72 @@
 import React from 'react';
 import Stack from '@mui/material/Stack';
+import Box from '@mui/material/Box';
 import LogoSection from 'components/logo';
-import { Link, Typography } from '@mui/material';
+import { Link, Typography, useTheme } from '@mui/material';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import EmailIcon from '@mui/icons-material/Email';
 import TextWithIcon from 'layout/HomeLayout/TextWithIcon';
 
 const Footer = () => {
+  const theme = useTheme();
   return (
     <>
-      <Stack justifyContent="center" alignItems="center" sx={{ mt: 'auto', backgroundColor: '#D9D9D8' }}>
-        <Stack direction={{ xs: 'column', sm: 'row' }} width="80%" sx={{ p: '30px' }} spacing={4}>
-          <Stack width={{ xs: '100%', sm: '70%' }} spacing={2}>
-            <Stack direction="row" alignItems="center">
-              <LogoSection />
-              <Stack ml={3} spacing={1}>
-                <Typography variant="h4" gutterBottom>
+      <Stack justifyContent="center" alignItems="center" sx={{ backgroundColor: theme.palette.secondary.light }}>
+        <Stack direction={{ xs: 'column', sm: 'row' }} width="80%" sx={{ py: '30px' }} spacing={2}>
+          <Stack width={{ xs: '100%', sm: '70%' }} spacing={3}>
+            <Stack direction="row" alignItems="center" spacing={2}>
+              <LogoSection width={80} />
+              <Stack spacing={0.5}>
+                <Typography variant="h4" fontWeight={700} sx={{ textTransform: 'uppercase' }} gutterBottom>
                   Trường Đại học Sài Gòn
                 </Typography>
-                <Typography variant="button" gutterBottom>
-                  SAIGON UNIVERCITY OF SCIENCE AND TECHNOLOGY
+                <Typography variant="h6" fontWeight={500} sx={{ textTransform: 'uppercase' }} gutterBottom>
+                  Khoa công nghệ thông tin
                 </Typography>
               </Stack>
             </Stack>
-            <TextWithIcon icon={<LocationOnIcon />} text="Phòng D301, Số 273 An Dương Vương, Phường 3, Quận 5, TP. HCM" />
-            <TextWithIcon icon={<LocalPhoneIcon />} text="Hotline: (028) 38382 664" />
-            <TextWithIcon icon={<EmailIcon />} text="Email: vpkcntt@sgu.edu.vn" />
-            <TextWithIcon icon={<LocalPhoneIcon />} text="Phone: (028) 38382 664 - 0366 686 557" />
+            <Stack spacing={1}>
+              <TextWithIcon
+                icon={<LocationOnIcon fontSize="small" />}
+                text="Phòng D301, Số 273 An Dương Vương, Phường 3, Quận 5, TP. HCM"
+              />
+              <TextWithIcon icon={<LocalPhoneIcon fontSize="small" />} text="Hotline: (028) 38382 664" />
+              <TextWithIcon icon={<EmailIcon fontSize="small" />} text="Email: vpkcntt@sgu.edu.vn" />
+              <TextWithIcon icon={<LocalPhoneIcon fontSize="small" />} text="Phone: (028) 38382 664 - 0366 686 557" />
+            </Stack>
           </Stack>
-          <Stack width={{ xs: '100%', sm: '30%' }} spacing={3}>
-            <Stack direction="row" alignItems="center" padding={2}>
-              <Stack ml={3} spacing={1}>
-                <Typography variant="h4" gutterBottom>
-                  Liên kết WEB
-                </Typography>
-                <Link fontSize="16px" fontWeight="700" rel="referrer" href="http://thongtindaotao.sgu.edu.vn/" underline="hover">
+          <Box width={{ xs: '100%', sm: '30%' }}>
+            <Stack>
+              <Typography variant="h4" gutterBottom>
+                Liên kết
+              </Typography>
+              <Stack spacing={0.5}>
+                <Link fontSize="15px" color="black" fontWeight="500" rel="referrer" href="http://sgu.edu.vn/">
                   Trường đại học Sài Gòn
+                </Link>
+                <Link fontSize="15px" color="black" fontWeight="500" rel="referrer" href="http://fit.sgu.edu.vn/">
+                  Khoa công nghệ thông tin
+                </Link>
+                <Link fontSize="15px" color="black" fontWeight="500" rel="referrer" href="http://thongtindaotao.sgu.edu.vn/">
+                  Thông tin đào tạo
+                </Link>
+                <Link fontSize="15px" color="black" fontWeight="500" rel="referrer" href="http://daotao.sgu.edu.vn/">
+                  Phòng đào tạo
+                </Link>
+                <Link fontSize="15px" color="black" fontWeight="500" rel="referrer" href="http://ctsv.sgu.edu.vn/">
+                  Phòng công tác sinh viên
                 </Link>
               </Stack>
             </Stack>
-          </Stack>
+          </Box>
         </Stack>
       </Stack>
-      <Stack sx={{ backgroundColor: '#b41d24', p: '30px' }} spacing={1}>
+      <Box sx={{ backgroundColor: theme.palette.primary.darker, py: '20px' }}>
         <Typography color="white" fontSize="16px" fontWeight="400" textAlign="center">
-          Bản quyền thuộc về Đại học Sài Gòn
+          Bản quyền thuộc về Khoa Công nghệ thông tin - Trường Đại học Sài Gòn
         </Typography>
-        <Typography color="white" fontSize="16px" fontWeight="400" textAlign="center">
-          Địa chỉ: Phòng D301, Số 273 An Dương Vương, Phường 3, Quận 5, TP. HCM
-        </Typography>
-        <Typography color="white" fontSize="16px" fontWeight="400" textAlign="center">
-          Điện thoại: (028) 38382 664 - 0366 686 557
-        </Typography>
-      </Stack>
+      </Box>
     </>
   );
 };
