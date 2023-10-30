@@ -34,7 +34,7 @@ class CreateStudentsTable extends Migration
             $table->foreign('jobholder_internship_id')
             ->references('jobholder_internship_id')
             ->on('jobholder_internships')
-            ->onDelete('cascade');
+            ->onDelete('set null');
             $table->foreign('company_position_detail_id')
                 ->references('company_position_detail_id')
                 ->on('company_position_detail')

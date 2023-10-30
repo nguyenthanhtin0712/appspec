@@ -92,7 +92,7 @@ class UserSeeder extends Seeder
         ]);
 
         $user6 = User::create([
-            'user_email' => 'minhhuan@sgu.edu.vn',
+            'user_email' => 'tanquoc@sgu.edu.vn',
             'user_firstname' => 'Phan Tấn',
             'user_lastname' => 'Quốc',
             'user_phone' => '098222151',
