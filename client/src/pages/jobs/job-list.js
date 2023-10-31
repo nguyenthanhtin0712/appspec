@@ -21,7 +21,7 @@ const Jobs = () => {
   }, [page, query]);
 
   if (isLoading) {
-    const numSkeletons = 9; // Number of skeleton components to display
+    const numSkeletons = 9;
     const skeletonItems = Array.from({ length: numSkeletons }, (_, index) => (
       <Grid item key={index} xs={4}>
         <JobItemSkeleton />
@@ -30,7 +30,7 @@ const Jobs = () => {
 
     return (
       <Container maxWidth="lg" sx={{ mt: 2 }}>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} alignItems="stretch">
           {skeletonItems}
         </Grid>
       </Container>
@@ -74,13 +74,11 @@ const JobItem = ({ info }) => {
       sx={{
         border: '1px solid',
         borderRadius: 1.5,
-        borderColor: theme.palette.divider
+        borderColor: theme.palette.divider,
+        height: '100%'
       }}
     >
       <Stack spacing={2}>
-        {/* <Box>
-          <Briefcase variant="Bulk" size="40" color={theme.palette.primary.main} />
-        </Box> */}
         <Stack spacing={1}>
           <Typography
             component={Link}

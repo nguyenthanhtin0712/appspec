@@ -17,7 +17,10 @@ export default function BasicTable() {
 
   const dataDisplay = React.useMemo(() => {
     return dataDetail.filter(
-      (item) => item.subject_id.includes(query) || item.subject_name.includes(query) || item.openclass_subject_for_course.includes(query)
+      (item) =>
+        item.subject_id.includes(query) ||
+        item.subject_name.toLowerCase().includes(query.toLowerCase()) ||
+        item.openclass_subject_for_course.includes(query)
     );
   }, [dataDetail, query]);
 

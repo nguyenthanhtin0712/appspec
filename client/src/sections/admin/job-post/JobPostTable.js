@@ -86,7 +86,7 @@ const JobPostTable = () => {
         positionActionsColumn="last"
         renderRowActions={({ row }) => (
           <Stack direction="row" flexWrap="nowrap">
-            <IconAction title={'Xem'} icon={<Eye />} href={`/page/${row.original.page_slug}`} />
+            <IconAction title={'Xem'} icon={<Eye />} href={`/jobs/${row.id}`} />
             <IconAction title={'Chỉnh sửa'} icon={<Edit />} href={`/admin/job-post/edit/${row.id}`} />
             <IconAction title={'Xoá'} color="error" icon={<Trash />} onClick={() => dispatch(setIdDeleteJobPost(row.id))} />
           </Stack>

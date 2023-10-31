@@ -176,7 +176,7 @@ class JobPostController extends Controller
         $query = JobPost::leftJoin('users', 'users.user_id', 'job_posts.user_id')
             ->selectRaw('job_post_id, job_post_title, job_post_desc,job_posts.created_at')
             ->where("job_post_isDelete", "0")
-            ->where('job_post_confirm', 1);
+            ->where('job_post_confirm', 1)->orderBy('created_at', 'desc');
 
         if ($request->has('query')) {
             $query->where("job_post_title", "LIKE", "%{$request->input('query')}%");
@@ -213,5 +213,15 @@ class JobPostController extends Controller
 
         $subjectCollection = new Collection($posts);
         return $this->sentSuccessResponse($subjectCollection, "Get data success", Response::HTTP_OK);
+    }
+
+    public function getRelatedPost($id)
+    {
+        $query = JobPost::where("job_post_isDelete", "0")
+            ->where('job_post_confirm', 1)
+            ->whereNotIn('job_post_id', [$id])
+            ->select(['job_post_id', 'job_post_title', 'created_at'])
+            ->orderBy('created_at', 'desc')->limit(5)->get();
+        return $this->sentSuccessResponse($query, "Get data success", Response::HTTP_OK);
     }
 }

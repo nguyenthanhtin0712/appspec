@@ -695,7 +695,8 @@ class InternshipGraduationController extends Controller
         ], $emails)->delay(now()->addMinute(1));
     }
 
-    public function checkUserInternship(Request $request){
+    public function checkUserInternship(Request $request)
+    {
         $user = $request->user();
         $internship_graduation_id = DisplayConfig::find('register_intern')->display_config_value ?? InternshipGraduation::latest()->value('internship_graduation_id');
         $student = Student::where('user_id', $user->user_id)->where('internship_graduation_id', $internship_graduation_id)->first();
@@ -762,7 +763,8 @@ class InternshipGraduationController extends Controller
         return $this->sentSuccessResponse($student, "Add mentor success", 200);
     }
 
-    public function getAssignmentDetail(GetAssignmentDetailRequest $request){
+    public function getAssignmentDetail(GetAssignmentDetailRequest $request)
+    {
         $displayConfig = $request->input('id');
         $studentsQuery = Student::select(
             'students.student_code',

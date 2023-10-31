@@ -16,14 +16,23 @@ import { getAllSubject, registerOpenClass } from 'store/slices/registerOpenClass
 import InputField from 'components/input/InputField';
 import SelectField from 'components/input/SelectField';
 import InfoItem from 'sections/user/register_speciality/index/InfoItem';
-import { Chart2, Task } from 'iconsax-react';
-import { useTheme } from '@mui/material';
+import { Chart2, Task, Warning2 } from 'iconsax-react';
+import { Box, Typography, useTheme } from '@mui/material';
 
 const RegisterOpenClass = () => {
   const theme = useTheme();
   return (
     <Container maxWidth="sm" sx={{ mt: 2 }}>
       <MainCard title="Đăng ký mở thêm lớp học cải thiện">
+        <Stack direction="row" spacing={2} mb={3} alignItems="center">
+          <Box>
+            <Warning2 size="50" color={theme.palette.warning.main} variant="Bulk" />
+          </Box>
+          <Typography>
+            Đăng ký mở thêm lớp học cải thiện nhằm mục đích để khoa thống kê số lượng và mở số nhóm học phần phù hợp, sinh viên cũng phải
+            đăng ký học phần tại trang Thông tin đào tạo
+          </Typography>
+        </Stack>
         <Grid container spacing={2} mb={3}>
           <InfoItem
             href="/register-open-class/history"

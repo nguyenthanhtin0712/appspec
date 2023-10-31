@@ -223,3 +223,4 @@ Route::post('/upload-image', [PageController::class, 'uploadImage']);
 //
 Route::get('job-posts/list', [JobPostController::class, 'getListPost']);
 Route::get('job-posts/{id}', [JobPostController::class, 'show']);
+Route::get('job-posts/related/{id}', [JobPostController::class, 'getRelatedPost']);

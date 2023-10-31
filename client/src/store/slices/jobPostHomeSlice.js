@@ -24,6 +24,11 @@ export const getJobPostById = createAsyncThunk('job_post_home/getJobPostById', a
   return response.data;
 });
 
+export const getRelatedPost = createAsyncThunk('job_post_home/getRelatedPost', async (id) => {
+  const response = await axios.get(`${API_BASE_URL}/job-posts/related/${id}`);
+  return response.data;
+});
+
 const initialState = {
   data: [],
   isError: false,
@@ -31,7 +36,11 @@ const initialState = {
   query: '',
   page: 1,
   total_page: 0,
-  viewData: null
+  viewData: null,
+  relatedPost: {
+    isLoading: false,
+    data: []
+  }
 };
 
 const job_post_home = createSlice({
@@ -62,6 +71,16 @@ const job_post_home = createSlice({
       })
       .addCase(getJobPostById.fulfilled, (state, action) => {
         state.viewData = action.payload.data;
+      })
+      .addCase(getRelatedPost.pending, (state) => {
+        state.relatedPost.isLoading = true;
+      })
+      .addCase(getRelatedPost.fulfilled, (state, action) => {
+        state.relatedPost.data = action.payload.data;
+        state.relatedPost.isLoading = false;
+      })
+      .addCase(getRelatedPost.rejected, (state) => {
+        state.relatedPost.isLoading = false;
       });
   }
 });

@@ -53,7 +53,7 @@ const RegisterSpecialtyEdit = () => {
   return (
     <>
       <Typography variant="h4" component="h1" mb={2}>
-        Tạo đợt đăng ký chuyên ngành
+        Chỉnh sửa đợt đăng ký chuyên ngành
       </Typography>
       <MainCard sx={{ mb: 2 }}>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
