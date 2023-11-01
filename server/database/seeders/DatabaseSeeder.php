@@ -37,5 +37,6 @@ class DatabaseSeeder extends Seeder
         $this->call(ContactSeeder::class);
         $this->call(ContactConfigSeeder::class);
         $this->call(MentorSeeder::class);
+        $this->call(JobPostSeeder::class);
     }
 }
