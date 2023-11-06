@@ -43,7 +43,7 @@ class InternshipGraduationController extends Controller
         $sortBy = $request->input('sortBy');
         $sortOrder = $request->input('sortOrder', 'asc');
         $filters = $request->input('filters');
-        $internshipGraduation = InternshipGraduation::with('openclasstime')->where('internship_graduation_isDelete', 0);
+        $internshipGraduation = InternshipGraduation::with('openclasstime')->where('internship_graduation_isDelete', 0)->orderBy('internship_graduation_id', 'desc');
         if ($query) {
             $internshipGraduation->where("openclass_time_id", "LIKE", "%$query%");
         }
