@@ -345,7 +345,7 @@ class RegisterSpecialtyController extends Controller
             ->leftJoin('users', 'users.user_id', '=', 'students.user_id')
             ->where('students.register_specialty_id', $register_specialty_id)
             ->where('students.major_id', $major_id)
-            ->leftJoin('specialties', 'specialties.specialty_id', '=', 'students.specialty_id');
+            ->leftJoin('specialties', 'specialties.specialty_id', '=', 'students.specialty_id')->latest();
 
         if ($status == 1) {
             $queryBuilder->whereNotNull('students.specialty_id');

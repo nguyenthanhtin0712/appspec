@@ -23,7 +23,7 @@ const Jobs = () => {
   if (isLoading) {
     const numSkeletons = 9;
     const skeletonItems = Array.from({ length: numSkeletons }, (_, index) => (
-      <Grid item key={index} xs={4}>
+      <Grid item key={index} md={4} sm={6} xs={12}>
         <JobItemSkeleton />
       </Grid>
     ));
@@ -43,7 +43,7 @@ const Jobs = () => {
         <Grid container spacing={2}>
           {data.length > 0 &&
             data.map((post) => (
-              <Grid item key={post.job_post_id} xs={4}>
+              <Grid item key={post.job_post_id} md={4} sm={6} xs={12}>
                 <JobItem info={post} />
               </Grid>
             ))}

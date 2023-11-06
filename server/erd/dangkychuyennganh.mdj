@@ -8264,7 +8264,7 @@
 									"font": "Arial;13;1",
 									"left": 2936,
 									"top": 1877,
-									"width": 196.841796875,
+									"width": 254.62451171875,
 									"height": 13,
 									"text": "jobholder_gradutions"
 								},
@@ -8290,7 +8290,7 @@
 											"font": "Arial;13;0",
 											"left": 2941,
 											"top": 1900,
-											"width": 186.841796875,
+											"width": 244.62451171875,
 											"height": 13
 										},
 										{
@@ -8305,7 +8305,7 @@
 											"font": "Arial;13;0",
 											"left": 2941,
 											"top": 1915,
-											"width": 186.841796875,
+											"width": 244.62451171875,
 											"height": 13
 										},
 										{
@@ -8320,21 +8320,21 @@
 											"font": "Arial;13;0",
 											"left": 2941,
 											"top": 1930,
-											"width": 186.841796875,
+											"width": 244.62451171875,
 											"height": 13
 										}
 									],
 									"font": "Arial;13;0",
 									"left": 2936,
 									"top": 1895,
-									"width": 196.841796875,
+									"width": 254.62451171875,
 									"height": 53
 								}
 							],
 							"font": "Arial;13;0",
 							"left": 2936,
 							"top": 1872,
-							"width": 196.841796875,
+							"width": 254.62451171875,
 							"height": 76,
 							"nameLabel": {
 								"$ref": "AAAAAAGLWoaPUOn/oE8="
@@ -8442,8 +8442,8 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 3149,
-									"top": 1915,
+									"left": 3168,
+									"top": 1926,
 									"height": 13,
 									"alpha": 1.5707963267948966,
 									"distance": 15,
@@ -8459,8 +8459,8 @@
 										"$ref": "AAAAAAGLWoj1d+o5U0w="
 									},
 									"font": "Arial;13;0",
-									"left": 3142,
-									"top": 1914,
+									"left": 3193,
+									"top": 1926,
 									"height": 13,
 									"alpha": 0.5235987755982988,
 									"distance": 30,
@@ -8476,8 +8476,8 @@
 										"$ref": "AAAAAAGLWoj1d+o5U0w="
 									},
 									"font": "Arial;13;0",
-									"left": 3157,
-									"top": 1914,
+									"left": 3193,
+									"top": 1955,
 									"height": 13,
 									"alpha": -0.5235987755982988,
 									"distance": 30,
@@ -8494,7 +8494,7 @@
 								"$ref": "AAAAAAGKAVTWNEKCe0k="
 							},
 							"lineStyle": 2,
-							"points": "3168:1906;3132:1906",
+							"points": "3168:1947;3168:1947",
 							"nameLabel": {
 								"$ref": "AAAAAAGLWoj1d+o6Z5s="
 							},
@@ -13678,6 +13678,7 @@
 								"$ref": "AAAAAAGLWoaPT+n8Phg="
 							},
 							"name": "jobholder_gradution_id",
+							"type": "INTEGER",
 							"primaryKey": true
 						},
 						{

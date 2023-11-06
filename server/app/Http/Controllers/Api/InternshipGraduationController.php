@@ -43,7 +43,7 @@ class InternshipGraduationController extends Controller
         $sortBy = $request->input('sortBy');
         $sortOrder = $request->input('sortOrder', 'asc');
         $filters = $request->input('filters');
-        $internshipGraduation = InternshipGraduation::with('openclasstime')->where('internship_graduation_isDelete', 0);
+        $internshipGraduation = InternshipGraduation::with('openclasstime')->where('internship_graduation_isDelete', 0)->latest();
         if ($query) {
             $internshipGraduation->where("openclass_time_id", "LIKE", "%$query%");
         }
@@ -394,7 +394,7 @@ class InternshipGraduationController extends Controller
             ->leftJoin('recruitment_positions', 'recruitment_positions.position_id', '=', 'company_position_detail.position_id')
             ->leftjoin('jobholder_internships', 'jobholder_internships.jobholder_internship_id', 'students.jobholder_internship_id')
             ->where('student_isDelete', '0')
-            ->where('register_internship_company.internship_graduation_id', $displayConfig);
+            ->where('register_internship_company.internship_graduation_id', $displayConfig)->latest();
 
         $query = $request->input('query');
         $id = $request->input('id');
@@ -483,7 +483,7 @@ class InternshipGraduationController extends Controller
             ->leftJoin('recruitment_positions', 'recruitment_positions.position_id', '=', 'company_position_detail.position_id')
             ->leftjoin('jobholder_internships', 'jobholder_internships.jobholder_internship_id', 'students.jobholder_internship_id')
             ->where('student_isDelete', '0')
-            ->where('students.internship_graduation_id', $displayConfig);
+            ->where('students.internship_graduation_id', $displayConfig)->latest();
 
         $query = $request->input('query');
         $sortBy = $request->input('sortBy');
@@ -784,7 +784,7 @@ class InternshipGraduationController extends Controller
             ->leftJoin('recruitment_positions', 'recruitment_positions.position_id', '=', 'company_position_detail.position_id')
             ->leftjoin('jobholder_internships', 'jobholder_internships.jobholder_internship_id', 'students.jobholder_internship_id')
             ->where('student_isDelete', '0')
-            ->where('register_internship_company.internship_graduation_id', $displayConfig);
+            ->where('register_internship_company.internship_graduation_id', $displayConfig)->latest();
 
         $query = $request->input('query');
         $sortBy = $request->input('sortBy');
