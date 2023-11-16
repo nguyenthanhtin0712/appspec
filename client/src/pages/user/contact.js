@@ -128,6 +128,7 @@ const ContactForm = () => {
     contact_phone: '',
     contact_content: ''
   };
+  const phoneRegExp = /(84|0[3|5|7|8|9])+([0-9]{8})\b/g;
   return (
     <Grid item xs={12} md={8}>
       <MainCard>
@@ -136,7 +137,7 @@ const ContactForm = () => {
           validationSchema={Yup.object().shape({
             contact_fullname: Yup.string().max(255).required('Họ tên là bắt buộc !'),
             contact_email: Yup.string().email('Email không đúng định dạng!').max(255).required('Email là bắt buộc !'),
-            contact_phone: Yup.number().required('Số điện thoại là bắt buộc'),
+            contact_phone: Yup.string().matches(phoneRegExp, 'Số điện thoại không hợp lệ').required('Số điện thoại là bắt buộc'),
             contact_content: Yup.string().required('Nội dung là bắt buộc')
           })}
           onSubmit={async (values, { setErrors, setStatus, setSubmitting, resetForm }) => {

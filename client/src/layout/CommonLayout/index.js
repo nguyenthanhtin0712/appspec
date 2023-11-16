@@ -7,7 +7,7 @@ const CommonLayout = () => {
   return (
     <>
       <ScrollTop />
-      <Outlet />;
+      <Outlet />
     </>
   );
 };
