@@ -20,6 +20,7 @@ use App\Http\Controllers\Api\SubjectController;
 use App\Http\Controllers\Api\InternshipGraduationController;
 use App\Http\Controllers\Api\JobPostController;
 use App\Http\Controllers\Api\PageController;
+use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\RegisterOpenClassController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\SubjectScheduleController;
@@ -170,6 +171,9 @@ Route::middleware(['auth:api'])->group(function () {
     Route::delete('job-posts/{id}', [JobPostController::class, 'destroy']);
     Route::post('job-posts/confirm/{id}', [JobPostController::class, 'confirmPost']);
     Route::get('job-posts/user', [JobPostController::class, 'getUserPosts']);
+
+    //Profile
+    Route::post('profile/change-password', [ProfileController::class, 'change_password']);
 });
 
 Route::get('test-email', [InternshipGraduationController::class, 'testEmail']);
@@ -200,7 +204,7 @@ Route::get('register-internships/getAssignmentDetail', [InternshipGraduationCont
 
 // Contact
 Route::get('contacts', [ContactController::class, 'index']);
-Route::post('contacts/mail', [ContactController::class, 'sendMail']);
+Route::post('contacts/send', [ContactController::class, 'sendMail']);
 Route::get('contact-config', [ContactConfigController::class, 'getInfo']);
 Route::post('contact-config', [ContactConfigController::class, 'updateContactConfig']);
 Route::post('internship-graduations/list-students', [InternshipGraduationController::class, 'submitListStudentInternship']);

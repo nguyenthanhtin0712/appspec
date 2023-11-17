@@ -36,7 +36,7 @@ export const fetchData = createAsyncThunk('contact/fetchData', async (params, { 
 
 export const sendMail = createAsyncThunk('contact/sendMail', async (message) => {
   try {
-    const response = await axios.post(`/contacts/mail`, message);
+    const response = await axios.post(`/contacts/send`, message);
     return response.data;
   } catch (error) {
     console.error(error);
