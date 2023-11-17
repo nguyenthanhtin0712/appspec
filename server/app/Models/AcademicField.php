@@ -19,7 +19,7 @@ class AcademicField extends Model
     protected $fillable = [
         'academic_field_id',
         'academic_field_name',
-        'academic_field_names'
+        'academic_field_isDelete'
     ];
 
     public function jobholder() {
