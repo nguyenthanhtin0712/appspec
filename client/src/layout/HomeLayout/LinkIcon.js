@@ -9,8 +9,8 @@ const LinkIcon = ({ text, link }) => {
       spacing={1}
       sx={{
         '&:hover .MuiBox-root': {
-          transform: 'translateX(8px)',
-          transition: 'all 0.3s ease' // Để làm mượt hiệu ứng nhích
+          transform: 'translateX(5px)',
+          transition: 'all 0.3s linear' // Để làm mượt hiệu ứng nhích
         }
       }}
     >

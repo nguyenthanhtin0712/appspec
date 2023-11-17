@@ -77,9 +77,9 @@ export const getRegistrationInfoById = createAsyncThunk('register_specialty_user
   }
 });
 
-export const getStatistic = createAsyncThunk('register_specialty_user/getRegistrationInfoById', async (id) => {
+export const getStatistic = createAsyncThunk('register_specialty_user/getStatistic', async (id) => {
   try {
-    const response = await axios.get(`/register-specialties/admin/${id}`);
+    const response = await axios.get(`/register-specialties/${id}/statistic`);
     return response.data;
   } catch (error) {
     console.error(error);
@@ -120,7 +120,7 @@ export const getExportData = createAsyncThunk('register_specialty_user/getExport
 const initialState = {
   data: [],
   isError: false,
-  isLoading: false,
+  isLoading: true,
   isRefetching: false,
   rowCount: 0,
   columnFilters: [],

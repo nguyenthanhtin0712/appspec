@@ -212,6 +212,7 @@ class RegisterSpecialtyController extends Controller
     {
         $displayConfig = DisplayConfig::find('register_specialty')->display_config_value ?? RegisterSpecialty::latest()->first()->register_specialty_id;
         $registerSpecialty = RegisterSpecialty::with(['specialty.major', 'specialty.student'])->find($displayConfig);
+
         $groupedSpecialties = $registerSpecialty->specialty->groupBy('major.major_id')->map(function ($specialties) use ($displayConfig) {
             $major = $specialties->first()->major;
             $specialtiesData = $specialties->map(function ($value) use ($displayConfig) {
@@ -244,8 +245,11 @@ class RegisterSpecialtyController extends Controller
     public function getSpecialtiesForRegister(Request $request)
     {
         if (!$request->user()->student) return response()->json(['message' => 'No permission',], 403);
+
         $displayConfig = DisplayConfig::find('register_specialty')->display_config_value ?? RegisterSpecialty::latest()->first()->register_specialty_id;
+
         if ($request->user()->student->register_specialty_id != $displayConfig) return response()->json(['message' => 'No permission',], 403);
+
         $major_id = $request->user()->student->major_id;
 
         $registerSpecialty = RegisterSpecialty::with(['specialty' => function ($query) use ($major_id) {
@@ -268,6 +272,7 @@ class RegisterSpecialtyController extends Controller
             'major_id' => $major_id,
             'statistic' => $specialtyInfo
         ];
+
         return $this->sentSuccessResponse($result, "Get data success", Response::HTTP_OK);
     }
 
@@ -345,7 +350,8 @@ class RegisterSpecialtyController extends Controller
             ->leftJoin('users', 'users.user_id', '=', 'students.user_id')
             ->where('students.register_specialty_id', $register_specialty_id)
             ->where('students.major_id', $major_id)
-            ->leftJoin('specialties', 'specialties.specialty_id', '=', 'students.specialty_id');
+            ->leftJoin('specialties', 'specialties.specialty_id', '=', 'students.specialty_id')
+            ->orderBy('students.specialty_date', 'desc');
 
         if ($status == 1) {
             $queryBuilder->whereNotNull('students.specialty_id');

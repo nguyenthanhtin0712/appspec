@@ -16,6 +16,7 @@ const RegisterSpeciality = () => {
   const theme = useTheme();
   const registrationPageInfo = useSelector((state) => state.register_specialty_user.registrationPageInfo);
   const [error, setError] = useState(false);
+
   useEffect(() => {
     const fetchData = async () => {
       const result = await dispatch(getSpecialtiesForRegister());
@@ -46,7 +47,7 @@ const RegisterSpeciality = () => {
     <Container maxWidth="lg" sx={{ mt: 2 }}>
       <Stack spacing={2}>
         <MainCard title="Hiện trạng đăng ký">
-          <SpecialityContainer></SpecialityContainer>
+          <SpecialityContainer />
         </MainCard>
         <RegisterForm></RegisterForm>
       </Stack>

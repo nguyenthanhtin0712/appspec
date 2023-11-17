@@ -11,6 +11,7 @@ import { Card, CardContent, CardHeader, Divider, Tab, Tabs } from '@mui/material
 
 const SpecialityResult = () => {
   const { majors, majorId } = useSelector((state) => state.register_specialty_user);
+
   const handleChange = (event, newValue) => {
     dispatch(setMajorId(newValue));
   };

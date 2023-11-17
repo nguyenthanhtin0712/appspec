@@ -15,8 +15,8 @@ const Footer = () => {
     <>
       <Stack justifyContent="center" alignItems="center" sx={{ backgroundColor: theme.palette.secondary.light }}>
         <Container sx={{ py: 4 }}>
-          <Grid container>
-            <Grid item xs={12} md={8} display="flex" rowGap={2} direction="column">
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={8} display="flex" rowGap={2} sx={{ flexDirection: 'column' }}>
               <Stack direction="row" alignItems="center" spacing={2}>
                 <LogoSection width={80} />
                 <Stack spacing={0.5}>
@@ -46,7 +46,7 @@ const Footer = () => {
                 <Stack spacing={0.5}>
                   <LinkIcon text="Trường đại học Sài Gòn" link="http://sgu.edu.vn/" />
                   <LinkIcon text="Khoa công nghệ thông tin" link="http://fit.sgu.edu.vn/" />
-                  <LinkIcon text="Thông tin đào tạo" link="http://thongtindaotao.sgu.edu.vn/" />
+                  <LinkIcon text="Thông tin đào tạo" link="https://thongtindaotao.sgu.edu.vn/" />
                   <LinkIcon text="Phòng đào tạo" link="http://daotao.sgu.edu.vn/" />
                   <LinkIcon text="Phòng công tác sinh viên" link="http://ctsv.sgu.edu.vn/" />
                 </Stack>
