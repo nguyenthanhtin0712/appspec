@@ -28,6 +28,7 @@ const SubjectSchedule = Loadable(lazy(() => import('pages/user/subject-schedule'
 const Page = Loadable(lazy(() => import('pages/user/page/page')));
 const Jobs = Loadable(lazy(() => import('pages/user/jobs/job-list')));
 const JobDetail = Loadable(lazy(() => import('pages/user/jobs/job-detail')));
+
 const Page404 = Loadable(lazy(() => import('pages/error/page404')));
 
 const UserRoutes = {
