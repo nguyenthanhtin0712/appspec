@@ -60,7 +60,6 @@ const ResultTable = () => {
         getRowId={(row) => row.student_code}
         enableRowNumbers
         manualPagination
-        manualSorting
         enableFilters={false}
         enableHiding={false}
         enableFullScreenToggle={false}

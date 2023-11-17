@@ -128,37 +128,35 @@ class RegisterSpecialtyController extends Controller
      */
     public function show($id)
     {
-        $registerSpecialty = RegisterSpecialty::with(['specialty.major'])->find($id);
-        if (!$registerSpecialty || $registerSpecialty->register_specialty_isDelete == 1) {
-            return response()->json([
-                'message' => 'Resource unavailable',
-            ], 404);
-        } else {
-            $groupedSpecialties = $registerSpecialty->specialty->groupBy('major.major_id')->map(function ($specialties) {
-                $major = $specialties->first()->major;
-                $specialtiesData = $specialties->map(function ($value) {
-                    return [
-                        "specialty_id" => $value->specialty_id,
-                        "specialty_name" => $value->specialty_name,
-                        "specialty_quantity" => $value->pivot->specialty_quantity,
-                    ];
-                });
+        $registerSpecialty = RegisterSpecialty::with(['specialty.major'])
+            ->where('register_specialty_id', $id)
+            ->where('register_specialty_isDelete', 0)
+            ->firstOrFail();
+
+        $groupedSpecialties = $registerSpecialty->specialty->groupBy('major.major_id')->map(function ($specialties) {
+            $major = $specialties->first()->major;
+            $specialtiesData = $specialties->map(function ($value) {
                 return [
-                    "major_id" => $major->major_id,
-                    "major_name" => $major->major_name,
-                    "specialties" => $specialtiesData->all(),
+                    "specialty_id" => $value->specialty_id,
+                    "specialty_name" => $value->specialty_name,
+                    "specialty_quantity" => $value->pivot->specialty_quantity,
                 ];
             });
+            return [
+                "major_id" => $major->major_id,
+                "major_name" => $major->major_name,
+                "specialties" => $specialtiesData->all(),
+            ];
+        });
 
-            $selectedColumns = $registerSpecialty->only([
-                'register_specialty_id',
-                'register_specialty_name',
-                'register_specialty_start_date',
-                'register_specialty_end_date'
-            ]);
-            $selectedColumns['register_specialty_detail'] = $groupedSpecialties->values()->all();
-            return $this->sentSuccessResponse($selectedColumns, "Get data success", Response::HTTP_OK);
-        }
+        $selectedColumns = $registerSpecialty->only([
+            'register_specialty_id',
+            'register_specialty_name',
+            'register_specialty_start_date',
+            'register_specialty_end_date'
+        ]);
+        $selectedColumns['register_specialty_detail'] = $groupedSpecialties->values()->all();
+        return $this->sentSuccessResponse($selectedColumns, "Get data success", Response::HTTP_OK);
     }
 
     /**
@@ -253,10 +251,7 @@ class RegisterSpecialtyController extends Controller
         if ($request->user()->student->register_specialty_id != $displayConfig) return response()->json(['message' => 'No permission',], 403);
 
         $major_id = $request->user()->student->major_id;
-
-        $registerSpecialty = RegisterSpecialty::with(['specialty' => function ($query) use ($major_id) {
-            $query->where('major_id', $major_id);
-        }])->find($displayConfig);
+        $registerSpecialty = RegisterSpecialty::find($displayConfig);
 
         $result = [
             'register_specialty_name' => $registerSpecialty->register_specialty_name,
@@ -375,7 +370,6 @@ class RegisterSpecialtyController extends Controller
         $sortBy = $request->input('sortBy');
         $register_specialty_id = $request->input('id') ?? $displayConfig;
         $sortOrder = $request->input('sortOrder', 'asc');
-        $filters = $request->input('filters');
         $major_id = $request->input('majorId');
         $status = $request->input('status');
 
@@ -395,12 +389,14 @@ class RegisterSpecialtyController extends Controller
             ->leftJoin('specialties', 'specialties.specialty_id', '=', 'students.specialty_id')
             ->orderBy('students.specialty_date', 'desc');
 
-        if ($status == 1) {
-            $queryBuilder->whereNotNull('students.specialty_id');
-        }
-        if ($status == 2) {
+        if ($status == "CDK") {
             $queryBuilder->whereNull('students.specialty_id');
         }
+
+        if ($status != "ALL") {
+            $queryBuilder->where('students.specialty_id', $status);
+        }
+
 
         if ($query) {
             $queryBuilder->where(function ($queryBuilder) use ($query) {
@@ -412,17 +408,6 @@ class RegisterSpecialtyController extends Controller
 
         if ($sortBy) {
             $queryBuilder->orderBy($sortBy, $sortOrder);
-        }
-
-        if ($filters) {
-            $filters = json_decode($filters, true);
-            if (is_array($filters)) {
-                foreach ($filters as $filter) {
-                    $id = $filter['id'];
-                    $value = $filter['value'];
-                    $queryBuilder->where($id, 'LIKE', '%' . $value . '%');
-                }
-            }
         }
 
         $perPage = $perPage ?? 10;

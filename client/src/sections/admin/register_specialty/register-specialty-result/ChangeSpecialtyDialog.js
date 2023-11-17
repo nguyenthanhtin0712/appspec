@@ -9,9 +9,9 @@ import { changeSpecialty, fetchData } from 'store/slices/registerSpecialtyUserSl
 import { toast } from 'react-toastify';
 
 const ChangeSpecialtyDialog = ({ open, handleClose, rowSelection, setRowSelection }) => {
-  const { statistic, columnFilters, globalFilter, sorting, pagination, majorId, registerSpecialtyId, status } = useSelector(
-    (state) => state.register_specialty_user
-  );
+  const { statistic, tableResult, majorId, registerSpecialtyId, status } = useSelector((state) => state.register_specialty_user);
+
+  const { columnFilters, globalFilter, sorting, pagination } = tableResult;
 
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="xs">
@@ -26,14 +26,13 @@ const ChangeSpecialtyDialog = ({ open, handleClose, rowSelection, setRowSelectio
         })}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
           try {
-            console.log(values);
             const result = await dispatch(changeSpecialty(values));
             if (result) {
               setRowSelection({});
+              await dispatch(fetchData({ columnFilters, globalFilter, sorting, pagination, majorId, registerSpecialtyId, status }));
               toast.success('Thay đổi thông tin thành công');
               setStatus({ success: true });
               setSubmitting(false);
-              await dispatch(fetchData({ columnFilters, globalFilter, sorting, pagination, majorId, registerSpecialtyId, status }));
               handleClose();
             }
           } catch (err) {
@@ -54,13 +53,13 @@ const ChangeSpecialtyDialog = ({ open, handleClose, rowSelection, setRowSelectio
                     id="specialty_id"
                     labelId="specialty_id"
                     name="specialty_id"
-                    label="Chọn chuyên ngành"
+                    label="Chuyên ngành"
                     value={values.specialty_id}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     error={Boolean(touched.specialty_id && errors.specialty_id)}
                     helperText={errors.specialty_id}
-                    list={statistic}
+                    list={statistic.data}
                     getOptionLabel={(option) => option.specialty_name}
                     getOptionValue={(option) => option.specialty_id}
                     fullWidth

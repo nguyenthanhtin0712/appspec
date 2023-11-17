@@ -27,16 +27,16 @@ export async function ExportResultRegisterSpecialty(registerspecialtyid, major_i
     });
 
     const r1 = ws.addRow(['KHOA CÔNG NGHỆ THÔNG TIN']);
-    r1.style.alignment = { vertical: 'middle', horizontal: 'center' };
-    r1.style.font = { size: 16 };
+    r1.alignment = { vertical: 'middle', horizontal: 'center' };
+    r1.font = { size: 16 };
 
     const r2 = ws.addRow(['DANH SÁCH SINH VIÊN']);
-    r2.style.alignment = { vertical: 'middle', horizontal: 'center' };
-    r2.style.font = { bold: true, size: 16 };
+    r2.alignment = { vertical: 'middle', horizontal: 'center' };
+    r2.font = { bold: true, size: 16 };
 
     const r3 = ws.addRow([`CHUYÊN NGÀNH ${specialty.specialty_name.toUpperCase()}`]);
-    r3.style.alignment = { vertical: 'middle', horizontal: 'center' };
-    r3.style.font = { bold: true, size: 16 };
+    r3.alignment = { vertical: 'middle', horizontal: 'center' };
+    r3.font = { bold: true, size: 16 };
 
     ws.mergeCells('A1:I1');
     ws.mergeCells('A2:I2');
