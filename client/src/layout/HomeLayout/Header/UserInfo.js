@@ -74,7 +74,12 @@ const UserInfo = () => {
 
         <Divider sx={{ borderStyle: 'dashed' }} />
         <List component="nav" sx={{ p: 0, '& .MuiListItemIcon-root': { minWidth: 32 } }}>
-          <ListItemButton>
+          <ListItemButton
+            onClick={() => {
+              navigate('/profile');
+              handleCloseUserMenu();
+            }}
+          >
             <ListItemIcon>
               <Profile variant="Bulk" size={18} />
             </ListItemIcon>

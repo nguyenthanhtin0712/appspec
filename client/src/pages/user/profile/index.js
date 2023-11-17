@@ -1,49 +1,107 @@
 import React from 'react';
 import Box from '@mui/material/Box';
+import Tab from '@mui/material/Tab';
+import TabContext from '@mui/lab/TabContext';
+import TabList from '@mui/lab/TabList';
+import TabPanel from '@mui/lab/TabPanel';
 import Container from '@mui/material/Container';
 import MainCard from 'components/MainCard';
-import Grid from '@mui/material/Grid';
-import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
-import { Calendar, InfoCircle, Stickynote, Call, Check, MedalStar } from 'iconsax-react';
-import { useTheme } from '@mui/material/styles';
-import InfoItem from 'sections/user/register_speciality/index/InfoItem';
-import { formatDateTimeDisplay } from 'utils/formatDateTime';
+import { Profile, Unlock, TickCircle, DirectRight } from 'iconsax-react';
+import { Button, Divider, Grid, Stack, Typography } from '@mui/material';
+import InputField from 'components/input/InputField';
 
-const Profile = () => {
-  const theme = useTheme();
+const ProfileUser = () => {
+  const [value, setValue] = React.useState('1');
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
   return (
     <Container maxWidth="md" sx={{ mt: 2 }}>
-      <MainCard title="Thông tin đăng ký thực tập">
-        <Box sx={{ borderBottom: '1px solid', borderColor: theme.palette.divider, pb: 1 }}>
-          <Stack direction="row" alignItems="flex-end" spacing={1} mb={2}>
-            <Calendar size="25" color={theme.palette.primary.main} variant="Bulk" />
-            <Typography variant="h5" fontWeight={600}>
-              Lịch đăng ký
-            </Typography>
-          </Stack>
-          <Stack ml={4}>
-            <Typography variant="h6">Thời gian bắt đầu: {formatDateTimeDisplay(internship?.register_internship_start_date)}</Typography>
-            <Typography variant="h6">Thời gian kết thúc: {formatDateTimeDisplay(internship?.register_internship_end_date)}</Typography>
-          </Stack>
-        </Box>
-        <Box sx={{ borderBottom: '1px solid', borderColor: theme.palette.divider, py: 2 }}>
-          <Stack direction="row" alignItems="flex-end" spacing={1} mb={2}>
-            <InfoCircle size="25" color={theme.palette.primary.main} variant="Bulk" />
-            <Typography variant="h5" fontWeight={600}>
-              Thông tin
-            </Typography>
-          </Stack>
-          <Grid container spacing={2}>
-            <InfoItem href="/" title="Hướng dẫn đăng ký thực tập" icon={<Stickynote size="32" color={theme.palette.primary.main} />} />
-            <InfoItem href="/" title="Điều lệ đăng ký thực tập" icon={<Check size="32" color={theme.palette.primary.main} />} />
-            <InfoItem href="/" title="Kết quả đăng ký thực tập" icon={<MedalStar size="32" color={theme.palette.primary.main} />} />
-            <InfoItem href="/" title="Liên hệ với Ban quản trị website" icon={<Call size="32" color={theme.palette.primary.main} />} />
-          </Grid>
-        </Box>
+      <MainCard title="Thông tin">
+        <TabContext value={value}>
+          <Box>
+            <TabList onChange={handleChange} aria-label="lab API tabs example">
+              <Tab icon={<Profile />} iconPosition="start" label="Hồ sơ" value="1" />
+              <Tab icon={<Unlock />} iconPosition="start" label="Thay đổi mật khẩu" value="2" />
+            </TabList>
+          </Box>
+          <TabPanel value="1">
+            <MainCard title="Thông tin cá nhân"></MainCard>
+          </TabPanel>
+          <TabPanel value="2">
+            <MainCard title="Thay đổi mật khẩu">
+              <Grid container spacing={2}>
+                <Grid item xs={12} md={7}>
+                  <Stack spacing={1}>
+                    <InputField label="Mật khẩu hiện tại" />
+                    <InputField label="Mật khẩu mới" />
+                    <InputField label="Xác nhận mật khẩu" />
+                  </Stack>
+                </Grid>
+                <Grid item xs={12} md={5}>
+                  <Stack spacing={1}>
+                    <Typography variant="h5" gutterBottom>
+                      Mật khẩu mới cần đảm bảo
+                    </Typography>
+                    <Stack p={1} spacing={2}>
+                      <Stack>
+                        <Stack direction="row" spacing={1.5} mb={2}>
+                          <TickCircle color="#66af8e" />
+                          <Typography variant="h6" gutterBottom>
+                            Mật khẩu cần lớn hơn 6 ký tự
+                          </Typography>
+                        </Stack>
+                        <Divider sx={{ borderStyle: 'dashed' }} />
+                      </Stack>
+                      <Stack>
+                        <Stack direction="row" spacing={1.5} mb={2}>
+                          <TickCircle color="#66af8e" />
+                          <Typography variant="h6" gutterBottom>
+                            Có ít nhất 1 ký tự thường (a-z)
+                          </Typography>
+                        </Stack>
+                        <Divider sx={{ borderStyle: 'dashed' }} />
+                      </Stack>
+                      <Stack>
+                        <Stack direction="row" spacing={1.5} mb={2}>
+                          <TickCircle color="#66af8e" />
+                          <Typography variant="h6" gutterBottom>
+                            Có ít nhất 1 ký tự in hoa (A-Z)
+                          </Typography>
+                        </Stack>
+                        <Divider sx={{ borderStyle: 'dashed' }} />
+                      </Stack>
+                      <Stack>
+                        <Stack direction="row" spacing={1.5} mb={2}>
+                          <TickCircle color="#66af8e" />
+                          <Typography variant="h6" gutterBottom>
+                            Có ít nhất 1 chứ số
+                          </Typography>
+                        </Stack>
+                        <Divider sx={{ borderStyle: 'dashed' }} />
+                      </Stack>
+                      <Stack>
+                        <Stack direction="row" spacing={1.5} mb={2}>
+                          <TickCircle color="#66af8e" />
+                          <Typography variant="h6" gutterBottom>
+                            Có ít nhất 1 ký tự đặt biệt
+                          </Typography>
+                        </Stack>
+                      </Stack>
+                    </Stack>
+                  </Stack>
+                </Grid>
+              </Grid>
+              <Button variant="contained" startIcon={<DirectRight />}>
+                Thay đổi
+              </Button>
+            </MainCard>
+          </TabPanel>
+        </TabContext>
       </MainCard>
     </Container>
   );
 };
 
-export default Profile;
+export default ProfileUser;
