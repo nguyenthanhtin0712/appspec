@@ -141,7 +141,7 @@ const initialState = {
       pageSize: 10
     }
   },
-  status: '',
+  status: 'ALL',
   majorId: '',
   userRegistrationPeriod: null,
   registrationPageInfo: null,

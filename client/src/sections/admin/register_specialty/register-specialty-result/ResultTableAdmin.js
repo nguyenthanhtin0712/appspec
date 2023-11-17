@@ -11,7 +11,7 @@ import {
   setStatus
 } from 'store/slices/registerSpecialtyUserSlice';
 import { dispatch } from 'store/index';
-import { Box, Button, MenuItem, Select } from '@mui/material';
+import { Box, Button, Chip, FormControl, MenuItem, Select, Typography } from '@mui/material';
 import ChangeSpecialtyDialog from 'sections/admin/register_specialty/register-specialty-result/ChangeSpecialtyDialog';
 
 const ResultTable = () => {
@@ -20,6 +20,7 @@ const ResultTable = () => {
   const { data, isError, isLoading, isRefetching, rowCount, columnFilters, globalFilter, sorting, pagination } = tableResult;
   const [open, setOpen] = useState(false);
   const [rowSelection, setRowSelection] = useState({});
+
   useEffect(() => {
     dispatch(fetchData({ columnFilters, globalFilter, sorting, pagination, majorId, registerSpecialtyId, status }));
   }, [columnFilters, globalFilter, sorting, pagination, majorId, registerSpecialtyId, status]);
@@ -50,12 +51,10 @@ const ResultTable = () => {
         accessorKey: 'specialty_name',
         header: 'Chuyên ngành',
         Cell: ({ cell }) => (cell.getValue() ? cell.getValue() : 'Chưa đăng ký'),
-        filterVariant: 'select',
-        filterSelectOptions: statistic.data.map((item) => item.specialty_name),
         size: 10
       }
     ],
-    [statistic]
+    []
   );
 
   const handleClose = () => {
@@ -71,9 +70,10 @@ const ResultTable = () => {
         enableRowNumbers
         enableRowSelection
         onRowSelectionChange={setRowSelection}
-        manualFiltering
         manualPagination
-        manualSorting
+        enableFilters={false}
+        enableHiding={false}
+        enableFullScreenToggle={false}
         muiToolbarAlertBannerProps={isError ? { color: 'error', children: 'Error loading data' } : null}
         onColumnFiltersChange={(updater) => dispatch(setColumnFilters(updater(columnFilters)))}
         onGlobalFilterChange={(filter) => dispatch(setGlobalFilter(filter))}
@@ -117,7 +117,7 @@ const ResultTable = () => {
         }}
         positionToolbarAlertBanner="bottom"
         renderTopToolbarCustomActions={({ table }) => (
-          <Box>
+          <FormControl sx={{ minWidth: 215 }}>
             {!table.getIsSomeRowsSelected() && !table.getIsAllRowsSelected() ? (
               <Select
                 id="register-status"
@@ -127,23 +127,33 @@ const ResultTable = () => {
                 displayEmpty
                 inputProps={{ 'aria-label': 'Without label' }}
               >
-                <MenuItem value="" sx={{ color: 'text.secondary' }}>
-                  Tất cả
+                <MenuItem value="ALL" sx={{ color: 'text.secondary' }}>
+                  <Box display="flex" justifyContent="space-between" width="100%" gap={2}>
+                    <Typography>Tất cả</Typography>
+                    <Chip label={rowCount} color="primary" size="small" />
+                  </Box>
                 </MenuItem>
-                <MenuItem value={1}>Đã đăng ký</MenuItem>
-                <MenuItem value={2}>Chưa đăng ký</MenuItem>
+                {statistic.data.map((item) => (
+                  <MenuItem key={item.specialty_id} value={item.specialty_id}>
+                    <Box display="flex" justifyContent="space-between" width="100%" gap={2}>
+                      <Typography>{item.specialty_name}</Typography>
+                      <Chip label={item.specialty_registered} color="primary" size="small" />
+                    </Box>
+                  </MenuItem>
+                ))}
+                <MenuItem value="CDK">
+                  <Box display="flex" justifyContent="space-between" width="100%" gap={2}>
+                    <Typography>Chưa đăng ký</Typography>
+                    <Chip label={rowCount - statistic.data.reduce((a, b) => a + b.specialty_registered, 0)} color="primary" size="small" />
+                  </Box>
+                </MenuItem>
               </Select>
             ) : (
-              <Button
-                onClick={() => {
-                  setOpen(true);
-                }}
-                variant="contained"
-              >
+              <Button onClick={() => setOpen(true)} variant="contained">
                 Đổi chuyên ngành
               </Button>
             )}
-          </Box>
+          </FormControl>
         )}
       />
       <ChangeSpecialtyDialog open={open} handleClose={handleClose} rowSelection={rowSelection} setRowSelection={setRowSelection} />
