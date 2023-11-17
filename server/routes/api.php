@@ -85,8 +85,6 @@ Route::middleware(['auth:api'])->group(function () {
     Route::put('/register-specialties/admin/{id}', [RegisterSpecialtyController::class, 'update'])->middleware('check_user_role_permission:register_spec.update');
     Route::delete('/register-specialties/admin/{id}', [RegisterSpecialtyController::class, 'destroy'])->middleware('check_user_role_permission:register_spec.delete');
 
-
-    Route::get('/register-specialties/{id}/statistic', [RegisterSpecialtyController::class, 'getStatistic']);
     Route::get('register-specialties/register', [RegisterSpecialtyController::class, 'getSpecialtiesForRegister']);
     Route::post('register-specialties/register', [RegisterSpecialtyController::class, 'submitRegisterSpecialty']);
     Route::post('register-specialties/change', [RegisterSpecialtyController::class, 'changeSpecialty']);
@@ -174,6 +172,10 @@ Route::middleware(['auth:api'])->group(function () {
 
 Route::get('test-email', [InternshipGraduationController::class, 'testEmail']);
 
+Route::get('register-specialties/majors/{id?}', [RegisterSpecialtyController::class, 'getMajor']);
+
+Route::get('register-specialties/statistics/{major_id?}', [RegisterSpecialtyController::class, 'getStatisticDefault']);
+Route::get('register-specialties/{id}/statistics/{major_id?}', [RegisterSpecialtyController::class, 'getStatistic']);
 
 Route::get('register-specialties/result', [RegisterSpecialtyController::class, 'getResult']);
 Route::get('register-specialties', [RegisterSpecialtyController::class, 'getRegisterSpecialtyByUser']);

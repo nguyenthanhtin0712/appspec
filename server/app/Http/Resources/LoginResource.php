@@ -23,7 +23,10 @@ class LoginResource extends JsonResource
             'user_info' => $attributes,
             'accessToken' => $token->accessToken,
             'roles' => $this->roles->pluck('name') ?? [],
-            'roles.permissions' => $this->getPermissionsViaRoles() ?? [],
+            'roles.permissions' => $this->getPermissionsViaRoles()
+                ->map(function ($permission) {
+                    return $permission->name;
+                }) ?? [],
         ];
         return $data;
     }

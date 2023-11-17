@@ -8,8 +8,10 @@ use App\Http\Requests\SubmitRegisterSpecialtyRequest;
 use App\Http\Resources\Collection;
 use App\Http\Resources\RegisterSpecialtyResource;
 use App\Models\DisplayConfig;
+use App\Models\Major;
 use App\Models\RegisterSpecialty;
 use App\Models\RegisterSpecialtyDetail;
+use App\Models\Specialty;
 use App\Models\Student;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -256,24 +258,30 @@ class RegisterSpecialtyController extends Controller
             $query->where('major_id', $major_id);
         }])->find($displayConfig);
 
-        $specialtyInfo = $registerSpecialty->specialty->map(function ($specialty) use ($displayConfig) {
-            return [
-                'specialty_id' => $specialty->specialty_id,
-                'specialty_name' => $specialty->specialty_name,
-                'specialty_quantity' => $specialty->pivot->specialty_quantity,
-                'specialty_registered' => Student::where('register_specialty_id', $displayConfig)->where('specialty_id', $specialty->specialty_id)->count()
-            ];
-        });
-
         $result = [
             'register_specialty_name' => $registerSpecialty->register_specialty_name,
             'register_specialty_start_date' => $registerSpecialty->register_specialty_start_date,
             'register_specialty_end_date' => $registerSpecialty->register_specialty_end_date,
-            'major_id' => $major_id,
-            'statistic' => $specialtyInfo
+            'major_id' => $major_id
         ];
 
         return $this->sentSuccessResponse($result, "Get data success", Response::HTTP_OK);
+    }
+
+    public function getMajor($id = null)
+    {
+        if ($id === null) {
+            $id = DisplayConfig::find('register_specialty')->display_config_value;
+        }
+        $majors = Major::join('specialties', 'specialties.major_id', 'majors.major_id')
+            ->join('register_specialty_detail', 'register_specialty_detail.specialty_id', '=', 'specialties.specialty_id')
+            ->where('register_specialty_id', $id)
+            ->select('majors.major_id', 'major_name')
+            ->distinct()
+            ->get();
+
+        $majorCollection = new Collection($majors);
+        return $this->sentSuccessResponse($majorCollection, "Get data success", Response::HTTP_OK);
     }
 
 
@@ -308,21 +316,55 @@ class RegisterSpecialtyController extends Controller
         return response()->json(['message' => 'Change specialty successful'], 200);
     }
 
-    public function getStatistic($register_specialty_id, $major_id)
+    public function getStatistic($id, $major_id = null)
     {
-        $statistic = RegisterSpecialty::find($register_specialty_id)->specialty
+        $registerSpecialty = RegisterSpecialty::findOrFail($id);
+
+        $statistic = $registerSpecialty->specialty
             ->filter(function ($specialty) use ($major_id) {
-                return $specialty->major->major_id === $major_id;
+                return $major_id === null || $specialty->major->major_id === $major_id;
             })
-            ->map(function ($specialty) use ($register_specialty_id) {
+            ->map(function ($specialty) use ($id) {
                 return [
                     'specialty_id' => $specialty->specialty_id,
                     'specialty_name' => $specialty->specialty_name,
                     'specialty_quantity' => $specialty->pivot->specialty_quantity,
-                    'specialty_registered' => Student::where('register_specialty_id', $register_specialty_id)->where('specialty_id', $specialty->specialty_id)->count()
+                    'specialty_registered' => Student::where('register_specialty_id', $id)
+                        ->where('specialty_id', $specialty->specialty_id)
+                        ->count(),
                 ];
-            })->values();
-        return $statistic;
+            })
+            ->values();
+
+        $statisticCollection = new Collection($statistic);
+
+        return $this->sentSuccessResponse($statisticCollection, "Get data success", Response::HTTP_OK);
+    }
+
+    public function getStatisticDefault($major_id = null)
+    {
+        $id = DisplayConfig::find('register_specialty')->display_config_value;
+        $registerSpecialty = RegisterSpecialty::findOrFail($id);
+
+        $statistic = $registerSpecialty->specialty
+            ->filter(function ($specialty) use ($major_id) {
+                return $major_id === null || $specialty->major->major_id === $major_id;
+            })
+            ->map(function ($specialty) use ($id) {
+                return [
+                    'specialty_id' => $specialty->specialty_id,
+                    'specialty_name' => $specialty->specialty_name,
+                    'specialty_quantity' => $specialty->pivot->specialty_quantity,
+                    'specialty_registered' => Student::where('register_specialty_id', $id)
+                        ->where('specialty_id', $specialty->specialty_id)
+                        ->count(),
+                ];
+            })
+            ->values();
+
+        $statisticCollection = new Collection($statistic);
+
+        return $this->sentSuccessResponse($statisticCollection, "Get data success", Response::HTTP_OK);
     }
 
     public function getResult(Request $request)
@@ -386,15 +428,10 @@ class RegisterSpecialtyController extends Controller
         $perPage = $perPage ?? 10;
         $dataStudent = $queryBuilder->paginate($perPage);
 
-        $statistic = $this->getStatistic($register_specialty_id, $major_id);
 
         $registerSpecialtiesCollection = new Collection($dataStudent);
-        $dataResult = [
-            'statistic' => $statistic,
-            'students' =>   $registerSpecialtiesCollection
-        ];
 
-        return $this->sentSuccessResponse($dataResult, "Get data success", Response::HTTP_OK);
+        return $this->sentSuccessResponse($registerSpecialtiesCollection, "Get data success", Response::HTTP_OK);
     }
 
     public function getStudentOfSpecialtys(Request $request)

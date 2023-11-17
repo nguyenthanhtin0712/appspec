@@ -16,21 +16,8 @@ import ChangeSpecialtyDialog from 'sections/admin/register_specialty/register-sp
 
 const ResultTable = () => {
   const theme = useTheme();
-  const {
-    data,
-    isError,
-    isLoading,
-    isRefetching,
-    rowCount,
-    columnFilters,
-    globalFilter,
-    sorting,
-    pagination,
-    registerSpecialtyId,
-    majorId,
-    status,
-    statistic
-  } = useSelector((state) => state.register_specialty_user);
+  const { tableResult, registerSpecialtyId, majorId, status, statistic } = useSelector((state) => state.register_specialty_user);
+  const { data, isError, isLoading, isRefetching, rowCount, columnFilters, globalFilter, sorting, pagination } = tableResult;
   const [open, setOpen] = useState(false);
   const [rowSelection, setRowSelection] = useState({});
   useEffect(() => {
@@ -64,7 +51,7 @@ const ResultTable = () => {
         header: 'Chuyên ngành',
         Cell: ({ cell }) => (cell.getValue() ? cell.getValue() : 'Chưa đăng ký'),
         filterVariant: 'select',
-        filterSelectOptions: statistic.map((item) => item.specialty_name),
+        filterSelectOptions: statistic.data.map((item) => item.specialty_name),
         size: 10
       }
     ],

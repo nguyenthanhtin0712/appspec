@@ -1,13 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Grid from '@mui/material/Grid';
 import SpecialityItem from './SpecialityItem';
 import { useSelector } from 'react-redux';
 import SpecialityItemSkeleton from 'sections/user/register_speciality/register/SpecialityItemSkeleton';
+import { dispatch } from 'store';
+import { getStatistic } from 'store/slices/registerSpecialtyUserSlice';
 
 const SpecialityContainer = () => {
-  const { statistic, isLoading } = useSelector((state) => state.register_specialty_user);
+  const { statistic, majorId } = useSelector((state) => state.register_specialty_user);
 
-  if (isLoading) {
+  useEffect(() => {
+    const fetchData = async () => {
+      await dispatch(getStatistic(majorId));
+    };
+    fetchData();
+  }, [majorId]);
+
+  if (statistic.isLoading) {
     const numSkeletons = 4;
     const skeletonItems = Array.from({ length: numSkeletons }, (_, index) => <SpecialityItemSkeleton key={index} />);
 
@@ -20,7 +29,7 @@ const SpecialityContainer = () => {
 
   return (
     <Grid container spacing={2}>
-      {statistic.map(({ specialty_id, specialty_name, specialty_quantity, specialty_registered }) => (
+      {statistic.data.map(({ specialty_id, specialty_name, specialty_quantity, specialty_registered }) => (
         <SpecialityItem
           key={specialty_id}
           name={specialty_name}

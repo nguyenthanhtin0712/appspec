@@ -8,9 +8,9 @@ import { formatDateTimeDisplay } from 'utils/formatDateTime';
 
 const ResultTable = () => {
   const theme = useTheme();
-  const { data, isError, isLoading, isRefetching, rowCount, columnFilters, globalFilter, sorting, pagination, majorId } = useSelector(
-    (state) => state.register_specialty_user
-  );
+  const { tableResult, majorId } = useSelector((state) => state.register_specialty_user);
+
+  const { data, isError, isLoading, isRefetching, rowCount, columnFilters, globalFilter, sorting, pagination } = tableResult;
 
   useEffect(() => {
     const fetch = async () => {

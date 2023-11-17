@@ -19,7 +19,7 @@ export const login = createAsyncThunk('auth/login', async (credentials, { reject
     const token = response.data.data.accessToken;
     const user = response.data.data.user_info;
     const roles = response.data.data.roles;
-    const permissions = response.data.data['roles.permissions'].map((item) => item.name);
+    const permissions = response.data.data['roles.permissions'];
     Cookies.set('token', token, { expires: 15 });
     return { token, user, roles, permissions };
   } catch (error) {
@@ -48,7 +48,7 @@ export const getUserDataFromToken = createAsyncThunk('auth/getUserDataFromToken'
     if (response) {
       const user = response.data.data.user_info;
       const roles = response.data.data.roles;
-      const permissions = response.data.data['roles.permissions'].map((item) => item.name);
+      const permissions = response.data.data['roles.permissions'];
       return { user, roles, permissions };
     }
   } catch (error) {

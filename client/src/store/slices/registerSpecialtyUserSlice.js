@@ -28,9 +28,8 @@ export const fetchData = createAsyncThunk('register_specialty_user/fetchData', a
     const response = await axios.get(url.href);
     const { data } = response;
     return {
-      statistic: data.data.statistic,
-      data: data.data.students.result,
-      rowCount: data.data.students.meta.total
+      data: data.data.result,
+      rowCount: data.data.meta.total
     };
   } catch (error) {
     if (error.response && error.response.data && error.response.data.errors) {
@@ -79,7 +78,17 @@ export const getRegistrationInfoById = createAsyncThunk('register_specialty_user
 
 export const getStatistic = createAsyncThunk('register_specialty_user/getStatistic', async (id) => {
   try {
-    const response = await axios.get(`/register-specialties/${id}/statistic`);
+    const response = await axios.get(`/register-specialties/statistics/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+});
+
+export const getMajors = createAsyncThunk('register_specialty_user/getMajors', async (id) => {
+  try {
+    const response = await axios.get(`/register-specialties/majors/${id ?? ''}`);
     return response.data;
   } catch (error) {
     console.error(error);
@@ -118,23 +127,28 @@ export const getExportData = createAsyncThunk('register_specialty_user/getExport
 });
 
 const initialState = {
-  data: [],
-  isError: false,
-  isLoading: true,
-  isRefetching: false,
-  rowCount: 0,
-  columnFilters: [],
-  globalFilter: '',
-  sorting: [],
-  pagination: {
-    pageIndex: 0,
-    pageSize: 10
+  tableResult: {
+    data: [],
+    isError: false,
+    isLoading: true,
+    isRefetching: false,
+    rowCount: 0,
+    columnFilters: [],
+    globalFilter: '',
+    sorting: [],
+    pagination: {
+      pageIndex: 0,
+      pageSize: 10
+    }
   },
   status: '',
   majorId: '',
   userRegistrationPeriod: null,
   registrationPageInfo: null,
-  statistic: [],
+  statistic: {
+    isLoading: true,
+    data: []
+  },
   majors: [],
   registerSpecialtyId: ''
 };
@@ -144,16 +158,16 @@ const register_specialty_user = createSlice({
   initialState,
   reducers: {
     setColumnFilters: (state, action) => {
-      state.columnFilters = action.payload;
+      state.tableResult.columnFilters = action.payload;
     },
     setGlobalFilter: (state, action) => {
-      state.globalFilter = action.payload;
+      state.tableResult.globalFilter = action.payload;
     },
     setSorting: (state, action) => {
-      state.sorting = action.payload;
+      state.tableResult.sorting = action.payload;
     },
     setPagination: (state, action) => {
-      state.pagination = action.payload;
+      state.tableResult.pagination = action.payload;
     },
     setMajorId: (state, action) => {
       state.majorId = action.payload;
@@ -168,20 +182,35 @@ const register_specialty_user = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchData.pending, (state) => {
-        state.isLoading = true;
+        state.tableResult.isLoading = true;
       })
       .addCase(fetchData.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isRefetching = false;
-        state.data = action.payload.data;
-        state.rowCount = action.payload.rowCount;
-        state.statistic = action.payload.statistic;
-        state.isError = false;
+        state.tableResult.isLoading = false;
+        state.tableResult.isRefetching = false;
+        state.tableResult.data = action.payload.data;
+        state.tableResult.rowCount = action.payload.rowCount;
+        state.tableResult.isError = false;
       })
       .addCase(fetchData.rejected, (state) => {
-        state.isLoading = false;
-        state.isRefetching = false;
-        state.isError = true;
+        state.tableResult.isLoading = false;
+        state.tableResult.isRefetching = false;
+        state.tableResult.isError = true;
+      })
+      .addCase(getStatistic.pending, (state) => {
+        state.statistic.isLoading = true;
+      })
+      .addCase(getStatistic.rejected, (state) => {
+        state.statistic.isLoading = false;
+      })
+      .addCase(getStatistic.fulfilled, (state, action) => {
+        state.statistic.data = action.payload.data.result;
+        state.statistic.isLoading = false;
+      })
+      .addCase(getMajors.fulfilled, (state, action) => {
+        state.majors = action.payload.data.result;
+        if (state.majorId === '') {
+          state.majorId = action.payload.data.result[0]?.major_id;
+        }
       })
       .addCase(getRegistrationInformation.fulfilled, (state, action) => {
         state.userRegistrationPeriod = action.payload.data;
@@ -198,10 +227,8 @@ const register_specialty_user = createSlice({
         }
       })
       .addCase(getSpecialtiesForRegister.fulfilled, (state, action) => {
-        const { register_specialty_end_date, register_specialty_name, register_specialty_start_date, statistic, major_id } =
-          action.payload.data;
+        const { register_specialty_end_date, register_specialty_name, register_specialty_start_date, major_id } = action.payload.data;
         state.registrationPageInfo = { register_specialty_name, register_specialty_end_date, register_specialty_start_date };
-        state.statistic = statistic;
         state.majorId = major_id;
       });
   }

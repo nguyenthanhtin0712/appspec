@@ -1742,7 +1742,7 @@
 									"top": 1045,
 									"width": 320.900390625,
 									"height": 13,
-									"text": "speciality_registration"
+									"text": "register_specialties"
 								},
 								{
 									"_type": "ERDColumnCompartmentView",
@@ -1902,7 +1902,7 @@
 									"top": 1061,
 									"width": 363.7470703125,
 									"height": 13,
-									"text": "speciality_registration_detail"
+									"text": "register_specialty_detail"
 								},
 								{
 									"_type": "ERDColumnCompartmentView",
@@ -10467,7 +10467,7 @@
 					"_parent": {
 						"$ref": "AAAAAAGITK4l2657GSk="
 					},
-					"name": "speciality_registration",
+					"name": "register_specialties",
 					"ownedElements": [
 						{
 							"_type": "ERDRelationship",
@@ -10578,7 +10578,7 @@
 					"_parent": {
 						"$ref": "AAAAAAGITK4l2657GSk="
 					},
-					"name": "speciality_registration_detail",
+					"name": "register_specialty_detail",
 					"columns": [
 						{
 							"_type": "ERDColumn",
@@ -31650,7 +31650,8 @@
 								"$ref": "AAAAAAGL3Z/WaUDjaqk="
 							},
 							"name": "warned_dismissed_student_id",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -31659,7 +31660,8 @@
 								"$ref": "AAAAAAGL3Z/WaUDjaqk="
 							},
 							"name": "student_code",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -31668,7 +31670,8 @@
 								"$ref": "AAAAAAGL3Z/WaUDjaqk="
 							},
 							"name": "student_year",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -31677,7 +31680,8 @@
 								"$ref": "AAAAAAGL3Z/WaUDjaqk="
 							},
 							"name": "student_semester",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -31686,7 +31690,8 @@
 								"$ref": "AAAAAAGL3Z/WaUDjaqk="
 							},
 							"name": "total_warning_count",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -31695,7 +31700,8 @@
 								"$ref": "AAAAAAGL3Z/WaUDjaqk="
 							},
 							"name": "semester_gpa",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -31704,7 +31710,8 @@
 								"$ref": "AAAAAAGL3Z/WaUDjaqk="
 							},
 							"name": "cumulative_gpa",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -31713,7 +31720,8 @@
 								"$ref": "AAAAAAGL3Z/WaUDjaqk="
 							},
 							"name": "result",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -31722,7 +31730,8 @@
 								"$ref": "AAAAAAGL3Z/WaUDjaqk="
 							},
 							"name": "openclass_time_id",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						}
 					],
 					"operations": [
@@ -31751,7 +31760,8 @@
 								"$ref": "AAAAAAGL3aKeTUFUG3I="
 							},
 							"name": "title_id",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -31760,7 +31770,8 @@
 								"$ref": "AAAAAAGL3aKeTUFUG3I="
 							},
 							"name": "title_name",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -31769,7 +31780,8 @@
 								"$ref": "AAAAAAGL3aKeTUFUG3I="
 							},
 							"name": "title_isDelete",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						}
 					]
 				},
@@ -31788,7 +31800,8 @@
 								"$ref": "AAAAAAGL3aNkdEGT+Kg="
 							},
 							"name": "subject_prerequisite_id",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -31797,7 +31810,8 @@
 								"$ref": "AAAAAAGL3aNkdEGT+Kg="
 							},
 							"name": "subject_id",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -31806,7 +31820,8 @@
 								"$ref": "AAAAAAGL3aNkdEGT+Kg="
 							},
 							"name": "subject_previous_id",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						}
 					]
 				},
@@ -31825,7 +31840,8 @@
 								"$ref": "AAAAAAGL3aPv/0HSS4M="
 							},
 							"name": "subject_id",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -31834,7 +31850,8 @@
 								"$ref": "AAAAAAGL3aPv/0HSS4M="
 							},
 							"name": "subject_name",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -31843,7 +31860,8 @@
 								"$ref": "AAAAAAGL3aPv/0HSS4M="
 							},
 							"name": "subject_credit",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -31852,7 +31870,8 @@
 								"$ref": "AAAAAAGL3aPv/0HSS4M="
 							},
 							"name": "subject_coeffcient",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -31861,7 +31880,8 @@
 								"$ref": "AAAAAAGL3aPv/0HSS4M="
 							},
 							"name": "subject_LT",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -31870,7 +31890,8 @@
 								"$ref": "AAAAAAGL3aPv/0HSS4M="
 							},
 							"name": "subject_BT",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -31879,7 +31900,8 @@
 								"$ref": "AAAAAAGL3aPv/0HSS4M="
 							},
 							"name": "subject_TH",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -31888,7 +31910,8 @@
 								"$ref": "AAAAAAGL3aPv/0HSS4M="
 							},
 							"name": "academic_field_id",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -31897,7 +31920,8 @@
 								"$ref": "AAAAAAGL3aPv/0HSS4M="
 							},
 							"name": "subject_isDelete",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						}
 					],
 					"operations": [
@@ -31934,7 +31958,8 @@
 								"$ref": "AAAAAAGL3aaH30JLXdc="
 							},
 							"name": "user_id",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -31943,7 +31968,8 @@
 								"$ref": "AAAAAAGL3aaH30JLXdc="
 							},
 							"name": "student_code",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -31952,7 +31978,8 @@
 								"$ref": "AAAAAAGL3aaH30JLXdc="
 							},
 							"name": "student_class",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -31961,7 +31988,8 @@
 								"$ref": "AAAAAAGL3aaH30JLXdc="
 							},
 							"name": "student_score",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -31970,7 +31998,8 @@
 								"$ref": "AAAAAAGL3aaH30JLXdc="
 							},
 							"name": "student_course",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -31979,7 +32008,8 @@
 								"$ref": "AAAAAAGL3aaH30JLXdc="
 							},
 							"name": "major_id",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -31988,7 +32018,8 @@
 								"$ref": "AAAAAAGL3aaH30JLXdc="
 							},
 							"name": "specialty_id",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -31997,7 +32028,8 @@
 								"$ref": "AAAAAAGL3aaH30JLXdc="
 							},
 							"name": "specialty_date",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32006,7 +32038,8 @@
 								"$ref": "AAAAAAGL3aaH30JLXdc="
 							},
 							"name": "speciality_registration_id",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32015,7 +32048,8 @@
 								"$ref": "AAAAAAGL3aaH30JLXdc="
 							},
 							"name": "company_position_detail_id",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32024,7 +32058,8 @@
 								"$ref": "AAAAAAGL3aaH30JLXdc="
 							},
 							"name": "mentor_code",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32033,7 +32068,8 @@
 								"$ref": "AAAAAAGL3aaH30JLXdc="
 							},
 							"name": "internship_graduation_id",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32042,7 +32078,8 @@
 								"$ref": "AAAAAAGL3aaH30JLXdc="
 							},
 							"name": "jobholder_internship_id",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32051,7 +32088,8 @@
 								"$ref": "AAAAAAGL3aaH30JLXdc="
 							},
 							"name": "student_isDelete",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						}
 					]
 				},
@@ -32070,7 +32108,8 @@
 								"$ref": "AAAAAAGL3amGS0LbsFo="
 							},
 							"name": "specialty_id",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32079,7 +32118,8 @@
 								"$ref": "AAAAAAGL3amGS0LbsFo="
 							},
 							"name": "specialty_name",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32088,7 +32128,8 @@
 								"$ref": "AAAAAAGL3amGS0LbsFo="
 							},
 							"name": "major_id",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32097,7 +32138,8 @@
 								"$ref": "AAAAAAGL3amGS0LbsFo="
 							},
 							"name": "specialty_isDelete",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						}
 					],
 					"operations": [
@@ -32142,7 +32184,8 @@
 								"$ref": "AAAAAAGL3aoKC0MhIyw="
 							},
 							"name": "register_specialty_detail_id",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32151,7 +32194,8 @@
 								"$ref": "AAAAAAGL3aoKC0MhIyw="
 							},
 							"name": "register_specialty_id",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32160,7 +32204,8 @@
 								"$ref": "AAAAAAGL3aoKC0MhIyw="
 							},
 							"name": "specialty_id",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32169,7 +32214,8 @@
 								"$ref": "AAAAAAGL3aoKC0MhIyw="
 							},
 							"name": "specialty_quantity",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						}
 					]
 				},
@@ -32188,7 +32234,8 @@
 								"$ref": "AAAAAAGL3a+C6EN8dAI="
 							},
 							"name": "register_specialty_id",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32197,7 +32244,8 @@
 								"$ref": "AAAAAAGL3a+C6EN8dAI="
 							},
 							"name": "register_specialty_name",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32206,7 +32254,8 @@
 								"$ref": "AAAAAAGL3a+C6EN8dAI="
 							},
 							"name": "register_specialty_start_date",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32215,7 +32264,8 @@
 								"$ref": "AAAAAAGL3a+C6EN8dAI="
 							},
 							"name": "register_specialty_end_date",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32224,7 +32274,8 @@
 								"$ref": "AAAAAAGL3a+C6EN8dAI="
 							},
 							"name": "register_specialty_isDelete",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						}
 					],
 					"operations": [
@@ -32253,7 +32304,8 @@
 								"$ref": "AAAAAAGL3bCdx0PQtJ8="
 							},
 							"name": "id",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32262,7 +32314,8 @@
 								"$ref": "AAAAAAGL3bCdx0PQtJ8="
 							},
 							"name": "subject_id",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32271,7 +32324,8 @@
 								"$ref": "AAAAAAGL3bCdx0PQtJ8="
 							},
 							"name": "student_code",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32280,7 +32334,8 @@
 								"$ref": "AAAAAAGL3bCdx0PQtJ8="
 							},
 							"name": "semester",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32289,7 +32344,8 @@
 								"$ref": "AAAAAAGL3bCdx0PQtJ8="
 							},
 							"name": "year",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						}
 					]
 				},
@@ -32308,7 +32364,8 @@
 								"$ref": "AAAAAAGL3bFcCUQeRDc="
 							},
 							"name": "register_internship_company_id",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32317,7 +32374,8 @@
 								"$ref": "AAAAAAGL3bFcCUQeRDc="
 							},
 							"name": "internship_graduation_id",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32326,7 +32384,8 @@
 								"$ref": "AAAAAAGL3bFcCUQeRDc="
 							},
 							"name": "company_id",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32335,7 +32394,8 @@
 								"$ref": "AAAAAAGL3bFcCUQeRDc="
 							},
 							"name": "company_isInterview",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						}
 					],
 					"operations": [
@@ -32372,7 +32432,8 @@
 								"$ref": "AAAAAAGL3bINdERyClI="
 							},
 							"name": "position_id",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32381,7 +32442,8 @@
 								"$ref": "AAAAAAGL3bINdERyClI="
 							},
 							"name": "position_name",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32390,7 +32452,8 @@
 								"$ref": "AAAAAAGL3bINdERyClI="
 							},
 							"name": "company_id",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						}
 					],
 					"operations": [
@@ -32419,7 +32482,8 @@
 								"$ref": "AAAAAAGL3bKIA0S4Xy0="
 							},
 							"name": "page_id",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32428,7 +32492,8 @@
 								"$ref": "AAAAAAGL3bKIA0S4Xy0="
 							},
 							"name": "page_slug",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32437,7 +32502,8 @@
 								"$ref": "AAAAAAGL3bKIA0S4Xy0="
 							},
 							"name": "page_title",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32446,7 +32512,8 @@
 								"$ref": "AAAAAAGL3bKIA0S4Xy0="
 							},
 							"name": "page_content",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32455,7 +32522,8 @@
 								"$ref": "AAAAAAGL3bKIA0S4Xy0="
 							},
 							"name": "page_isDelete",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						}
 					]
 				},
@@ -32474,7 +32542,8 @@
 								"$ref": "AAAAAAGL3bMeM0UFCN4="
 							},
 							"name": "openclass_time_id",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32483,7 +32552,8 @@
 								"$ref": "AAAAAAGL3bMeM0UFCN4="
 							},
 							"name": "openclass_time_semester",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32492,7 +32562,8 @@
 								"$ref": "AAAAAAGL3bMeM0UFCN4="
 							},
 							"name": "openclass_time_year",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						}
 					],
 					"operations": [
@@ -32537,7 +32608,8 @@
 								"$ref": "AAAAAAGL3bO4PUVZb1g="
 							},
 							"name": "openclass_subject_course_id",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32546,7 +32618,8 @@
 								"$ref": "AAAAAAGL3bO4PUVZb1g="
 							},
 							"name": "openclass_subject_id",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32555,7 +32628,8 @@
 								"$ref": "AAAAAAGL3bO4PUVZb1g="
 							},
 							"name": "openclass_subject_for_course",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						}
 					]
 				},
@@ -32574,7 +32648,8 @@
 								"$ref": "AAAAAAGL3bRK5kWYBfE="
 							},
 							"name": "openclass_subject_id",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32583,7 +32658,8 @@
 								"$ref": "AAAAAAGL3bRK5kWYBfE="
 							},
 							"name": "openclass_time_id",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32592,7 +32668,8 @@
 								"$ref": "AAAAAAGL3bRK5kWYBfE="
 							},
 							"name": "subject_id",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32601,7 +32678,8 @@
 								"$ref": "AAAAAAGL3bRK5kWYBfE="
 							},
 							"name": "openclass_totalgroup",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32610,7 +32688,8 @@
 								"$ref": "AAAAAAGL3bRK5kWYBfE="
 							},
 							"name": "openclass_totalstudent",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						}
 					]
 				},
@@ -32629,7 +32708,8 @@
 								"$ref": "AAAAAAGL3bTIQkXlUOY="
 							},
 							"name": "mentor_code",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32638,7 +32718,8 @@
 								"$ref": "AAAAAAGL3bTIQkXlUOY="
 							},
 							"name": "mentor_name",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32647,7 +32728,8 @@
 								"$ref": "AAAAAAGL3bTIQkXlUOY="
 							},
 							"name": "mentor_phone",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32656,7 +32738,8 @@
 								"$ref": "AAAAAAGL3bTIQkXlUOY="
 							},
 							"name": "mentor_email",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32665,7 +32748,8 @@
 								"$ref": "AAAAAAGL3bTIQkXlUOY="
 							},
 							"name": "mentor_isDelete",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						}
 					]
 				},
@@ -32684,7 +32768,8 @@
 								"$ref": "AAAAAAGL3bVHmEYyzAs="
 							},
 							"name": "major_id",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32693,7 +32778,8 @@
 								"$ref": "AAAAAAGL3bVHmEYyzAs="
 							},
 							"name": "major_name",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32702,7 +32788,8 @@
 								"$ref": "AAAAAAGL3bVHmEYyzAs="
 							},
 							"name": "major_isDelete",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						}
 					]
 				},
@@ -32721,7 +32808,8 @@
 								"$ref": "AAAAAAGL3bWeqEZxEYA="
 							},
 							"name": "job_post_id",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32730,7 +32818,8 @@
 								"$ref": "AAAAAAGL3bWeqEZxEYA="
 							},
 							"name": "job_post_title",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32739,7 +32828,8 @@
 								"$ref": "AAAAAAGL3bWeqEZxEYA="
 							},
 							"name": "job_post_desc",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32748,7 +32838,8 @@
 								"$ref": "AAAAAAGL3bWeqEZxEYA="
 							},
 							"name": "job_post_confirm",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32757,7 +32848,8 @@
 								"$ref": "AAAAAAGL3bWeqEZxEYA="
 							},
 							"name": "user_id",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32766,7 +32858,8 @@
 								"$ref": "AAAAAAGL3bWeqEZxEYA="
 							},
 							"name": "job_post_isDelete",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						}
 					]
 				},
@@ -32785,7 +32878,8 @@
 								"$ref": "AAAAAAGL3bZAR0bHpCQ="
 							},
 							"name": "jobholder_internship_id",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32794,7 +32888,8 @@
 								"$ref": "AAAAAAGL3bZAR0bHpCQ="
 							},
 							"name": "jobholder_code",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32803,7 +32898,8 @@
 								"$ref": "AAAAAAGL3bZAR0bHpCQ="
 							},
 							"name": "internship_graduation_id",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						}
 					],
 					"operations": [
@@ -32832,7 +32928,8 @@
 								"$ref": "AAAAAAGL3ba4OEcOqOc="
 							},
 							"name": "user_id",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32841,7 +32938,8 @@
 								"$ref": "AAAAAAGL3ba4OEcOqOc="
 							},
 							"name": "jobholder_code",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32850,7 +32948,8 @@
 								"$ref": "AAAAAAGL3ba4OEcOqOc="
 							},
 							"name": "title_id",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32859,7 +32958,8 @@
 								"$ref": "AAAAAAGL3ba4OEcOqOc="
 							},
 							"name": "academic_field_id",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32868,7 +32968,8 @@
 								"$ref": "AAAAAAGL3ba4OEcOqOc="
 							},
 							"name": "jobholder_isLeader",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32877,7 +32978,8 @@
 								"$ref": "AAAAAAGL3ba4OEcOqOc="
 							},
 							"name": "jobholder_unit",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32886,7 +32988,8 @@
 								"$ref": "AAAAAAGL3ba4OEcOqOc="
 							},
 							"name": "jobholder_specialty",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32895,7 +32998,8 @@
 								"$ref": "AAAAAAGL3ba4OEcOqOc="
 							},
 							"name": "jobholder_position",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32904,7 +33008,8 @@
 								"$ref": "AAAAAAGL3ba4OEcOqOc="
 							},
 							"name": "jobholder_type",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32913,7 +33018,8 @@
 								"$ref": "AAAAAAGL3ba4OEcOqOc="
 							},
 							"name": "jobholder_degree",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32922,7 +33028,8 @@
 								"$ref": "AAAAAAGL3ba4OEcOqOc="
 							},
 							"name": "jobholder_isDelete",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						}
 					]
 				},
@@ -32941,7 +33048,8 @@
 								"$ref": "AAAAAAGL3b7jiUeFncg="
 							},
 							"name": "internship_graduation_id",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32950,7 +33058,8 @@
 								"$ref": "AAAAAAGL3b7jiUeFncg="
 							},
 							"name": "internship_graduation_start_date",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32959,7 +33068,8 @@
 								"$ref": "AAAAAAGL3b7jiUeFncg="
 							},
 							"name": "internship_graduation_end_date",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32968,7 +33078,8 @@
 								"$ref": "AAAAAAGL3b7jiUeFncg="
 							},
 							"name": "register_internship_start_date",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32977,7 +33088,8 @@
 								"$ref": "AAAAAAGL3b7jiUeFncg="
 							},
 							"name": "register_internship_end_date",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -32986,7 +33098,8 @@
 								"$ref": "AAAAAAGL3b7jiUeFncg="
 							},
 							"name": "internship_graduation_status",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						}
 					],
 					"operations": [
@@ -33015,7 +33128,8 @@
 								"$ref": "AAAAAAGL3b/C2kfhmJY="
 							},
 							"name": "functional_code",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -33024,7 +33138,8 @@
 								"$ref": "AAAAAAGL3b/C2kfhmJY="
 							},
 							"name": "functional_name",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						}
 					]
 				},
@@ -33043,7 +33158,8 @@
 								"$ref": "AAAAAAGL3cAY5kgZ5Es="
 							},
 							"name": "display_config_id",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -33052,7 +33168,8 @@
 								"$ref": "AAAAAAGL3cAY5kgZ5Es="
 							},
 							"name": "display_config_name",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -33061,7 +33178,8 @@
 								"$ref": "AAAAAAGL3cAY5kgZ5Es="
 							},
 							"name": "display_config_value",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						}
 					]
 				},
@@ -33080,7 +33198,8 @@
 								"$ref": "AAAAAAGL3cB0ekhYxB0="
 							},
 							"name": "contact_config_id",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -33089,7 +33208,8 @@
 								"$ref": "AAAAAAGL3cB0ekhYxB0="
 							},
 							"name": "department_name",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -33098,7 +33218,8 @@
 								"$ref": "AAAAAAGL3cB0ekhYxB0="
 							},
 							"name": "department_address",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -33107,7 +33228,8 @@
 								"$ref": "AAAAAAGL3cB0ekhYxB0="
 							},
 							"name": "department_phone",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -33116,7 +33238,8 @@
 								"$ref": "AAAAAAGL3cB0ekhYxB0="
 							},
 							"name": "department_email",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -33125,7 +33248,8 @@
 								"$ref": "AAAAAAGL3cB0ekhYxB0="
 							},
 							"name": "admin_name",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -33134,7 +33258,8 @@
 								"$ref": "AAAAAAGL3cB0ekhYxB0="
 							},
 							"name": "admin_phone",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -33143,7 +33268,8 @@
 								"$ref": "AAAAAAGL3cB0ekhYxB0="
 							},
 							"name": "admin_email",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						}
 					]
 				},
@@ -33162,7 +33288,8 @@
 								"$ref": "AAAAAAGL3cFOYkjCR28="
 							},
 							"name": "contact_id",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -33171,7 +33298,8 @@
 								"$ref": "AAAAAAGL3cFOYkjCR28="
 							},
 							"name": "contact_fullname",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -33180,7 +33308,8 @@
 								"$ref": "AAAAAAGL3cFOYkjCR28="
 							},
 							"name": "contact_phone",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -33189,7 +33318,8 @@
 								"$ref": "AAAAAAGL3cFOYkjCR28="
 							},
 							"name": "contact_email",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -33198,7 +33328,8 @@
 								"$ref": "AAAAAAGL3cFOYkjCR28="
 							},
 							"name": "contact_content",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -33207,7 +33338,8 @@
 								"$ref": "AAAAAAGL3cFOYkjCR28="
 							},
 							"name": "contact_isDelete",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						}
 					]
 				},
@@ -33226,7 +33358,8 @@
 								"$ref": "AAAAAAGL3cHn/UkW0FA="
 							},
 							"name": "company_position_detail_id",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -33235,7 +33368,8 @@
 								"$ref": "AAAAAAGL3cHn/UkW0FA="
 							},
 							"name": "register_internship_company_id",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -33244,7 +33378,8 @@
 								"$ref": "AAAAAAGL3cHn/UkW0FA="
 							},
 							"name": "position_id",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -33253,7 +33388,8 @@
 								"$ref": "AAAAAAGL3cHn/UkW0FA="
 							},
 							"name": "position_quantity",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						}
 					]
 				},
@@ -33272,7 +33408,8 @@
 								"$ref": "AAAAAAGL3cKYJElc16k="
 							},
 							"name": "company_id",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -33281,7 +33418,8 @@
 								"$ref": "AAAAAAGL3cKYJElc16k="
 							},
 							"name": "user_id",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -33290,7 +33428,8 @@
 								"$ref": "AAAAAAGL3cKYJElc16k="
 							},
 							"name": "company_name",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -33299,7 +33438,8 @@
 								"$ref": "AAAAAAGL3cKYJElc16k="
 							},
 							"name": "company_address",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -33307,7 +33447,8 @@
 							"_parent": {
 								"$ref": "AAAAAAGL3cKYJElc16k="
 							},
-							"name": "company_host"
+							"name": "company_host",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -33315,7 +33456,8 @@
 							"_parent": {
 								"$ref": "AAAAAAGL3cKYJElc16k="
 							},
-							"name": "company_is_official"
+							"name": "company_is_official",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -33323,7 +33465,8 @@
 							"_parent": {
 								"$ref": "AAAAAAGL3cKYJElc16k="
 							},
-							"name": "company_isDelete"
+							"name": "company_isDelete",
+							"type": ""
 						}
 					],
 					"operations": [
@@ -33360,7 +33503,8 @@
 								"$ref": "AAAAAAGL3cPcf0nFAuY="
 							},
 							"name": "academic_field_id",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -33369,7 +33513,8 @@
 								"$ref": "AAAAAAGL3cPcf0nFAuY="
 							},
 							"name": "academic_field_name",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -33378,7 +33523,8 @@
 								"$ref": "AAAAAAGL3cPcf0nFAuY="
 							},
 							"name": "academic_field_isDelete",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						}
 					]
 				}
