@@ -49,7 +49,7 @@ const RegisterSpeciality = () => {
         <MainCard title="Hiện trạng đăng ký">
           <SpecialityContainer />
         </MainCard>
-        <RegisterForm></RegisterForm>
+        <RegisterForm />
       </Stack>
     </Container>
   );

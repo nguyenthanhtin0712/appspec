@@ -62,7 +62,7 @@ const RegisterForm = () => {
               <MenuItem value="" sx={{ color: 'text.secondary' }}>
                 Chọn chuyên ngành bạn muốn đăng ký
               </MenuItem>
-              {statistic?.map(({ specialty_id, specialty_name }) => (
+              {statistic?.data.map(({ specialty_id, specialty_name }) => (
                 <MenuItem value={specialty_id} key={specialty_id}>
                   {specialty_name}
                 </MenuItem>
