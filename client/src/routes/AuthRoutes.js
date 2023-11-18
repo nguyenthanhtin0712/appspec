@@ -3,7 +3,7 @@ import { lazy } from 'react';
 // project-imports
 import Loadable from 'components/Loadable';
 import CommonLayout from 'layout/CommonLayout';
-import AuthRoute from './route/AuthRoute';
+import AuthRoute from '../guards/AuthRoute';
 
 // render - data display components
 const AuthLogin = Loadable(lazy(() => import('pages/auth/login')));

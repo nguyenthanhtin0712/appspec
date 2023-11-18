@@ -8,7 +8,6 @@ import { useSelector } from 'react-redux';
 import { dispatch } from 'store';
 import { logoutUser } from 'store/slices/authSlice';
 import { useNavigate } from 'react-router';
-import { toast } from 'react-toastify';
 import { Button, Divider, List, ListItemButton, ListItemIcon, ListItemText, Popover, Stack } from '@mui/material';
 import { Logout, Profile } from 'iconsax-react';
 
@@ -93,7 +92,6 @@ const UserInfo = () => {
           onClick={() => {
             dispatch(logoutUser());
             navigate('/');
-            toast.success('Đăng xuất thành công !');
           }}
           fullWidth
           variant="contained"

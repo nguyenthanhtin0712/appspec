@@ -17,7 +17,6 @@ import { useSelector } from 'react-redux';
 import { logoutUser } from 'store/slices/authSlice';
 import { useNavigate } from 'react-router-dom';
 import { dispatch } from 'store/index';
-import { toast } from 'react-toastify';
 
 const ProfilePage = () => {
   const theme = useTheme();
@@ -26,7 +25,6 @@ const ProfilePage = () => {
   const handleLogout = async () => {
     const result = await dispatch(logoutUser());
     if (result) {
-      toast.success('Đăng xuất thành công!');
       navigate('/');
     }
   };

@@ -3,7 +3,7 @@ import { lazy } from 'react';
 // project-imports
 import Loadable from 'components/Loadable';
 import HomeLayout from 'layout/HomeLayout';
-import PrivateRoute from './route/PrivateRoute';
+import PrivateRoute from '../guards/PrivateRoute';
 import { dispatch } from 'store';
 import { viewPage } from 'store/slices/pageSlice';
 import { getJobPostById } from 'store/slices/jobPostHomeSlice';

@@ -1,7 +1,7 @@
 import { lazy } from 'react';
 import MainLayout from 'layout/MainLayout';
 import Loadable from 'components/Loadable';
-import PrivateRoute from './route/PrivateRoute';
+import PrivateRoute from '../guards/PrivateRoute';
 import { dispatch } from 'store';
 import { getWarningInfo } from 'store/slices/warnedStudentDetailSlice';
 import { getPageById } from 'store/slices/pageSlice';

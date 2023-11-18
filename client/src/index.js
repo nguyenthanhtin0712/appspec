@@ -15,7 +15,7 @@ const root = createRoot(container);
 root.render(
   <ReduxProvider store={store}>
     <App />
-    <ToastContainer />
+    <ToastContainer autoClose={2000} pauseOnHover={false} />
   </ReduxProvider>
 );
 

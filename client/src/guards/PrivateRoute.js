@@ -2,7 +2,7 @@ import Cookies from 'js-cookie';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
-import Page403 from 'pages/error/Page403';
+import { checkPermissions } from 'utils/checkPermissions';
 
 const PrivateRoute = ({ component: Component, requiredPermissions }) => {
   const { isAuthenticated, permissions, isLoaded } = useSelector((state) => state.auth);
@@ -14,15 +14,11 @@ const PrivateRoute = ({ component: Component, requiredPermissions }) => {
       if (requiredPermissions.length === 0 || checkPermissions(permissions, requiredPermissions)) {
         return <Component />;
       }
-      return <Page403 />;
+      return <Navigate to="/403" replace={true} />;
     }
   } else {
     return <Navigate to="/auth/login" replace={true} />;
   }
-};
-
-const checkPermissions = (permissions, requiredPermissions) => {
-  return requiredPermissions.some((permission) => permissions.includes(permission));
 };
 
 export default PrivateRoute;
