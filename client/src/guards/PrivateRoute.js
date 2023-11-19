@@ -1,17 +1,19 @@
+import useCheckPermissions from 'hooks/useCheckPermissions';
 import Cookies from 'js-cookie';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
-import { checkPermissions } from 'utils/checkPermissions';
 
 const PrivateRoute = ({ component: Component, requiredPermissions }) => {
-  const { isAuthenticated, permissions, isLoaded } = useSelector((state) => state.auth);
+  const { isAuthenticated, isLoaded } = useSelector((state) => state.auth);
+  const hasPermission = useCheckPermissions(requiredPermissions);
+
   if (Cookies.get('token')) {
     if (isLoaded) {
       if (!isAuthenticated) {
         return <Navigate to="/auth/login" replace={true} />;
       }
-      if (requiredPermissions.length === 0 || checkPermissions(permissions, requiredPermissions)) {
+      if (requiredPermissions.length === 0 || hasPermission) {
         return <Component />;
       }
       return <Navigate to="/403" replace={true} />;

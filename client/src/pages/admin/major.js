@@ -8,6 +8,7 @@ import MajorTable from 'sections/admin/major/MajorTable';
 import MajorDialog from 'sections/admin/major/MajorDialog';
 import { dispatch } from 'store/index';
 import MajorDeleteDialog from 'sections/admin/major/MajorDeleteDialog';
+import WithPermission from 'guards/WithPermission';
 
 const MajorPage = () => {
   const handleClickOpen = () => {
@@ -18,9 +19,11 @@ const MajorPage = () => {
     <>
       <Stack direction="row" justifyContent="space-between" alignItems="center" mb={1.5} flexWrap="wrap">
         <Typography variant="h4">Quản lý ngành</Typography>
-        <Button variant="contained" onClick={handleClickOpen} startIcon={<Add />}>
-          Thêm ngành
-        </Button>
+        <WithPermission requiredPermission={['major.create']}>
+          <Button variant="contained" onClick={handleClickOpen} startIcon={<Add />}>
+            Thêm ngành
+          </Button>
+        </WithPermission>
       </Stack>
       <MajorDialog />
       <MajorTable />

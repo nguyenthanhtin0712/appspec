@@ -19,6 +19,8 @@ import Button from '@mui/material/Button';
 import { dispatch } from 'store/index';
 import { Export } from 'iconsax-react';
 import { utils, writeFileXLSX } from 'xlsx';
+import WithPermission from 'guards/WithPermission';
+import useCheckPermissions from 'hooks/useCheckPermissions';
 
 const MajorTable = () => {
   const theme = useTheme();
@@ -103,16 +105,20 @@ const MajorTable = () => {
           showProgressBars: isRefetching,
           sorting
         }}
-        enableRowActions
+        enableRowActions={useCheckPermissions(['major.update', 'major.delete'])}
         positionActionsColumn="last"
         renderRowActions={({ row }) => (
           <Stack direction="row">
-            <IconButton onClick={() => handleUpdate(row.original)}>
-              <Edit />
-            </IconButton>
-            <IconButton color="error" onClick={() => handleDelete(row.id)}>
-              <Trash />
-            </IconButton>
+            <WithPermission requiredPermission={['major.update']}>
+              <IconButton onClick={() => handleUpdate(row.original)}>
+                <Edit />
+              </IconButton>
+            </WithPermission>
+            <WithPermission requiredPermission={['major.delete']}>
+              <IconButton color="error" onClick={() => handleDelete(row.id)}>
+                <Trash />
+              </IconButton>
+            </WithPermission>
           </Stack>
         )}
         muiTablePaperProps={{

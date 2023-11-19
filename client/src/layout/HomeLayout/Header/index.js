@@ -17,12 +17,23 @@ import { openUserDrawer } from 'store/slices/menu';
 import { dispatch } from 'store/index';
 import { navItems } from 'menu-items/user';
 import { useMediaQuery } from '@mui/material';
+import Cookies from 'js-cookie';
 
 const Navbar = () => {
   const theme = useTheme();
   const downSm = useMediaQuery(theme.breakpoints.down('sm'));
   const drawerUserOpen = useSelector((state) => state.menu.drawerUserOpen);
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const { isAuthenticated, isLoaded } = useSelector((state) => state.auth);
+
+  const loginButton = downSm ? (
+    <IconButton component={Link} to="/auth/login" aria-label="Đăng nhập">
+      <Login variant="Bulk" />
+    </IconButton>
+  ) : (
+    <Button variant="contained" component={Link} to="/auth/login">
+      Đăng nhập
+    </Button>
+  );
 
   const handleDrawerToggle = () => {
     dispatch(openUserDrawer({ drawerUserOpen: !drawerUserOpen }));
@@ -64,17 +75,7 @@ const Navbar = () => {
                 <NavItem key={item.name} item={item}></NavItem>
               ))}
             </Box>
-            {isAuthenticated ? (
-              <UserInfo />
-            ) : !downSm ? (
-              <Button variant="contained" component={Link} to="/auth/login">
-                Đăng nhập
-              </Button>
-            ) : (
-              <IconButton component={Link} to="/auth/login" aria-label="Đăng nhập">
-                <Login variant="Bulk" />
-              </IconButton>
-            )}
+            {Cookies.get('token') ? isLoaded ? isAuthenticated ? <UserInfo /> : loginButton : <Box /> : loginButton}
           </Toolbar>
         </Container>
       </AppBar>
