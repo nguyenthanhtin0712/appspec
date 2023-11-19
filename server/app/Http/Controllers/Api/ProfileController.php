@@ -4,10 +4,26 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ChangePasswordRequest;
+use App\Http\Resources\ProfileResource;
+use App\Models\Student;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
+    public function index(Request $request){
+        $user = $request->user();
+        $studentWithUser = Student::query()
+                ->with('major', 'specialty')
+                ->leftJoin('users', 'users.user_id', '=', 'students.user_id')
+                ->leftJoin('majors', 'students.major_id', '=', 'majors.major_id')
+                ->select('students.*', 'users.user_firstname', 'users.user_lastname', 'users.user_birthday', 'users.user_gender', 'majors.major_name')
+                ->where('students.user_id', $user->user_id)
+                ->firstOrFail();
+            $studentResource = new ProfileResource($studentWithUser);
+        return $studentResource;
+    }
+
     public function change_password(ChangePasswordRequest $request)
     {
         $user = $request->user();

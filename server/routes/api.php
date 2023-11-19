@@ -171,6 +171,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('job-posts/user', [JobPostController::class, 'getUserPosts']);
 
     //Profile
+    Route::get('profile', [ProfileController::class, 'index']);
     Route::put('profile/change-password', [ProfileController::class, 'change_password']);
 });
 
@@ -211,7 +212,7 @@ Route::get('contact-config', [ContactConfigController::class, 'getInfo']);
 Route::post('contact-config', [ContactConfigController::class, 'updateContactConfig']);
 Route::post('internship-graduations/list-students', [InternshipGraduationController::class, 'submitListStudentInternship']);
 
-//
+
 Route::get('subjects-schedule', [SubjectScheduleController::class, 'index']);
 Route::get('subjects-schedule/{id}', [SubjectScheduleController::class, 'show']);
 
@@ -223,12 +224,9 @@ Route::put('roles/{id}', [RoleController::class, 'update']);
 Route::delete('roles/{id}', [RoleController::class, 'destroy']);
 Route::get('functional', [RoleController::class, 'getPermissions']);
 
-///
-
 Route::get('pages/view/{slug}', [PageController::class, 'viewPage']);
 Route::post('/upload-image', [PageController::class, 'uploadImage']);
 
-//
 Route::get('job-posts/list', [JobPostController::class, 'getListPost']);
 Route::get('job-posts/{id}', [JobPostController::class, 'show']);
 Route::get('job-posts/related/{id}', [JobPostController::class, 'getRelatedPost']);

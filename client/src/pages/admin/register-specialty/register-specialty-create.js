@@ -86,24 +86,26 @@ const RegisterSpecialty = () => {
             })}
             onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
               const data = await handleImportData(values.file_student, values.password_student);
-              try {
-                const result = await dispatch(createRegisterSpecalty({ values, data }));
-                if (result && !result.error) {
-                  setStatus({ success: true });
-                  setSubmitting(false);
-                  toast.success('Tạo đợt đăng ký thành công!');
-                  navigate('/admin/register_specialty');
-                } else {
+              if (!data) {
+                try {
+                  const result = await dispatch(createRegisterSpecalty({ values, data }));
+                  if (result && !result.error) {
+                    setStatus({ success: true });
+                    setSubmitting(false);
+                    toast.success('Tạo đợt đăng ký thành công!');
+                    navigate('/admin/register_specialty');
+                  } else {
+                    setStatus({ success: false });
+                    setErrors(result.payload.errors);
+                    setSubmitting(false);
+                    toast.error('Tạo đợt đăng ký không thành công');
+                  }
+                } catch (err) {
+                  console.error(err);
                   setStatus({ success: false });
-                  setErrors(result.payload.errors);
+                  setErrors({ submit: err.message });
                   setSubmitting(false);
-                  toast.error('Tạo đợt đăng ký không thành công');
                 }
-              } catch (err) {
-                console.error(err);
-                setStatus({ success: false });
-                setErrors({ submit: err.message });
-                setSubmitting(false);
               }
             }}
           >
@@ -233,7 +235,6 @@ async function handleImportData(files, pass) {
       const data = await new Promise((resolve, reject) => {
         const reader = new FileReader();
 
-        // Xử lý sự kiện khi đọc file hoàn tất
         reader.onload = (e) => {
           try {
             const data = e.target.result;
@@ -244,17 +245,16 @@ async function handleImportData(files, pass) {
               const error = new Error('Không đúng định dạng.');
               toast.error('File không đúng format!' + error);
               reject(error);
-              return;
+              return null;
             }
 
             const sheet = workbook.Sheets[sheetName];
             const jsonData = XLSX.utils.sheet_to_json(sheet, { header: 2 });
-
             if (!jsonData.some((row) => 'MaSV' in row && 'DTBTLHK' in row)) {
               const error = new Error("Thiếu cột 'MaSV' hoặc 'DTBTLHK'.");
               toast.error('File không đúng format!' + error);
               reject(error);
-              return;
+              return null;
             }
 
             let result = { data: [] };
