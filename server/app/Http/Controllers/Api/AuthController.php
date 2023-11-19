@@ -92,7 +92,7 @@ class AuthController extends Controller
     }
 
     public function check_token(Request $request){
-        // PasswordReset::where('created_at', '<=', now()->subMinutes(5))->delete();
+        PasswordReset::where('created_at', '<=', now()->subMinutes(5))->delete();
         $checkToken = PasswordReset::where('token', $request->token)->first();
         if($checkToken) return $this->sentSuccessResponse($checkToken, "Check token successfully", 200);
         else return $this->sentErrorResponse("CheckFail", "Token not found", 400);
