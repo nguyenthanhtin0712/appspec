@@ -14,6 +14,15 @@ const App = () => {
     fetchUser();
   }, []);
 
+  console.info(
+    `%c
+    ░█▀▀░█▀▀░█░█
+    ░▀▀█░█░█░█░█
+    ░▀▀▀░▀▀▀░▀▀▀
+  `,
+    'color: #0089e2'
+  );
+
   const routes = createBrowserRouter(ThemeRoutes);
 
   return (
