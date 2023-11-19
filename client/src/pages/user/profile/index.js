@@ -5,11 +5,15 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import Container from '@mui/material/Container';
 import { Profile, Unlock, TickCircle, DirectRight } from 'iconsax-react';
-import { Avatar, Box, Button, Divider, Grid, Stack, Typography } from '@mui/material';
+import { Backdrop, Box, Button, CircularProgress, Divider, Grid, Stack, Typography } from '@mui/material';
 import InputField from 'components/input/InputField';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import MainCard from 'components/MainCard';
+import { toast } from 'react-toastify';
+import { changePassword } from 'store/slices/profileSlice';
+import { dispatch } from 'store';
+import { useSelector } from 'react-redux';
 
 const validationSchema = Yup.object().shape({
   old_password: Yup.string().required('Vui lòng nhập mật khẩu hiện tại!'),
@@ -26,6 +30,7 @@ const validationSchema = Yup.object().shape({
 });
 
 const ProfileUser = () => {
+  const { isLoading } = useSelector((state) => state.profile);
   const [value, setValue] = React.useState('1');
 
   const handleChange = (event, newValue) => {
@@ -33,6 +38,11 @@ const ProfileUser = () => {
   };
   return (
     <Container maxWidth="md" sx={{ mt: 2 }}>
+      {isLoading && (
+        <Backdrop sx={{ color: '#fff', zIndex: 2000 }} open={isLoading}>
+          <CircularProgress color="inherit" />
+        </Backdrop>
+      )}
       <MainCard title="Thông tin">
         <TabContext value={value}>
           <Box>
@@ -45,9 +55,6 @@ const ProfileUser = () => {
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <MainCard title="Thông tin cá nhân">
-                  <Stack direction="row" justifyContent="center">
-                    <Avatar sx={{ width: 50, height: 50 }} />
-                  </Stack>
                   <Stack spacing={2}>
                     <InputField label="Mã số sinh viên" value="3121410069" disabled />
                     <Stack direction="row" spacing={1}>
@@ -82,6 +89,25 @@ const ProfileUser = () => {
                 confirm_password: ''
               }}
               validationSchema={validationSchema}
+              onSubmit={async (values, { setErrors, setStatus, setSubmitting, resetForm }) => {
+                try {
+                  const result = await dispatch(changePassword(values));
+                  if (result.payload.status == 400) {
+                    toast.warning('Mật khẩu hiện tại không đúng');
+                  }
+                  if (result.payload.status == 200) {
+                    toast.success('Thay đổi mật khẩu thành công');
+                    resetForm();
+                    setStatus({ success: true });
+                    setSubmitting(false);
+                  }
+                } catch (err) {
+                  console.error(err);
+                  setStatus({ success: false });
+                  setErrors({ submit: err.message });
+                  setSubmitting(false);
+                }
+              }}
             >
               {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
                 <form noValidate onSubmit={handleSubmit}>

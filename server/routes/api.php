@@ -171,7 +171,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('job-posts/user', [JobPostController::class, 'getUserPosts']);
 
     //Profile
-    Route::post('profile/change-password', [ProfileController::class, 'change_password']);
+    Route::put('profile/change-password', [ProfileController::class, 'change_password']);
 });
 
 Route::get('test-email', [InternshipGraduationController::class, 'testEmail']);
