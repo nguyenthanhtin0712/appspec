@@ -173,6 +173,7 @@ Route::middleware(['auth:api'])->group(function () {
     //Profile
     Route::get('profile', [ProfileController::class, 'index']);
     Route::put('profile/change-password', [ProfileController::class, 'change_password']);
+    Route::put('profile/change-information', [ProfileController::class, 'change_info']);
 });
 
 Route::get('test-email', [InternshipGraduationController::class, 'testEmail']);

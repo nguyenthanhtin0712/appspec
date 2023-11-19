@@ -24,11 +24,15 @@ class CreateStudentsTable extends Migration
             $table->dateTime('specialty_date')->nullable();
             $table->integer('register_specialty_id')->nullable();
             $table->unsignedBigInteger('company_position_detail_id')->nullable();
-            $table->integer('student_status')->default(1);
             $table->integer('mentor_code')->nullable();
             $table->unsignedBigInteger('jobholder_internship_id')->nullable();
             $table->integer('internship_graduation_id')->nullable();
             $table->double('internship_score')->nullable();
+            $table->string('student_cmnd')->nullable();
+            $table->string('student_address')->nullable();
+            $table->string('student_religion')->nullable();
+            $table->string('student_nation')->nullable();
+            $table->integer('student_status')->default(1);
             $table->integer('student_isDelete')->default(0);
             $table->timestamps();
             $table->foreign('jobholder_internship_id')
