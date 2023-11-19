@@ -45,7 +45,6 @@ const InternshipGraduationForm = ({ initialValues, action }) => {
         try {
           const actionType = action === 'update' ? updateInternshipGraduation : createInternshipGraduation;
           const result = await dispatch(actionType(values));
-          console.log(result);
           if (result && !result.error) {
             if (result.payload.status != 409) {
               setStatus({ success: true });

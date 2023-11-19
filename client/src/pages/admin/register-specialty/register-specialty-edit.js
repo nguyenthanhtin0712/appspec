@@ -78,7 +78,6 @@ const RegisterSpecialtyEdit = () => {
             })}
             onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
               try {
-                console.log(values);
                 const result = await dispatch(updateRegisterSpecalty({ values, id }));
                 if (result && !result.error) {
                   setStatus({ success: true });

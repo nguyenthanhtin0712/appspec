@@ -37,7 +37,6 @@ const CreateJobPost = () => {
             })
           })}
           onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
-            console.log(values);
             try {
               const result = await dispatch(createJobPost(values));
               if (result && !result.error) {

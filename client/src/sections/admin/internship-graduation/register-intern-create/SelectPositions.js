@@ -230,7 +230,6 @@ const CreateRecruitmentPositionForm = ({ setOpenForm, companyId }) => {
         } else {
           toast.error(result.payload.errors?.position_name[0]);
         }
-        console.log(result);
       } catch (error) {
         toast.error(error);
       }

@@ -14,7 +14,6 @@ const Contact = Loadable(lazy(() => import('pages/user/contact')));
 //speciality
 const RegisterSpeciality_Index = Loadable(lazy(() => import('pages/user/register-speciality')));
 const RegisterSpeciality_Register = Loadable(lazy(() => import('pages/user/register-speciality/register')));
-const RegisterSpeciality_Rules = Loadable(lazy(() => import('pages/user/register-speciality/rules')));
 const RegisterSpeciality_Result = Loadable(lazy(() => import('pages/user/register-speciality/result')));
 //intern
 const RegisterIntern_Index = Loadable(lazy(() => import('pages/user/internship-graduation')));
@@ -96,10 +95,6 @@ const UserRoutes = {
           element: <PrivateRoute component={RegisterSpeciality_Register} requiredPermissions={[]} />
         },
         {
-          path: 'rules',
-          element: <RegisterSpeciality_Rules requiredPermissions={[]} />
-        },
-        {
           path: 'result',
           element: <RegisterSpeciality_Result requiredPermissions={[]} />
         }
@@ -133,15 +128,15 @@ const UserRoutes = {
       children: [
         {
           path: '/register-open-class',
-          element: <RegisterImprovement />
+          element: <PrivateRoute component={RegisterImprovement} requiredPermissions={[]} />
         },
         {
           path: '/register-open-class/history',
-          element: <RegisterOpenClassHistory />
+          element: <PrivateRoute component={RegisterOpenClassHistory} requiredPermissions={[]} />
         },
         {
           path: '/register-open-class/statistic',
-          element: <RegisterOpenClassStatistic />
+          element: <PrivateRoute component={RegisterOpenClassStatistic} requiredPermissions={[]} />
         }
       ]
     }

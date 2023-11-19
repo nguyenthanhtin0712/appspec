@@ -40,7 +40,6 @@ const EditJobPost = () => {
             })
           })}
           onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
-            console.log(values);
             try {
               const result = await dispatch(updateJobPost(values));
               if (result && !result.error) {

@@ -1,9 +1,4 @@
-import { Link } from 'react-router-dom';
-
-// material-ui
 import { Grid, Stack, Typography } from '@mui/material';
-
-// project-imports
 import Logo from 'components/logo';
 // import AuthSocButton from 'sections/auth/AuthSocButton';
 // import AuthDivider from 'sections/auth/AuthDivider';
@@ -11,13 +6,7 @@ import AuthWrapper from 'sections/auth/AuthWrapper';
 import AuthLogin from 'sections/auth/auth-forms/AuthLogin';
 import AuthSocButton from 'sections/auth/AuthSocButton';
 import AuthDivider from 'sections/auth/AuthDivider';
-
-// assets
-// import imgFacebook from 'assets/images/auth/facebook.svg';
-// import imgTwitter from 'assets/images/auth/twitter.svg';
 import imgGoogle from 'assets/images/auth/google.svg';
-
-// ================================|| LOGIN ||================================ //
 
 const Login = () => {
   return (
@@ -42,10 +31,7 @@ const Login = () => {
         </Grid>
         <Grid item xs={12}>
           <Stack direction="row" justifyContent="space-between" alignItems="baseline" sx={{ mb: { xs: -0.5, sm: 0.5 } }}>
-            <Typography variant="h3">Login</Typography>
-            <Typography component={Link} to="/auth/register" variant="body1" sx={{ textDecoration: 'none' }} color="primary">
-              Don&apos;t have an account?
-            </Typography>
+            <Typography variant="h4">Đăng nhập</Typography>
           </Stack>
         </Grid>
         <Grid item xs={12}>

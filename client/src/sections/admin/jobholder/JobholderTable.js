@@ -28,7 +28,6 @@ const JobholderTable = () => {
   const { data, isError, isLoading, isRefetching, rowCount, columnFilters, globalFilter, sorting, pagination } = useSelector(
     (state) => state.jobholder
   );
-  console.log('data', data);
   useEffect(() => {
     dispatch(fetchData({ columnFilters, globalFilter, sorting, pagination }));
   }, [columnFilters, globalFilter, sorting, pagination]);

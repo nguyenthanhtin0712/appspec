@@ -11,7 +11,6 @@ export const fetchListJobPost = createAsyncThunk('job_post_home/fetchListJobPost
   try {
     const response = await axios.get(url.href);
     const { data } = response;
-    console.log(data.data);
     return data.data;
   } catch (error) {
     console.error(error);

@@ -8,6 +8,7 @@ import AuthRoute from '../guards/AuthRoute';
 // render - data display components
 const AuthLogin = Loadable(lazy(() => import('pages/auth/login')));
 const AuthRegister = Loadable(lazy(() => import('pages/auth/register')));
+const ForgotPassword = Loadable(lazy(() => import('pages/auth/forgot-password')));
 // ==============================|| COMPONENTS ROUTES ||============================== //
 
 const AuthRoutes = {
@@ -21,6 +22,10 @@ const AuthRoutes = {
     {
       path: 'register',
       element: <AuthRegister />
+    },
+    {
+      path: 'forgot-password',
+      element: <ForgotPassword />
     }
   ]
 };

@@ -46,7 +46,6 @@ const AssignmentInternDialog = ({ rowSelection, setRowSelection }) => {
           jobholder_code: Yup.string().max(255).required('Vui lòng chọn giảng viên !')
         })}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
-          console.log(values);
           try {
             const result = await dispatch(changeJobholder(values));
             if (result) {

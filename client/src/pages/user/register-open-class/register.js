@@ -72,7 +72,6 @@ const RegisterOpenClassForm = () => {
           try {
             const result = await dispatch(registerOpenClass(data));
             if (result && result.payload.status == 200) {
-              console.log(result.payload.status);
               toast.success('Đăng ký thành công!');
               setStatus({ success: true });
               setSubmitting(false);

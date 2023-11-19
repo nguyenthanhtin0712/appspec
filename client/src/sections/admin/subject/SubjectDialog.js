@@ -41,7 +41,6 @@ const SubjectForm = ({ initialValues, action }) => {
           ...values,
           subject_previous: values.subject_previous.map((subject) => subject.subject_id)
         };
-        console.log(payload);
         try {
           const actionType = action === 'update' ? updateSubject : createSubject;
           const result = await dispatch(actionType(payload));

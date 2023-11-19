@@ -28,7 +28,6 @@ const AssignmentInternDetail = () => {
   }, [Id]);
 
   if (!info) return null;
-  console.log('info', info);
 
   return (
     <>

@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
-// material-ui
 import {
   Button,
   Checkbox,
@@ -16,15 +15,10 @@ import {
   Typography
 } from '@mui/material';
 
-// third-party
 import * as Yup from 'yup';
 import { Formik } from 'formik';
-
-// project-imports
 import IconButton from 'components/@extended/IconButton';
 import AnimateButton from 'components/@extended/AnimateButton';
-
-// assets
 import { Eye, EyeSlash } from 'iconsax-react';
 import { login } from 'store/slices/authSlice';
 import { useNavigate } from 'react-router-dom';
@@ -134,7 +128,13 @@ const AuthLogin = () => {
               </Grid>
 
               <Grid item xs={12} sx={{ mt: -1 }}>
-                <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
+                <Stack
+                  direction="row"
+                  justifyContent="space-between"
+                  alignItems="center"
+                  spacing={2}
+                  sx={{ transform: 'translateX(-10px)' }}
+                >
                   <FormControlLabel
                     control={
                       <Checkbox
@@ -147,7 +147,7 @@ const AuthLogin = () => {
                     }
                     label={<Typography variant="h6">Keep me sign in</Typography>}
                   />
-                  <Link variant="h6" component={RouterLink} to="/auth/login" color="text.primary">
+                  <Link variant="h6" component={RouterLink} to="/auth/forgot-password" color="text.primary">
                     Forgot Password?
                   </Link>
                 </Stack>

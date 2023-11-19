@@ -34,7 +34,6 @@ const CreatePage = () => {
             page_slug: Yup.string().max(255).required('Đường đẫn là bắt buộc !')
           })}
           onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
-            console.log(values);
             try {
               const result = await dispatch(createPage(values));
               if (result && !result.error) {

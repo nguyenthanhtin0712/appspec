@@ -8,8 +8,7 @@ import { useSelector } from 'react-redux';
 import { dispatch } from 'store';
 import { logoutUser } from 'store/slices/authSlice';
 import { useNavigate } from 'react-router';
-import { Button, Divider, List, ListItemButton, ListItemIcon, ListItemText, Popover, Stack } from '@mui/material';
-import { Logout, Profile } from 'iconsax-react';
+import { Divider, MenuItem, Popover, Stack } from '@mui/material';
 
 const UserInfo = () => {
   const navigate = useNavigate();
@@ -43,63 +42,44 @@ const UserInfo = () => {
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
         PaperProps={{
           sx: {
-            p: 2,
+            p: 0,
             mt: 1.5,
             ml: 0.75,
-            width: 250,
+            width: 200,
             '& .MuiMenuItem-root': {
               borderRadius: 0.75
             }
           }
         }}
       >
-        <Stack direction="row" spacing={1} sx={{ my: 1.5 }}>
-          <IconButton sx={{ p: 0 }}>
-            <Avatar
-              alt={currentUser?.user_firstname + ' ' + currentUser?.user_lastname}
-              src={currentUser?.user_avatar}
-              sx={{ width: 35, height: 35 }}
-            />
-          </IconButton>
-          <Box sx={{}}>
-            <Typography fontWeight={600} noWrap>
-              {currentUser?.user_firstname + ' ' + currentUser?.user_lastname}
-            </Typography>
-            <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-              {currentUser?.user_email ?? 'Vui lòng bổ sung email'}
-            </Typography>
-          </Box>
-        </Stack>
+        <Box sx={{ my: 1.5, px: 2.5 }}>
+          <Typography fontWeight={600} noWrap>
+            {currentUser?.user_firstname + ' ' + currentUser?.user_lastname}
+          </Typography>
+          <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
+            {currentUser?.user_email ?? 'Vui lòng bổ sung email'}
+          </Typography>
+        </Box>
 
         <Divider sx={{ borderStyle: 'dashed' }} />
-        <List component="nav" sx={{ p: 0, '& .MuiListItemIcon-root': { minWidth: 32 } }}>
-          <ListItemButton
+        <Stack sx={{ px: 1, py: 2 }}>
+          <MenuItem
             onClick={() => {
               navigate('/profile');
               handleCloseUserMenu();
             }}
           >
-            <ListItemIcon>
-              <Profile variant="Bulk" size={18} />
-            </ListItemIcon>
-            <ListItemText primary="Thông tin cá nhân" />
-          </ListItemButton>
-        </List>
-        <Button
-          sx={{
-            mt: 1
-          }}
-          onClick={() => {
-            dispatch(logoutUser());
-            navigate('/');
-          }}
-          fullWidth
-          variant="contained"
-          startIcon={<Logout />}
-          size="large"
-        >
-          Đăng xuất
-        </Button>
+            Thông tin cá nhân
+          </MenuItem>
+          <MenuItem
+            onClick={() => {
+              dispatch(logoutUser());
+              navigate('/');
+            }}
+          >
+            Đăng xuất
+          </MenuItem>
+        </Stack>
       </Popover>
     </Box>
   );

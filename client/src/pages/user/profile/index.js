@@ -1,13 +1,11 @@
 import React from 'react';
-import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import Container from '@mui/material/Container';
-import MainCard from 'components/MainCard';
 import { Profile, Unlock, TickCircle, DirectRight } from 'iconsax-react';
-import { Button, Divider, Grid, Stack, Typography } from '@mui/material';
+import { Button, Card, CardContent, CardHeader, Divider, Grid, Stack, Typography } from '@mui/material';
 import InputField from 'components/input/InputField';
 
 const ProfileUser = () => {
@@ -18,19 +16,28 @@ const ProfileUser = () => {
   };
   return (
     <Container maxWidth="md" sx={{ mt: 2 }}>
-      <MainCard title="Thông tin">
-        <TabContext value={value}>
-          <Box>
-            <TabList onChange={handleChange} aria-label="lab API tabs example">
-              <Tab icon={<Profile />} iconPosition="start" label="Hồ sơ" value="1" />
-              <Tab icon={<Unlock />} iconPosition="start" label="Thay đổi mật khẩu" value="2" />
-            </TabList>
-          </Box>
-          <TabPanel value="1">
-            <MainCard title="Thông tin cá nhân"></MainCard>
-          </TabPanel>
-          <TabPanel value="2">
-            <MainCard title="Thay đổi mật khẩu">
+      <TabContext value={value}>
+        <Card>
+          <CardHeader
+            subheader={
+              <TabList onChange={handleChange} aria-label="lab API tabs example">
+                <Tab icon={<Profile />} iconPosition="start" label="Hồ sơ" value="1" />
+                <Tab icon={<Unlock />} iconPosition="start" label="Thay đổi mật khẩu" value="2" />
+              </TabList>
+            }
+            sx={{ p: 0 }}
+          />
+          <Divider />
+          <CardContent>
+            <TabPanel value="1">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae sint aut quisquam velit, natus, dicta corrupti tempore
+              atque sapiente aliquid repellat, ab rem sit. Quos placeat qui quisquam itaque aliquid iste quis debitis praesentium
+              perferendis. Pariatur omnis architecto atque error illo hic maxime officia laudantium quo obcaecati sapiente ut necessitatibus
+              ducimus dignissimos, voluptate quibusdam qui reiciendis at aperiam esse dolores, laboriosam cum molestiae illum! Dolore, vero
+              adipisci fugit accusamus quaerat asperiores? Nemo sint dolorum quibusdam dolor atque dignissimos non impedit quos aliquid
+              ducimus ut ad nam numquam, nihil incidunt aut eaque nisi facere! Veniam magnam necessitatibus ad soluta recusandae in.
+            </TabPanel>
+            <TabPanel value="2">
               <Grid container spacing={2}>
                 <Grid item xs={12} md={7}>
                   <Stack spacing={1}>
@@ -96,10 +103,10 @@ const ProfileUser = () => {
               <Button variant="contained" startIcon={<DirectRight />}>
                 Thay đổi
               </Button>
-            </MainCard>
-          </TabPanel>
-        </TabContext>
-      </MainCard>
+            </TabPanel>
+          </CardContent>
+        </Card>
+      </TabContext>
     </Container>
   );
 };
