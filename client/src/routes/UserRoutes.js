@@ -78,7 +78,7 @@ const UserRoutes = {
         },
         {
           path: 'profile',
-          element: <Profile />
+          element: <PrivateRoute component={Profile} requiredPermissions={[]} />
         }
       ]
     },
