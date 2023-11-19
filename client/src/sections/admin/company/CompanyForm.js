@@ -101,20 +101,6 @@ const CompanyForm = ({ initialValues, action }) => {
                     error={Boolean(touched.user_email && errors.user_email)}
                     helperText={errors.user_email}
                   />
-                  {action != 'update' && (
-                    <InputField
-                      id="user_password"
-                      type="text"
-                      value={values.user_password}
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      placeholder="Nhập mật khẩu"
-                      label="Mật khẩu"
-                      fullWidth
-                      error={Boolean(touched.user_password && errors.user_password)}
-                      helperText={errors.user_password}
-                    />
-                  )}
                 </Stack>
               </Grid>
               <Grid item xs={6}>
@@ -156,6 +142,20 @@ const CompanyForm = ({ initialValues, action }) => {
                     error={Boolean(touched.company_host && errors.company_host)}
                     helperText={errors.company_host}
                   />
+                  {action != 'update' && (
+                    <InputField
+                      id="user_password"
+                      type="text"
+                      value={values.user_password}
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      placeholder="Nhập mật khẩu"
+                      label="Mật khẩu"
+                      fullWidth
+                      error={Boolean(touched.user_password && errors.user_password)}
+                      helperText={errors.user_password}
+                    />
+                  )}
                   <Box mt={2}>
                     <label htmlFor="company_is_official">Công ty chính thức</label>
                     <Switch

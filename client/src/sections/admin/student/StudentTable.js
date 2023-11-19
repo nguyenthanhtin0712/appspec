@@ -21,9 +21,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { toast } from 'react-toastify';
 import { dispatch } from 'store/index';
-import { Export, Import } from 'iconsax-react';
-import { utils, writeFileXLSX } from 'xlsx';
-import { useCallback } from 'react';
+import { Import } from 'iconsax-react';
 import StudentFileDialog from 'sections/admin/student/StudentFileDialog';
 import StudentScoreDialog from 'sections/admin/student/StudentScoreDialog';
 import ScoreIcon from '@mui/icons-material/Score';
@@ -51,41 +49,6 @@ const StudentTable = () => {
       })
     );
   };
-
-  const handleExportData = useCallback(() => {
-    const wb = utils.book_new();
-    const ws = utils.json_to_sheet(data);
-
-    // Calculate optimal column widths based on column names and data length
-    const columnWidths = [];
-
-    // Calculate column widths based on column names
-    Object.keys(data[0]).forEach((key, index) => {
-      const columnName = key !== null ? key.toString() : '';
-      const columnNameLength = columnName.length;
-      columnWidths[index] = Math.max(columnWidths[index] || 0, columnNameLength);
-    });
-
-    // Calculate column widths based on data length
-    data.forEach((row) => {
-      Object.values(row).forEach((cell, index) => {
-        const cellValue = cell !== null ? cell.toString() : '';
-        const cellLength = cellValue.length;
-        columnWidths[index] = Math.max(columnWidths[index] || 0, cellLength);
-      });
-    });
-
-    // Convert the column widths to Excel-style width units
-    const columnWidthsExcel = columnWidths.map((width) => ({
-      width: width + 2 // Adding some extra padding for better readability
-    }));
-
-    // Apply the calculated column widths to the worksheet
-    ws['!cols'] = columnWidthsExcel;
-
-    utils.book_append_sheet(wb, ws, 'Major');
-    writeFileXLSX(wb, 'Specialty.xlsx');
-  }, [data]);
 
   useEffect(() => {
     dispatch(fetchData({ columnFilters, globalFilter, sorting, pagination }));
@@ -176,7 +139,7 @@ const StudentTable = () => {
           sorting
         }}
         enableRowActions
-        positionActionsColumn="last"
+        positionActionsColumn="first"
         renderRowActions={({ row }) => {
           return (
             <Box sx={{ display: 'flex' }}>
@@ -215,10 +178,7 @@ const StudentTable = () => {
         }}
         renderTopToolbarCustomActions={() => (
           <Box display="flex" alignItems="center">
-            <Button color="primary" onClick={handleExportData} startIcon={<Export />} variant="contained">
-              Xuất Excel
-            </Button>
-            <Box marginLeft={2}>
+            <Box>
               <Button color="primary" onClick={handleClickOpen} startIcon={<Import />} variant="contained" component="span">
                 Nhập Excel
               </Button>

@@ -208,7 +208,7 @@ class RegisterSpecialtyController extends Controller
         return $this->sentSuccessResponse($registerSpecialtyResource, "Delete success", Response::HTTP_OK);
     }
 
-    public function getRegisterSpecialtyByUser()
+    public function getRegisterSpecialty()
     {
         $displayConfig = DisplayConfig::find('register_specialty')->display_config_value ?? RegisterSpecialty::latest()->first()->register_specialty_id;
         $registerSpecialty = RegisterSpecialty::with(['specialty.major', 'specialty.student'])->find($displayConfig);

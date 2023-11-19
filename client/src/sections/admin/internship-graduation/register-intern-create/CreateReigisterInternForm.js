@@ -47,7 +47,7 @@ const CreateReigisterInternForm = () => {
       validationSchema={Yup.object().shape({
         register_internship_start_date: Yup.date()
           .typeError('Vui lòng nhập đầy đủ')
-          .min(new Date(), 'Thời gian bắt đầu phải lớn hơn thời gian hiện tại')
+          // .min(new Date(), 'Thời gian bắt đầu phải lớn hơn thời gian hiện tại')
           .required('Thời gian bắt đầu là bắt buộc'),
         register_internship_end_date: Yup.date()
           .typeError('Vui lòng nhập đầy đủ')

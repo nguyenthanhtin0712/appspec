@@ -381,7 +381,7 @@ const JobholderDialog = () => {
     dispatch(setCloseDialog());
   };
   return (
-    <Dialog open={jobholderDialog.open} onClose={handleClose} scroll="paper" maxWidth="md" fullWidth>
+    <Dialog open={jobholderDialog.open} onClose={handleClose} scroll="paper" maxWidth="sm" fullWidth>
       <DialogTitleCustom onClose={handleClose}>{action === 'add' ? 'Thêm viên chức' : 'Chỉnh sửa viên chức'}</DialogTitleCustom>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <JobholderForm initialValues={initialValues} action={action} />

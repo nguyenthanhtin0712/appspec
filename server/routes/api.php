@@ -183,7 +183,7 @@ Route::get('register-specialties/statistics/{major_id?}', [RegisterSpecialtyCont
 Route::get('register-specialties/{id}/statistics/{major_id?}', [RegisterSpecialtyController::class, 'getStatistic']);
 
 Route::get('register-specialties/result', [RegisterSpecialtyController::class, 'getResult']);
-Route::get('register-specialties', [RegisterSpecialtyController::class, 'getRegisterSpecialtyByUser']);
+Route::get('register-specialties', [RegisterSpecialtyController::class, 'getRegisterSpecialty']);
 
 Route::get('recruitment-positions', [RecruitmentPositionController::class, 'index']);
 Route::post('recruitment-positions', [RecruitmentPositionController::class, 'store']);
