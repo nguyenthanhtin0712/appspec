@@ -36,6 +36,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [RegisterController::class, 'register']);
 // Route::post('refresh', [AuthController::class, 'refreshToken']);
+Route::post('forget-password', [AuthController::class, 'forget_password']);
 
 // Cái đăng nhập bằng accessToken
 Route::middleware('auth:api')->get('/user', function (Request $request) {

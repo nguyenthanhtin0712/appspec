@@ -11,10 +11,14 @@ const AuthForgotPassword = () => {
     <>
       <Formik
         initialValues={{
-          user_email: ''
+          password: '',
+          password_comfirm: ''
         }}
         validationSchema={Yup.object().shape({
-          user_email: Yup.string().required('Vui lòng nhập email').email('Địa chỉ email không hợp lệ')
+          password: Yup.string().required('Vui lòng nhập mật khẩu mới').min(6, 'Mật khẩu mới phải có ít nhất 6 ký tự'),
+          password_confirm: Yup.string()
+            .required('Vui lòng nhập xác nhận')
+            .oneOf([Yup.ref('password'), null], 'Mật khẩu xác nhận phải khớp với mật khẩu mới')
         })}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting, resetForm }) => {
           try {
@@ -22,10 +26,10 @@ const AuthForgotPassword = () => {
             if (result) {
               console.log(result.payload);
               if (result.payload.status == 400) {
-                toast.warning('Email không tồn tại trong hệ thống');
+                toast.warning('');
               }
               if (result.payload.status == 200) {
-                toast.success('Vui lòng kiểm tra email');
+                toast.success('');
                 resetForm();
                 resetForm();
               }
@@ -48,23 +52,40 @@ const AuthForgotPassword = () => {
         {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
           <form noValidate onSubmit={handleSubmit}>
             <Grid container spacing={3}>
-              <Grid item xs={12}>
+              <Grid item xs={12} spacing={2}>
                 <Stack spacing={1}>
-                  <InputLabel htmlFor="email-login">Email đã đăng ký trong hệ thống</InputLabel>
+                  <InputLabel htmlFor="password">Mật khẩu mới</InputLabel>
                   <OutlinedInput
-                    id="user_email"
-                    type="email"
-                    value={values.user_email}
-                    name="user_email"
+                    id="password"
+                    value={values.password}
+                    name="password"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    placeholder="Nhập email đã đăng ký trong hệ thống"
+                    placeholder="Nhập mật khẩu mới"
                     fullWidth
-                    error={Boolean(touched.user_email && errors.user_email)}
+                    error={Boolean(touched.password && errors.password)}
                   />
-                  {touched.user_email && errors.user_email && (
-                    <FormHelperText error id="helper-text-user_user_email">
-                      {errors.user_email}
+                  {touched.password && errors.password && (
+                    <FormHelperText error id="helper-text-user_password">
+                      {errors.password}
+                    </FormHelperText>
+                  )}
+                </Stack>
+                <Stack spacing={1}>
+                  <InputLabel htmlFor="password_comfirm">Xác nhận mật khẩu</InputLabel>
+                  <OutlinedInput
+                    id="password_comfirm"
+                    value={values.password_comfirm}
+                    name="password_comfirm"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    placeholder="Xác nhận mật khẩu"
+                    fullWidth
+                    error={Boolean(touched.password_comfirm && errors.password_comfirm)}
+                  />
+                  {touched.password_comfirm && errors.password_comfirm && (
+                    <FormHelperText error id="helper-text-user_password_comfirm">
+                      {errors.password_comfirm}
                     </FormHelperText>
                   )}
                 </Stack>
