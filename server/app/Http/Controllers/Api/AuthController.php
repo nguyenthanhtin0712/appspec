@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Helpers\Helper;
+use App\Http\Requests\ChangePasswordTokenRequest;
 use App\Http\Requests\ForgetPassword;
 use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Auth;
@@ -73,20 +74,38 @@ class AuthController extends Controller
         $user = User::where('user_email', $request->user_email)->first();
         if ($user) {
             $token = Str::random(40);
-            $url = 'http://localhost:3000/auth/forgot-password?token=' . $token;
+            $url = 'http://localhost:3000/auth/change-password/token=' . $token;
             $message['url'] = $url;
             $message['subject'] = 'Liên hệ từ trang đăng ký chuyên ngành';
             $message['view'] = 'mails.mail-forgot-password';
             SendEmail::dispatch($message, [
                 $request->user_email
             ])->delay(now()->addMinute(0));
-            $foget_pass = PasswordReset::create([
+            PasswordReset::create([
                 'email' => $request->user_email,
                 'token' => $token
             ]);
             return $this->sentSuccessResponse("", "Gửi mail thành công", 200);
         } else {
-            return $this->sentErrorResponse('',"Email không tồn tại trong hệ thống", 400);
+            return $this->sentErrorResponse("","Email không tồn tại trong hệ thống", 400);
         }
+    }
+
+    public function check_token(Request $request){
+        // PasswordReset::where('created_at', '<=', now()->subMinutes(5))->delete();
+        $checkToken = PasswordReset::where('token', $request->token)->first();
+        if($checkToken) return $this->sentSuccessResponse($checkToken, "Check token successfully", 200);
+        else return $this->sentErrorResponse("CheckFail", "Token not found", 400);
+    }
+
+    public function change_password_token(ChangePasswordTokenRequest $request){
+        $checkToken = PasswordReset::where('token', $request->token)->first();
+        if($checkToken){
+            $user = User::where('user_email', $checkToken->email)->first();
+            $user->user_password = bcrypt($request->password);
+            $user->save();
+            PasswordReset::where('token', $request->token)->delete();
+            return $this->sentSuccessResponse("Success","Thay đổi mật khẩu thành công", 200);
+        } 
     }
 }

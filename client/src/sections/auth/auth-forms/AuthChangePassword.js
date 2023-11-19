@@ -1,41 +1,48 @@
-import { Button, FormHelperText, Grid, InputLabel, OutlinedInput, Stack } from '@mui/material';
+import { Button, FormHelperText, Grid, Stack, Typography } from '@mui/material';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import AnimateButton from 'components/@extended/AnimateButton';
 import { toast } from 'react-toastify';
 import { dispatch } from 'store/index';
-import { forgotPassword } from 'store/slices/forgotpasswordSlice';
+import { useNavigate, useParams } from 'react-router';
+import InputField from 'components/input/InputField';
+import { ChangePasswordToken } from 'store/slices/forgotpasswordSlice';
 
-const AuthForgotPassword = () => {
+const AuthChangePassword = () => {
+  const { token } = useParams();
+  const navigate = useNavigate();
   return (
     <>
       <Formik
         initialValues={{
           password: '',
-          password_comfirm: ''
+          confirm_password: ''
         }}
         validationSchema={Yup.object().shape({
-          password: Yup.string().required('Vui lòng nhập mật khẩu mới').min(6, 'Mật khẩu mới phải có ít nhất 6 ký tự'),
-          password_confirm: Yup.string()
-            .required('Vui lòng nhập xác nhận')
-            .oneOf([Yup.ref('password'), null], 'Mật khẩu xác nhận phải khớp với mật khẩu mới')
+          password: Yup.string()
+            .required('Vui lòng nhập mật khẩu mới')
+            .min(6, 'Mật khẩu phải có ít nhất 6 ký tự')
+            .matches(/[a-z]/, 'Cần có ít nhất 1 ký tự thường (a-z)')
+            .matches(/[A-Z]/, 'Cần có ít nhất 1 ký tự in hoa (A-Z)')
+            .matches(/\d/, 'Cần có ít nhất 1 chữ số')
+            .matches(/[!@#$%^&*(),.?":{}|<>]/, 'Cần có ít nhất 1 ký tự đặt biệt'),
+          confirm_password: Yup.string()
+            .oneOf([Yup.ref('password'), null], 'Xác nhận mật khẩu không khớp')
+            .required('Vui lòng xác nhận mật khẩu')
         })}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting, resetForm }) => {
           try {
-            const result = await dispatch(forgotPassword(values));
+            values['token'] = token.split('=')[1];
+            console.log('values', values);
+            const result = await dispatch(ChangePasswordToken(values));
             if (result) {
-              console.log(result.payload);
-              if (result.payload.status == 400) {
-                toast.warning('');
-              }
               if (result.payload.status == 200) {
-                toast.success('');
+                toast.success('Thay đổi mật khẩu thành công');
                 resetForm();
-                resetForm();
+                navigate('/auth/login');
               }
               setStatus({ success: true });
               setSubmitting(false);
-              // navigate('/auth/login');
             } else {
               setStatus({ success: true });
               setSubmitting(false);
@@ -52,10 +59,14 @@ const AuthForgotPassword = () => {
         {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
           <form noValidate onSubmit={handleSubmit}>
             <Grid container spacing={3}>
-              <Grid item xs={12} spacing={2}>
-                <Stack spacing={1}>
-                  <InputLabel htmlFor="password">Mật khẩu mới</InputLabel>
-                  <OutlinedInput
+              <Grid item xs={12}>
+                <Stack direction="row" justifyContent="center" sx={{ mb: 4 }}>
+                  <Typography variant="h5">Thay đổi mật khẩu</Typography>
+                </Stack>
+                <Stack spacing={2}>
+                  <InputField
+                    type="password"
+                    label="Mật khẩu mới"
                     id="password"
                     value={values.password}
                     name="password"
@@ -64,30 +75,21 @@ const AuthForgotPassword = () => {
                     placeholder="Nhập mật khẩu mới"
                     fullWidth
                     error={Boolean(touched.password && errors.password)}
+                    helperText={errors.password}
                   />
-                  {touched.password && errors.password && (
-                    <FormHelperText error id="helper-text-user_password">
-                      {errors.password}
-                    </FormHelperText>
-                  )}
-                </Stack>
-                <Stack spacing={1}>
-                  <InputLabel htmlFor="password_comfirm">Xác nhận mật khẩu</InputLabel>
-                  <OutlinedInput
-                    id="password_comfirm"
-                    value={values.password_comfirm}
-                    name="password_comfirm"
+                  <InputField
+                    type="password"
+                    label="Xác nhận mật khẩu"
+                    id="confirm_password"
+                    value={values.confirm_password}
+                    name="confirm_password"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    placeholder="Xác nhận mật khẩu"
+                    placeholder="Nhập mật khẩu xác nhận"
                     fullWidth
-                    error={Boolean(touched.password_comfirm && errors.password_comfirm)}
+                    error={Boolean(touched.confirm_password && errors.confirm_password)}
+                    helperText={errors.confirm_password}
                   />
-                  {touched.password_comfirm && errors.password_comfirm && (
-                    <FormHelperText error id="helper-text-user_password_comfirm">
-                      {errors.password_comfirm}
-                    </FormHelperText>
-                  )}
                 </Stack>
               </Grid>
 
@@ -99,7 +101,7 @@ const AuthForgotPassword = () => {
               <Grid item xs={12}>
                 <AnimateButton>
                   <Button disableElevation disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained" color="primary">
-                    Login
+                    Thay đổi
                   </Button>
                 </AnimateButton>
               </Grid>
@@ -111,4 +113,4 @@ const AuthForgotPassword = () => {
   );
 };
 
-export default AuthForgotPassword;
+export default AuthChangePassword;

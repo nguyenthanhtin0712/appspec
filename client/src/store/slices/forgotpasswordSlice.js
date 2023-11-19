@@ -12,9 +12,29 @@ export const fetchData = createAsyncThunk('profile/fetchData', async () => {
   }
 });
 
-export const forgotPassword = createAsyncThunk('authen/forgotPassword', async (value) => {
+export const forgotPassword = createAsyncThunk('authentication/forgotPassword', async (value) => {
   try {
     const response = await axios.post(`${API_BASE_URL}/forget-password`, value);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+});
+
+export const checkToken = createAsyncThunk('authentication/checkToken', async (token) => {
+  try {
+    const response = await axios.post(`${API_BASE_URL}/check-token`, token);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+});
+
+export const ChangePasswordToken = createAsyncThunk('authentication/ChangePassword', async (values) => {
+  try {
+    const response = await axios.post(`${API_BASE_URL}/change-password-token`, values);
     return response.data;
   } catch (error) {
     console.error(error);
@@ -47,7 +67,7 @@ const forgotpassword = createSlice({
       })
       .addCase(fetchData.rejected, (state) => {
         state.isLoadingInfo = false;
-      })
+      });
   }
 });
 

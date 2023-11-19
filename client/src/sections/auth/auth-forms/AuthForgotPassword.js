@@ -78,7 +78,7 @@ const AuthForgotPassword = () => {
               <Grid item xs={12}>
                 <AnimateButton>
                   <Button disableElevation disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained" color="primary">
-                    Login
+                    Gửi
                   </Button>
                 </AnimateButton>
               </Grid>
