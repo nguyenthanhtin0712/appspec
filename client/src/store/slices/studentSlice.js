@@ -42,6 +42,7 @@ export const createStudent = createAsyncThunk('student/createStudent', async (st
 });
 
 export const addFileStudent = createAsyncThunk('student/addFileStudent', async (data) => {
+  console.log('data', data);
   try {
     const response = await axios.post(`${API_BASE_URL}/addFileStudents`, data);
     return response.data;

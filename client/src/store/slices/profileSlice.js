@@ -1,36 +1,15 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from '../../api/axios';
 import { API_BASE_URL } from 'config';
+import { toast } from 'react-toastify';
 
-export const fetchData = createAsyncThunk('page/fetchData', async (params, { rejectWithValue }) => {
-  const {
-    columnFilters,
-    globalFilter,
-    sorting,
-    pagination: { pageIndex, pageSize }
-  } = params;
-  const url = new URL('/api/pages', API_BASE_URL);
-  url.searchParams.set('page', `${pageIndex + 1}`);
-  url.searchParams.set('perPage', `${pageSize}`);
-  url.searchParams.set('filters', JSON.stringify(columnFilters ?? []));
-  url.searchParams.set('query', globalFilter ?? '');
-  url.searchParams.set('sortBy', `${sorting.length !== 0 ? sorting[0].id : ''}`);
-  url.searchParams.set('sortOrder', `${sorting.length !== 0 ? (sorting[0].desc ? 'desc' : 'asc') : ''}`);
-
+export const fetchData = createAsyncThunk('profile/fetchData', async () => {
   try {
-    const response = await axios.get(url.href);
-    const { data } = response;
-    return {
-      data: data.data.result,
-      rowCount: data.data.meta.total
-    };
+    const response = await axios.get(`${API_BASE_URL}/profile`);
+    return response.data;
   } catch (error) {
-    if (error.response && error.response.data && error.response.data.errors) {
-      return rejectWithValue(error.response.data);
-    } else {
-      console.error(error);
-      throw error;
-    }
+    console.error(error);
+    throw error;
   }
 });
 
@@ -44,8 +23,31 @@ export const changePassword = createAsyncThunk('profile/changPassword', async (v
   }
 });
 
+export const changeInformation = createAsyncThunk('profile/changeInformation', async (value) => {
+  try {
+    const response = await axios.put(`${API_BASE_URL}/profile/change-information`, value);
+    return response.data;
+  } catch (error) {
+    if (error.response && error.response.status === 422) {
+      const errors = error.response.data.errors;
+
+      if (errors.user_email) {
+        toast.warning('Email này đã được sử dụng');
+      } else if (errors.user_phone) {
+        toast.warning('Số điện thoại này đã được sử dụng');
+      } else {
+        console.error('Other validation errors:', errors);
+      }
+    } else {
+      console.error(error);
+      throw error;
+    }
+  }
+});
+
 const initialState = {
   data: null,
+  isLoadingInfo: false,
   isLoading: false
 };
 
@@ -60,14 +62,14 @@ const profile = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchData.pending, (state) => {
-        state.isLoading = true;
+        state.isLoadingInfo = true;
       })
       .addCase(fetchData.fulfilled, (state, action) => {
-        state.isLoading = false;
+        state.isLoadingInfo = false;
         state.data = action.payload.data;
       })
       .addCase(fetchData.rejected, (state) => {
-        state.isLoading = false;
+        state.isLoadingInfo = false;
       })
       .addCase(changePassword.pending, (state) => {
         state.isLoading = true;
@@ -76,6 +78,15 @@ const profile = createSlice({
         state.isLoading = false;
       })
       .addCase(changePassword.rejected, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(changeInformation.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(changeInformation.fulfilled, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(changeInformation.rejected, (state) => {
         state.isLoading = false;
       });
   }

@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\User;
-use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 
@@ -44,7 +43,7 @@ class UserSeeder extends Seeder
         ]);
         
         $user2 = User::create([
-            'user_email' => 'hgbao2k3@gmail.com',
+            'user_email' => 'hgiabao2k3@gmail.com',
             'user_firstname' => 'Hồ Minh',
             'user_lastname' => 'Hưng',
             'user_phone' => '098765432',
