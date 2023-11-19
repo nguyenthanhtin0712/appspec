@@ -177,7 +177,7 @@ const ProfileUser = () => {
                     <form noValidate onSubmit={handleSubmit}>
                       <Grid container spacing={2}>
                         <Grid item xs={12} md={7}>
-                          <Stack spacing={1}>
+                          <Stack spacing={2}>
                             <InputField
                               type="password"
                               label="Mật khẩu hiện tại"
