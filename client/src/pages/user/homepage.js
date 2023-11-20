@@ -34,8 +34,7 @@ const HomePage = () => {
       };
       loginGoolge();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [isAuthenticated]);
 
   return (
     <>
