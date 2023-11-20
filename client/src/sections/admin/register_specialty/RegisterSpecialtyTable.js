@@ -139,7 +139,7 @@ const RegisterSpecialtyTable = () => {
           size: 'small',
           InputProps: {
             startAdornment: (
-              <InputAdornment>
+              <InputAdornment position="start">
                 <IconButton variant="contained" shape="rounded" size="small">
                   <SearchNormal />
                 </IconButton>

@@ -11,7 +11,7 @@ import {
   setStatus
 } from 'store/slices/registerSpecialtyUserSlice';
 import { dispatch } from 'store/index';
-import { Box, Button, Chip, FormControl, MenuItem, Select, Typography } from '@mui/material';
+import { Box, Button, FormControl, MenuItem, Select, Typography } from '@mui/material';
 import ChangeSpecialtyDialog from 'sections/admin/register_specialty/register-specialty-result/ChangeSpecialtyDialog';
 
 const ResultTable = () => {
@@ -130,21 +130,21 @@ const ResultTable = () => {
                 <MenuItem value="ALL" sx={{ color: 'text.secondary' }}>
                   <Box display="flex" justifyContent="space-between" width="100%" gap={2}>
                     <Typography>Tất cả</Typography>
-                    <Chip label={rowCount} color="primary" size="small" />
+                    {/* <Chip label={rowCount} color="primary" size="small" /> */}
                   </Box>
                 </MenuItem>
                 {statistic.data.map((item) => (
                   <MenuItem key={item.specialty_id} value={item.specialty_id}>
                     <Box display="flex" justifyContent="space-between" width="100%" gap={2}>
                       <Typography>{item.specialty_name}</Typography>
-                      <Chip label={item.specialty_registered} color="primary" size="small" />
+                      {/* <Chip label={item.specialty_registered} color="primary" size="small" /> */}
                     </Box>
                   </MenuItem>
                 ))}
                 <MenuItem value="CDK">
                   <Box display="flex" justifyContent="space-between" width="100%" gap={2}>
                     <Typography>Chưa đăng ký</Typography>
-                    <Chip label={rowCount - statistic.data.reduce((a, b) => a + b.specialty_registered, 0)} color="primary" size="small" />
+                    {/* <Chip label={rowCount - statistic.data.reduce((a, b) => a + b.specialty_registered, 0)} color="primary" size="small" /> */}
                   </Box>
                 </MenuItem>
               </Select>

@@ -2,7 +2,6 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from '../../api/axios';
 import { API_BASE_URL } from 'config';
 
-// Async Thunk Actions
 export const fetchData = createAsyncThunk('register_specialty_user/fetchData', async (params, { rejectWithValue }) => {
   const {
     columnFilters,
@@ -79,6 +78,16 @@ export const getRegistrationInfoById = createAsyncThunk('register_specialty_user
 export const getStatistic = createAsyncThunk('register_specialty_user/getStatistic', async (id) => {
   try {
     const response = await axios.get(`/register-specialties/statistics/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+});
+
+export const getStatisticId = createAsyncThunk('register_specialty_user/getStatistic', async ({ id, major_id }) => {
+  try {
+    const response = await axios.get(`/register-specialties/${id}/statistics/${major_id}`);
     return response.data;
   } catch (error) {
     console.error(error);
@@ -221,6 +230,7 @@ const register_specialty_user = createSlice({
       })
       .addCase(getRegistrationInfoById.fulfilled, (state, action) => {
         state.userRegistrationPeriod = action.payload.data;
+        state.registerSpecialtyId = action.payload.data.register_specialty_id;
         state.majors = action.payload.data.register_specialty_detail;
         if (state.majorId === '') {
           state.majorId = action.payload.data.register_specialty_detail[0]?.major_id;

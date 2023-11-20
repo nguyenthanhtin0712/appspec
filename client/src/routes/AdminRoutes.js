@@ -6,6 +6,7 @@ import { dispatch } from 'store';
 import { getWarningInfo } from 'store/slices/warnedStudentDetailSlice';
 import { getPageById } from 'store/slices/pageSlice';
 import { getJobPostById } from 'store/slices/jobPostSlice';
+import { getRegistrationInfoById } from 'store/slices/registerSpecialtyUserSlice';
 
 // render - dashboard
 const DashboardDefault = Loadable(lazy(() => import('pages/admin/dashboard')));
@@ -85,6 +86,13 @@ const AdminRoutes = {
     },
     {
       path: 'register_specialty/:Id',
+      loader: async ({ params }) => {
+        const res = await dispatch(getRegistrationInfoById(params.Id));
+        if (res && res.error) {
+          throw new Response('Not Found', { status: 404 });
+        }
+        return res;
+      },
       element: <PrivateRoute component={RegisterSpecialtyPageResult} requiredPermissions={['major.view']} />
     },
     {

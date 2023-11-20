@@ -86,26 +86,24 @@ const RegisterSpecialty = () => {
             })}
             onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
               const data = await handleImportData(values.file_student, values.password_student);
-              if (!data) {
-                try {
-                  const result = await dispatch(createRegisterSpecalty({ values, data }));
-                  if (result && !result.error) {
-                    setStatus({ success: true });
-                    setSubmitting(false);
-                    toast.success('Tạo đợt đăng ký thành công!');
-                    navigate('/admin/register_specialty');
-                  } else {
-                    setStatus({ success: false });
-                    setErrors(result.payload.errors);
-                    setSubmitting(false);
-                    toast.error('Tạo đợt đăng ký không thành công');
-                  }
-                } catch (err) {
-                  console.error(err);
-                  setStatus({ success: false });
-                  setErrors({ submit: err.message });
+              try {
+                const result = await dispatch(createRegisterSpecalty({ values, data }));
+                if (result && !result.error) {
+                  setStatus({ success: true });
                   setSubmitting(false);
+                  toast.success('Tạo đợt đăng ký thành công!');
+                  navigate('/admin/register_specialty');
+                } else {
+                  setStatus({ success: false });
+                  setErrors(result.payload.errors);
+                  setSubmitting(false);
+                  toast.error('Tạo đợt đăng ký không thành công');
                 }
+              } catch (err) {
+                console.error(err);
+                setStatus({ success: false });
+                setErrors({ submit: err.message });
+                setSubmitting(false);
               }
             }}
           >
@@ -294,9 +292,7 @@ async function handleImportData(files, pass) {
 }
 
 function convertDateFormat(dateString) {
-  // Tách ngày, tháng và năm bằng cách split chuỗi
   var parts = dateString.split('/');
-  // Kiểm tra xem chuỗi có đúng định dạng ngày/tháng/năm hay không
   if (parts.length === 3) {
     var day = parts[0];
     var month = parts[1];
