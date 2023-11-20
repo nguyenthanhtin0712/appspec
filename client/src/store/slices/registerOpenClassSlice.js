@@ -60,6 +60,16 @@ export const getHistory = createAsyncThunk('register_open_class/getHistory', asy
   }
 });
 
+export const getStatistic = createAsyncThunk('register_open_class/getStatistic', async (info) => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/register-open-class/statistical?semester=${info?.semester}&year=${info?.year}`);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+});
+
 const initialState = {
   data: [],
   isError: false,
@@ -80,6 +90,16 @@ const initialState = {
   history: {
     data: [],
     isLoading: true
+  },
+  statistic: {
+    timeOption: {
+      id: 0,
+      semester: '',
+      year: ''
+    },
+    query: '',
+    data: [],
+    isLoading: true
   }
 };
 
@@ -98,6 +118,12 @@ const register_open_class = createSlice({
     },
     setPagination: (state, action) => {
       state.pagination = action.payload;
+    },
+    setTimeOption: (state, action) => {
+      state.statistic.timeOption = action.payload;
+    },
+    setQuery: (state, action) => {
+      state.statistic.query = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -136,10 +162,20 @@ const register_open_class = createSlice({
       })
       .addCase(getHistory.rejected, (state) => {
         state.history.isLoading = false;
+      })
+      .addCase(getStatistic.pending, (state) => {
+        state.statistic.isLoading = true;
+      })
+      .addCase(getStatistic.fulfilled, (state, action) => {
+        state.statistic.isLoading = false;
+        state.statistic.data = action.payload.data;
+      })
+      .addCase(getStatistic.rejected, (state) => {
+        state.statistic.isLoading = false;
       });
   }
 });
 
-export const { setColumnFilters, setGlobalFilter, setSorting, setPagination } = register_open_class.actions;
+export const { setColumnFilters, setGlobalFilter, setSorting, setPagination, setTimeOption, setQuery } = register_open_class.actions;
 
 export default register_open_class.reducer;
