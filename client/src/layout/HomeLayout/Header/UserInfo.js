@@ -33,7 +33,6 @@ const UserInfo = () => {
           />
         </IconButton>
       </Tooltip>
-
       <Popover
         open={Boolean(anchorElUser)}
         anchorEl={anchorElUser}

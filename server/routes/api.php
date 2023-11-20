@@ -34,8 +34,12 @@ use Illuminate\Support\Facades\Route;
 
 //Này đăng nhập bằng email, mssv và password
 Route::post('login', [AuthController::class, 'login']);
+Route::post('login-google', [AuthController::class, 'login_google']);
 Route::post('register', [RegisterController::class, 'register']);
 // Route::post('refresh', [AuthController::class, 'refreshToken']);
+Route::post('forget-password', [AuthController::class, 'forget_password']);
+Route::post('check-token', [AuthController::class, 'check_token']);
+Route::post('change-password-token', [AuthController::class, 'change_password_token']);
 
 // Cái đăng nhập bằng accessToken
 Route::middleware('auth:api')->get('/user', function (Request $request) {

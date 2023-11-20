@@ -2,30 +2,36 @@ import { Button, FormHelperText, Grid, InputLabel, OutlinedInput, Stack } from '
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import AnimateButton from 'components/@extended/AnimateButton';
-import { login } from 'store/slices/authSlice';
-import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { dispatch } from 'store/index';
+import { forgotPassword } from 'store/slices/forgotpasswordSlice';
 
 const AuthForgotPassword = () => {
-  const navigate = useNavigate();
-
   return (
     <>
       <Formik
         initialValues={{
-          email: ''
+          user_email: ''
         }}
         validationSchema={Yup.object().shape({
-          email: Yup.string().max(255).required('Vui lòng điền tên đăng nhập!')
+          user_email: Yup.string().required('Vui lòng nhập email').email('Địa chỉ email không hợp lệ')
         })}
-        onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
+        onSubmit={async (values, { setErrors, setStatus, setSubmitting, resetForm }) => {
           try {
-            const result = await dispatch(login(values));
-            if (result && !result.error) {
+            const result = await dispatch(forgotPassword(values));
+            if (result) {
+              console.log(result.payload);
+              if (result.payload.status == 400) {
+                toast.warning('Email không tồn tại trong hệ thống');
+              }
+              if (result.payload.status == 200) {
+                toast.success('Vui lòng kiểm tra email');
+                resetForm();
+                resetForm();
+              }
               setStatus({ success: true });
               setSubmitting(false);
-              navigate('/');
+              // navigate('/auth/login');
             } else {
               setStatus({ success: true });
               setSubmitting(false);
@@ -46,19 +52,19 @@ const AuthForgotPassword = () => {
                 <Stack spacing={1}>
                   <InputLabel htmlFor="email-login">Email đã đăng ký trong hệ thống</InputLabel>
                   <OutlinedInput
-                    id="email-login"
+                    id="user_email"
                     type="email"
-                    value={values.email}
-                    name="email"
+                    value={values.user_email}
+                    name="user_email"
                     onBlur={handleBlur}
                     onChange={handleChange}
                     placeholder="Nhập email đã đăng ký trong hệ thống"
                     fullWidth
-                    error={Boolean(touched.email && errors.email)}
+                    error={Boolean(touched.user_email && errors.user_email)}
                   />
-                  {touched.email && errors.email && (
-                    <FormHelperText error id="helper-text-email-login">
-                      {errors.email}
+                  {touched.user_email && errors.user_email && (
+                    <FormHelperText error id="helper-text-user_user_email">
+                      {errors.user_email}
                     </FormHelperText>
                   )}
                 </Stack>
@@ -72,7 +78,7 @@ const AuthForgotPassword = () => {
               <Grid item xs={12}>
                 <AnimateButton>
                   <Button disableElevation disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained" color="primary">
-                    Login
+                    Gửi
                   </Button>
                 </AnimateButton>
               </Grid>
