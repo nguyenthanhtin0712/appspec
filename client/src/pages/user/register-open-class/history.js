@@ -24,7 +24,7 @@ const RegisterOpenClassHistory = () => {
   }, []);
   return (
     <Container maxWidth="md" sx={{ mt: 2 }}>
-      <MainCard title="Danh sách môn học bạn đã yêu cầu mở nhóm">
+      <MainCard title="Danh sách môn học bạn đã yêu cầu mở nhóm" sx={{ minHeight: 'calc(100vh - 100px)' }}>
         <OpenClassTableHistory />
       </MainCard>
     </Container>

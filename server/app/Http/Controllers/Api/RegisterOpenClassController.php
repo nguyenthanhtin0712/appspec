@@ -45,17 +45,23 @@ class RegisterOpenClassController extends Controller
 
     public function statistical(Request $request)
     {
-        $query = $request->input('query');
         $semester = $request->input('semester');
         $year = $request->input('year');
 
-        $results = RegisterOpenClass::where('semester', $semester)
-            ->where('year', $year)
-            ->leftJoin('subjects', 'subjects.subject_id', '=', 'register_open_class.subject_id')
+        $query = RegisterOpenClass::leftJoin('subjects', 'subjects.subject_id', '=', 'register_open_class.subject_id')
             ->selectRaw('register_open_class.subject_id, subjects.subject_name, COUNT(*) as student_count')
-            ->groupBy('register_open_class.subject_id', 'subject_name')
-            ->get();
+            ->groupBy('register_open_class.subject_id', 'subject_name');
 
-        return response()->json($results, 200);
+        if ($semester !== null) {
+            $query->where('register_open_class.semester', $semester);
+        }
+
+        if ($year !== null) {
+            $query->where('register_open_class.year', $year);
+        }
+
+        $results = $query->get();
+
+        return $this->sentSuccessResponse($results, 'Get data success', Response::HTTP_OK);;
     }
 }
