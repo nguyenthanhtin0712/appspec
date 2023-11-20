@@ -88,7 +88,7 @@ class AuthController extends Controller
             $token = Str::random(40);
             $url = 'http://localhost:3000/auth/change-password/token=' . $token;
             $message['url'] = $url;
-            $message['subject'] = 'Thông báo từ phòng công tác sinh viên SGU';
+            $message['subject'] = 'Một liên kết đặt lại mật khẩu đã được gửi đến email của bạn.';
             $message['view'] = 'mails.mail-forgot-password';
             SendEmail::dispatch($message, [
                 $request->user_email
