@@ -12,15 +12,11 @@ const App = () => {
   const { isAuthenticated } = useSelector((state) => state.auth);
   useLayoutEffect(() => {
     const fetchUser = async () => {
-      try {
-        const result = await dispatch(getUserDataFromToken());
-        if (!result.payload) {
-          if (!isAuthenticated) {
-            checkLoginGoogle();
-          }
+      const result = await dispatch(getUserDataFromToken());
+      if (!result.payload) {
+        if (!isAuthenticated) {
+          checkLoginGoogle();
         }
-      } catch (error) {
-        console.log(error);
       }
     };
 
