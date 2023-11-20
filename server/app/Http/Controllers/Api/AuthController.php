@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Helpers\Helper;
 use App\Http\Requests\ChangePasswordTokenRequest;
 use App\Http\Requests\ForgetPassword;
+use App\Http\Requests\LoginGoogleRequest;
 use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\LoginResource;
@@ -39,6 +40,17 @@ class AuthController extends Controller
             }
         }
         return Helper::sendError("Tên đăng nhập hoặc mật khẩu không đúng", 401);
+    }
+
+    public function login_google(LoginGoogleRequest $request)
+    {
+        $credentials = $request->only('user_email');
+        $user = User::where('user_email', $credentials['user_email'])->first();
+        if ($user) {
+            Auth::login($user);
+            return new LoginResource($user);
+        }
+        return Helper::sendError("Email không tồn tại trong hệ thống", 401);
     }
 
     public function logout()
