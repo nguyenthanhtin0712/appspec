@@ -5,11 +5,15 @@ import { dispatch } from 'store/index';
 import { RouterProvider } from 'react-router';
 import { createBrowserRouter } from 'react-router-dom';
 import { ThemeRoutes } from 'routes';
+import { checkLoginGoogle } from 'utils/loginGoogle';
 
 const App = () => {
   useLayoutEffect(() => {
     const fetchUser = async () => {
-      await dispatch(getUserDataFromToken());
+      const result = await dispatch(getUserDataFromToken());
+      if (!result.payload) {
+        checkLoginGoogle();
+      }
     };
 
     fetchUser();

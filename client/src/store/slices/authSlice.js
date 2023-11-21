@@ -2,7 +2,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import Cookies from 'js-cookie';
 import axios from '../../api/axios';
-import { checkLoginGoogle } from 'utils/loginGoogle';
 
 const initialState = {
   isAuthenticated: false,
@@ -73,7 +72,6 @@ export const getUserDataFromToken = createAsyncThunk('auth/getUserDataFromToken'
     }
   } catch (error) {
     Cookies.remove('token');
-    checkLoginGoogle();
     throw error;
   }
 });

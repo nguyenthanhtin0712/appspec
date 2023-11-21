@@ -1,9 +1,14 @@
-import { login_google } from 'store/slices/authSlice';
+import React from 'react';
+import { useEffect } from 'react';
 import { jwtDecode } from 'jwt-decode';
+import { dispatch } from 'store/index';
+import { login_google } from 'store/slices/authSlice';
 import { toast } from 'react-toastify';
-import { dispatch } from 'store';
+import { useNavigate } from 'react-router';
 
-export function checkLoginGoogle() {
+const GoogleLogin = () => {
+  const navigate = useNavigate();
+
   const handleCallbackResponse = async (response) => {
     var userObject = jwtDecode(response.credential);
     const value = { user_email: userObject.email };
@@ -11,6 +16,7 @@ export function checkLoginGoogle() {
       const result = await dispatch(login_google(value));
       if (result && !result.error) {
         toast.success('Đăng nhập thành công');
+        navigate('/');
       } else {
         toast.error(result.payload.message);
       }
@@ -19,13 +25,16 @@ export function checkLoginGoogle() {
     }
   };
 
-  const loginGoogle = () => {
+  useEffect(() => {
     google.accounts.id.initialize({
       client_id: '387483545489-muknqkprotf0b41nlgai6msu2dqf8ftt.apps.googleusercontent.com',
       callback: handleCallbackResponse
     });
-    google.accounts.id.prompt();
-  };
 
-  loginGoogle();
-}
+    google.accounts.id.renderButton(document.getElementById('signInDiv'), { theme: 'outline', size: 'large' });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  return <div id="signInDiv"></div>;
+};
+
+export default GoogleLogin;

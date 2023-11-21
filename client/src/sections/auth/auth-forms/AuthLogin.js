@@ -55,6 +55,7 @@ const AuthLogin = () => {
               setStatus({ success: true });
               setSubmitting(false);
               navigate('/');
+              toast.success('Đăng nhập thành công');
             } else {
               setStatus({ success: true });
               setSubmitting(false);
