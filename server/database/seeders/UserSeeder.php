@@ -55,6 +55,7 @@ class UserSeeder extends Seeder
         ]);
 
         $user3 = User::create([
+            'user_id' => '104',
             'user_email' => 'thanhsang@sgu.edu.vn',
             'user_firstname' => 'Nguyễn Thanh',
             'user_lastname' => 'Sang',
@@ -67,6 +68,7 @@ class UserSeeder extends Seeder
         ]);
 
         $user4 = User::create([
+            'user_id' => '105',
             'user_email' => 'tankhoa@sgu.edu.vn',
             'user_firstname' => 'Trương Tấn',
             'user_lastname' => 'Khoa',
@@ -79,6 +81,7 @@ class UserSeeder extends Seeder
         ]);
 
         $user5 = User::create([
+            'user_id' => '106',
             'user_email' => 'minhhuan@sgu.edu.vn',
             'user_firstname' => 'Lương Minh',
             'user_lastname' => 'Huấn',
@@ -91,6 +94,7 @@ class UserSeeder extends Seeder
         ]);
 
         $user6 = User::create([
+            'user_id' => '107',
             'user_email' => 'tanquoc@sgu.edu.vn',
             'user_firstname' => 'Phan Tấn',
             'user_lastname' => 'Quốc',
@@ -103,6 +107,7 @@ class UserSeeder extends Seeder
         ]);
         // 
         $user7 = User::create([
+            'user_id' => '108',
             'user_email' => 'nqhuy@sgu.edu.vn',
             'user_firstname' => 'Nguyễn Quốc',
             'user_lastname' => 'Huy',
@@ -115,9 +120,23 @@ class UserSeeder extends Seeder
         ]);
 
         $user8 = User::create([
+            'user_id' => '109',
             'user_email' => 'langphieu@sgu.edu.vn',
             'user_firstname' => 'Từ Lãng',
             'user_lastname' => 'Phiêu',
+            'user_phone' => '098222151',
+            'user_avatar' => 'http://fit.sgu.edu.vn/site/wp-content/uploads/2019/01/nguyenquochuy.jpg',
+            'user_password' => bcrypt('password'),
+            'user_gender' => '0',
+            'user_status' => '1',
+            'user_birthday' => '2003-01-01',
+        ]);
+
+        $user9 = User::create([
+            'user_id' => '110',
+            'user_email' => 'nguyenva@sgu.edu.vn',
+            'user_firstname' => 'Nguyễn Văn',
+            'user_lastname' => 'A',
             'user_phone' => '098222151',
             'user_avatar' => 'http://fit.sgu.edu.vn/site/wp-content/uploads/2019/01/nguyenquochuy.jpg',
             'user_password' => bcrypt('password'),
@@ -136,5 +155,6 @@ class UserSeeder extends Seeder
         $user6->assignRole($jobholder_role);
         $user7->assignRole($jobholder_role);
         $user8->assignRole($jobholder_role);
+        $user9->assignRole($jobholder_role);
     }
 }

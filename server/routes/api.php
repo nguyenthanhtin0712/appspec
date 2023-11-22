@@ -102,12 +102,16 @@ Route::middleware(['auth:api'])->group(function () {
     Route::put('titles/{id}', [TitleController::class, 'update'])->middleware('check_user_role_permission:title.update');
     Route::delete('titles/{id}', [TitleController::class, 'destroy'])->middleware('check_user_role_permission:title.delete');
 
-    // Company api
+    // Company 
     Route::get('jobholders', [JobHolderController::class, 'index'])->middleware('check_user_role_permission:jobholder.view');
     Route::post('jobholders', [JobHolderController::class, 'store'])->middleware('check_user_role_permission:jobholder.create');
     Route::get('jobholders/{id}', [JobHolderController::class, 'show'])->middleware('check_user_role_permission:jobholder.view');
     Route::put('jobholders/{id}', [JobHolderController::class, 'update'])->middleware('check_user_role_permission:jobholder.update');
     Route::delete('jobholders/{id}', [JobHolderController::class, 'destroy'])->middleware('check_user_role_permission:jobholder.delete');
+
+    // Recuitment-position
+    Route::get('recruitment-positions', [RecruitmentPositionController::class, 'index']);
+    Route::post('recruitment-positions', [RecruitmentPositionController::class, 'store']);
 
     // Jobholder api
     Route::get('companies', [CompanyController::class, 'index'])->middleware('check_user_role_permission:company.view');
@@ -136,9 +140,23 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('internship-graduations/check-user-internship', [InternshipGraduationController::class, 'checkUserInternship']);
     Route::post('internship-graduations/additional-mentor', [InternshipGraduationController::class, 'additionalMentor']);
     Route::post('internship-graduations/additional-company', [InternshipGraduationController::class, 'additionalCompnay']);
+    Route::get('internship-graduations', [InternshipGraduationController::class, 'index']);
+    Route::get('internship-graduations/{id}', [InternshipGraduationController::class, 'show']);
+    Route::get('internship-graduations/company/{id}', [InternshipGraduationController::class, 'getCompany']);
+    Route::post('internship-graduations/register-info', [InternshipGraduationController::class, 'storeRegisterInfo']);
+    Route::post('internship-graduations/list-students', [InternshipGraduationController::class, 'submitListStudentInternship']);
+    Route::get('register-internships/assignmentInternship', [InternshipGraduationController::class, 'assignmentInternshipStudent']);
+    Route::get('register-internships/jobholder/{id}', [InternshipGraduationController::class, 'getJobholderAssinmentInteship']);
+    Route::post('register-internships/jobholder', [InternshipGraduationController::class, 'changeJobholder']);
+    Route::get('register-internships/queryJobholder', [InternshipGraduationController::class, 'queryJobholder']);
+    Route::post('register-internships/addJobholderIternship', [InternshipGraduationController::class, 'addJobholderIternship']);
+    Route::get('register-internships/getAssignmentDetail', [InternshipGraduationController::class, 'getAssignmentDetail']);
+
+    //Grading
     Route::get('grading', [GradingController::class, 'index'])->middleware('check_user_role_permission:jobholder.grading');
     Route::get('grading/students/{id}', [GradingController::class, 'getSutdentGrading'])->middleware('check_user_role_permission:jobholder.grading');
     Route::post('grading/update/', [GradingController::class, 'updateGrade'])->middleware('check_user_role_permission:jobholder.grading');
+
 
     // Academic_field api
     Route::get('academic-fields', [AcademicFieldController::class, 'index'])->middleware('check_user_role_permission:academic_field.view');;
@@ -178,6 +196,20 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('profile', [ProfileController::class, 'index']);
     Route::put('profile/change-password', [ProfileController::class, 'change_password']);
     Route::put('profile/change-information', [ProfileController::class, 'change_info']);
+
+    //Contact
+    Route::get('contacts', [ContactController::class, 'index']);
+
+    // Contact config
+    Route::post('contact-config', [ContactConfigController::class, 'updateContactConfig']);
+
+    //Role
+    Route::get('roles', [RoleController::class, 'index']);
+    Route::post('roles', [RoleController::class, 'store']);
+    Route::get('roles/{id}', [RoleController::class, 'show']);
+    Route::put('roles/{id}', [RoleController::class, 'update']);
+    Route::delete('roles/{id}', [RoleController::class, 'destroy']);
+    Route::get('functional', [RoleController::class, 'getPermissions']);
 });
 
 Route::get('test-email', [InternshipGraduationController::class, 'testEmail']);
@@ -189,45 +221,16 @@ Route::get('register-specialties/{id}/statistics/{major_id?}', [RegisterSpecialt
 
 Route::get('register-specialties/result', [RegisterSpecialtyController::class, 'getResult']);
 Route::get('register-specialties', [RegisterSpecialtyController::class, 'getRegisterSpecialty']);
-
-Route::get('recruitment-positions', [RecruitmentPositionController::class, 'index']);
-Route::post('recruitment-positions', [RecruitmentPositionController::class, 'store']);
-
-Route::get('internship-graduations', [InternshipGraduationController::class, 'index']);
-Route::get('company-internships', [InternshipGraduationController::class, 'getCompanyInternshipByUser']);
+//Register internship from student
 Route::get('register-internship/infoInternship', [InternshipGraduationController::class, 'getInfoInternship']);
-Route::get('internship-graduations/{id}', [InternshipGraduationController::class, 'show']);
-Route::get('internship-graduations/company/{id}', [InternshipGraduationController::class, 'getCompany']);
-Route::post('internship-graduations/register-info', [InternshipGraduationController::class, 'storeRegisterInfo']);
-
-
+Route::get('company-internships', [InternshipGraduationController::class, 'getCompanyInternshipByUser']);
 Route::get('register-internships', [InternshipGraduationController::class, 'getRegisterInternshipByUser']);
 Route::get('register-internships/result', [InternshipGraduationController::class, 'registerResultStudent']);
-Route::get('register-internships/assignmentInternship', [InternshipGraduationController::class, 'assignmentInternshipStudent']);
-Route::get('register-internships/jobholder/{id}', [InternshipGraduationController::class, 'getJobholderAssinmentInteship']);
-Route::post('register-internships/jobholder', [InternshipGraduationController::class, 'changeJobholder']);
-Route::get('register-internships/queryJobholder', [InternshipGraduationController::class, 'queryJobholder']);
-Route::post('register-internships/addJobholderIternship', [InternshipGraduationController::class, 'addJobholderIternship']);
-Route::get('register-internships/getAssignmentDetail', [InternshipGraduationController::class, 'getAssignmentDetail']);
-
-// Contact
-Route::get('contacts', [ContactController::class, 'index']);
-Route::post('contacts/send', [ContactController::class, 'sendMail']);
-Route::get('contact-config', [ContactConfigController::class, 'getInfo']);
-Route::post('contact-config', [ContactConfigController::class, 'updateContactConfig']);
-Route::post('internship-graduations/list-students', [InternshipGraduationController::class, 'submitListStudentInternship']);
-
 
 Route::get('subjects-schedule', [SubjectScheduleController::class, 'index']);
 Route::get('subjects-schedule/{id}', [SubjectScheduleController::class, 'show']);
 
 Route::get('warned-student/info/{id}', [WarnedDissmissedStudentController::class, 'getWarningInfo']);
-Route::get('roles', [RoleController::class, 'index']);
-Route::post('roles', [RoleController::class, 'store']);
-Route::get('roles/{id}', [RoleController::class, 'show']);
-Route::put('roles/{id}', [RoleController::class, 'update']);
-Route::delete('roles/{id}', [RoleController::class, 'destroy']);
-Route::get('functional', [RoleController::class, 'getPermissions']);
 
 Route::get('pages/view/{slug}', [PageController::class, 'viewPage']);
 Route::post('/upload-image', [PageController::class, 'uploadImage']);
@@ -235,3 +238,8 @@ Route::post('/upload-image', [PageController::class, 'uploadImage']);
 Route::get('job-posts/list', [JobPostController::class, 'getListPost']);
 Route::get('job-posts/{id}', [JobPostController::class, 'show']);
 Route::get('job-posts/related/{id}', [JobPostController::class, 'getRelatedPost']);
+////Page contact
+//Send mail from student
+Route::post('contacts/send', [ContactController::class, 'sendMail']);
+//Get info config
+Route::get('contact-config', [ContactConfigController::class, 'getInfo']);

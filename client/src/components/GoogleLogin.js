@@ -18,7 +18,7 @@ const GoogleLogin = () => {
         toast.success('Đăng nhập thành công');
         navigate('/');
       } else {
-        toast.error(result.payload.message);
+        toast.error('Vui lòng liên kết email với tài khoản!');
       }
     } catch (err) {
       console.error(err);

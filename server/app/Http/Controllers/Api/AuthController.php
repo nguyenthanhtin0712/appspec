@@ -99,7 +99,7 @@ class AuthController extends Controller
             ]);
             return $this->sentSuccessResponse("", "Gửi mail thành công", 200);
         } else {
-            return $this->sentErrorResponse("","Email không tồn tại trong hệ thống", 400);
+            return $this->sentErrorResponse("","Vui lòng liên kết email với tài khoản hệ thống", 400);
         }
     }
 

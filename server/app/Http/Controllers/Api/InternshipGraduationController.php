@@ -649,7 +649,6 @@ class InternshipGraduationController extends Controller
         $students = $request->input('students');
         $internship_graduation_id = $request->input('internship_graduation_id');
 
-        // Get all students with their associated users
         $studentsWithUsers = Student::with('user')
             ->where('internship_graduation_id', $internship_graduation_id)
             ->get();
@@ -661,7 +660,6 @@ class InternshipGraduationController extends Controller
             if (in_array($student->student_code, $students)) {
                 $listStudentSuccess[] = $student->user->user_email;
             } else {
-                // Update the student's attributes and save
                 $student->update([
                     'company_position_detail_id' => null,
                     'internship_graduation_id' => null,
