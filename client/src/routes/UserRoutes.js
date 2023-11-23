@@ -118,7 +118,7 @@ const UserRoutes = {
         },
         {
           path: 'result',
-          element: <RegisterIntern_Result requiredPermissions={[]} />
+          element: <RegisterIntern_Result />
         }
       ]
     },
