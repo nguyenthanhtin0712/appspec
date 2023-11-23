@@ -34,12 +34,11 @@ const TitleForm = ({ initialValues, action }) => {
           if (result && !result.error) {
             setStatus({ success: true });
             setSubmitting(false);
-            toast.success(action === 'update' ? 'Sửa chức vụ thành công!' : 'Thêm chức vụ thành công!');
+            toast.success(action === 'update' ? 'Cập nhật chức vụ thành công!' : 'Thêm chức vụ thành công!');
           } else {
             setStatus({ success: false });
             setErrors(result.payload.errors);
             setSubmitting(false);
-            toast.error(action === 'update' ? 'Có lỗi xảy ra khi Sửa chức vụ!' : 'Có lỗi xảy ra khi thêm chức vụ!');
           }
         } catch (err) {
           console.error(err);

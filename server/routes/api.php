@@ -208,11 +208,13 @@ Route::middleware(['auth:api'])->group(function () {
     //Role
     Route::get('roles', [RoleController::class, 'index']);
     Route::post('roles', [RoleController::class, 'store']);
-    Route::get('roles/{id}', [RoleController::class, 'show']);
     Route::put('roles/{id}', [RoleController::class, 'update']);
     Route::delete('roles/{id}', [RoleController::class, 'destroy']);
     Route::get('functional', [RoleController::class, 'getPermissions']);
 });
+Route::get('roles/{id}', [RoleController::class, 'show']);
+
+
 
 Route::get('register-specialties/majors/{id?}', [RegisterSpecialtyController::class, 'getMajor']);
 
