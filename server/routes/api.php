@@ -33,10 +33,10 @@ use Illuminate\Support\Facades\Route;
 //Authentication api
 
 //Này đăng nhập bằng email, mssv và password
+// Route::post('register', [RegisterController::class, 'register']);
+// Route::post('refresh', [AuthController::class, 'refreshToken']);
 Route::post('login', [AuthController::class, 'login']);
 Route::post('login-google', [AuthController::class, 'login_google']);
-Route::post('register', [RegisterController::class, 'register']);
-// Route::post('refresh', [AuthController::class, 'refreshToken']);
 Route::post('forget-password', [AuthController::class, 'forget_password']);
 Route::post('check-token', [AuthController::class, 'check_token']);
 Route::post('change-password-token', [AuthController::class, 'change_password_token']);
@@ -127,9 +127,9 @@ Route::middleware(['auth:api'])->group(function () {
     Route::put('subjects/{id}', [SubjectController::class, 'update'])->middleware('check_user_role_permission:subject.update');
     Route::delete('subjects/{id}', [SubjectController::class, 'destroy'])->middleware('check_user_role_permission:subject.delete');
 
+    // Subject schedule
     Route::post('subjects-schedule', [SubjectScheduleController::class, 'store'])->middleware('check_user_role_permission:subject_schedule.create');
     Route::delete('subjects-schedule/{id}', [SubjectScheduleController::class, 'destroy'])->middleware('check_user_role_permission:subject_schedule.delete');
-
 
     //Internship Graduation
     Route::post('internship-graduations/register', [InternshipGraduationController::class, 'submitRegisterInternship']);
@@ -183,6 +183,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('pages/{id}', [PageController::class, 'show']);
     Route::put('pages/{id}', [PageController::class, 'update']);
     Route::delete('pages/{id}', [PageController::class, 'destroy']);
+    Route::post('/upload-image', [PageController::class, 'uploadImage']);
 
     // Job Post
     Route::get('job-posts', [JobPostController::class, 'index']);
@@ -212,8 +213,6 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('functional', [RoleController::class, 'getPermissions']);
 });
 
-Route::get('test-email', [InternshipGraduationController::class, 'testEmail']);
-
 Route::get('register-specialties/majors/{id?}', [RegisterSpecialtyController::class, 'getMajor']);
 
 Route::get('register-specialties/statistics/{major_id?}', [RegisterSpecialtyController::class, 'getStatisticDefault']);
@@ -232,13 +231,14 @@ Route::get('subjects-schedule/{id}', [SubjectScheduleController::class, 'show'])
 
 Route::get('warned-student/info/{id}', [WarnedDissmissedStudentController::class, 'getWarningInfo']);
 
+// Page 
 Route::get('pages/view/{slug}', [PageController::class, 'viewPage']);
-Route::post('/upload-image', [PageController::class, 'uploadImage']);
 
+// Career
 Route::get('job-posts/list', [JobPostController::class, 'getListPost']);
 Route::get('job-posts/{id}', [JobPostController::class, 'show']);
 Route::get('job-posts/related/{id}', [JobPostController::class, 'getRelatedPost']);
-////Page contact
+//Page contact
 //Send mail from student
 Route::post('contacts/send', [ContactController::class, 'sendMail']);
 //Get info config

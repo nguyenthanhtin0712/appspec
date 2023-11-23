@@ -631,19 +631,6 @@ class InternshipGraduationController extends Controller
         return $this->sentSuccessResponse($jobholder_internship, "Change success", 200);
     }
 
-
-
-    public function testEmail()
-    {
-        $message = [
-            'type' => 'Create task',
-            'content' => 'has been created!',
-        ];
-        SendEmail::dispatch($message, [
-            'musicanime2501@gmail.com'
-        ])->delay(now()->addMinute(1));
-    }
-
     public function submitListStudentInternship(SubmitListStudentInternshipRequest $request)
     {
         $students = $request->input('students');
