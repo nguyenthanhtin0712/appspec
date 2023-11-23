@@ -134,7 +134,6 @@ class RoleController extends Controller
         $role->syncPermissions($permission);
         $role->name = $name;
         $role->save();
-
         return $this->sentSuccessResponse($role, "Update role success", 200);
     }
 
