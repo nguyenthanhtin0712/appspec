@@ -8,7 +8,6 @@ import { useNavigate } from 'react-router';
 
 const GoogleLogin = () => {
   const navigate = useNavigate();
-
   const handleCallbackResponse = async (response) => {
     var userObject = jwtDecode(response.credential);
     const value = { user_email: userObject.email };
