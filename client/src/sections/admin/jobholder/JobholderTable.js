@@ -44,13 +44,17 @@ const JobholderTable = () => {
         size: 5
       },
       {
-        accessorKey: 'user.user_firstname',
-        header: 'Họ'
+        header: 'Họ',
+        Cell: ({ cell }) => {
+          return <div>{cell.row.original.user.user_firstname}</div>;
+        }
       },
       {
-        accessorKey: 'user.user_lastname',
         header: 'Tên',
-        size: 5
+        size: 5,
+        Cell: ({ cell }) => {
+          return <div>{cell.row.original.user.user_lastname}</div>;
+        }
       },
       {
         accessorKey: 'jobholder_degree',
@@ -58,14 +62,18 @@ const JobholderTable = () => {
         size: 5
       },
       {
-        accessorKey: 'title.title_name',
         header: 'Chức vụ',
-        size: 10
+        size: 10,
+        Cell: ({ cell }) => {
+          return <div>{cell.row.original.title.title_name}</div>;
+        }
       },
       {
-        accessorKey: 'academic_field.academic_field_name',
         header: 'Bộ môn',
-        size: 20
+        size: 20,
+        Cell: ({ cell }) => {
+          return <div>{cell.row.original.academic_field.academic_field_name}</div>;
+        }
       }
     ],
     []

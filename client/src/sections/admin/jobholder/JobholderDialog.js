@@ -96,12 +96,12 @@ const JobholderForm = ({ initialValues, action }) => {
           if (result && !result.error) {
             setStatus({ success: true });
             setSubmitting(false);
-            toast.success(action === 'update' ? 'Sửa viên chức thành công!' : 'Thêm viên chức thành công!');
+            toast.success(action === 'update' ? 'Cập nhật viên chức thành công!' : 'Thêm viên chức thành công!');
           } else {
             setStatus({ success: false });
             setErrors(result.payload.errors);
             setSubmitting(false);
-            toast.error(action === 'update' ? 'Có lỗi xảy ra khi Sửa viên chức!' : 'Có lỗi xảy ra khi thêm viên chức!');
+            toast.error(action === 'update' ? 'Có lỗi xảy ra khi cập nhật viên chức!' : 'Có lỗi xảy ra khi thêm viên chức!');
           }
         } catch (err) {
           console.error(err);
