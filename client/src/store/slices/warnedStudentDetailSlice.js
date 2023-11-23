@@ -10,7 +10,7 @@ export const fetchData = createAsyncThunk('warned_student_detail/fetchData', asy
     studentQuery,
     pagination: { pageIndex, pageSize }
   } = params;
-  const url = new URL(`/api/warned-student/${id}`, API_BASE_URL);
+  const url = new URL(`/api/warned-student/${id}/students`, API_BASE_URL);
   url.searchParams.set('page', `${pageIndex + 1}`);
   url.searchParams.set('perPage', `${pageSize}`);
   url.searchParams.set('majorId', majorId ?? '');
@@ -57,7 +57,7 @@ export const getStatistical = createAsyncThunk('warned_student_detail/getStatist
 });
 
 export const getWarningInfo = createAsyncThunk('warned_student_detail/getWarningInfo', async (id) => {
-  const response = await axios.get(`${API_BASE_URL}/warned-student/info/${id}`);
+  const response = await axios.get(`${API_BASE_URL}/warned-student/${id}`);
   return response.data;
 });
 

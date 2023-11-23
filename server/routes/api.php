@@ -9,7 +9,6 @@ use App\Http\Controllers\Api\GradingController;
 use App\Http\Controllers\Api\JobHolderController;
 use App\Http\Controllers\Api\MajorController;
 use App\Http\Controllers\Api\RecruitmentPositionController;
-use App\Http\Controllers\Api\RegisterController;
 use App\Http\Controllers\Api\RegisterSpecialtyController;
 use App\Http\Controllers\Api\SpecialtyController;
 use App\Http\Controllers\Api\StudentController;
@@ -90,10 +89,10 @@ Route::middleware(['auth:api'])->group(function () {
     Route::put('/register-specialties/admin/{id}', [RegisterSpecialtyController::class, 'update'])->middleware('check_user_role_permission:register_spec.update');
     Route::delete('/register-specialties/admin/{id}', [RegisterSpecialtyController::class, 'destroy'])->middleware('check_user_role_permission:register_spec.delete');
 
-    Route::get('register-specialties/register', [RegisterSpecialtyController::class, 'getSpecialtiesForRegister']);
-    Route::post('register-specialties/register', [RegisterSpecialtyController::class, 'submitRegisterSpecialty']);
-    Route::post('register-specialties/change', [RegisterSpecialtyController::class, 'changeSpecialty']);
-    Route::post('register-specialties/export', [RegisterSpecialtyController::class, 'getStudentOfSpecialty']);
+    Route::get('register-specialties/register', [RegisterSpecialtyController::class, 'getSpecialtiesForRegister'])->middleware('check_user_role_permission:register_spec.register');
+    Route::post('register-specialties/register', [RegisterSpecialtyController::class, 'submitRegisterSpecialty'])->middleware('check_user_role_permission:register_spec.register');
+    Route::post('register-specialties/change', [RegisterSpecialtyController::class, 'changeSpecialty'])->middleware('check_user_role_permission:register_spec.divide');
+    Route::post('register-specialties/export', [RegisterSpecialtyController::class, 'getStudentOfSpecialty'])->middleware('check_user_role_permission:register_spec.divide');
 
     //Title api
     Route::get('titles', [TitleController::class, 'index'])->middleware('check_user_role_permission:title.view');
@@ -159,31 +158,34 @@ Route::middleware(['auth:api'])->group(function () {
 
 
     // Academic_field api
-    Route::get('academic-fields', [AcademicFieldController::class, 'index'])->middleware('check_user_role_permission:academic_field.view');;
+    Route::get('academic-fields', [AcademicFieldController::class, 'index'])->middleware('check_user_role_permission:academic_field.view');
 
     // Config page
     Route::get('configs', [DisplayConfigController::class, 'index']);
     Route::put('/configs/{id}', [DisplayConfigController::class, 'update']);
 
     // Warned dimissed student
-    Route::get('warned-student', [WarnedDissmissedStudentController::class, 'index']);
-    Route::post('warned-student', [WarnedDissmissedStudentController::class, 'store']);
-    Route::get('warned-student/lookup', [WarnedDissmissedStudentController::class, 'lookUpStudent']);
-    Route::get('warned-student/statistical/{id}', [WarnedDissmissedStudentController::class, 'statistical']);
-    Route::get('warned-student/{id}', [WarnedDissmissedStudentController::class, 'show']);
-    Route::delete('warned-student/{id}', [WarnedDissmissedStudentController::class, 'destroy']);
+    Route::get('warned-student', [WarnedDissmissedStudentController::class, 'index'])->middleware('check_user_role_permission:warned_dismissed.view');
+    Route::post('warned-student', [WarnedDissmissedStudentController::class, 'store'])->middleware('check_user_role_permission:warned_dismissed.create');
+    Route::get('warned-student/lookup', [WarnedDissmissedStudentController::class, 'lookUpStudent'])->middleware('check_user_role_permission:warned_dismissed.lookup');
+    Route::delete('warned-student/{id}', [WarnedDissmissedStudentController::class, 'destroy'])->middleware('check_user_role_permission:warned_dismissed.delete');
+
+    Route::get('warned-student/statistical/{id}', [WarnedDissmissedStudentController::class, 'statistical'])->middleware('check_user_role_permission:warned_dismissed.detail');
+    Route::get('warned-student/{id}/students', [WarnedDissmissedStudentController::class, 'show'])->middleware('check_user_role_permission:warned_dismissed.detail');
+    Route::get('warned-student/{id}', [WarnedDissmissedStudentController::class, 'getWarningInfo'])->middleware('check_user_role_permission:warned_dismissed.detail');
+
     // Register Open Class
-    Route::post('register-open-class', [RegisterOpenClassController::class, 'register']);
-    Route::get('register-open-class/history', [RegisterOpenClassController::class, 'history']);
-    Route::get('register-open-class/statistical', [RegisterOpenClassController::class, 'statistical']);
+    Route::post('register-open-class', [RegisterOpenClassController::class, 'register'])->middleware('check_user_role_permission:register_open_class');
+    Route::get('register-open-class/history', [RegisterOpenClassController::class, 'history'])->middleware('check_user_role_permission:register_open_class');
+    Route::get('register-open-class/statistical', [RegisterOpenClassController::class, 'statistical'])->middleware('check_user_role_permission:register_open_class.statistic');
 
     // Pages
-    Route::get('pages', [PageController::class, 'index']);
-    Route::post('pages', [PageController::class, 'store']);
-    Route::get('pages/{id}', [PageController::class, 'show']);
-    Route::put('pages/{id}', [PageController::class, 'update']);
-    Route::delete('pages/{id}', [PageController::class, 'destroy']);
-    Route::post('/upload-image', [PageController::class, 'uploadImage']);
+    Route::get('pages', [PageController::class, 'index'])->middleware('check_user_role_permission:page_view');
+    Route::post('pages', [PageController::class, 'store'])->middleware('check_user_role_permission:page_create');
+    Route::post('/upload-image', [PageController::class, 'uploadImage'])->middleware('check_user_role_permission:page_create');
+    Route::get('pages/{id}', [PageController::class, 'show'])->middleware('check_user_role_permission:page_update');
+    Route::put('pages/{id}', [PageController::class, 'update'])->middleware('check_user_role_permission:page_update');
+    Route::delete('pages/{id}', [PageController::class, 'destroy'])->middleware('check_user_role_permission:page_delete');
 
     // Job Post
     Route::get('job-posts', [JobPostController::class, 'index']);
@@ -226,10 +228,9 @@ Route::get('company-internships', [InternshipGraduationController::class, 'getCo
 Route::get('register-internships', [InternshipGraduationController::class, 'getRegisterInternshipByUser']);
 Route::get('register-internships/result', [InternshipGraduationController::class, 'registerResultStudent']);
 
+// Subject Schedule
 Route::get('subjects-schedule', [SubjectScheduleController::class, 'index']);
 Route::get('subjects-schedule/{id}', [SubjectScheduleController::class, 'show']);
-
-Route::get('warned-student/info/{id}', [WarnedDissmissedStudentController::class, 'getWarningInfo']);
 
 // Page 
 Route::get('pages/view/{slug}', [PageController::class, 'viewPage']);
