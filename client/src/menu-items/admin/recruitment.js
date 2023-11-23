@@ -18,14 +18,16 @@ const dashboard = {
       title: 'Quản lý tin tuyển dụng',
       type: 'item',
       url: '/admin/manage-job-post',
-      icon: icons.managepost
+      icon: icons.managepost,
+      permission: ['job_post.confirm']
     },
     {
       id: 'post',
       title: 'Tin tuyển dụng của bạn',
       type: 'item',
       url: '/admin/job-post',
-      icon: icons.jobpost
+      icon: icons.jobpost,
+      permission: ['job_post.create']
     }
   ]
 };

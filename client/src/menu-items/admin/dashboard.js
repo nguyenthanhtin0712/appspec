@@ -23,35 +23,40 @@ const dashboard = {
       title: 'Tổng quan',
       type: 'item',
       url: '/admin',
-      icon: icons.dashboard
+      icon: icons.dashboard,
+      permission: ['system.update']
     },
     {
       id: 'config',
       title: 'Cấu hình',
       type: 'item',
       url: '/admin/config',
-      icon: icons.config
+      icon: icons.config,
+      permission: ['system.update']
     },
     {
       id: 'contact',
       title: 'Liên hệ',
       type: 'item',
       url: '/admin/contact',
-      icon: icons.contact
+      icon: icons.contact,
+      permission: ['contact.view']
     },
     {
       id: 'page',
       title: 'Quản lý trang',
       type: 'item',
       url: '/admin/page',
-      icon: icons.page
+      icon: icons.page,
+      permission: ['page.view']
     },
     {
       id: 'role',
       title: 'Phân quyền',
       type: 'item',
       url: '/admin/role',
-      icon: icons.role
+      icon: icons.role,
+      permission: ['role.view']
     }
   ]
 };

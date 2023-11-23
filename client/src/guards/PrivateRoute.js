@@ -11,13 +11,12 @@ const PrivateRoute = ({ component: Component, requiredPermissions }) => {
   if (Cookies.get('token')) {
     if (isLoaded) {
       if (!isAuthenticated) {
-        sessionStorage.setItem('prevPath', window.location.pathname);
         return <Navigate to="/auth/login" replace={true} />;
       }
       if (requiredPermissions.length === 0 || hasPermission) {
         return <Component />;
       }
-      return <Navigate to="/403" replace={true} />;
+      return <Navigate to="/error/403" replace={true} />;
     }
   } else {
     return <Navigate to="/auth/login" replace={true} />;

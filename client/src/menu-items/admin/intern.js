@@ -22,21 +22,24 @@ const intern = {
       title: 'Công ty',
       type: 'item',
       url: '/admin/company',
-      icon: icons.company
+      icon: icons.company,
+      permission: []
     },
     {
       id: 'internship-graduation',
       title: 'Đăng ký thực tập',
       type: 'item',
       url: '/admin/internship-graduation',
-      icon: icons.assignment
+      icon: icons.assignment,
+      permission: []
     },
     {
       id: 'grading',
       title: 'Chấm điểm',
       type: 'item',
       url: '/admin/grading',
-      icon: icons.grading
+      icon: icons.grading,
+      permission: []
     }
   ]
 };

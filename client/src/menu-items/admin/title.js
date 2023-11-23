@@ -17,7 +17,8 @@ const title = {
       title: 'Chức vụ',
       type: 'item',
       url: '/admin/title',
-      icon: icons.title
+      icon: icons.title,
+      permission: ['title.view']
     }
   ]
 };

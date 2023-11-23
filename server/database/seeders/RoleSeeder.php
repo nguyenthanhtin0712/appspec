@@ -77,7 +77,7 @@ class RoleSeeder extends Seeder
         $jobholder_delete = Permission::create(['name' => 'jobholder.delete', 'desc' => 'Xoá viên chức', 'functional_code' => 'jobholder']);
         $jobholder_grading = Permission::create(['name' => 'jobholder.grading', 'desc' => 'Chấm điểm', 'functional_code' => 'jobholder']);
         // Role subject
-        Functional::create(['functional_code' => 'subject', 'functional_name' => 'Quản lý bộ môn']);
+        Functional::create(['functional_code' => 'subject', 'functional_name' => 'Quản lý môn học']);
         $subject_view = Permission::create(['name' => 'subject.view', 'desc' => 'Xem bộ môn', 'functional_code' => 'subject']);
         $subject_create = Permission::create(['name' => 'subject.create', 'desc' => 'Tạo bộ môn', 'functional_code' => 'subject']);
         $subject_update = Permission::create(['name' => 'subject.update', 'desc' => 'Cập nhật bộ môn', 'functional_code' => 'subject']);
@@ -124,13 +124,14 @@ class RoleSeeder extends Seeder
 
         // Contact
         Functional::create(['functional_code' => 'contact', 'functional_name' => 'Quản lý liên hệ']);
-        $contact_view = Permission::create(['name' => 'contact.view', 'desc' => 'Xoá liên hệ', 'functional_code' => 'contact']);
+        $contact_view = Permission::create(['name' => 'contact.view', 'desc' => 'Xem danh sách liên hệ', 'functional_code' => 'contact']);
         $contact_delete = Permission::create(['name' => 'contact.delete', 'desc' => 'Xoá liên hệ', 'functional_code' => 'contact']);
-        $contact_update_info = Permission::create(['name' => 'contact.update_info', 'desc' => 'Xoá liên hệ', 'functional_code' => 'contact']);
+        $contact_update_info = Permission::create(['name' => 'contact.update_info', 'desc' => 'Cập nhật thông tin liên hệ', 'functional_code' => 'contact']);
 
 
         // System
         Functional::create(['functional_code' => 'system', 'functional_name' => 'Quản lý hệ thống']);
+        $system_update = Permission::create(['name' => 'system.update', 'desc' => 'Cập nhật cấu hình hệ thống', 'functional_code' => 'system']);
 
         $admin_role = Role::create(['name' => 'admin']);
         $jobholder_role = Role::create(['name' => 'jobhodler']);
@@ -199,7 +200,8 @@ class RoleSeeder extends Seeder
             $job_post_confirm,
             $contact_view,
             $contact_delete,
-            $contact_update_info
+            $contact_update_info,
+            $system_update
         ]);
 
         $jobholder_role->givePermissionTo([

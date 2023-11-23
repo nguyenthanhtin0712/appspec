@@ -104,7 +104,7 @@ const RepeatCustomerChart = () => {
     }
   ]);
 
-  return <ReactApexChart options={options} series={series} type="area" height={260} />;
+  return <ReactApexChart options={options} series={series} type="area" height={310} />;
 };
 
 export default RepeatCustomerChart;

@@ -88,15 +88,15 @@ const UserRoutes = {
       children: [
         {
           path: '/register_speciality',
-          element: <RegisterSpeciality_Index requiredPermissions={[]} />
+          element: <RegisterSpeciality_Index />
         },
         {
           path: 'register',
-          element: <PrivateRoute component={RegisterSpeciality_Register} requiredPermissions={[]} />
+          element: <PrivateRoute component={RegisterSpeciality_Register} requiredPermissions={['register_spec.register']} />
         },
         {
           path: 'result',
-          element: <RegisterSpeciality_Result requiredPermissions={[]} />
+          element: <RegisterSpeciality_Result />
         }
       ]
     },
@@ -128,15 +128,15 @@ const UserRoutes = {
       children: [
         {
           path: '/register-open-class',
-          element: <PrivateRoute component={RegisterImprovement} requiredPermissions={[]} />
+          element: <PrivateRoute component={RegisterImprovement} requiredPermissions={['register_open_class']} />
         },
         {
           path: '/register-open-class/history',
-          element: <PrivateRoute component={RegisterOpenClassHistory} requiredPermissions={[]} />
+          element: <PrivateRoute component={RegisterOpenClassHistory} requiredPermissions={['register_open_class']} />
         },
         {
           path: '/register-open-class/statistic',
-          element: <PrivateRoute component={RegisterOpenClassStatistic} requiredPermissions={[]} />
+          element: <PrivateRoute component={RegisterOpenClassStatistic} requiredPermissions={['register_open_class.statistic']} />
         }
       ]
     }

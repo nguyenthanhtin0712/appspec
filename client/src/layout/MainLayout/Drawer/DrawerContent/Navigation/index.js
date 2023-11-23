@@ -1,15 +1,8 @@
 import { useLayoutEffect, useState } from 'react';
-
-// material-ui
 import { Box, Typography } from '@mui/material';
-
-// project-imports
 import NavGroup from './NavGroup';
 import menuItem from 'menu-items/admin';
-
 import { useSelector } from 'store';
-
-// ==============================|| DRAWER CONTENT - NAVIGATION ||============================== //
 
 const Navigation = () => {
   let items = [];

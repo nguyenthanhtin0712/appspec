@@ -22,6 +22,7 @@ use App\Http\Controllers\Api\PageController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\RegisterOpenClassController;
 use App\Http\Controllers\Api\RoleController;
+use App\Http\Controllers\Api\StatisticsController;
 use App\Http\Controllers\Api\SubjectScheduleController;
 use App\Http\Controllers\Api\WarnedDissmissedStudentController;
 use App\Http\Resources\LoginResource;
@@ -216,6 +217,9 @@ Route::middleware(['auth:api'])->group(function () {
     Route::delete('roles/{id}', [RoleController::class, 'destroy']);
     Route::get('roles/{id}', [RoleController::class, 'show']);
     Route::get('functional', [RoleController::class, 'getPermissions']);
+
+    // Statistic
+    Route::get('statistics', [StatisticsController::class, 'index']);
 });
 
 

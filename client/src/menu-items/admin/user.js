@@ -21,14 +21,16 @@ const user = {
       title: 'Sinh viên',
       type: 'item',
       url: '/admin/student',
-      icon: icons.student
+      icon: icons.student,
+      permission: ['student.view']
     },
     {
       id: 'jobholder',
       title: 'Viên chức',
       type: 'item',
       url: '/admin/jobhodler',
-      icon: icons.jobholder
+      icon: icons.jobholder,
+      permission: ['jobholder.view']
     }
   ]
 };

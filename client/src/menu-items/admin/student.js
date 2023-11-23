@@ -18,14 +18,8 @@ const student = {
       title: 'Cảnh cáo & Buộc thôi học',
       type: 'item',
       url: '/admin/warned-student',
-      icon: icons.warned
-    },
-    {
-      id: 'graduated',
-      title: 'Tốt nghiệp',
-      type: 'item',
-      url: '/admin/title',
-      icon: icons.graduated
+      icon: icons.warned,
+      permission: ['warned_dismissed.view']
     }
   ]
 };

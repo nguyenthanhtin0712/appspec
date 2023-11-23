@@ -11,6 +11,7 @@ import ConfirmDialog from 'components/ConfirmDialog';
 import { Button, Typography } from '@mui/material';
 import { toast } from 'react-toastify';
 import IconAction from 'components/IconAction';
+import WithPermission from 'guards/WithPermission';
 
 const ContactTable = () => {
   const theme = useTheme();
@@ -89,7 +90,9 @@ const ContactTable = () => {
                 console.log('row.original.contact_id', row.original.contact_id);
               }}
             />
-            <IconAction title="Xoá" icon={<Trash />} onClick={() => handleDelete(row.original.contact_id)} />
+            <WithPermission requiredPermission={['contact.delete']}>
+              <IconAction title="Xoá" icon={<Trash />} color="error" onClick={() => handleDelete(row.original.contact_id)} />
+            </WithPermission>
           </Stack>
         )}
         muiTablePaperProps={{

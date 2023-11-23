@@ -1,30 +1,20 @@
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
-
-// material-ui
 import { useTheme } from '@mui/material/styles';
 import { Box, List, Typography, useMediaQuery } from '@mui/material';
-
-// project-imports
 import NavItem from './NavItem';
-
 import { dispatch, useSelector } from 'store';
 import { activeID } from 'store/slices/menu';
-
-// ==============================|| NAVIGATION - GROUP ||============================== //
 
 const NavGroup = ({ item, lastItem, remItems, lastItemId }) => {
   const theme = useTheme();
   const { pathname } = useLocation();
-
-  const { drawerAdminOpen } = useSelector((state) => state.menu);
-
+  const drawerAdminOpen = useSelector((state) => state.menu.drawerAdminOpen);
+  const permissions = useSelector((state) => state.auth.permissions);
   const downLG = useMediaQuery(theme.breakpoints.down('lg'));
-
   const [anchorEl, setAnchorEl] = useState(null);
   const [currentItem, setCurrentItem] = useState(item);
-
   const openMini = Boolean(anchorEl);
 
   useEffect(() => {
@@ -51,6 +41,7 @@ const NavGroup = ({ item, lastItem, remItems, lastItemId }) => {
       }
     });
   };
+
   const checkSelectedOnload = (data) => {
     const childrens = data.children ? data.children : [];
     childrens.forEach((itemCheck) => {
@@ -69,10 +60,16 @@ const NavGroup = ({ item, lastItem, remItems, lastItemId }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname, currentItem]);
 
-  const navCollapse = item.children?.map((menuItem) => {
+  const newListItem = item.children.filter((menuItem) => {
+    // menuItem.permission.length == 0 ||
+    return menuItem.permission.some((permission) => permissions.includes(permission));
+  });
+
+  if (newListItem.length == 0) return null;
+
+  const navCollapse = newListItem.map((menuItem) => {
     switch (menuItem.type) {
       case 'collapse':
-        // Pro version
         return (
           <Typography key={menuItem.id} variant="h6" color="error" align="center">
             Pro Version

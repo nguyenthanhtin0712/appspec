@@ -47,7 +47,8 @@ const JobholderTable = () => {
         header: 'Họ',
         Cell: ({ cell }) => {
           return <div>{cell.row.original.user.user_firstname}</div>;
-        }
+        },
+        size: 5
       },
       {
         header: 'Tên',

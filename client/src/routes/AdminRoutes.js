@@ -8,10 +8,7 @@ import { getPageById } from 'store/slices/pageSlice';
 import { getJobPostById } from 'store/slices/jobPostSlice';
 import { getRegistrationInfoById } from 'store/slices/registerSpecialtyUserSlice';
 
-// render - dashboard
 const DashboardDefault = Loadable(lazy(() => import('pages/admin/dashboard')));
-
-// render - sample page
 const MajorPage = Loadable(lazy(() => import('pages/admin/major')));
 const ConfigPage = Loadable(lazy(() => import('pages/admin/config-page')));
 const ContactPage = Loadable(lazy(() => import('pages/admin/contact')));
@@ -62,11 +59,11 @@ const AdminRoutes = {
     },
     {
       path: 'config',
-      element: <ConfigPage />
+      element: <PrivateRoute component={ConfigPage} requiredPermissions={['system.update']} />
     },
     {
       path: 'contact',
-      element: <ContactPage />
+      element: <PrivateRoute component={ContactPage} requiredPermissions={['contact.view']} />
     },
     {
       path: 'major',
@@ -74,15 +71,15 @@ const AdminRoutes = {
     },
     {
       path: 'register_specialty',
-      element: <PrivateRoute component={RegisterSpecialtyPageIndex} requiredPermissions={['major.view']} />
+      element: <PrivateRoute component={RegisterSpecialtyPageIndex} requiredPermissions={['register_spec.view']} />
     },
     {
       path: 'register_specialty/create',
-      element: <PrivateRoute component={RegisterSpecialtyPageCreate} requiredPermissions={['major.view']} />
+      element: <PrivateRoute component={RegisterSpecialtyPageCreate} requiredPermissions={['register_spec.create']} />
     },
     {
       path: 'register_specialty/edit/:id',
-      element: <PrivateRoute component={RegisterSpecialtyPageEdit} requiredPermissions={['major.view']} />
+      element: <PrivateRoute component={RegisterSpecialtyPageEdit} requiredPermissions={['register_spec.update']} />
     },
     {
       path: 'register_specialty/:Id',
@@ -93,7 +90,7 @@ const AdminRoutes = {
         }
         return res;
       },
-      element: <PrivateRoute component={RegisterSpecialtyPageResult} requiredPermissions={['major.view']} />
+      element: <PrivateRoute component={RegisterSpecialtyPageResult} requiredPermissions={['register_spec.divide']} />
     },
     {
       path: 'internship-graduation',
@@ -129,11 +126,7 @@ const AdminRoutes = {
     },
     {
       path: 'company',
-      element: <PrivateRoute component={CompanyPage} requiredPermissions={[]} />
-    },
-    {
-      path: 'page',
-      element: <PrivateRoute component={Page} requiredPermissions={['student.view']} />
+      element: <PrivateRoute component={CompanyPage} requiredPermissions={['company.view']} />
     },
     {
       path: 'subject',
@@ -141,11 +134,11 @@ const AdminRoutes = {
     },
     {
       path: 'subject-schedule',
-      element: <PrivateRoute component={SubjectSchedule} requiredPermissions={['subject.view']} />
+      element: <PrivateRoute component={SubjectSchedule} requiredPermissions={['subject_schedule.create']} />
     },
     {
       path: 'warned-student',
-      element: <PrivateRoute component={WarnedStudent} requiredPermissions={['subject.view']} />
+      element: <PrivateRoute component={WarnedStudent} requiredPermissions={['warned_dismissed.view']} />
     },
     {
       path: 'warned-student/:id',
@@ -156,11 +149,15 @@ const AdminRoutes = {
         }
         return res;
       },
-      element: <PrivateRoute component={WarnedStudentDetailPage} requiredPermissions={['subject.view']} />
+      element: <PrivateRoute component={WarnedStudentDetailPage} requiredPermissions={['warned_dismissed.detail']} />
+    },
+    {
+      path: 'page',
+      element: <PrivateRoute component={Page} requiredPermissions={['page.view']} />
     },
     {
       path: 'page/create',
-      element: <PrivateRoute component={PageCreate} requiredPermissions={[]} />
+      element: <PrivateRoute component={PageCreate} requiredPermissions={['page.create']} />
     },
     {
       path: 'page/edit/:pageId',
@@ -171,7 +168,7 @@ const AdminRoutes = {
         }
         return res;
       },
-      element: <PrivateRoute component={PageEdit} requiredPermissions={[]} />
+      element: <PrivateRoute component={PageEdit} requiredPermissions={['page.update']} />
     },
     {
       path: 'role',
@@ -199,15 +196,15 @@ const AdminRoutes = {
     },
     {
       path: 'manage-job-post',
-      element: <PrivateRoute component={ManageJobPost} requiredPermissions={[]} />
+      element: <PrivateRoute component={ManageJobPost} requiredPermissions={['job_post.confirm']} />
     },
     {
       path: 'job-post',
-      element: <PrivateRoute component={JobPost} requiredPermissions={[]} />
+      element: <PrivateRoute component={JobPost} requiredPermissions={['job_post.create']} />
     },
     {
       path: 'job-post/create',
-      element: <PrivateRoute component={CreateJobPost} requiredPermissions={[]} />
+      element: <PrivateRoute component={CreateJobPost} requiredPermissions={['job_post.create']} />
     },
     {
       path: 'job-post/edit/:postId',
@@ -218,7 +215,7 @@ const AdminRoutes = {
         }
         return res;
       },
-      element: <PrivateRoute component={EditJobPost} requiredPermissions={[]} />
+      element: <PrivateRoute component={EditJobPost} requiredPermissions={['job_post.update']} />
     }
   ]
 };

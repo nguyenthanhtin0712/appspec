@@ -21,21 +21,24 @@ const specialty = {
       title: 'Ngành',
       type: 'item',
       url: '/admin/major',
-      icon: icons.major
+      icon: icons.major,
+      permission: ['major.view']
     },
     {
       id: 'specialty',
       title: 'Chuyên ngành',
       type: 'item',
       url: '/admin/specialty',
-      icon: icons.specialty
+      icon: icons.specialty,
+      permission: ['specialty.view']
     },
     {
       id: 'register_specialty',
       title: 'Đăng ký chuyên ngành',
       type: 'item',
       url: '/admin/register_specialty',
-      icon: icons.register_specialty
+      icon: icons.register_specialty,
+      permission: ['register_spec.create']
     }
   ]
 };

@@ -9,6 +9,7 @@ import { fetchData, setColumnFilters, setGlobalFilter, setSorting, setPagination
 import { dispatch } from 'store/index';
 import dayjs from 'dayjs';
 import IconAction from 'components/IconAction';
+import WithPermission from 'guards/WithPermission';
 
 const PageTable = () => {
   const theme = useTheme();
@@ -75,8 +76,12 @@ const PageTable = () => {
         renderRowActions={({ row }) => (
           <Box>
             <IconAction title={'Xem'} icon={<Eye />} href={`/page/${row.original.page_slug}`} />
-            <IconAction title={'Chỉnh sửa'} icon={<Edit />} href={`/admin/page/edit/${row.id}`} />
-            <IconAction title={'Xoá'} color="error" icon={<Trash />} onClick={() => dispatch(setIdDeletePage(row.id))} />
+            <WithPermission requiredPermission={['page.update']}>
+              <IconAction title={'Chỉnh sửa'} icon={<Edit />} href={`/admin/page/edit/${row.id}`} />
+            </WithPermission>
+            <WithPermission requiredPermission={['page.delete']}>
+              <IconAction title={'Xoá'} color="error" icon={<Trash />} onClick={() => dispatch(setIdDeletePage(row.id))} />
+            </WithPermission>
           </Box>
         )}
         displayColumnDefOptions={{
