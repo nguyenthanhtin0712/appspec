@@ -6,6 +6,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Response;
+use Illuminate\Validation\Rule;
 
 class UpdateTitleRequest extends FormRequest
 {
@@ -27,7 +28,17 @@ class UpdateTitleRequest extends FormRequest
     public function rules()
     {
         return [
-            'title_name' => 'required',
+            'title_name' => [
+                'required',
+                Rule::unique('titles')->ignore($this->title_id, 'title_id'),
+            ],
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'title_name.unique' => 'Chức vụ đã tồn tại trong hệ thống',
         ];
     }
 

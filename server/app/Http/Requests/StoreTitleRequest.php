@@ -27,7 +27,14 @@ class StoreTitleRequest extends FormRequest
     public function rules()
     {
         return [
-            'title_name' => 'required',
+            'title_name' => 'required|unique:titles,title_name',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'title_name.unique' => "Tên chức vụ đã tồn tại"
         ];
     }
 
