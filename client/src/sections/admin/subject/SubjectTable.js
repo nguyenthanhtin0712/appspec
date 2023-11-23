@@ -129,11 +129,16 @@ const SubjectTable = () => {
             bgcolor: theme.palette.background.neutral
           })
         }}
-        renderTopToolbarCustomActions={() => (
-          <Button color="success" startIcon={<Export />} variant="contained">
-            Xuất Excel
-          </Button>
-        )}
+        positionGlobalFilter="left"
+        initialState={{
+          showGlobalFilter: true
+        }}
+        muiSearchTextFieldProps={{
+          placeholder: 'Tìm kiếm học phần ...',
+          sx: { minWidth: '300px' },
+          variant: 'outlined',
+          size: 'small'
+        }}
       />
     </>
   );

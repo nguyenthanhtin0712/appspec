@@ -11,7 +11,7 @@ const contact = () => {
     <>
       <Stack direction="row" justifyContent="space-between" alignItems="center" mb={1.5} flexWrap="wrap">
         <Typography variant="h4">Quản lý liên hệ</Typography>
-        <WithPermission requiredPermission={['contact.update']}>
+        <WithPermission requiredPermission={['contact.update_info']}>
           <Button variant="contained" startIcon={<Edit />} onClick={() => dispatch(setContactDialog({ open: true }))}>
             Sửa TTLH
           </Button>

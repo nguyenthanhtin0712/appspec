@@ -19,15 +19,8 @@ const ContactConfigDialog = () => {
   }, []);
 
   return (
-    <Dialog
-      open={contactDialog.open}
-      onClose={() => {
-        dispatch(setContactDialog({ open: false }));
-      }}
-      maxWidth="sm"
-      fullWidth
-    >
-      <DialogTitleCustom>Thông tin liên hệ</DialogTitleCustom>
+    <Dialog open={contactDialog.open} onClose={() => dispatch(setContactDialog({ open: false }))} maxWidth="sm" fullWidth>
+      <DialogTitleCustom onClose={() => dispatch(setContactDialog({ open: false }))}>Thông tin liên hệ</DialogTitleCustom>
       <ContactForm initialValues={contactDialog?.init} />
     </Dialog>
   );
