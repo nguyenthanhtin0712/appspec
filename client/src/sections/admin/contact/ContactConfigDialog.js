@@ -8,7 +8,7 @@ import { ContactForm } from 'sections/admin/contact/ContactForm';
 
 import { getContactConfig } from 'store/slices/contactSlice';
 
-const ContactDialog = () => {
+const ContactConfigDialog = () => {
   const { contactDialog } = useSelector((state) => state.contact);
 
   useEffect(() => {
@@ -33,4 +33,4 @@ const ContactDialog = () => {
   );
 };
 
-export default memo(ContactDialog);
+export default memo(ContactConfigDialog);

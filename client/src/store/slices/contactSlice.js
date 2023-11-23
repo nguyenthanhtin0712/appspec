@@ -34,6 +34,16 @@ export const fetchData = createAsyncThunk('contact/fetchData', async (params, { 
   }
 });
 
+export const deleteContact = createAsyncThunk('contact/deleteContact', async (id) => {
+  try {
+    const response = await axios.delete(`/contacts/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+});
+
 export const sendMail = createAsyncThunk('contact/sendMail', async (message) => {
   try {
     const response = await axios.post(`/contacts/send`, message);
@@ -132,6 +142,10 @@ const contact = createSlice({
       })
       .addCase(getContactConfig.fulfilled, (state, action) => {
         state.contactDialog.init = action.payload.data;
+      })
+      .addCase(deleteContact.fulfilled, (state, action) => {
+        const id = action.payload.data.contact_id;
+        state.data = state.data.filter((contact) => contact.contact_id != id);
       });
   }
 });

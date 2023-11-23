@@ -18,7 +18,7 @@ class CreateContactsTable extends Migration
             $table->string('contact_fullname');
             $table->string('contact_email');
             $table->string('contact_phone');
-            $table->string('contact_content');
+            $table->text('contact_content');
             $table->boolean('contact_isDelete')->default(0);
             $table->timestamps();
         });

@@ -187,7 +187,7 @@ const JobholderTable = () => {
               try {
                 await dispatch(deleteJobholder(idDelete));
                 handleCloseCofirm();
-                toast.success('Xóa ngành thành công!');
+                toast.success('Xóa viên chức thành công');
                 setIdDelete('');
               } catch (err) {
                 console.error(err);

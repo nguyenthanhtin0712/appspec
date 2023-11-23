@@ -199,6 +199,7 @@ Route::middleware(['auth:api'])->group(function () {
 
     //Contact
     Route::get('contacts', [ContactController::class, 'index']);
+    Route::delete('contacts/{id}', [ContactController::class, 'destroy']);
 
     // Contact config
     Route::post('contact-config', [ContactConfigController::class, 'updateContactConfig']);
