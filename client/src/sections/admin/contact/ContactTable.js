@@ -1,17 +1,28 @@
-import React, { memo, useEffect } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useTheme } from '@mui/material/styles';
-import { Trash } from 'iconsax-react';
+import { Eye, Trash } from 'iconsax-react';
 import Stack from '@mui/material/Stack';
-import IconButton from '@mui/material/IconButton';
 import { MaterialReactTable } from 'material-react-table';
-import { fetchData, setColumnFilters, setGlobalFilter, setSorting, setPagination } from 'store/slices/contactSlice';
+import { fetchData, setColumnFilters, setGlobalFilter, setSorting, setPagination, deleteContact } from 'store/slices/contactSlice';
 import { dispatch } from 'store/index';
 import { formatDateTimeDisplay } from 'utils/formatDateTime';
+import ConfirmDialog from 'components/ConfirmDialog';
+import { Button, Typography } from '@mui/material';
+import { toast } from 'react-toastify';
+import IconAction from 'components/IconAction';
 
 const ContactTable = () => {
   const theme = useTheme();
-
+  const [openCofirm, setOpenCofirm] = useState(false);
+  const [idDelete, setIdDelete] = useState('');
+  const handleCloseCofirm = () => {
+    setOpenCofirm(false);
+  };
+  const handleDelete = (id) => {
+    setOpenCofirm(true);
+    setIdDelete(id);
+  };
   const { data, isError, isLoading, isRefetching, rowCount, columnFilters, globalFilter, sorting, pagination } = useSelector(
     (state) => state.contact
   );
@@ -32,10 +43,6 @@ const ContactTable = () => {
       {
         accessorKey: 'contact_phone',
         header: 'Phone'
-      },
-      {
-        accessorKey: 'contact_content',
-        header: 'Nội dung'
       },
       {
         accessorKey: 'created_at',
@@ -75,14 +82,14 @@ const ContactTable = () => {
         positionActionsColumn="last"
         renderRowActions={({ row }) => (
           <Stack direction="row">
-            <IconButton
+            <IconAction
+              title={'Xem'}
+              icon={<Eye />}
               onClick={() => {
-                console.log('row.original', row.original);
-                return null;
+                console.log('row.original.contact_id', row.original.contact_id);
               }}
-            >
-              <Trash />
-            </IconButton>
+            />
+            <IconAction title="Xoá" icon={<Trash />} onClick={() => handleDelete(row.original.contact_id)} />
           </Stack>
         )}
         muiTablePaperProps={{
@@ -110,6 +117,31 @@ const ContactTable = () => {
           variant: 'outlined',
           size: 'small'
         }}
+      />
+      <ConfirmDialog
+        open={openCofirm}
+        onClose={handleCloseCofirm}
+        title="Delete"
+        content={<Typography variant="h6">Bạn có chắc chắn muốn xóa ?</Typography>}
+        action={
+          <Button
+            variant="contained"
+            color="error"
+            onClick={async () => {
+              try {
+                await dispatch(deleteContact(idDelete));
+                handleCloseCofirm();
+                toast.success('Xóa thông tin liên hệ thành công');
+                setIdDelete('');
+              } catch (err) {
+                console.error(err);
+                toast.error('Có lỗi trong quá trình xóa!' + err);
+              }
+            }}
+          >
+            Chắc chắn
+          </Button>
+        }
       />
     </>
   );

@@ -57,49 +57,12 @@ class ContactController extends Controller
         return $this->sentSuccessResponse($contactCollection, "Get data success", Response::HTTP_OK);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
-        //
+        $contact = Contact::where('contact_id', $id)->firstOrFail();
+        $contact->contact_isDelete = 1;
+        $contact->save();
+        return $this->sentSuccessResponse($contact, "Delete contact success", Response::HTTP_OK);
     }
 
     public function sendMail(SendMailRequest $request)

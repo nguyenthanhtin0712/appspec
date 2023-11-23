@@ -29,6 +29,8 @@ class StoreJobholderRequest extends FormRequest
         return [
             "user_firstname" => "required",
             "user_lastname" => "required",
+            "user_email" => "required|unique:users,user_email",
+            "user_phone" => "required|unique:users,user_phone",
             "user_gender" => "required",
             "user_birthday" => "required",
             "user_password" => "required",
@@ -36,6 +38,15 @@ class StoreJobholderRequest extends FormRequest
             "title_id" => "required",
             "academic_field_id" => "required",
             "jobholder_isLeader" => "required"
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'user_email.unique' => 'Địa chỉ email này đã được sử dụng',
+            'user_phone.unique' => 'Số điện thoại này đã được sử dụng',
+            'jobholder_code.unique' => 'Mã viên chức đã tồn tại'
         ];
     }
 

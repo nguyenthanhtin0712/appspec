@@ -6,6 +6,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Response;
+use Illuminate\Validation\Rule;
 
 class LoginGoogleRequest extends FormRequest
 {
@@ -27,7 +28,14 @@ class LoginGoogleRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_email' => "required"
+            'user_email' => ['required', Rule::exists('users', 'user_email')],
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'user_email.required' => 'Địa chỉ email này không tồn tại trong hệ thống',
         ];
     }
 

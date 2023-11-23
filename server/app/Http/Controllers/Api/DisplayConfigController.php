@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateDisplayConfigRequest;
 use App\Models\DisplayConfig;
 use App\Models\InternshipGraduation;
 use App\Models\RegisterSpecialty;
-use Illuminate\Http\Response;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class DisplayConfigController extends Controller
 {

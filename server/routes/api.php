@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CompanyController;
 use App\Http\Controllers\Api\ContactConfigController;
 use App\Http\Controllers\Api\ContactController;
+use App\Http\Controllers\Api\DisplayConfigController;
 use App\Http\Controllers\Api\GradingController;
 use App\Http\Controllers\Api\JobHolderController;
 use App\Http\Controllers\Api\MajorController;
@@ -23,7 +24,6 @@ use App\Http\Controllers\Api\RegisterOpenClassController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\SubjectScheduleController;
 use App\Http\Controllers\Api\WarnedDissmissedStudentController;
-use App\Http\Controllers\Api\DisplayConfigController;
 use App\Http\Resources\LoginResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -202,6 +202,7 @@ Route::middleware(['auth:api'])->group(function () {
 
     //Contact
     Route::get('contacts', [ContactController::class, 'index']);
+    Route::delete('contacts/{id}', [ContactController::class, 'destroy']);
 
     // Contact config
     Route::post('contact-config', [ContactConfigController::class, 'updateContactConfig']);
