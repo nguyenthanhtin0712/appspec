@@ -180,20 +180,22 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('register-open-class/statistical', [RegisterOpenClassController::class, 'statistical'])->middleware('check_user_role_permission:register_open_class.statistic');
 
     // Pages
-    Route::get('pages', [PageController::class, 'index'])->middleware('check_user_role_permission:page_view');
-    Route::post('pages', [PageController::class, 'store'])->middleware('check_user_role_permission:page_create');
-    Route::post('/upload-image', [PageController::class, 'uploadImage'])->middleware('check_user_role_permission:page_create');
-    Route::get('pages/{id}', [PageController::class, 'show'])->middleware('check_user_role_permission:page_update');
-    Route::put('pages/{id}', [PageController::class, 'update'])->middleware('check_user_role_permission:page_update');
-    Route::delete('pages/{id}', [PageController::class, 'destroy'])->middleware('check_user_role_permission:page_delete');
+    Route::get('pages', [PageController::class, 'index'])->middleware('check_user_role_permission:page.view');
+    Route::post('pages', [PageController::class, 'store'])->middleware('check_user_role_permission:page.create');
+    Route::post('/upload-image', [PageController::class, 'uploadImage'])->middleware('check_user_role_permission:page.create');
+    Route::get('pages/{id}', [PageController::class, 'show'])->middleware('check_user_role_permission:page.update');
+    Route::put('pages/{id}', [PageController::class, 'update'])->middleware('check_user_role_permission:page.update');
+    Route::delete('pages/{id}', [PageController::class, 'destroy'])->middleware('check_user_role_permission:page.delete');
 
     // Job Post
-    Route::get('job-posts', [JobPostController::class, 'index']);
-    Route::post('job-posts', [JobPostController::class, 'store']);
-    Route::put('job-posts/{id}', [JobPostController::class, 'update']);
-    Route::delete('job-posts/{id}', [JobPostController::class, 'destroy']);
-    Route::post('job-posts/confirm/{id}', [JobPostController::class, 'confirmPost']);
-    Route::get('job-posts/user', [JobPostController::class, 'getUserPosts']);
+    Route::get('job-posts', [JobPostController::class, 'index'])->middleware('check_user_role_permission:job_post.confirm');
+    Route::post('job-posts/confirm/{id}', [JobPostController::class, 'confirmPost'])->middleware('check_user_role_permission:job_post.confirm');
+
+    Route::put('job-posts/{id}', [JobPostController::class, 'update'])->middleware('check_user_role_permission:job_post.update');
+    Route::delete('job-posts/{id}', [JobPostController::class, 'destroy'])->middleware('check_user_role_permission:job_post.delete');
+    
+    Route::post('job-posts', [JobPostController::class, 'store'])->middleware('check_user_role_permission:job_post.create');
+    Route::get('job-posts/user', [JobPostController::class, 'getUserPosts'])->middleware('check_user_role_permission:job_post.create');
 
     //Profile
     Route::get('profile', [ProfileController::class, 'index']);
@@ -201,11 +203,11 @@ Route::middleware(['auth:api'])->group(function () {
     Route::put('profile/change-information', [ProfileController::class, 'change_info']);
 
     //Contact
-    Route::get('contacts', [ContactController::class, 'index']);
-    Route::delete('contacts/{id}', [ContactController::class, 'destroy']);
+    Route::get('contacts', [ContactController::class, 'index'])->middleware('check_user_role_permission:contact.view');
+    Route::delete('contacts/{id}', [ContactController::class, 'destroy'])->middleware('check_user_role_permission:contact.delete');
 
     // Contact config
-    Route::post('contact-config', [ContactConfigController::class, 'updateContactConfig']);
+    Route::post('contact-config', [ContactConfigController::class, 'updateContactConfig'])->middleware('check_user_role_permission:contact.update_info');
 
     //Role
     Route::get('roles', [RoleController::class, 'index']);

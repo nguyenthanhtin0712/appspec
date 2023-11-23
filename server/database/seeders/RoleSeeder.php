@@ -117,11 +117,17 @@ class RoleSeeder extends Seeder
 
         // Job post
         Functional::create(['functional_code' => 'job_post', 'functional_name' => 'Quản lý bài đăng tuyển dụng']);
-        $job_post_view = Permission::create(['name' => 'job_post.view', 'desc' => 'Xem danh sách bài đăng tuyển dụng', 'functional_code' => 'job_post']);
         $job_post_create = Permission::create(['name' => 'job_post.create', 'desc' => 'Tạo bài đăng tuyển dụng', 'functional_code' => 'job_post']);
         $job_post_update = Permission::create(['name' => 'job_post.update', 'desc' => 'Cập nhật bài đăng tuyển dụng', 'functional_code' => 'job_post']);
         $job_post_delete = Permission::create(['name' => 'job_post.delete', 'desc' => 'Xoá bài đăng tuyển dụng', 'functional_code' => 'job_post']);
         $job_post_confirm = Permission::create(['name' => 'job_post.confirm', 'desc' => 'Phê duyệt đăng tuyển dụng', 'functional_code' => 'job_post']);
+
+        // Contact
+        Functional::create(['functional_code' => 'contact', 'functional_name' => 'Quản lý liên hệ']);
+        $contact_view = Permission::create(['name' => 'contact.view', 'desc' => 'Xoá liên hệ', 'functional_code' => 'contact']);
+        $contact_delete = Permission::create(['name' => 'contact.delete', 'desc' => 'Xoá liên hệ', 'functional_code' => 'contact']);
+        $contact_update_info = Permission::create(['name' => 'contact.update_info', 'desc' => 'Xoá liên hệ', 'functional_code' => 'contact']);
+
 
         // System
         Functional::create(['functional_code' => 'system', 'functional_name' => 'Quản lý hệ thống']);
@@ -187,11 +193,13 @@ class RoleSeeder extends Seeder
             $page_create,
             $page_update,
             $page_delete,
-            $job_post_view,
             $job_post_create,
             $job_post_update,
             $job_post_delete,
-            $job_post_confirm
+            $job_post_confirm,
+            $contact_view,
+            $contact_delete,
+            $contact_update_info
         ]);
 
         $jobholder_role->givePermissionTo([
