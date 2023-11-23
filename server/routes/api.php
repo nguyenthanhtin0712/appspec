@@ -214,9 +214,9 @@ Route::middleware(['auth:api'])->group(function () {
     Route::post('roles', [RoleController::class, 'store']);
     Route::put('roles/{id}', [RoleController::class, 'update']);
     Route::delete('roles/{id}', [RoleController::class, 'destroy']);
+    Route::get('roles/{id}', [RoleController::class, 'show']);
     Route::get('functional', [RoleController::class, 'getPermissions']);
 });
-Route::get('roles/{id}', [RoleController::class, 'show']);
 
 
 

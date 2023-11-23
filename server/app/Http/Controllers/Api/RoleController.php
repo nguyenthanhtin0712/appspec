@@ -100,13 +100,13 @@ class RoleController extends Controller
      */
     public function show($id)
     {
-        $permissions = Role::findById($id)->permissions->map(function ($per) {
+        $permissions = Role::findById($id, 'web')->permissions->map(function ($per) {
             return [
                 'name' => $per->name
             ];
         });
         $roles = [
-            'name' => Role::findById($id)->name,
+            'name' => Role::findById($id, 'web')->name,
             'permissions' => $permissions
         ];
         return $this->sentSuccessResponse($roles, "Get role sucess", 200);
