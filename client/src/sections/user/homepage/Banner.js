@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Banner from '../../../assets/images/csc.jpg';
 import { useTheme } from '@mui/material';
+import Spiders from 'components/Spiders';
 
 const BannerSection = () => {
   const theme = useTheme();
@@ -72,6 +73,7 @@ const BannerSection = () => {
           KHOA CÔNG NGHỆ THÔNG TIN
         </Typography>
       </Box>
+      <Spiders />
     </Box>
   );
 };
