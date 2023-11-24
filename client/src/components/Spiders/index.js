@@ -115,30 +115,32 @@ const Spiders = () => {
   };
 
   const _animate = () => {
-    const { width, height } = canvas.current;
-    const ctx = canvas.current.getContext('2d');
-    ctx.clearRect(0, 0, width, height);
-    for (const i in points.current) {
-      // detect points in range
-      const distanceFromCursor = Math.abs(getDistance(position.current, points.current[i]));
-      if (distanceFromCursor < 4000) {
-        points.current[i].opacity = 0.3;
-        points.current[i].circle.opacity = 0.6;
-      } else if (distanceFromCursor < 20000) {
-        points.current[i].opacity = 0.1;
-        points.current[i].circle.opacity = 0.3;
-      } else if (distanceFromCursor < 40000) {
-        points.current[i].opacity = 0.02;
-        points.current[i].circle.opacity = 0.1;
-      } else {
-        points.current[i].opacity = 0;
-        points.current[i].circle.opacity = 0;
+    if (canvas.current) {
+      const { width, height } = canvas.current;
+      const ctx = canvas.current.getContext('2d');
+      ctx.clearRect(0, 0, width, height);
+      for (const i in points.current) {
+        // detect points in range
+        const distanceFromCursor = Math.abs(getDistance(position.current, points.current[i]));
+        if (distanceFromCursor < 4000) {
+          points.current[i].opacity = 0.3;
+          points.current[i].circle.opacity = 0.6;
+        } else if (distanceFromCursor < 20000) {
+          points.current[i].opacity = 0.1;
+          points.current[i].circle.opacity = 0.3;
+        } else if (distanceFromCursor < 40000) {
+          points.current[i].opacity = 0.02;
+          points.current[i].circle.opacity = 0.1;
+        } else {
+          points.current[i].opacity = 0;
+          points.current[i].circle.opacity = 0;
+        }
+        _drawLines(points.current[i]);
+        points.current[i].circle.draw();
       }
-      _drawLines(points.current[i]);
-      points.current[i].circle.draw();
-    }
 
-    requestAnimationFrame(() => _animate());
+      requestAnimationFrame(() => _animate());
+    }
   };
 
   const _drawLines = (point) => {
