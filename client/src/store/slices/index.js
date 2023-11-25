@@ -34,6 +34,7 @@ import job_post from 'store/slices/jobPostSlice';
 import job_post_home from 'store/slices/jobPostHomeSlice';
 import manage_job_post from 'store/slices/manageJobPostSlice';
 import profile from 'store/slices/profileSlice';
+import dashboard from 'store/slices/dashboardSlice';
 // ==============================|| COMBINE REDUCERS ||============================== //
 
 const reducers = combineReducers({
@@ -68,7 +69,8 @@ const reducers = combineReducers({
   job_post,
   job_post_home,
   manage_job_post,
-  profile
+  profile,
+  dashboard
 });
 
 export default reducers;

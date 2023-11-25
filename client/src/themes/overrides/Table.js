@@ -66,7 +66,7 @@ export default function Table(theme) {
         root: {
           backgroundColor: theme.palette.secondary.lighter,
           borderTop: '1px solid '.concat(theme.palette.divider),
-          borderBottom: '2px solid '.concat(theme.palette.divider)
+          borderBottom: '1px solid '.concat(theme.palette.divider)
         }
       }
     }
