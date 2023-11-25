@@ -136,16 +136,11 @@ const ContactForm = () => {
           initialValues={initialFormValues}
           validationSchema={Yup.object().shape({
             contact_fullname: Yup.string().max(255).required('Họ tên là bắt buộc !'),
-            contact_email: Yup.string().email('Email không đúng định dạng!').max(255).required('Email là bắt buộc !'),
+            contact_email: Yup.string().email('Email không đúng định dạng!').required('Email là bắt buộc !'),
             contact_phone: Yup.string().matches(phoneRegExp, 'Số điện thoại không hợp lệ').required('Số điện thoại là bắt buộc'),
             contact_content: Yup.string()
               .test('notEmpty', 'Nội dung không được để trống', (value) => value && value.trim().length > 0)
-              .test('wordCount', 'Nội dung không được vượt quá 200 từ', (value) => {
-                if (!value) return true;
-
-                const wordCount = value.trim().split(/\s+/).filter(Boolean).length;
-                return wordCount <= 200;
-              })
+              .max(200, 'Nội dung không được vượt quá 200 từ')
               .required('Nội dung là bắt buộc')
           })}
           onSubmit={async (values, { setErrors, setStatus, setSubmitting, resetForm }) => {
