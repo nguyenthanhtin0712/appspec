@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import DialogTitleCustom from 'components/DialogTitleCustom';
 import { setContactDialog } from 'store/slices/contactSlice';
 import { dispatch } from 'store/index';
-import { ContactForm } from 'sections/admin/contact/ContactForm';
+import { ContactForm } from 'sections/admin/contact/ContactConfigForm';
 
 import { getContactConfig } from 'store/slices/contactSlice';
 

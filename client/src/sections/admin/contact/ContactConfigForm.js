@@ -13,17 +13,18 @@ import { FormHelperText, InputLabel, OutlinedInput, Stack } from '@mui/material'
 import { toast } from 'react-toastify';
 
 export const ContactForm = ({ initialValues }) => {
+  const phoneRegExp = /(84|0[2|3|5|7|8|9])+([0-9]{9})\b/g;
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={Yup.object().shape({
         department_name: Yup.string().max(255).required('Tên bộ phận là bắt buộc!'),
         department_address: Yup.string().max(255).required('Địa chỉ bộ phận là bắt buộc!'),
-        department_phone: Yup.string().max(255).required('Số điện thoại bộ phận là bắt buộc!'),
-        department_email: Yup.string().max(255).required('Email bộ phận là bắt buộc!'),
+        department_phone: Yup.string().matches(phoneRegExp, 'Số điện thoại không hợp lệ').required('Số điện thoại bộ phận là bắt buộc!'),
+        department_email: Yup.string().email('Email không hợp lệ').required('Email bộ phận là bắt buộc!'),
         admin_name: Yup.string().max(255).required('Tên người quản trị là bắt buộc!'),
-        admin_phone: Yup.string().max(255).required('Số điện thoại người quản trị là bắt buộc!'),
-        admin_email: Yup.string().max(255).required('Email người quản trị là bắt buộc!')
+        admin_phone: Yup.string().matches(phoneRegExp, 'Số điện thoại không hợp lệ').required('Số điện thoại người quản trị là bắt buộc!'),
+        admin_email: Yup.string().email('Email không hợp lệ').required('Email người quản trị là bắt buộc!')
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
         try {

@@ -59,7 +59,10 @@ const RoleUpdate = () => {
                 name: `${infoRole?.name}`
               }}
               validationSchema={Yup.object().shape({
-                name: Yup.string().max(255).required('Tên nhóm quyền là bắt buộc !')
+                name: Yup.string()
+                  .test('notEmpty', 'Tên nhóm quyền là bắt buộc !', (value) => value && value.trim().length > 0)
+                  .max(255)
+                  .required('Tên nhóm quyền là bắt buộc !')
               })}
               onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
                 const permissions = getSelectedCheckboxesArray();
