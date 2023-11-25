@@ -32,9 +32,9 @@ class ProfileController extends Controller
         if (Hash::check($request->old_password, $user->user_password)) {
             $user->user_password = Hash::make($request->password);
             $user->save();
-            return $this->sentSuccessResponse('', "Passowrd successfully updated", 200);
+            return $this->sentSuccessResponse(null, "Passowrd successfully updated", 200);
         } else {
-            return $this->sentErrorResponse('', "Old passsword does not matched", 400);
+            return $this->sentErrorResponse(null, "Old passsword does not matched", 400);
         }
     }
 
