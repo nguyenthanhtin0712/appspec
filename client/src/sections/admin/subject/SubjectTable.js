@@ -18,6 +18,8 @@ import {
 } from 'store/slices/subjectSlice';
 import Button from '@mui/material/Button';
 import { dispatch } from 'store/index';
+import WithPermission from 'guards/WithPermission';
+import useCheckPermissions from 'hooks/useCheckPermissions';
 
 const SubjectTable = () => {
   const theme = useTheme();
@@ -103,15 +105,19 @@ const SubjectTable = () => {
           showProgressBars: isRefetching,
           sorting
         }}
-        enableRowActions
+        enableRowActions={useCheckPermissions(['subject.update', 'subject.delete'])}
         renderRowActions={({ row }) => (
           <Stack direction="row">
-            <IconButton onClick={() => handleUpdate(row.original)}>
-              <Edit />
-            </IconButton>
-            <IconButton color="error" onClick={() => handleDelete(row.id)}>
-              <Trash />
-            </IconButton>
+            <WithPermission requiredPermission={['subject.update']}>
+              <IconButton onClick={() => handleUpdate(row.original)}>
+                <Edit />
+              </IconButton>
+            </WithPermission>
+            <WithPermission requiredPermission={['subject.delete']}>
+              <IconButton color="error" onClick={() => handleDelete(row.id)}>
+                <Trash />
+              </IconButton>
+            </WithPermission>
           </Stack>
         )}
         muiTablePaperProps={{

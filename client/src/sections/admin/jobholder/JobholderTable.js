@@ -20,6 +20,8 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import { toast } from 'react-toastify';
 import { dispatch } from 'store/index';
+import WithPermission from 'guards/WithPermission';
+import useCheckPermissions from 'hooks/useCheckPermissions';
 
 const JobholderTable = () => {
   const theme = useTheme();
@@ -133,16 +135,20 @@ const JobholderTable = () => {
           showProgressBars: isRefetching,
           sorting
         }}
-        enableRowActions
+        enableRowActions={useCheckPermissions(['jobholder.update', 'jobholder.delete'])}
         positionActionsColumn="last"
         renderRowActions={({ row }) => (
           <Box sx={{ display: 'flex' }}>
-            <IconButton onClick={() => handleUpdate(row.original)}>
-              <Edit />
-            </IconButton>
-            <IconButton color="error" onClick={() => handleDelete(row.original.jobholder_code)}>
-              <Trash />
-            </IconButton>
+            <WithPermission requiredPermission={['jobholder.update']}>
+              <IconButton onClick={() => handleUpdate(row.original)}>
+                <Edit />
+              </IconButton>
+            </WithPermission>
+            <WithPermission requiredPermission={['jobholder.delete']}>
+              <IconButton color="error" onClick={() => handleDelete(row.original.jobholder_code)}>
+                <Trash />
+              </IconButton>
+            </WithPermission>
           </Box>
         )}
         muiTablePaperProps={{
@@ -162,13 +168,7 @@ const JobholderTable = () => {
         }}
         renderTopToolbarCustomActions={() => (
           <Tooltip title="Xuất Excel">
-            <IconButton
-              color="success"
-              onClick={() => {
-                alert('Chưa khả dụng');
-              }}
-              variant="contained"
-            >
+            <IconButton color="success" onClick={() => alert('Chưa khả dụng')} variant="contained">
               <ExportSquare variant="Bulk" />
             </IconButton>
           </Tooltip>

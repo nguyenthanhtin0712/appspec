@@ -171,9 +171,9 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('warned-student/lookup', [WarnedDissmissedStudentController::class, 'lookUpStudent'])->middleware('user_permission:warned_dismissed.lookup');
     Route::delete('warned-student/{id}', [WarnedDissmissedStudentController::class, 'destroy'])->middleware('user_permission:warned_dismissed.delete');
 
-    Route::get('warned-student/statistical/{id}', [WarnedDissmissedStudentController::class, 'statistical'])->middleware('user_permission:warned_dismissed.detail');
-    Route::get('warned-student/{id}/students', [WarnedDissmissedStudentController::class, 'show'])->middleware('user_permission:warned_dismissed.detail');
-    Route::get('warned-student/{id}', [WarnedDissmissedStudentController::class, 'getWarningInfo'])->middleware('user_permission:warned_dismissed.detail');
+    Route::get('warned-student/statistical/{id}', [WarnedDissmissedStudentController::class, 'statistical'])->middleware('user_permission:warned_dismissed.view');
+    Route::get('warned-student/{id}/students', [WarnedDissmissedStudentController::class, 'show'])->middleware('user_permission:warned_dismissed.view');
+    Route::get('warned-student/{id}', [WarnedDissmissedStudentController::class, 'getWarningInfo'])->middleware('user_permission:warned_dismissed.view');
 
     // Register Open Class
     Route::post('register-open-class', [RegisterOpenClassController::class, 'register'])->middleware('user_permission:register_open_class');
@@ -194,7 +194,7 @@ Route::middleware(['auth:api'])->group(function () {
 
     Route::put('job-posts/{id}', [JobPostController::class, 'update'])->middleware('user_permission:job_post.update');
     Route::delete('job-posts/{id}', [JobPostController::class, 'destroy'])->middleware('user_permission:job_post.delete');
-    
+
     Route::post('job-posts', [JobPostController::class, 'store'])->middleware('user_permission:job_post.create');
     Route::get('job-posts/user', [JobPostController::class, 'getUserPosts'])->middleware('user_permission:job_post.create');
 
@@ -213,12 +213,12 @@ Route::middleware(['auth:api'])->group(function () {
     Route::post('contact-config', [ContactConfigController::class, 'updateContactConfig'])->middleware('user_permission:contact.update_info');
 
     //Role
-    Route::get('roles', [RoleController::class, 'index']);
-    Route::post('roles', [RoleController::class, 'store']);
-    Route::put('roles/{id}', [RoleController::class, 'update']);
-    Route::delete('roles/{id}', [RoleController::class, 'destroy']);
-    Route::get('roles/{id}', [RoleController::class, 'show']);
-    Route::get('functional', [RoleController::class, 'getPermissions']);
+    Route::get('roles', [RoleController::class, 'index'])->middleware('user_permission:role.view');
+    Route::post('roles', [RoleController::class, 'store'])->middleware('user_permission:role.create');
+    Route::put('roles/{id}', [RoleController::class, 'update'])->middleware('user_permission:role.update');
+    Route::delete('roles/{id}', [RoleController::class, 'destroy'])->middleware('user_permission:role.delete');
+    Route::get('roles/{id}', [RoleController::class, 'show'])->middleware('user_permission:role.view');
+    Route::get('functional', [RoleController::class, 'getPermissions'])->middleware('user_permission:role.view');
 
     // Statistic
     Route::get('statistics', [StatisticsController::class, 'index']);

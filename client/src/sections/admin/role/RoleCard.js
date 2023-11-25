@@ -5,7 +5,7 @@ import React from 'react';
 const RoleCard = ({ func, handleChange, select }) => {
   return (
     <Grid item xs={12} sm={6} md={4}>
-      <MainCard title={func.functional_name}>
+      <MainCard title={func.functional_name} sx={{ height: '100%' }}>
         <FormGroup>
           {func?.permissions.length > 0 &&
             func?.permissions.map((permission, index) => (

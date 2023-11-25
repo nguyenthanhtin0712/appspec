@@ -7,6 +7,7 @@ import { MaterialReactTable } from 'material-react-table';
 import { fetchData, setColumnFilters, setGlobalFilter, setSorting, setPagination, setIdDelete } from 'store/slices/warnedStudentSlice';
 import { dispatch } from 'store/index';
 import IconAction from 'components/IconAction';
+import WithPermission from 'guards/WithPermission';
 
 const WarnedStudentTable = () => {
   const theme = useTheme();
@@ -67,7 +68,9 @@ const WarnedStudentTable = () => {
         renderRowActions={({ row }) => (
           <Stack direction="row">
             <IconAction title="Xem chi tiết" icon={<Eye />} href={`/admin/warned-student/${row.id}`} />
-            <IconAction title="Xoá" icon={<Trash />} onClick={() => handleDelete(row.id)} color="error" />
+            <WithPermission requiredPermission={['warned_dismissed.delete']}>
+              <IconAction title="Xoá" icon={<Trash />} onClick={() => handleDelete(row.id)} color="error" />
+            </WithPermission>
           </Stack>
         )}
         muiTablePaperProps={{

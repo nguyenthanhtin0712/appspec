@@ -15,9 +15,9 @@ import {
   setOpenCofirmDialog,
   setIdDeleteCompany
 } from 'store/slices/companySlice';
-import Button from '@mui/material/Button';
 import { dispatch } from 'store/index';
-import { Export } from 'iconsax-react';
+import WithPermission from 'guards/WithPermission';
+import useCheckPermissions from 'hooks/useCheckPermissions';
 
 const CompanyTable = () => {
   const theme = useTheme();
@@ -103,20 +103,20 @@ const CompanyTable = () => {
           showProgressBars: isRefetching,
           sorting
         }}
-        enableRowActions
+        enableRowActions={useCheckPermissions(['company.update', 'company.delete'])}
         positionActionsColumn="last"
         renderRowActions={({ row }) => (
           <Box sx={{ display: 'flex' }}>
-            <IconButton
-              onClick={() => {
-                handleUpdate(row.original);
-              }}
-            >
-              <Edit />
-            </IconButton>
-            <IconButton color="error" onClick={() => handleDelete(row.id)}>
-              <Trash />
-            </IconButton>
+            <WithPermission requiredPermission={['company.update']}>
+              <IconButton onClick={() => handleUpdate(row.original)}>
+                <Edit />
+              </IconButton>
+            </WithPermission>
+            <WithPermission requiredPermission={['company.delete']}>
+              <IconButton color="error" onClick={() => handleDelete(row.id)}>
+                <Trash />
+              </IconButton>
+            </WithPermission>
           </Box>
         )}
         muiTablePaperProps={{
@@ -134,11 +134,16 @@ const CompanyTable = () => {
             bgcolor: theme.palette.background.neutral
           })
         }}
-        renderTopToolbarCustomActions={() => (
-          <Button color="success" startIcon={<Export />} variant="contained">
-            Xuất Excel
-          </Button>
-        )}
+        positionGlobalFilter="left"
+        initialState={{
+          showGlobalFilter: true
+        }}
+        muiSearchTextFieldProps={{
+          placeholder: 'Tìm kiếm công ty ...',
+          sx: { minWidth: '300px' },
+          variant: 'outlined',
+          size: 'small'
+        }}
       />
     </>
   );
