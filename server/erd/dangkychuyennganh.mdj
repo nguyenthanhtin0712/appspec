@@ -1932,6 +1932,21 @@
 										},
 										{
 											"_type": "ERDColumnView",
+											"_id": "AAAAAAGMBGguU8NV/2M=",
+											"_parent": {
+												"$ref": "AAAAAAGITSg7DLIep9M="
+											},
+											"model": {
+												"$ref": "AAAAAAGMBGguMMNS0H4="
+											},
+											"font": "Arial;13;0",
+											"left": 1261,
+											"top": 1086,
+											"width": 353.7470703125,
+											"height": 13
+										},
+										{
+											"_type": "ERDColumnView",
 											"_id": "AAAAAAGITSiDULItNe8=",
 											"_parent": {
 												"$ref": "AAAAAAGITSg7DLIep9M="
@@ -1941,7 +1956,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 1261,
-											"top": 1086,
+											"top": 1101,
 											"width": 353.7470703125,
 											"height": 13
 										},
@@ -1956,7 +1971,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 1261,
-											"top": 1101,
+											"top": 1116,
 											"width": 353.7470703125,
 											"height": 13
 										},
@@ -1971,7 +1986,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 1261,
-											"top": 1116,
+											"top": 1131,
 											"width": 353.7470703125,
 											"height": 13
 										}
@@ -1980,14 +1995,14 @@
 									"left": 1256,
 									"top": 1079,
 									"width": 363.7470703125,
-									"height": 55
+									"height": 70
 								}
 							],
 							"font": "Arial;13;0",
 							"left": 1256,
 							"top": 1056,
 							"width": 363.7470703125,
-							"height": 81,
+							"height": 93,
 							"nameLabel": {
 								"$ref": "AAAAAAGITSg7DLIdMkY="
 							},
@@ -10514,7 +10529,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGITSJF3bHNor0="
 							},
-							"name": "speciality_registration_id",
+							"name": "register_specialty_id ",
 							"type": "INTEGER",
 							"length": 0,
 							"primaryKey": true
@@ -10525,7 +10540,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGITSJF3bHNor0="
 							},
-							"name": "speciality_registration_name",
+							"name": "register_specialty_name",
 							"type": "VARCHAR",
 							"length": 0
 						},
@@ -10535,7 +10550,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGITSJF3bHNor0="
 							},
-							"name": "speciality_registration_start_date",
+							"name": "register_specialty_start_date",
 							"type": "DATETIME",
 							"length": 0
 						},
@@ -10545,7 +10560,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGITSJF3bHNor0="
 							},
-							"name": "speciality_registration_end_date",
+							"name": "register_specialty_end_date",
 							"type": "DATETIME",
 							"length": 0
 						},
@@ -10593,11 +10608,19 @@
 						},
 						{
 							"_type": "ERDColumn",
+							"_id": "AAAAAAGMBGguMMNS0H4=",
+							"_parent": {
+								"$ref": "AAAAAAGITSg7DLIau6I="
+							},
+							"name": "register_specialty_detail_id"
+						},
+						{
+							"_type": "ERDColumn",
 							"_id": "AAAAAAGITSiDNLIqIhE=",
 							"_parent": {
 								"$ref": "AAAAAAGITSg7DLIau6I="
 							},
-							"name": "speciality_registration_id",
+							"name": "register_specialty_id ",
 							"type": "INTEGER",
 							"length": 0,
 							"primaryKey": true,
@@ -10621,7 +10644,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGITSg7DLIau6I="
 							},
-							"name": "speciality_registration_detail_quantity",
+							"name": "specialty_quantity",
 							"type": "INTEGER",
 							"length": 0
 						}
