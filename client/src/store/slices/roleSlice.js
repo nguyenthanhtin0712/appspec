@@ -105,7 +105,7 @@ const initialState = {
   isLoadingFunc: false,
   selectedCheckboxes: {},
   isLoadingCreate: false,
-  infoRole: '',
+  infoRole: null,
   idDelete: '',
   openCofirmDialog: false
 };
@@ -168,6 +168,14 @@ const role = createSlice({
             };
           });
         });
+        if (state.infoRole) {
+          state.infoRole.permissions.forEach((per) => {
+            state.selectedCheckboxes = {
+              ...state.selectedCheckboxes,
+              [per.name]: true
+            };
+          });
+        }
         state.rowCount = action.payload.rowCount;
         state.isError = false;
       })
@@ -199,12 +207,6 @@ const role = createSlice({
       })
       .addCase(getRole.fulfilled, (state, action) => {
         state.infoRole = action.payload.data;
-        action.payload.data.permissions.forEach((per) => {
-          state.selectedCheckboxes = {
-            ...state.selectedCheckboxes,
-            [per.name]: true
-          };
-        });
         state.isLoadingFunc = false;
       })
       .addCase(deleteRole.fulfilled, (state, action) => {
