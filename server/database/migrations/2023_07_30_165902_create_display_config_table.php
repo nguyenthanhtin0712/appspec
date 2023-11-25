@@ -13,10 +13,10 @@ class CreateDisplayConfigTable extends Migration
      */
     public function up()
     {
-        Schema::create('display_configs', function (Blueprint $table) {
-            $table->string('display_config_id')->primary();
-            $table->string('display_config_name');
-            $table->string('display_config_value')->nullable();
+        Schema::create('configs', function (Blueprint $table) {
+            $table->string('config_id')->primary();
+            $table->string('config_name');
+            $table->string('config_value')->nullable();
         });
     }
 
@@ -27,6 +27,6 @@ class CreateDisplayConfigTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('display_configs');
+        Schema::dropIfExists('configs');
     }
 }

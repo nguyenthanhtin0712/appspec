@@ -1,28 +1,24 @@
-/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
-import { Box, Stack, useTheme } from '@mui/material';
+import { Box, Stack, Switch, useTheme } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import MainCard from 'components/MainCard';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
-import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { dispatch } from 'store';
-import { getAllInternshipGraduation, getAllRegisterSpecialty, getPageConfigInfo, updateConfig } from 'store/slices/configPageSlice';
+import { getPageConfigInfo, updateConfig } from 'store/slices/configPageSlice';
+import SpecialtyDisplayDialog from 'sections/admin/config-page/SpecialtyDisplayDialog';
+import InternshipGraduationDisplayDialog from 'sections/admin/config-page/InternshipGraduationDisplayDialog';
 
 const ConfigPage = () => {
-  const [open, setOpen] = useState(false);
-  const [open1, setOpen1] = useState(false);
+  const [specialty, setSpecialty] = useState(false);
+  const [intern, setIntern] = useState(false);
 
   const dataConfig = useSelector((state) => state.config_page.dataConfig);
 
   useEffect(() => {
-    dispatch(getPageConfigInfo());
+    const fetchData = async () => {
+      await dispatch(getPageConfigInfo());
+    };
+    fetchData();
   }, []);
 
   if (dataConfig.length === 0) return null;
@@ -34,21 +30,18 @@ const ConfigPage = () => {
           Cấu hình
         </Typography>
         <Stack spacing={3}>
-          <BoxCofig
-            name="Đăng ký chuyên ngành"
-            value={dataConfig['register_specialty']?.name ?? 'Chưa chọn đợt hiển thị'}
-            onClick={() => setOpen(true)}
-          />
-
-          <BoxCofig
-            name="Đăng ký thực tập"
-            value={dataConfig['register_internship']?.name ?? 'Chưa chọn đợt hiển thị'}
-            onClick={() => setOpen1(true)}
+          <BoxCofig name="Đăng ký chuyên ngành" value={dataConfig['register_specialty']?.name} onClick={() => setSpecialty(true)} />
+          <BoxCofig name="Đăng ký thực tập" value={dataConfig['register_internship']?.name} onClick={() => setIntern(true)} />
+          <BoxCheckBox
+            name="Phê duyệt bài đăng tuyển dụng"
+            value={dataConfig['confirm_post'] == 1}
+            desc="Cho phép đăng tin tuyển dụng mà không cần chờ quản trị viên xét duyệt"
+            switchChange={async (value) => await dispatch(updateConfig({ config_id: 'confirm_post', config_value: value }))}
           />
         </Stack>
       </MainCard>
-      <SpecialtyDisplayDialog open={open} handleClose={() => setOpen(false)} />
-      <InternshipGraduationDisplayDialog open={open1} handleClose={() => setOpen1(false)} />
+      <SpecialtyDisplayDialog open={specialty} handleClose={() => setSpecialty(false)} />
+      <InternshipGraduationDisplayDialog open={intern} handleClose={() => setIntern(false)} />
     </>
   );
 };
@@ -70,111 +63,44 @@ const BoxCofig = ({ name, value, onClick }) => {
         }
       }}
     >
-      <Typography fontSize={16}>{name}</Typography>
+      <Typography fontSize={16}>{name ?? 'Chưa cấu hình'}</Typography>
       <Typography color="#00000085">{value}</Typography>
     </Box>
   );
 };
 
-const SpecialtyDisplayDialog = ({ open, handleClose }) => {
-  const [value, setValue] = React.useState(null);
-  const [inputValue, setInputValue] = React.useState('');
-  const dataRegisterSpecialty = useSelector((state) => state.config_page.dataRegisterSpecialty);
-  useEffect(() => {
-    dispatch(getAllRegisterSpecialty());
-  }, []);
-  if (!dataRegisterSpecialty) return null;
+const BoxCheckBox = ({ name, desc, value, switchChange }) => {
+  const theme = useTheme();
+  const [checked, setChecked] = useState(value);
 
-  const handleSubmit = () => {
-    const result = dispatch(updateConfig({ display_config_id: 'register_specialty', display_config_value: value.register_specialty_id }));
-    if (result) {
-      dispatch(getPageConfigInfo());
-      handleClose();
-      toast.success('Lưu thành công');
-    }
+  const handleChange = (event) => {
+    setChecked(event.target.checked);
+    switchChange(event.target.checked);
   };
+
   return (
-    <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>Chọn đợt đăng ký chuyên ngành</DialogTitle>
-      <DialogContent>
-        <Autocomplete
-          value={value}
-          onChange={(event, newValue) => setValue(newValue)}
-          inputValue={inputValue}
-          onInputChange={(event, newInputValue) => {
-            setInputValue(newInputValue);
-          }}
-          id="select-register-specialty"
-          options={dataRegisterSpecialty}
-          getOptionLabel={(option) => option.register_specialty_name}
-          renderOption={(props, option) => (
-            <Box component="li" {...props} key={option.register_specialty_id}>
-              {option.register_specialty_name}
-            </Box>
-          )}
-          renderInput={(params) => <TextField {...params} placeholder="Chọn đợt đăng ký chuyên ngành" />}
-        />
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={handleClose}>Hủy</Button>
-        <Button variant="contained" disabled={Boolean(!value)} onClick={handleSubmit}>
-          Lưu
-        </Button>
-      </DialogActions>
-    </Dialog>
-  );
-};
-
-const InternshipGraduationDisplayDialog = ({ open, handleClose }) => {
-  const [value, setValue] = React.useState(null);
-  const [inputValue, setInputValue] = React.useState('');
-
-  const dataInternshipGraduation = useSelector((state) => state.config_page.dataInternshipGraduation);
-  useEffect(() => {
-    dispatch(getAllInternshipGraduation());
-  }, []);
-
-  if (!dataInternshipGraduation) return null;
-
-  const handleSubmit = () => {
-    const result = dispatch(updateConfig({ display_config_id: 'register_intern', display_config_value: value.internship_graduation_id }));
-    if (result) {
-      dispatch(getPageConfigInfo());
-      handleClose();
-      toast.success('Lưu thành công');
-    }
-  };
-  return (
-    <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>Chọn đợt thực tập tốt nghiệp</DialogTitle>
-      <DialogContent>
-        <Autocomplete
-          value={value}
-          onChange={(event, newValue) => setValue(newValue)}
-          inputValue={inputValue}
-          onInputChange={(event, newInputValue) => {
-            setInputValue(newInputValue);
-          }}
-          id="select-internship-graduation"
-          options={dataInternshipGraduation}
-          getOptionLabel={(option) =>
-            `Học kỳ ${option.openclasstime.openclass_time_semester} - Năm học ${option.openclasstime.openclass_time_year}`
-          }
-          renderOption={(props, option) => (
-            <Box component="li" {...props} key={option.internship_graduation_id}>
-              {`Học kỳ ${option.openclasstime.openclass_time_semester} - Năm học ${option.openclasstime.openclass_time_year}`}
-            </Box>
-          )}
-          renderInput={(params) => <TextField {...params} placeholder="Chọn đợt thực tập tốt nghiệp" />}
-        />
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={handleClose}>Hủy</Button>
-        <Button variant="contained" disabled={Boolean(!value)} onClick={handleSubmit}>
-          Lưu
-        </Button>
-      </DialogActions>
-    </Dialog>
+    <Stack
+      sx={{
+        padding: 2,
+        cursor: 'pointer',
+        border: '1.5px solid',
+        borderRadius: 1.5,
+        borderColor: theme.palette.divider,
+        transition: 'all 0.2s ease',
+        '&:hover': {
+          background: theme.palette.secondary[200]
+        }
+      }}
+      direction="row"
+      justifyContent="space-between"
+      alignItems="center"
+    >
+      <Box>
+        <Typography fontSize={16}>{name}</Typography>
+        <Typography color="#00000085">{desc}</Typography>
+      </Box>
+      <Switch checked={checked} onChange={handleChange} />
+    </Stack>
   );
 };
 

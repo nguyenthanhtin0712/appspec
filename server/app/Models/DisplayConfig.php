@@ -9,14 +9,14 @@ use Spatie\Permission\Traits\HasRoles;
 class DisplayConfig extends Model
 {
     use HasFactory, HasRoles;
-    protected $table = 'display_configs';
-    protected $primaryKey = 'display_config_id';
+    protected $table = 'configs';
+    protected $primaryKey = 'config_id';
     protected $keyType = 'string';
     public $incrementing = false;
     public $timestamps = false;
     protected $fillable = [
-        'display_config_id',
-        'display_config_name',
-        'display_config_value'
+        'config_id',
+        'config_name',
+        'config_value'
     ];
 }

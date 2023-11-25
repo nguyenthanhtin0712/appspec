@@ -28,8 +28,8 @@ class UpdateDisplayConfigRequest extends FormRequest
     public function rules()
     {
         return [
-            'display_config_id' => 'required',
-            'display_config_value' => 'required',
+            'config_id' => 'required',
+            'config_value' => 'required',
         ];
     }
 

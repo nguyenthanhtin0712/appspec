@@ -38,6 +38,7 @@ const JobPostTable = () => {
         header: 'Trạng thái',
         Cell: ({ cell }) => {
           const variant = getJobPostStatus(cell.getValue());
+          console.log(variant);
           return <Chip label={variant.text} color={variant.color} />;
         },
         size: 5

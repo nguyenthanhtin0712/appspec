@@ -163,7 +163,7 @@ class InternshipGraduationController extends Controller
 
     public function getInfoInternship()
     {
-        $displayConfig = DisplayConfig::find('register_intern')->display_config_value ?? InternshipGraduation::latest()->first()->internship_graduation_id;
+        $displayConfig = DisplayConfig::find('register_intern')->config_value ?? InternshipGraduation::latest()->first()->internship_graduation_id;
         $registerInternship = InternshipGraduation::with(['openclasstime'])->where('internship_graduation_id', $displayConfig)->first();
         return $this->sentSuccessResponse($registerInternship, 'Get infoInternship success', 200);
     }
@@ -171,7 +171,7 @@ class InternshipGraduationController extends Controller
     public function getCompanyInternshipByUser(Request $request)
     {
 
-        $displayConfig = DisplayConfig::find('register_intern')->display_config_value ?? InternshipGraduation::latest()->first()->internship_graduation_id;
+        $displayConfig = DisplayConfig::find('register_intern')->config_value ?? InternshipGraduation::latest()->first()->internship_graduation_id;
         $companyInternship = RegisterIntershipCompany::leftJoin('companies', 'companies.company_id', 'register_internship_company.company_id')
             ->where('internship_graduation_id', $displayConfig)
             ->where('companies.company_is_official', '1')
@@ -294,7 +294,7 @@ class InternshipGraduationController extends Controller
 
     public function getRegisterInternshipByUser()
     {
-        $displayConfig = DisplayConfig::find('register_intern')->display_config_value ?? InternshipGraduation::latest()->first()->internship_graduation_id;
+        $displayConfig = DisplayConfig::find('register_intern')->config_value ?? InternshipGraduation::latest()->first()->internship_graduation_id;
         $companyInternship = RegisterIntershipCompany::leftJoin('companies', 'companies.company_id', 'register_internship_company.company_id')
             ->where('internship_graduation_id', $displayConfig)
             ->where('companies.company_is_official', '1')->get()->map(function ($companyInternship) {
@@ -319,7 +319,7 @@ class InternshipGraduationController extends Controller
         $user = $request->user();
         $position_id = $request->input('position_id');
         $company_id = $request->input('company_id');
-        $internship_graduation_id = DisplayConfig::find('register_intern')->display_config_value ?? InternshipGraduation::latest()->first()->internship_graduation_id;
+        $internship_graduation_id = DisplayConfig::find('register_intern')->config_value ?? InternshipGraduation::latest()->first()->internship_graduation_id;
         $register_internship_company_id = (RegisterIntershipCompany::where('internship_graduation_id', $internship_graduation_id)->where('company_id', $company_id)->firstOrFail())->register_internship_company_id;
         $company_position_detail_id = (CompanyPositionDetail::where('position_id', $position_id)->where('register_internship_company_id', $register_internship_company_id)->firstOrFail())->company_position_detail_id;
         $student = Student::where('user_id', $user->user_id)->firstOrFail();
@@ -357,7 +357,7 @@ class InternshipGraduationController extends Controller
             'position_name' => $position_name,
             'company_id' => $company->company_id
         ]);
-        $internship_graduation_id = DisplayConfig::find('register_intern')->display_config_value ?? InternshipGraduation::latest()->first()->internship_graduation_id;
+        $internship_graduation_id = DisplayConfig::find('register_intern')->config_value ?? InternshipGraduation::latest()->first()->internship_graduation_id;
         $registerInternshipCopmany = RegisterIntershipCompany::create([
             'internship_graduation_id' => $internship_graduation_id,
             'company_id' => $company->company_id,
@@ -377,7 +377,7 @@ class InternshipGraduationController extends Controller
     public function registerResultStudent(Request $request)
     {
 
-        $displayConfig = DisplayConfig::find('register_intern')->display_config_value ?? InternshipGraduation::latest()->value('internship_graduation_id');
+        $displayConfig = DisplayConfig::find('register_intern')->config_value ?? InternshipGraduation::latest()->value('internship_graduation_id');
 
         $studentsQuery = Student::select(
             'students.student_code',
@@ -685,7 +685,7 @@ class InternshipGraduationController extends Controller
     public function checkUserInternship(Request $request)
     {
         $user = $request->user();
-        $internship_graduation_id = DisplayConfig::find('register_intern')->display_config_value ?? InternshipGraduation::latest()->value('internship_graduation_id');
+        $internship_graduation_id = DisplayConfig::find('register_intern')->config_value ?? InternshipGraduation::latest()->value('internship_graduation_id');
         $student = Student::where('user_id', $user->user_id)->where('internship_graduation_id', $internship_graduation_id)->first();
         return $this->sentSuccessResponse($student, "Check success", 200);
     }
@@ -706,7 +706,7 @@ class InternshipGraduationController extends Controller
             'position_name' => $position_name,
             'company_id' => $company->company_id
         ]);
-        $internship_graduation_id = DisplayConfig::find('register_intern')->display_config_value ?? InternshipGraduation::latest()->first()->internship_graduation_id;
+        $internship_graduation_id = DisplayConfig::find('register_intern')->config_value ?? InternshipGraduation::latest()->first()->internship_graduation_id;
         $registerInternshipCopmany = RegisterIntershipCompany::create([
             'internship_graduation_id' => $internship_graduation_id,
             'company_id' => $company->company_id,

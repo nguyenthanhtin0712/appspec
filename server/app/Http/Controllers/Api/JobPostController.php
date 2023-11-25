@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Collection;
 use App\Http\Resources\JobPostResource;
+use App\Models\DisplayConfig;
 use App\Models\JobPost;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -70,7 +71,8 @@ class JobPostController extends Controller
     {
         $user_id = $request->user()->user_id;
         $dataCreate = $request->all();
-        $posts = JobPost::create([...$dataCreate, 'user_id' => $user_id]);
+        $confirm = DisplayConfig::find('confirm_post')->config_value;
+        $posts = JobPost::create([...$dataCreate, 'user_id' => $user_id, 'job_post_confirm' => $confirm]);
         return $this->sentSuccessResponse($posts, "Create job post successfully", Response::HTTP_OK);
     }
 

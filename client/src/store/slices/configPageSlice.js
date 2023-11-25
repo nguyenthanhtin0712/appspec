@@ -33,7 +33,7 @@ export const getAllInternshipGraduation = createAsyncThunk('config_page/getAllIn
 
 export const updateConfig = createAsyncThunk('config_page/updateConfig', async (config, { rejectWithValue }) => {
   try {
-    const response = await axios.put(`/configs/${config.display_config_id}`, config);
+    const response = await axios.put(`/configs/${config.config_id}`, config);
     return response.data;
   } catch (error) {
     if (error.response && error.response.data && error.response.data.errors) {

@@ -17,8 +17,8 @@ class DisplayConfigController extends Controller
         $resultRegisterSpecialty = [];
         $resultRegisterIntern = [];
 
-        $registerSpecialtyId = DisplayConfig::find('register_specialty')->display_config_value;
-        $internshipGraduationId = DisplayConfig::find('register_intern')->display_config_value;
+        $registerSpecialtyId = DisplayConfig::find('register_specialty')->config_value;
+        $internshipGraduationId = DisplayConfig::find('register_intern')->config_value;
 
         if ($registerSpecialtyId) {
             $registerSpecialty = RegisterSpecialty::find($registerSpecialtyId);
@@ -36,7 +36,9 @@ class DisplayConfigController extends Controller
         }
         $result = [
             'register_specialty' => $resultRegisterSpecialty,
-            'register_internship' => $resultRegisterIntern
+            'register_internship' => $resultRegisterIntern,
+            'confirm_post' => DisplayConfig::find('confirm_post')->config_value,
+            'email_contact' => DisplayConfig::find('email_contact')->config_value,
         ];
         return $this->sentSuccessResponse($result, "Get data success", Response::HTTP_OK);
     }
@@ -44,8 +46,8 @@ class DisplayConfigController extends Controller
     public function update(UpdateDisplayConfigRequest $request, $id)
     {
         $config = DisplayConfig::find($id);
-        $value = $request->input('display_config_value');
-        $config->display_config_value = $value;
+        $value = $request->input('config_value');
+        $config->config_value = $value;
         $config->save();
         return $this->sentSuccessResponse($config, "Update success", Response::HTTP_OK);
     }

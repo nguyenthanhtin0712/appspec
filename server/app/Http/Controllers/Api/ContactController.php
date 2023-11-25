@@ -67,7 +67,7 @@ class ContactController extends Controller
 
     public function sendMail(SendMailRequest $request)
     {
-        $admin_email = DisplayConfig::find('register_email')->display_config_value;
+        $admin_email = DisplayConfig::find('register_email')->config_value;
         $message = $request->input('message');
         $message['subject'] = 'Liên hệ từ trang đăng ký chuyên ngành';
         $message['view'] = 'mails.mail-contact';
@@ -77,5 +77,4 @@ class ContactController extends Controller
         $message = Contact::create($message);
         return $this->sentSuccessResponse($message, 'SendEmail success', 200);
     }
-
 }

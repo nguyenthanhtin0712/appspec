@@ -210,7 +210,7 @@ class RegisterSpecialtyController extends Controller
 
     public function getRegisterSpecialty()
     {
-        $displayConfig = DisplayConfig::find('register_specialty')->display_config_value ?? RegisterSpecialty::latest()->first()->register_specialty_id;
+        $displayConfig = DisplayConfig::find('register_specialty')->config_value ?? RegisterSpecialty::latest()->first()->register_specialty_id;
         $registerSpecialty = RegisterSpecialty::with(['specialty.major', 'specialty.student'])->find($displayConfig);
 
         $groupedSpecialties = $registerSpecialty->specialty->groupBy('major.major_id')->map(function ($specialties) use ($displayConfig) {
@@ -246,7 +246,7 @@ class RegisterSpecialtyController extends Controller
     {
         if (!$request->user()->student) return response()->json(['message' => 'No permission',], 403);
 
-        $displayConfig = DisplayConfig::find('register_specialty')->display_config_value ?? RegisterSpecialty::latest()->first()->register_specialty_id;
+        $displayConfig = DisplayConfig::find('register_specialty')->config_value ?? RegisterSpecialty::latest()->first()->register_specialty_id;
 
         if ($request->user()->student->register_specialty_id != $displayConfig) return response()->json(['message' => 'No permission',], 403);
 
@@ -266,7 +266,7 @@ class RegisterSpecialtyController extends Controller
     public function getMajor($id = null)
     {
         if ($id === null) {
-            $id = DisplayConfig::find('register_specialty')->display_config_value;
+            $id = DisplayConfig::find('register_specialty')->config_value;
         }
         $majors = Major::join('specialties', 'specialties.major_id', 'majors.major_id')
             ->join('register_specialty_detail', 'register_specialty_detail.specialty_id', '=', 'specialties.specialty_id')
@@ -338,7 +338,7 @@ class RegisterSpecialtyController extends Controller
 
     public function getStatisticDefault($major_id = null)
     {
-        $id = DisplayConfig::find('register_specialty')->display_config_value;
+        $id = DisplayConfig::find('register_specialty')->config_value;
         $registerSpecialty = RegisterSpecialty::findOrFail($id);
 
         $statistic = $registerSpecialty->specialty
@@ -364,7 +364,7 @@ class RegisterSpecialtyController extends Controller
 
     public function getResult(Request $request)
     {
-        $displayConfig = DisplayConfig::find('register_specialty')->display_config_value ?? RegisterSpecialty::latest()->first()->register_specialty_id;
+        $displayConfig = DisplayConfig::find('register_specialty')->config_value ?? RegisterSpecialty::latest()->first()->register_specialty_id;
         $perPage = $request->input('perPage');
         $query = $request->input('query');
         $sortBy = $request->input('sortBy');

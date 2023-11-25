@@ -16,7 +16,7 @@ export const getRecentContact = createAsyncThunk('dashboard/getRecentContact', a
 
 export const getRecentJobPost = createAsyncThunk('dashboard/getRecentJobPost', async () => {
   try {
-    const response = await axios.get('/job-posts?perPage=5');
+    const response = await axios.get('/job-posts?page=1&perPage=5');
     const { data } = response;
     return {
       data: data.data.result
