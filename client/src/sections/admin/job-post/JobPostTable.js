@@ -10,6 +10,7 @@ import dayjs from 'dayjs';
 import IconAction from 'components/IconAction';
 import { Chip, InputAdornment, Stack } from '@mui/material';
 import getJobPostStatus from 'utils/getJobPostStatus';
+import WithPermission from 'guards/WithPermission';
 
 const JobPostTable = () => {
   const theme = useTheme();
@@ -86,9 +87,13 @@ const JobPostTable = () => {
         positionActionsColumn="last"
         renderRowActions={({ row }) => (
           <Stack direction="row" flexWrap="nowrap">
-            <IconAction title={'Xem'} icon={<Eye />} href={`/jobs/${row.id}`} />
-            <IconAction title={'Chỉnh sửa'} icon={<Edit />} href={`/admin/job-post/edit/${row.id}`} />
-            <IconAction title={'Xoá'} color="error" icon={<Trash />} onClick={() => dispatch(setIdDeleteJobPost(row.id))} />
+            <IconAction title={'Xem'} icon={<Eye />} href={`./job-post/edit/${row.id}`} />
+            <WithPermission requiredPermission={['job_post.update']}>
+              <IconAction title={'Chỉnh sửa'} icon={<Edit />} href={`./job-post/edit/${row.id}`} />
+            </WithPermission>
+            <WithPermission requiredPermission={['job_post.delete']}>
+              <IconAction title={'Xoá'} color="error" icon={<Trash />} onClick={() => dispatch(setIdDeleteJobPost(row.id))} />
+            </WithPermission>
           </Stack>
         )}
         displayColumnDefOptions={{

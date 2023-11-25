@@ -13,9 +13,11 @@ import {
 import { dispatch } from 'store/index';
 import { Box, Button, FormControl, MenuItem, Select, Typography } from '@mui/material';
 import ChangeSpecialtyDialog from 'sections/admin/register_specialty/register-specialty-result/ChangeSpecialtyDialog';
+import useCheckPermissions from 'hooks/useCheckPermissions';
 
 const ResultTable = () => {
   const theme = useTheme();
+  const isDivide = useCheckPermissions(['register_spec.divide']);
   const { tableResult, registerSpecialtyId, majorId, status, statistic } = useSelector((state) => state.register_specialty_user);
   const { data, isError, isLoading, isRefetching, rowCount, columnFilters, globalFilter, sorting, pagination } = tableResult;
   const [open, setOpen] = useState(false);
@@ -118,7 +120,7 @@ const ResultTable = () => {
         positionToolbarAlertBanner="bottom"
         renderTopToolbarCustomActions={({ table }) => (
           <FormControl sx={{ minWidth: 215 }}>
-            {!table.getIsSomeRowsSelected() && !table.getIsAllRowsSelected() ? (
+            {!isDivide || (!table.getIsSomeRowsSelected() && !table.getIsAllRowsSelected()) ? (
               <Select
                 id="register-status"
                 onChange={(e) => dispatch(setStatus(e.target.value))}

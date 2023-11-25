@@ -91,7 +91,7 @@ const AdminRoutes = {
         }
         return res;
       },
-      element: <PrivateRoute component={RegisterSpecialtyPageResult} requiredPermissions={['register_spec.divide']} />
+      element: <PrivateRoute component={RegisterSpecialtyPageResult} requiredPermissions={['register_spec.view']} />
     },
     {
       path: 'internship-graduation',
@@ -150,7 +150,7 @@ const AdminRoutes = {
         }
         return res;
       },
-      element: <PrivateRoute component={WarnedStudentDetailPage} requiredPermissions={['warned_dismissed.detail']} />
+      element: <PrivateRoute component={WarnedStudentDetailPage} requiredPermissions={['warned_dismissed.view']} />
     },
     {
       path: 'page',
@@ -173,11 +173,11 @@ const AdminRoutes = {
     },
     {
       path: 'role',
-      element: <PrivateRoute component={Role} requiredPermissions={[]} />
+      element: <PrivateRoute component={Role} requiredPermissions={['role.view']} />
     },
     {
       path: 'role/create',
-      element: <PrivateRoute component={RoleCreate} requiredPermissions={[]} />
+      element: <PrivateRoute component={RoleCreate} requiredPermissions={['role.create']} />
     },
     {
       path: 'role/:id',
@@ -188,7 +188,7 @@ const AdminRoutes = {
         }
         return res;
       },
-      element: <PrivateRoute component={RoleUpdate} requiredPermissions={[]} />
+      element: <PrivateRoute component={RoleUpdate} requiredPermissions={['role.update']} />
     },
     {
       path: 'grading',

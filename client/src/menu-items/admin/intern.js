@@ -23,7 +23,7 @@ const intern = {
       type: 'item',
       url: '/admin/company',
       icon: icons.company,
-      permission: []
+      permission: ['company.view']
     },
     {
       id: 'internship-graduation',
@@ -31,7 +31,7 @@ const intern = {
       type: 'item',
       url: '/admin/internship-graduation',
       icon: icons.assignment,
-      permission: []
+      permission: ['register_intern.view']
     },
     {
       id: 'grading',

@@ -8,6 +8,7 @@ import CompanyDialog from 'sections/admin/company/CompanyDialog';
 import { setcompanyDialog } from 'store/slices/companySlice';
 import { dispatch } from 'store/index';
 import CompanyDeleteDialog from 'sections/admin/company/CompanyDeleteDialog';
+import WithPermission from 'guards/WithPermission';
 
 const CompanyPage = () => {
   const handleClickOpen = () => {
@@ -18,9 +19,11 @@ const CompanyPage = () => {
     <>
       <Stack direction="row" justifyContent="space-between" alignItems="center" mb={1.5} flexWrap="wrap">
         <Typography variant="h4">Quản lý công ty</Typography>
-        <Button variant="contained" onClick={handleClickOpen} startIcon={<Add />}>
-          Thêm công ty
-        </Button>
+        <WithPermission requiredPermission={['company.create']}>
+          <Button variant="contained" onClick={handleClickOpen} startIcon={<Add />}>
+            Thêm công ty
+          </Button>
+        </WithPermission>
       </Stack>
       <CompanyTable />
       <CompanyDialog />

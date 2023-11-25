@@ -78,10 +78,10 @@ class RoleSeeder extends Seeder
         $jobholder_grading = Permission::create(['name' => 'jobholder.grading', 'desc' => 'Chấm điểm', 'functional_code' => 'jobholder']);
         // Role subject
         Functional::create(['functional_code' => 'subject', 'functional_name' => 'Quản lý môn học']);
-        $subject_view = Permission::create(['name' => 'subject.view', 'desc' => 'Xem bộ môn', 'functional_code' => 'subject']);
-        $subject_create = Permission::create(['name' => 'subject.create', 'desc' => 'Tạo bộ môn', 'functional_code' => 'subject']);
-        $subject_update = Permission::create(['name' => 'subject.update', 'desc' => 'Cập nhật bộ môn', 'functional_code' => 'subject']);
-        $subject_delete = Permission::create(['name' => 'subject.delete', 'desc' => 'Xoá bộ môn', 'functional_code' => 'subject']);
+        $subject_view = Permission::create(['name' => 'subject.view', 'desc' => 'Xem môn học', 'functional_code' => 'subject']);
+        $subject_create = Permission::create(['name' => 'subject.create', 'desc' => 'Tạo môn học', 'functional_code' => 'subject']);
+        $subject_update = Permission::create(['name' => 'subject.update', 'desc' => 'Cập nhật môn học', 'functional_code' => 'subject']);
+        $subject_delete = Permission::create(['name' => 'subject.delete', 'desc' => 'Xoá môn học', 'functional_code' => 'subject']);
 
         // Role company
         Functional::create(['functional_code' => 'company', 'functional_name' => 'Quản lý công ty']);
@@ -101,7 +101,6 @@ class RoleSeeder extends Seeder
         $warned_dismissed_create = Permission::create(['name' => 'warned_dismissed.create', 'desc' => 'Tạo đợt cảnh báo & BTH', 'functional_code' => 'warned_dismissed']);
         $warned_dismissed_delete = Permission::create(['name' => 'warned_dismissed.delete', 'desc' => 'Xoá đợt cảnh báo & BTH', 'functional_code' => 'warned_dismissed']);
         $warned_dismissed_lookup = Permission::create(['name' => 'warned_dismissed.lookup', 'desc' => 'Tra cứu sinh viên bị cảnh báo & BTH', 'functional_code' => 'warned_dismissed']);
-        $warned_dismissed_detail = Permission::create(['name' => 'warned_dismissed.detail', 'desc' => 'Xem chi tiết đợt cảnh báo & BTH', 'functional_code' => 'warned_dismissed']);
 
         // Register Open Class
         Functional::create(['functional_code' => 'register_open_class', 'functional_name' => 'Đăng ký học cải thiện']);
@@ -132,6 +131,14 @@ class RoleSeeder extends Seeder
         // System
         Functional::create(['functional_code' => 'system', 'functional_name' => 'Quản lý hệ thống']);
         $system_update = Permission::create(['name' => 'system.update', 'desc' => 'Cập nhật cấu hình hệ thống', 'functional_code' => 'system']);
+
+        // Role
+        Functional::create(['functional_code' => 'role', 'functional_name' => 'Quản lý quyền']);
+        $role_view = Permission::create(['name' => 'role.view', 'desc' => 'Xem danh sách quyền', 'functional_code' => 'role']);
+        $role_create = Permission::create(['name' => 'role.create', 'desc' => 'Tạo quyền', 'functional_code' => 'role']);
+        $role_update = Permission::create(['name' => 'role.update', 'desc' => 'Cập nhật quyền', 'functional_code' => 'role']);
+        $role_delete = Permission::create(['name' => 'role.delete', 'desc' => 'Xoá quyền', 'functional_code' => 'role']);
+
 
         $admin_role = Role::create(['name' => 'admin']);
         $jobholder_role = Role::create(['name' => 'jobhodler']);
@@ -187,7 +194,6 @@ class RoleSeeder extends Seeder
             $warned_dismissed_view,
             $warned_dismissed_create,
             $warned_dismissed_delete,
-            $warned_dismissed_detail,
             $warned_dismissed_lookup,
             $register_open_class_statistic,
             $page_view,
@@ -201,7 +207,11 @@ class RoleSeeder extends Seeder
             $contact_view,
             $contact_delete,
             $contact_update_info,
-            $system_update
+            $system_update,
+            $role_view,
+            $role_create,
+            $role_update,
+            $role_delete
         ]);
 
         $jobholder_role->givePermissionTo([

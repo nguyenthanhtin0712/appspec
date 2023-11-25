@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography';
 import JobholderTable from 'sections/admin/jobholder/JobholderTable';
 import JobholderDialog from 'sections/admin/jobholder/JobholderDialog';
 import { dispatch } from 'store/index';
+import WithPermission from 'guards/WithPermission';
 
 const JobholderPage = () => {
   const handleClickOpen = () => {
@@ -17,9 +18,11 @@ const JobholderPage = () => {
     <>
       <Stack direction="row" justifyContent="space-between" alignItems="center" mb={1.5} flexWrap="wrap">
         <Typography variant="h4">Quản lý viên chức</Typography>
-        <Button variant="contained" onClick={handleClickOpen} startIcon={<Add />}>
-          Thêm viên chức
-        </Button>
+        <WithPermission requiredPermission={['jobholder.update']}>
+          <Button variant="contained" onClick={handleClickOpen} startIcon={<Add />}>
+            Thêm viên chức
+          </Button>
+        </WithPermission>
       </Stack>
       <JobholderDialog />
       <JobholderTable />

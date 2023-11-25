@@ -8,6 +8,7 @@ import { dispatch } from 'store/index';
 import SubjectTable from 'sections/admin/subject/SubjectTable';
 import SubjectDialog from 'sections/admin/subject/SubjectDialog';
 import SubjectDeleteDialog from 'sections/admin/subject/SubjectDeleteDialog';
+import WithPermission from 'guards/WithPermission';
 
 const SubjectPage = () => {
   const handleClickOpen = () => {
@@ -18,9 +19,11 @@ const SubjectPage = () => {
     <>
       <Stack direction="row" justifyContent="space-between" alignItems="center" mb={1.5} flexWrap="wrap">
         <Typography variant="h4">Quản lý học phần</Typography>
-        <Button variant="contained" onClick={handleClickOpen} startIcon={<Add />}>
-          Thêm học phần
-        </Button>
+        <WithPermission requiredPermission={['subject.create']}>
+          <Button variant="contained" onClick={handleClickOpen} startIcon={<Add />}>
+            Thêm học phần
+          </Button>
+        </WithPermission>
       </Stack>
       <SubjectDialog />
       <SubjectTable />

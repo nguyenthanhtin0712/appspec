@@ -16,6 +16,7 @@ import {
 } from 'store/slices/subjectScheduleSlice';
 import { dispatch } from 'store/index';
 import IconAction from 'components/IconAction';
+import WithPermission from 'guards/WithPermission';
 
 const SubjectScheduleTable = () => {
   const theme = useTheme();
@@ -77,7 +78,9 @@ const SubjectScheduleTable = () => {
         renderRowActions={({ row }) => (
           <Stack direction="row">
             <IconAction title="Xem chi tiết" icon={<Eye />} onClick={() => dispatch(setIdSelect(row.id))} />
-            <IconAction title="Xoá" icon={<Trash />} onClick={() => handleDelete(row.id)} color="error" />
+            <WithPermission requiredPermission={['subject_schedule.delete']}>
+              <IconAction title="Xoá" icon={<Trash />} onClick={() => handleDelete(row.id)} color="error" />
+            </WithPermission>
           </Stack>
         )}
         muiTablePaperProps={{

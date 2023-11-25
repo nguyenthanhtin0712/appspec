@@ -21,6 +21,7 @@ import { dispatch } from 'store/index';
 import { formatDateTimeDisplay } from 'utils/formatDateTime';
 import { Link } from 'react-router-dom';
 import { InputAdornment } from '@mui/material';
+import WithPermission from 'guards/WithPermission';
 
 const RegisterSpecialtyTable = () => {
   const theme = useTheme();
@@ -97,15 +98,21 @@ const RegisterSpecialtyTable = () => {
         positionActionsColumn="last"
         renderRowActions={({ row }) => (
           <Stack direction="row">
-            <IconButton component={Link} to={`/admin/register_specialty/${row.id}`}>
-              <Eye />
-            </IconButton>
-            <IconButton component={Link} to={`/admin/register_specialty/edit/${row.id}`}>
-              <Edit />
-            </IconButton>
-            <IconButton color="error" onClick={() => handleDelete(row.id)}>
-              <Trash />
-            </IconButton>
+            <WithPermission requiredPermission={['register_spec.view']}>
+              <IconButton component={Link} to={`/admin/register_specialty/${row.id}`}>
+                <Eye />
+              </IconButton>
+            </WithPermission>
+            <WithPermission requiredPermission={['register_spec.update']}>
+              <IconButton component={Link} to={`/admin/register_specialty/edit/${row.id}`}>
+                <Edit />
+              </IconButton>
+            </WithPermission>
+            <WithPermission requiredPermission={['register_spec.delete']}>
+              <IconButton color="error" onClick={() => handleDelete(row.id)}>
+                <Trash />
+              </IconButton>
+            </WithPermission>
           </Stack>
         )}
         displayColumnDefOptions={{

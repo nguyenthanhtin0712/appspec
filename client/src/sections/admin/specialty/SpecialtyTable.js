@@ -22,6 +22,7 @@ import { dispatch } from 'store/index';
 import { Export } from 'iconsax-react';
 import { utils, writeFileXLSX } from 'xlsx';
 import { useCallback } from 'react';
+import WithPermission from 'guards/WithPermission';
 
 const SpecialtyTable = () => {
   const theme = useTheme();
@@ -126,21 +127,21 @@ const SpecialtyTable = () => {
           showProgressBars: isRefetching,
           sorting
         }}
-        enableRowActions
+        enableRowActions={useCheckPermissions(['specialty.update', 'specialty.delete'])}
         positionActionsColumn="last"
         renderRowActions={({ row }) => {
           return (
             <Stack direction="row">
-              <IconButton
-                onClick={() => {
-                  handleUpdate(row.original);
-                }}
-              >
-                <Edit />
-              </IconButton>
-              <IconButton color="error" onClick={() => handleDelete(row.id)}>
-                <Trash />
-              </IconButton>
+              <WithPermission requiredPermission={['specialty.update']}>
+                <IconButton onClick={() => handleUpdate(row.original)}>
+                  <Edit />
+                </IconButton>
+              </WithPermission>
+              <WithPermission requiredPermission={['specialty.delete']}>
+                <IconButton color="error" onClick={() => handleDelete(row.id)}>
+                  <Trash />
+                </IconButton>
+              </WithPermission>
             </Stack>
           );
         }}

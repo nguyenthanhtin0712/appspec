@@ -14,12 +14,12 @@ import {
   setOpenCofirmDialog,
   setIdDelete
 } from 'store/slices/roleSlice';
-import Button from '@mui/material/Button';
 import { dispatch } from 'store/index';
-import { Export } from 'iconsax-react';
 import { useNavigate } from 'react-router';
 import IconAction from 'components/IconAction';
 import RoleDeleteDialog from 'sections/admin/role/RoleDeleteDialog';
+import WithPermission from 'guards/WithPermission';
+import useCheckPermissions from 'hooks/useCheckPermissions';
 
 const RoleTable = () => {
   const theme = useTheme();
@@ -76,18 +76,18 @@ const RoleTable = () => {
           showProgressBars: isRefetching,
           sorting
         }}
-        enableRowActions
+        enableRowActions={useCheckPermissions(['role.update', 'role.delete'])}
         positionActionsColumn="last"
         renderRowActions={({ row }) => (
           <Stack direction="row">
-            <IconButton
-              onClick={() => {
-                navigate(`/admin/role/${row.id}`);
-              }}
-            >
-              <Edit />
-            </IconButton>
-            <IconAction title="Xoá" icon={<Trash />} onClick={() => handleDelete(row.id)} color="error" />
+            <WithPermission requiredPermission={['role.update']}>
+              <IconButton onClick={() => navigate(`/admin/role/${row.id}`)}>
+                <Edit />
+              </IconButton>
+            </WithPermission>
+            <WithPermission requiredPermission={['role.delete']}>
+              <IconAction title="Xoá" icon={<Trash />} onClick={() => handleDelete(row.id)} color="error" />
+            </WithPermission>
           </Stack>
         )}
         muiTablePaperProps={{
@@ -105,11 +105,16 @@ const RoleTable = () => {
             bgcolor: theme.palette.background.neutral
           })
         }}
-        renderTopToolbarCustomActions={() => (
-          <Button color="success" startIcon={<Export />} variant="contained">
-            Xuất Excel
-          </Button>
-        )}
+        positionGlobalFilter="left"
+        initialState={{
+          showGlobalFilter: true
+        }}
+        muiSearchTextFieldProps={{
+          placeholder: 'Tìm kiếm học phần ...',
+          sx: { minWidth: '300px' },
+          variant: 'outlined',
+          size: 'small'
+        }}
       />
       <RoleDeleteDialog />
     </>
