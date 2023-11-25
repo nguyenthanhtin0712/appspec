@@ -21,6 +21,7 @@ import Tooltip from '@mui/material/Tooltip';
 import { toast } from 'react-toastify';
 import { dispatch } from 'store/index';
 import WithPermission from 'guards/WithPermission';
+import useCheckPermissions from 'hooks/useCheckPermissions';
 
 const JobholderTable = () => {
   const theme = useTheme();

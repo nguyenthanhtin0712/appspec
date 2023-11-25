@@ -23,6 +23,7 @@ import { Export } from 'iconsax-react';
 import { utils, writeFileXLSX } from 'xlsx';
 import { useCallback } from 'react';
 import WithPermission from 'guards/WithPermission';
+import useCheckPermissions from 'hooks/useCheckPermissions';
 
 const SpecialtyTable = () => {
   const theme = useTheme();

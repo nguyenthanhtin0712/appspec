@@ -17,6 +17,7 @@ import {
 } from 'store/slices/companySlice';
 import { dispatch } from 'store/index';
 import WithPermission from 'guards/WithPermission';
+import useCheckPermissions from 'hooks/useCheckPermissions';
 
 const CompanyTable = () => {
   const theme = useTheme();
