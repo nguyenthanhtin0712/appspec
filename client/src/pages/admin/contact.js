@@ -5,6 +5,7 @@ import { setContactDialog } from 'store/slices/contactSlice';
 import { dispatch } from 'store/index';
 import ContactConfigDialog from 'sections/admin/contact/ContactConfigDialog';
 import WithPermission from 'guards/WithPermission';
+import ConfirmContactDialog from 'sections/admin/contact/ConfirmContactDialog';
 
 const contact = () => {
   return (
@@ -19,6 +20,7 @@ const contact = () => {
       </Stack>
       <ContactTable />
       <ContactConfigDialog />
+      <ConfirmContactDialog />
     </>
   );
 };

@@ -34,6 +34,16 @@ export const fetchData = createAsyncThunk('contact/fetchData', async (params, { 
   }
 });
 
+export const checkViewContact = createAsyncThunk('contact/checkViewContact', async (id) => {
+  try {
+    const response = await axios.post(`/contacts/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+});
+
 export const deleteContact = createAsyncThunk('contact/deleteContact', async (id) => {
   try {
     const response = await axios.delete(`/contacts/${id}`);
@@ -87,11 +97,15 @@ const initialState = {
     pageIndex: 0,
     pageSize: 10
   },
-  isLoadingMail: false,
   contactDialog: {
     open: false,
     init: {}
-  }
+  },
+  isLoadingMail: false,
+  idDelete: null,
+  openConfirm: false,
+  viewContact: null,
+  openContact: false
 };
 
 const contact = createSlice({
@@ -112,6 +126,18 @@ const contact = createSlice({
     },
     setContactDialog: (state, action) => {
       state.contactDialog = { ...state.contactDialog, ...action.payload };
+    },
+    setIdDelete: (state, action) => {
+      state.idDelete = action.payload;
+    },
+    setOpenConfirm: (state, action) => {
+      state.openConfirm = action.payload;
+    },
+    setOpenContact: (state, action) => {
+      state.openContact = action.payload;
+    },
+    setViewContact: (state, action) => {
+      state.viewContact = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -146,10 +172,25 @@ const contact = createSlice({
       .addCase(deleteContact.fulfilled, (state, action) => {
         const id = action.payload.data.contact_id;
         state.data = state.data.filter((contact) => contact.contact_id != id);
+      })
+      .addCase(checkViewContact.fulfilled, (state, action) => {
+        const id = action.payload.data.contact_id;
+        const index = state.data.findIndex((contact) => contact.contact_id == id);
+        state.data[index].contact_check = 1;
       });
   }
 });
 
-export const { setColumnFilters, setGlobalFilter, setSorting, setPagination, setContactDialog } = contact.actions;
+export const {
+  setColumnFilters,
+  setGlobalFilter,
+  setSorting,
+  setPagination,
+  setContactDialog,
+  setIdDelete,
+  setOpenConfirm,
+  setOpenContact,
+  setViewContact
+} = contact.actions;
 
 export default contact.reducer;

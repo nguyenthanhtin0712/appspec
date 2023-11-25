@@ -67,14 +67,21 @@ class ContactController extends Controller
 
     public function sendMail(SendMailRequest $request)
     {
-        $admin_email = DisplayConfig::find('register_email')->config_value;
+        $admin_email = DisplayConfig::find('email_contact')->config_value;
         $message = $request->input('message');
-        $message['subject'] = 'Liên hệ từ trang đăng ký chuyên ngành';
+        $message['subject'] = 'Góp ý và phản hồi của sinh viên (Web hỗ trợ đào tạo)';
         $message['view'] = 'mails.mail-contact';
         SendEmail::dispatch($message, [
             $admin_email
         ])->delay(now()->addMinute(1));
         $message = Contact::create($message);
         return $this->sentSuccessResponse($message, 'SendEmail success', 200);
+    }
+
+    public function checkViewContact($id){
+        $contact = Contact::where('contact_id', $id)->firstOrFail();
+        $contact->contact_check = 1;
+        $contact->save();
+        return $this->sentSuccessResponse($contact, "Contact check view success", Response::HTTP_OK);
     }
 }

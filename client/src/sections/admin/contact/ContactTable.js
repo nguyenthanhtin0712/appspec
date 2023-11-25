@@ -1,35 +1,49 @@
-import React, { memo, useEffect, useState } from 'react';
+import React, { memo, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useTheme } from '@mui/material/styles';
 import { Eye, Trash } from 'iconsax-react';
 import Stack from '@mui/material/Stack';
 import { MaterialReactTable } from 'material-react-table';
-import { fetchData, setColumnFilters, setGlobalFilter, setSorting, setPagination, deleteContact } from 'store/slices/contactSlice';
+import {
+  fetchData,
+  setColumnFilters,
+  setGlobalFilter,
+  setSorting,
+  setPagination,
+  deleteContact,
+  setIdDelete,
+  setOpenConfirm,
+  setViewContact,
+  setOpenContact,
+  checkViewContact
+} from 'store/slices/contactSlice';
 import { dispatch } from 'store/index';
 import { formatDateTimeDisplay } from 'utils/formatDateTime';
 import ConfirmDialog from 'components/ConfirmDialog';
-import { Button, Typography } from '@mui/material';
+import { Button, Chip, Typography } from '@mui/material';
 import { toast } from 'react-toastify';
 import IconAction from 'components/IconAction';
 import WithPermission from 'guards/WithPermission';
 
 const ContactTable = () => {
   const theme = useTheme();
-  const [openCofirm, setOpenCofirm] = useState(false);
-  const [idDelete, setIdDelete] = useState('');
-  const handleCloseCofirm = () => {
-    setOpenCofirm(false);
-  };
-  const handleDelete = (id) => {
-    setOpenCofirm(true);
-    setIdDelete(id);
-  };
-  const { data, isError, isLoading, isRefetching, rowCount, columnFilters, globalFilter, sorting, pagination } = useSelector(
-    (state) => state.contact
-  );
+
+  const { data, isError, isLoading, isRefetching, rowCount, columnFilters, globalFilter, sorting, pagination, openConfirm, idDelete } =
+    useSelector((state) => state.contact);
+
   useEffect(() => {
     dispatch(fetchData({ columnFilters, globalFilter, sorting, pagination }));
   }, [columnFilters, globalFilter, sorting, pagination]);
+
+  const handleCloseConfirm = () => {
+    dispatch(setOpenConfirm(false));
+    dispatch(setIdDelete(null));
+  };
+
+  const handleDelete = (id) => {
+    dispatch(setOpenConfirm(true));
+    dispatch(setIdDelete(id));
+  };
 
   const columns = React.useMemo(
     () => [
@@ -42,13 +56,17 @@ const ContactTable = () => {
         header: 'Email'
       },
       {
-        accessorKey: 'contact_phone',
-        header: 'Phone'
-      },
-      {
         accessorKey: 'created_at',
         header: 'Thời gian',
-        Cell: ({ cell }) => formatDateTimeDisplay(cell.getValue())
+        Cell: ({ cell }) => formatDateTimeDisplay(cell.row.original.created_at)
+      },
+      {
+        accessorKey: 'contact_check',
+        header: 'Trạng thái',
+        Cell: (cell) => {
+          return cell.row.original.contact_check == 1 ? <Chip label="Đã xem" color="success" /> : <Chip label="Chưa xem" color="warning" />;
+        },
+        size: 5
       }
     ],
     []
@@ -87,7 +105,10 @@ const ContactTable = () => {
               title={'Xem'}
               icon={<Eye />}
               onClick={() => {
-                console.log('row.original.contact_id', row.original.contact_id);
+                let contactView = data.find((contact) => contact.contact_id == row.original.contact_id);
+                dispatch(setOpenContact(true));
+                dispatch(setViewContact(contactView));
+                if (row.original.contact_check == 0) dispatch(checkViewContact(row.original.contact_id));
               }}
             />
             <WithPermission requiredPermission={['contact.delete']}>
@@ -122,8 +143,8 @@ const ContactTable = () => {
         }}
       />
       <ConfirmDialog
-        open={openCofirm}
-        onClose={handleCloseCofirm}
+        open={openConfirm}
+        onClose={handleCloseConfirm}
         title="Delete"
         content={<Typography variant="h6">Bạn có chắc chắn muốn xóa ?</Typography>}
         action={
@@ -133,7 +154,7 @@ const ContactTable = () => {
             onClick={async () => {
               try {
                 await dispatch(deleteContact(idDelete));
-                handleCloseCofirm();
+                handleCloseConfirm();
                 toast.success('Xóa thông tin liên hệ thành công');
                 setIdDelete('');
               } catch (err) {

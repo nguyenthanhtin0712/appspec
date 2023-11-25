@@ -18,6 +18,7 @@ class Contact extends Model
         'contact_phone',
         'contact_email',
         'contact_content',
+        'contact_check',
         'contact_isDelete',
     ];
 }

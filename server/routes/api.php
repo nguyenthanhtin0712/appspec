@@ -205,7 +205,9 @@ Route::middleware(['auth:api'])->group(function () {
 
     //Contact
     Route::get('contacts', [ContactController::class, 'index'])->middleware('user_permission:contact.view');
+    Route::post('contacts/{id}', [ContactController::class, 'checkViewContact'])->middleware('user_permission:contact.view');
     Route::delete('contacts/{id}', [ContactController::class, 'destroy'])->middleware('user_permission:contact.delete');
+
 
     // Contact config
     Route::post('contact-config', [ContactConfigController::class, 'updateContactConfig'])->middleware('user_permission:contact.update_info');
