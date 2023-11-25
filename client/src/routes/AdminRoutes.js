@@ -7,6 +7,7 @@ import { getWarningInfo } from 'store/slices/warnedStudentDetailSlice';
 import { getPageById } from 'store/slices/pageSlice';
 import { getJobPostById } from 'store/slices/jobPostSlice';
 import { getRegistrationInfoById } from 'store/slices/registerSpecialtyUserSlice';
+import { getRole } from 'store/slices/roleSlice';
 
 const DashboardDefault = Loadable(lazy(() => import('pages/admin/dashboard')));
 const MajorPage = Loadable(lazy(() => import('pages/admin/major')));
@@ -180,6 +181,13 @@ const AdminRoutes = {
     },
     {
       path: 'role/:id',
+      loader: async ({ params }) => {
+        const res = await dispatch(getRole(params.id));
+        if (res && res.error) {
+          throw new Response('Not Found', { status: 404 });
+        }
+        return res;
+      },
       element: <PrivateRoute component={RoleUpdate} requiredPermissions={[]} />
     },
     {

@@ -18,7 +18,6 @@ class CreateSpecialtiesTable extends Migration
             $table->string('specialty_name');
             $table->string('major_id');
             $table->integer('specialty_isDelete')->default(0);
-            $table->timestamps();
         });
     }
 

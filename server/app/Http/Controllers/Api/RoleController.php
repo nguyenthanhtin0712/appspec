@@ -80,13 +80,6 @@ class RoleController extends Controller
     {
         $name = $request->input('name');
         $permissions = $request->input('permissions');
-        if (empty($permission)) {
-            return $this->sentErrorResponse(null, "Permission array is empty", 399);
-        }
-        $role = Role::where('name', $name)->first();
-        if ($role) {
-            return $this->sentErrorResponse($role, "Error update role", 400);
-        }
         $role = Role::create(['name' => $name]);
         $result = $role->givePermissionTo($permissions);
         return $this->sentSuccessResponse($result, "Create role success", 200);
@@ -123,13 +116,6 @@ class RoleController extends Controller
     {
         $name = $request->input('name');
         $permission = $request->input('permissions');
-        if (empty($permission)) {
-            return $this->sentErrorResponse(null, "Permission array is empty", 400);
-        }
-        $existingRole = Role::where('id', '!=', $id)->where('name', $name)->first();
-        if ($existingRole) {
-            return $this->sentErrorResponse(null, "Role with the same name already exists", 400);
-        }
         $role = Role::findOrFail($id);
         $role->syncPermissions($permission);
         $role->name = $name;

@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from '../../api/axios';
 import { API_BASE_URL } from 'config';
 
-export const fetchData = createAsyncThunk('role/fetchData', async (params, { rejectWithValue }) => {
+export const fetchData = createAsyncThunk('role/fetchData', async (params) => {
   const {
     columnFilters,
     globalFilter,
@@ -25,12 +25,8 @@ export const fetchData = createAsyncThunk('role/fetchData', async (params, { rej
       rowCount: data.data.meta.total
     };
   } catch (error) {
-    if (error.response && error.response.data && error.response.data.errors) {
-      return rejectWithValue(error.response.data);
-    } else {
-      console.error(error);
-      throw error;
-    }
+    console.error(error);
+    throw error;
   }
 });
 
@@ -54,23 +50,31 @@ export const getRole = createAsyncThunk('role/getRole', async (id) => {
   }
 });
 
-export const createRole = createAsyncThunk('role/createRole', async (value) => {
+export const createRole = createAsyncThunk('role/createRole', async (value, { rejectWithValue }) => {
   try {
     const response = await axios.post(`/roles`, value);
     return response.data;
   } catch (error) {
-    console.error(error);
-    throw error;
+    if (error.response && error.response.data && error.response.data.errors) {
+      return rejectWithValue(error.response.data);
+    } else {
+      console.error(error);
+      throw error;
+    }
   }
 });
 
-export const updateRole = createAsyncThunk('role/updateRole', async ({ id, value }) => {
+export const updateRole = createAsyncThunk('role/updateRole', async ({ id, value }, { rejectWithValue }) => {
   try {
     const response = await axios.put(`/roles/${id}`, value);
     return response.data;
   } catch (error) {
-    console.error(error);
-    throw error;
+    if (error.response && error.response.data && error.response.data.errors) {
+      return rejectWithValue(error.response.data);
+    } else {
+      console.error(error);
+      throw error;
+    }
   }
 });
 

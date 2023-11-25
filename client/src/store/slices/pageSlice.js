@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from '../../api/axios';
 import { API_BASE_URL } from 'config';
 
-export const fetchData = createAsyncThunk('page/fetchData', async (params, { rejectWithValue }) => {
+export const fetchData = createAsyncThunk('page/fetchData', async (params) => {
   const {
     columnFilters,
     globalFilter,
@@ -25,12 +25,8 @@ export const fetchData = createAsyncThunk('page/fetchData', async (params, { rej
       rowCount: data.data.meta.total
     };
   } catch (error) {
-    if (error.response && error.response.data && error.response.data.errors) {
-      return rejectWithValue(error.response.data);
-    } else {
-      console.error(error);
-      throw error;
-    }
+    console.error(error);
+    throw error;
   }
 });
 

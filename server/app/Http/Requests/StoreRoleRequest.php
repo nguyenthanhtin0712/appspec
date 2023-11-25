@@ -6,6 +6,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Response;
+use Spatie\Permission\Models\Role;
 
 class StoreRoleRequest extends FormRequest
 {
@@ -27,7 +28,15 @@ class StoreRoleRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => "required"
+            'name' => ['required', 'regex:/\S/', function ($attribute, $value, $fail) {
+                $existingRole = Role::where('name', $value)->first();
+                if ($existingRole) $fail("Role with the same name already exists");
+            }],
+            'permissions' => ['required', function ($attribute, $value, $fail) {
+                if (empty($value)) {
+                    $fail("Permission array is empty");
+                }
+            }],
         ];
     }
 

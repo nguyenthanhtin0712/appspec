@@ -53,7 +53,11 @@ const RoleCreate = () => {
                 name: ''
               }}
               validationSchema={Yup.object().shape({
-                name: Yup.string().max(255).required('Tên nhóm quyền là bắt buộc !')
+                name: Yup.string()
+                  .nullable()
+                  .transform((v, o) => (o === '' ? null : v))
+                  .max(255)
+                  .required('Tên nhóm quyền là bắt buộc !')
               })}
               onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
                 const permissions = getSelectedCheckboxesArray();
@@ -67,11 +71,7 @@ const RoleCreate = () => {
                 };
                 try {
                   const result = await dispatch(createRole(value));
-                  if (result.payload.status == 400) {
-                    toast.error('Tên nhóm quyền đã tồn tại');
-                    return;
-                  }
-                  if (result) {
+                  if (result && !result.error) {
                     setStatus({ success: true });
                     setSubmitting(false);
                     toast.success('Tạo nhóm quyền thành công!');

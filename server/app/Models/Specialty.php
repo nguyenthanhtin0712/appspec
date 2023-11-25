@@ -13,6 +13,7 @@ class Specialty extends Model
     protected $primaryKey = 'specialty_id';
     protected $keyType = 'string';
     public $incrementing = false;
+    public $timestamps = false;
     protected $fillable = [
         'specialty_id',
         'specialty_name',

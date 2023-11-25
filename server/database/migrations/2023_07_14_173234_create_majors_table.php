@@ -17,7 +17,6 @@ class CreateMajorsTable extends Migration
             $table->string('major_id')->primary();
             $table->string('major_name');
             $table->integer('major_isDelete')->default(0);
-            $table->timestamps();
         });
     }
 
