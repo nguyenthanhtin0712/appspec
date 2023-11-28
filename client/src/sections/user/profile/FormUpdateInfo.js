@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 import { changeInformation } from 'store/slices/profileSlice';
 import { dispatch } from 'store';
 
-const FormUpdateInfo = () => {
+const FormUpdateInfo = (data) => {
   return (
     <Formik
       initialValues={{

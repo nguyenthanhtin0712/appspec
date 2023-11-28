@@ -69,7 +69,7 @@ const ProfileUser = () => {
                 <FormChangePassword />
               </TabPanel>
               <TabPanel value="3">
-                <FormUpdateInfo />
+                <FormUpdateInfo data={data} />
               </TabPanel>
             </TabContext>
           )}
