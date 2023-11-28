@@ -16,7 +16,7 @@ import FormChangePassword from 'sections/user/profile/FormChangePassword';
 import FormUpdateInfo from 'sections/user/profile/FormUpdateInfo';
 
 const ProfileUser = () => {
-  const { data, isLoading } = useSelector((state) => state.profile);
+  const { data, isLoading, isLoadingInfo } = useSelector((state) => state.profile);
   const [value, setValue] = React.useState('1');
 
   useEffect(() => {
@@ -29,11 +29,17 @@ const ProfileUser = () => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  if (!data)
+    return (
+      <Container maxWidth="sm" sx={{ mt: 2 }}>
+        <h2>Tính năng đang được phát triển</h2>
+      </Container>
+    );
   return (
     <>
       <Container maxWidth="md" sx={{ mt: 2 }}>
         <MainCard title="Thông tin">
-          {!data ? (
+          {isLoadingInfo ? (
             <Stack direction="row" justifyContent="center" alignItems="center">
               <LoadingBox />
             </Stack>
