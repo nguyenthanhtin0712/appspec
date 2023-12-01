@@ -2,7 +2,7 @@ import React from 'react';
 import { useEffect } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import { dispatch } from 'store/index';
-import { login_google } from 'store/slices/authSlice';
+import { loginGoogle } from 'store/slices/authSlice';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router';
 
@@ -12,7 +12,7 @@ const GoogleLogin = () => {
     var userObject = jwtDecode(response.credential);
     const value = { user_email: userObject.email };
     try {
-      const result = await dispatch(login_google(value));
+      const result = await dispatch(loginGoogle(value));
       if (result && !result.error) {
         toast.success('Đăng nhập thành công');
         navigate('/');

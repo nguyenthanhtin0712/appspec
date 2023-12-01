@@ -1,4 +1,4 @@
-import { login_google } from 'store/slices/authSlice';
+import { loginGoogle } from 'store/slices/authSlice';
 import { jwtDecode } from 'jwt-decode';
 import { toast } from 'react-toastify';
 import { dispatch } from 'store';
@@ -8,7 +8,7 @@ export function checkLoginGoogle() {
     var userObject = jwtDecode(response.credential);
     const value = { user_email: userObject.email };
     try {
-      const result = await dispatch(login_google(value));
+      const result = await dispatch(loginGoogle(value));
       if (result && !result.error) {
         toast.success('Đăng nhập thành công');
       } else {
