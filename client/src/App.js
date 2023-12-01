@@ -11,7 +11,6 @@ const App = () => {
   useLayoutEffect(() => {
     const fetchUser = async () => {
       const result = await dispatch(getUserDataFromToken());
-      if (!result.payload) checkLoginGoogle();
     };
 
     fetchUser();
