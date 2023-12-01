@@ -43,11 +43,8 @@ const Navbar = () => {
     <>
       <AppBar
         component="nav"
-        position="sticky"
         sx={{
           boxShadow: theme.customShadows.z2,
-          borderBottom: '1px solid',
-          borderColor: theme.palette.divider,
           bgcolor: '#fff'
         }}
       >

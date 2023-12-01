@@ -4,6 +4,7 @@ import Header from 'layout/HomeLayout/Header';
 import Footer from './Footer';
 import Box from '@mui/material/Box';
 import ScrollTop from 'components/ScrollTop';
+import { Toolbar } from '@mui/material';
 
 function HomeLayout() {
   return (
@@ -19,6 +20,7 @@ function HomeLayout() {
         }}
         mb={4}
       >
+        <Toolbar sx={{ minHeight: '66px' }} />
         <ScrollTop />
         <Outlet />
       </Box>
