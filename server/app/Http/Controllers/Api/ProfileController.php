@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ChangeInfoRequest;
 use App\Http\Requests\ChangePasswordRequest;
 use App\Http\Resources\ProfileResource;
+use App\Models\JobHolder;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -21,9 +22,18 @@ class ProfileController extends Controller
             ->leftJoin('majors', 'students.major_id', '=', 'majors.major_id')
             ->select('students.*', 'users.user_firstname', 'users.user_lastname', 'users.*', 'majors.major_name')
             ->where('students.user_id', $user->user_id)
-            ->firstOrFail();
-        $studentResource = new ProfileResource($studentWithUser);
-        return $studentResource;
+            ->first();
+        if($studentWithUser){
+            $studentResource = new ProfileResource($studentWithUser);
+            return $studentResource;
+        }
+
+        $jobholderWithuser = JobHolder::query()
+        ->where('job_holders.user_id', $user->user_id)->first();
+        if($jobholderWithuser){
+            return $jobholderWithuser;
+        }
+        return $user;
     }
 
     public function change_password(ChangePasswordRequest $request)

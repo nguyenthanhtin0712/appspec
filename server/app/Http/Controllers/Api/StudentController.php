@@ -215,9 +215,9 @@ class StudentController extends Controller
                 $user->user_avatar = 'https://avatars.githubusercontent.com/u/120194990?v=4';
                 $user->user_password = bcrypt("hgbaodev");
                 $user->save();
-                $admin_role = Role::findByName('admin', 'web');
-                $user->assignRole($admin_role);
             }
+            $student_role = Role::findByName('student', 'web');
+            $user->assignRole($student_role);
             Student::create([
                 'user_id' => $user->user_id,
                 'student_code' => $student_code,
