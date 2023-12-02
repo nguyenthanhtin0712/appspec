@@ -209,13 +209,8 @@ class JobPostController extends Controller
 
         foreach ($posts as $post) {
             $cleanDescription = strip_tags($post->job_post_desc);
-            $cleanDescription = mb_convert_encoding($cleanDescription, 'UTF-8', 'auto');
-            if (mb_check_encoding($cleanDescription, 'UTF-8')) {
-                $shortDescription = mb_strimwidth($cleanDescription, 0, 120, '...');
-                $post->job_post_desc = $shortDescription;
-            } else {
-                $post->job_post_desc = 'Invalid UTF-8 String';
-            }
+            $shortDescription = Str::limit($cleanDescription, 120);
+            $post->job_post_desc = $shortDescription;
         }
 
         $subjectCollection = new Collection($posts);
