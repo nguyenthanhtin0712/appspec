@@ -5,7 +5,7 @@ import { Container, Grid } from '@mui/material';
 
 const arrFeature = [
   { id: 1, name: 'Đăng ký chuyên ngành', href: '/register_speciality', icon: <Code variant="Bulk" /> },
-  { id: 2, name: 'Đăng ký thực tập', href: '/admin', icon: <Profile2User variant="Bulk" /> },
+  { id: 2, name: 'Đăng ký thực tập', href: '/register_intern', icon: <Profile2User variant="Bulk" /> },
   { id: 3, name: 'Đăng ký học cải thiện', href: '/register-open-class', icon: <Refresh2 variant="Bulk" /> },
   { id: 4, name: 'Xem môn sắp mở', href: '/subject-schedule', icon: <FolderOpen variant="Bulk" /> },
   { id: 5, name: 'Tin tuyển dụng', href: '/jobs', icon: <PathTool variant="Bulk" /> },
