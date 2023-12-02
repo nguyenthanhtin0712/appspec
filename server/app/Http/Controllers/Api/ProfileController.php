@@ -27,13 +27,10 @@ class ProfileController extends Controller
             $studentResource = new ProfileResource($studentWithUser);
             return $studentResource;
         }
-
-        $jobholderWithuser = JobHolder::query()
-        ->where('job_holders.user_id', $user->user_id)->first();
-        if($jobholderWithuser){
-            return $jobholderWithuser;
-        }
-        return $user;
+        $userInfo = [
+            "data" => $user
+        ];
+        return $userInfo;
     }
 
     public function change_password(ChangePasswordRequest $request)

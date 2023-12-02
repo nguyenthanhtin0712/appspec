@@ -30,7 +30,16 @@ const GoogleLogin = () => {
       callback: handleCallbackResponse
     });
 
-    google.accounts.id.renderButton(document.getElementById('signInDiv'), { theme: 'outline', size: 'large' });
+    google.accounts.id.renderButton(document.getElementById('signInDiv'), {
+      type: 'standard',
+      theme: 'filled_blue',
+      size: 'large',
+      shape: 'rectangular',
+      width: '350',
+      height: '50',
+      logo_alignment: 'left'
+    });
+    google.accounts.id.prompt();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return <div id="signInDiv"></div>;

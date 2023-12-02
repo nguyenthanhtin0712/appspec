@@ -30,7 +30,6 @@ export const changeInformation = createAsyncThunk('profile/changeInformation', a
   } catch (error) {
     if (error.response && error.response.status === 422) {
       const errors = error.response.data.errors;
-
       if (errors.user_email) {
         toast.warning('Email này đã được sử dụng');
       } else if (errors.user_phone) {
