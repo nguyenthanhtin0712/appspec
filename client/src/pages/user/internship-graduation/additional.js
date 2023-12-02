@@ -95,20 +95,7 @@ const Additional = () => {
       </>
     );
   };
-  if (!internship || !student)
-    return (
-      <Container maxWidth="lg" sx={{ mt: 2 }}>
-        <Stack justifyContent="center" alignItems="center" spacing={4} minHeight={500}>
-          <LockCircle size="150" color={theme.palette.warning.main} variant="Bulk" />
-          <Typography variant="h4" textAlign="center">
-            Bạn không có quyền thay thôi đổi thông tin
-          </Typography>
-          <Button variant="contained" component={Link} to="/">
-            Trở về trang chủ
-          </Button>
-        </Stack>
-      </Container>
-    );
+  if (!internship || !student) return;
 
   const title = `Thực tập năm ${internship?.openclasstime.openclass_time_year} kì ${internship?.openclasstime.openclass_time_semester}`;
   return (

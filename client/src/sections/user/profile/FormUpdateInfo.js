@@ -1,12 +1,13 @@
 import React from 'react';
-import { TickCircle, DirectRight } from 'iconsax-react';
-import { Button, Divider, Grid, Stack, Typography } from '@mui/material';
+import { DirectRight } from 'iconsax-react';
+import { Button, Grid, Stack, Typography } from '@mui/material';
 import InputField from 'components/input/InputField';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 import { changeInformation } from 'store/slices/profileSlice';
 import { dispatch } from 'store';
+import ConditionItem from 'sections/user/profile/ConditionItem';
 
 const FormUpdateInfo = ({ data, setValue }) => {
   return (
@@ -75,15 +76,7 @@ const FormUpdateInfo = ({ data, setValue }) => {
                   Thông tin cần đảm bảo
                 </Typography>
                 <Stack p={1} spacing={2}>
-                  <Stack>
-                    <Stack direction="row" spacing={1.5} mb={2}>
-                      <TickCircle color="#66af8e" />
-                      <Typography variant="h6" gutterBottom>
-                        Phải là thông tin của chính bạn
-                      </Typography>
-                    </Stack>
-                    <Divider sx={{ borderStyle: 'dashed' }} />
-                  </Stack>
+                  <ConditionItem title="Phải là thông tin của chính bạn" />
                 </Stack>
               </Stack>
             </Grid>
