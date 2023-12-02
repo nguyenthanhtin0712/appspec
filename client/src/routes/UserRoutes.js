@@ -110,11 +110,11 @@ const UserRoutes = {
         },
         {
           path: 'register',
-          element: <PrivateRoute component={RegisterIntern_Register} requiredPermissions={['student.view']} />
+          element: <PrivateRoute component={RegisterIntern_Register} requiredPermissions={['register_intern.register']} />
         },
         {
           path: 'additional',
-          element: <PrivateRoute component={RegisterIntern_Add} requiredPermissions={['student.view']} />
+          element: <PrivateRoute component={RegisterIntern_Add} requiredPermissions={['register_intern.register']} />
         },
         {
           path: 'result',

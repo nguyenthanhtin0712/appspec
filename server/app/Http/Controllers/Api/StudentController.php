@@ -211,11 +211,6 @@ class StudentController extends Controller
                 'user_gender' => "$user_gender",
                 'user_birthday' => "$user_birthday",
             ]);
-            if($student_code === "3121410069"){
-                $user->user_avatar = 'https://avatars.githubusercontent.com/u/120194990?v=4';
-                $user->user_password = bcrypt("hgbaodev");
-                $user->save();
-            }
             $student_role = Role::findByName('student', 'web');
             $user->assignRole($student_role);
             Student::create([

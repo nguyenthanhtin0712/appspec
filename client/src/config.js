@@ -6,3 +6,5 @@ export const HEADER_HEIGHT = 74;
 
 export const APP_BASE_NAME = '';
 export const API_BASE_URL = 'http://localhost:8000/api';
+
+// export const API_BASE_URL = 'https://api.hgbaodev.id.vn/api';

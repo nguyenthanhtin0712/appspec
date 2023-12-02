@@ -39,8 +39,8 @@ export const changeInformation = createAsyncThunk('profile/changeInformation', a
       }
     } else {
       console.error(error);
-      throw error;
     }
+    throw error;
   }
 });
 
@@ -82,8 +82,11 @@ const profile = createSlice({
       .addCase(changeInformation.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(changeInformation.fulfilled, (state) => {
+      .addCase(changeInformation.fulfilled, (state, action) => {
         state.isLoading = false;
+        let infoUser = action.payload.data;
+        state.data.user_email = infoUser.user_email;
+        state.data.user_phone = infoUser.user_phone;
       })
       .addCase(changeInformation.rejected, (state) => {
         state.isLoading = false;

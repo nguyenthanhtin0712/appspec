@@ -8,12 +8,12 @@ import { toast } from 'react-toastify';
 import { changeInformation } from 'store/slices/profileSlice';
 import { dispatch } from 'store';
 
-const FormUpdateInfo = (data, setValue) => {
+const FormUpdateInfo = ({ data, setValue }) => {
   return (
     <Formik
       initialValues={{
-        user_phone: data.data.user_phone || '',
-        user_email: data.data.user_email || ''
+        user_phone: data.user_phone || '',
+        user_email: data.user_email || ''
       }}
       validationSchema={Yup.object().shape({
         user_phone: Yup.string()

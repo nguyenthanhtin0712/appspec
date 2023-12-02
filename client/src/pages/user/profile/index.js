@@ -17,6 +17,7 @@ import FormUpdateInfo from 'sections/user/profile/FormUpdateInfo';
 
 const ProfileUser = () => {
   const { data, isLoading, isLoadingInfo } = useSelector((state) => state.profile);
+
   const [value, setValue] = React.useState('1');
   useEffect(() => {
     const fetch = async () => {
