@@ -4,7 +4,7 @@ import { Formik } from 'formik';
 import AnimateButton from 'components/@extended/AnimateButton';
 import { toast } from 'react-toastify';
 import { dispatch } from 'store/index';
-import { forgotPassword } from 'store/slices/forgotpasswordSlice';
+import { forgotPassword, setEmail, setSentSuccess } from 'store/slices/forgotpasswordSlice';
 
 const AuthForgotPassword = () => {
   return (
@@ -25,13 +25,12 @@ const AuthForgotPassword = () => {
                 toast.warning('Email không tồn tại trong hệ thống');
               }
               if (result.payload.status == 200) {
-                toast.success('Vui lòng kiểm tra email');
-                resetForm();
+                dispatch(setEmail(values.user_email));
+                dispatch(setSentSuccess(true));
                 resetForm();
               }
               setStatus({ success: true });
               setSubmitting(false);
-              // navigate('/auth/login');
             } else {
               setStatus({ success: true });
               setSubmitting(false);

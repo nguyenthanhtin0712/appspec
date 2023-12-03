@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import { dispatch } from 'store/index';
 import { useNavigate, useParams } from 'react-router';
 import InputField from 'components/input/InputField';
-import { ChangePasswordToken } from 'store/slices/forgotpasswordSlice';
+import { ChangePasswordToken, setEmail, setSentSuccess } from 'store/slices/forgotpasswordSlice';
 
 const AuthChangePassword = () => {
   const { token } = useParams();
@@ -37,6 +37,8 @@ const AuthChangePassword = () => {
             const result = await dispatch(ChangePasswordToken(values));
             if (result) {
               if (result.payload.status == 200) {
+                dispatch(setEmail(''));
+                dispatch(setSentSuccess(false));
                 toast.success('Thay đổi mật khẩu thành công');
                 resetForm();
                 navigate('/auth/login');

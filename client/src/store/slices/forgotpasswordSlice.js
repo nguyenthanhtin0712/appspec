@@ -44,16 +44,21 @@ export const ChangePasswordToken = createAsyncThunk('authentication/ChangePasswo
 
 const initialState = {
   data: null,
+  email: '',
+  sendSuccess: false,
   isLoadingInfo: false,
   isLoading: false
 };
 
 const forgotpassword = createSlice({
-  name: 'page',
+  name: 'forgot',
   initialState,
   reducers: {
-    setColumnFilters: (state, action) => {
-      state.columnFilters = action.payload;
+    setEmail: (state, action) => {
+      state.email = action.payload;
+    },
+    setSentSuccess: (state, action) => {
+      state.sendSuccess = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -71,6 +76,6 @@ const forgotpassword = createSlice({
   }
 });
 
-export const { test } = forgotpassword.actions;
+export const { setEmail, setSentSuccess } = forgotpassword.actions;
 
 export default forgotpassword.reducer;

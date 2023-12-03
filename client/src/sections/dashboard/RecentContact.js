@@ -19,8 +19,6 @@ const RecentContact = () => {
     fetchData();
   }, []);
 
-  console.log(recentContact);
-
   return (
     <MainCard
       title="Liên hệ gần đây"
