@@ -7,6 +7,7 @@ import PrivateRoute from '../guards/PrivateRoute';
 import { dispatch } from 'store';
 import { viewPage } from 'store/slices/pageSlice';
 import { getJobPostById } from 'store/slices/jobPostHomeSlice';
+import { getUserInternship } from 'store/slices/registerInternUserSlice';
 
 // render - data display components
 const HomePage = Loadable(lazy(() => import('pages/user/homepage')));
@@ -114,6 +115,13 @@ const UserRoutes = {
         },
         {
           path: 'additional',
+          loader: async () => {
+            const res = await dispatch(getUserInternship());
+            if (!res?.payload?.data) {
+              throw new Response('Not Found', { status: 404 });
+            }
+            return res;
+          },
           element: <PrivateRoute component={RegisterIntern_Add} requiredPermissions={['register_intern.register']} />
         },
         {

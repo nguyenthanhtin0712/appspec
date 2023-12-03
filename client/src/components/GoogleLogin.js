@@ -15,7 +15,13 @@ const GoogleLogin = () => {
       const result = await dispatch(loginGoogle(value));
       if (result && !result.error) {
         toast.success('Đăng nhập thành công');
-        navigate('/');
+        if (result.payload.roles[0] == 'admin') {
+          navigate('/admin');
+        } else if (result.payload.roles[0] == 'jobhodler') {
+          navigate('/admin/grading');
+        } else {
+          navigate('/');
+        }
       } else {
         toast.error('Vui lòng liên kết email với tài khoản!');
       }

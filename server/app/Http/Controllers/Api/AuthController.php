@@ -86,7 +86,7 @@ class AuthController extends Controller
         $user = User::where('user_email', $request->user_email)->first();
         if ($user) {
             $token = Str::random(40);
-            $url = 'http://localhost:3000/auth/change-password/token=' . $token;
+            $url = env("CLIENT_CONNECT","http://localhost:3000").'/auth/change-password/token=' . $token;
             $message['url'] = $url;
             $message['subject'] = 'TRƯỜNG ĐẠI HỌC SÀI GÒN - ĐỔI MẬT KHẨU!';
             $message['view'] = 'mails.mail-forgot-password';

@@ -39,7 +39,7 @@ const intern = {
       type: 'item',
       url: '/admin/grading',
       icon: icons.grading,
-      permission: []
+      permission: ['jobholder.grading']
     }
   ]
 };

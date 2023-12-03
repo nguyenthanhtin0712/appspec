@@ -54,7 +54,13 @@ const AuthLogin = () => {
             if (result && !result.error) {
               setStatus({ success: true });
               setSubmitting(false);
-              navigate('/');
+              if (result.payload.roles[0] == 'admin') {
+                navigate('/admin');
+              } else if (result.payload.roles[0] == 'jobhodler') {
+                navigate('/admin/grading');
+              } else {
+                navigate('/');
+              }
               toast.success('Đăng nhập thành công');
             } else {
               setStatus({ success: true });

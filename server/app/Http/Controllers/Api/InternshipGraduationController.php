@@ -672,14 +672,14 @@ class InternshipGraduationController extends Controller
     {
         $subject = "Thông báo từ Trường đại học Sài Gòn";
         $content = $status == 1
-            ? "Bạn vui lòng cập nhật thông tin người hướng dẫn trong trang đăng ký thực tập. Tại trang http://localhost:3000/register_intern/additional"
+            ? "Bạn vui lòng cập nhật thông tin người hướng dẫn trong trang đăng ký thực tập. Tại trang ".env("CLIENT_CONNECT","http://localhost:3000")."/register_intern/additional"
             : "Đăng ký thực tập của bạn bị huỷ do chưa đăng ký thông tin ở phòng đào tạo!";
 
         SendEmail::dispatch([
             'view' => 'mails.mail-notify',
             'subject' => $subject,
             'contact_content' => $content,
-        ], $emails)->delay(now()->addMinute(1));
+        ], $emails)->delay(now()->addMinute(0));
     }
 
     public function checkUserInternship(Request $request)
